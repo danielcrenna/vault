@@ -6,6 +6,11 @@ using metrics.Support;
 
 namespace metrics
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <see href="https://github.com/codahale/metrics"/>
+    /// <seealso href="http://codahale.com/codeconf-2011-04-09-metrics-metrics-everywhere.pdf" />
     public class Metrics
     {
         private static readonly ConcurrentDictionary<MetricName, IMetric> _metrics = new ConcurrentDictionary<MetricName, IMetric>();

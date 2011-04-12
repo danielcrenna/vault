@@ -3,7 +3,7 @@
 namespace metrics.Core
 {
     /// <summary>
-    /// A hash key for storing metrics associated by the parent class and named pair
+    /// A hash key for storing metrics associated by the parent class and name pair
     /// </summary>
     public struct MetricName
     {
