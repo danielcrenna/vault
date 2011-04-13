@@ -5,6 +5,9 @@ using System.Threading;
 
 namespace metrics.Support
 {
+    /// <summary>
+    /// Provides a thread group for tracking
+    /// </summary>
     public class ThreadGroup : IEnumerable<Thread>
     {
         private readonly string _name;

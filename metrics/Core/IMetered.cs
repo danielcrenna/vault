@@ -9,19 +9,19 @@ namespace metrics.Core
         /// Returns the meter's rate unit
         /// </summary>
         /// <returns></returns>
-        TimeUnit RateUnit();
+        TimeUnit RateUnit { get; }
 
-       /// <summary>
+        /// <summary>
         /// Returns the type of events the meter is measuring
-       /// </summary>
-       /// <returns></returns>
-        String EventType();
+        /// </summary>
+        /// <returns></returns>
+        String EventType { get; }
 
         /// <summary>
         ///  Returns the number of events which have been marked
         /// </summary>
         /// <returns></returns>
-        long Count();
+        long Count { get; }
 
         /// <summary>
         /// Returns the fifteen-minute exponentially-weighted moving average rate at

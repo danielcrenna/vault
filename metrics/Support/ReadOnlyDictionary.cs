@@ -4,6 +4,9 @@ using metrics.Core;
 
 namespace metrics.Support
 {
+    /// <summary>
+    /// Provides an immutable dictionary
+    /// </summary>
     internal class ReadOnlyDictionary<T, TK> : IDictionary<T, TK> where TK : ICopyable<TK>
     {
         private readonly IDictionary<T, TK> _inner;

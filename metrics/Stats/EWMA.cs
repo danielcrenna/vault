@@ -15,7 +15,7 @@ namespace metrics.Stats
         private static readonly double M5Alpha = 1 - Math.Exp(-5 / 60.0 / 5);
         private static readonly double M15Alpha = 1 - Math.Exp(-5 / 60.0 / 15);
 
-        private long _uncounted;
+        private /* atomic */ long _uncounted;
         private readonly double _alpha;
         private readonly double _interval;
         private volatile bool _initialized;

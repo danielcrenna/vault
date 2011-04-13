@@ -5,7 +5,7 @@ using metrics.Support;
 namespace metrics.Util
 {
     /// <summary>
-    /// A simple named thread factory.
+    /// A simple named thread factory
     /// </summary>
     public class NamedThreadFactory
     {

@@ -9,19 +9,19 @@ namespace metrics.Core
     /// <see href="http://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average" />
     public class MeterMetric : IMetered 
     {
-        public TimeUnit RateUnit()
+        public TimeUnit RateUnit
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        public string EventType()
+        public string EventType
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
-        public long Count()
+        public long Count
         {
-            throw new NotImplementedException();
+            get { throw new NotImplementedException(); }
         }
 
         public double FifteenMinuteRate()
