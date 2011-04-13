@@ -10,4 +10,10 @@ Requirements
 * .NET 4.0
 * ASP.NET MVC 3 (for reporting via HTTP)
 
+How To Use
+----------
+**First**, specify Metrics as a dependency:
+
+    PM> Install-Package Metrics
+
 Work in progress, nothing to see here.
