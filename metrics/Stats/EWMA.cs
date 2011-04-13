@@ -65,7 +65,7 @@ namespace metrics.Stats
        /// <param name="n"></param>
         public void Update(long n)
         {
-            Interlocked.Add(ref _uncounted, n);
+            Interlocked.Exchange(ref _uncounted, n);
         }
 
         /// <summary>
