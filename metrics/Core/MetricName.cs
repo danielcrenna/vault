@@ -8,6 +8,7 @@ namespace metrics.Core
     public struct MetricName
     {
         public Type Class { get; private set; }
+
         public string Name { get; private set; }
 
         public MetricName(Type @class, string name) : this()

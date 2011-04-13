@@ -1,11 +1,12 @@
 ﻿using System.Threading;
+using Newtonsoft.Json;
 
 namespace metrics.Core
 {
     /// <summary>
     /// An atomic counter metric
     /// </summary>
-    public class CounterMetric : IMetric
+    public sealed class CounterMetric : IMetric
     {
         private /* atomic */ long _count;
 
@@ -49,6 +50,7 @@ namespace metrics.Core
             get { return Interlocked.Read(ref _count); }
         }
 
+        [JsonIgnore]
         public IMetric Copy
         {
             get { return new CounterMetric(_count); }

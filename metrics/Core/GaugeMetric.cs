@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace metrics.Core
 {
@@ -12,11 +13,12 @@ namespace metrics.Core
     /// </code>
     /// </example>
     /// </summary>
-    public class GaugeMetric<T> : IMetric
+    public sealed class GaugeMetric<T> : IMetric
     {
         private readonly Func<T> _evaluator;
 
-        public virtual IMetric Copy
+        [JsonIgnore]
+        public IMetric Copy
         {
             get { return new GaugeMetric<T>(_evaluator); }
         }
@@ -26,7 +28,7 @@ namespace metrics.Core
             _evaluator = evaluator;
         }
 
-        public virtual T Value
+        public T Value
         {
             get { return _evaluator.Invoke(); }
         }

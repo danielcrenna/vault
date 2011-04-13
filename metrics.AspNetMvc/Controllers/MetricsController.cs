@@ -4,7 +4,7 @@ using System.Text;
 using System.Web.Mvc;
 using metrics.AspNetMvc.Extensions;
 using metrics.Core;
-using Newtonsoft.Json;
+using metrics.Serialization;
 
 namespace metrics.AspNetMvc.Controllers
 {
@@ -25,7 +25,7 @@ namespace metrics.AspNetMvc.Controllers
 
             var result = new ContentResult
                              {
-                                 Content = JsonConvert.SerializeObject(metrics.Metrics.All),
+                                 Content = Serializer.Serialize(metrics.Metrics.All),
                                  ContentType = "application/json",
                                  ContentEncoding = Encoding.UTF8
                              };
@@ -69,7 +69,7 @@ namespace metrics.AspNetMvc.Controllers
 
             var result = new ContentResult
             {
-                Content = JsonConvert.SerializeObject(health),
+                Content = Serializer.Serialize(health),
                 ContentType = "application/json",
                 ContentEncoding = Encoding.UTF8
             };
