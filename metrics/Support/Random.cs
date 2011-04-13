@@ -6,7 +6,7 @@ namespace metrics.Support
     /// <summary>
     /// Provides statistically relevant random number generation
     /// </summary>
-    public class Random
+    internal class Random
     {
         private static readonly RandomNumberGenerator _random;
 

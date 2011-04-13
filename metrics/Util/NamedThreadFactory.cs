@@ -13,9 +13,13 @@ namespace metrics.Util
         private readonly string _prefix;
         private static ThreadGroup _group;
 
-        public NamedThreadFactory(string name)
+        static NamedThreadFactory()
         {
             _group = new ThreadGroup("NamedThreadFactory");
+        }
+
+        public NamedThreadFactory(string name)
+        {
             _prefix = string.Concat(name, "-thread-");
         }
 

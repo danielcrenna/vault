@@ -7,7 +7,7 @@ namespace metrics.Core
     /// </summary>
     public class CounterMetric : IMetric
     {
-        private  /* atomic */ long _count;
+        private /* atomic */ long _count;
 
         public CounterMetric()
         {

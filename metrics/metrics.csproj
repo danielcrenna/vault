@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.0.1\lib\40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,7 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ClrProfiler.cs" />
     <Compile Include="Core\CounterMetric.cs" />
+    <Compile Include="Core\GaugeMetric.cs" />
+    <Compile Include="Core\HealthCheck.cs" />
+    <Compile Include="HealthChecks.cs" />
     <Compile Include="Core\ICopyable.cs" />
     <Compile Include="Core\IMetered.cs" />
     <Compile Include="Core\IMetric.cs" />
@@ -58,7 +65,9 @@
     <Compile Include="Util\NamedThreadFactory.cs" />
     <Compile Include="Support\ThreadGroup.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

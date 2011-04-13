@@ -4,6 +4,11 @@ using System.Threading;
 
 namespace metrics.Stats
 {
+    /// <summary>
+    /// A random sample of a stream of <code>long</code>s. Uses Vitter's Algorithm R to
+    /// produce a statistically representative sample.
+    /// <see href="http://www.cs.umd.edu/~samir/498/vitter.pdf">Random Sampling with a Reservoir</see>
+    /// </summary>
     public class UniformSample : ISample
     {
         private /* atomic */ long _count;

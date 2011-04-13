@@ -1,4 +1,5 @@
 ﻿using metrics.Support;
+using Newtonsoft.Json;
 
 namespace metrics.Core
 {
@@ -11,6 +12,7 @@ namespace metrics.Core
         /// <summary>
         /// Obtains a copy of the current type that is used in <see cref="ReadOnlyDictionary{T,TK}" /> to provide immutability
         /// </summary>
+        [JsonIgnore]
         T Copy { get; }
     }
 }
