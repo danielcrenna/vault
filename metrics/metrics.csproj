@@ -42,11 +42,17 @@
   <ItemGroup>
     <Compile Include="Core\CounterMetric.cs" />
     <Compile Include="Core\ICopyable.cs" />
+    <Compile Include="Core\IMetered.cs" />
     <Compile Include="Core\IMetric.cs" />
+    <Compile Include="Core\MeterMetric.cs" />
     <Compile Include="Core\MetricName.cs" />
     <Compile Include="Metrics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stats\EWMA.cs" />
     <Compile Include="Support\ReadOnlyDictionary.cs" />
+    <Compile Include="Support\TimeUnit.cs" />
+    <Compile Include="Util\NamedThreadFactory.cs" />
+    <Compile Include="Support\ThreadGroup.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
