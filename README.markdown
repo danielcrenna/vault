@@ -16,4 +16,104 @@ How To Use
 
     PM> Install-Package Metrics
 
-Work in progress, nothing to see here.
+**Second** ...
+
+Metrics comes with five types of metrics:
+
+* **Gauges** are instantaneous readings of values (e.g., a queue depth).
+* **Counters** are 64-bit integers which can be incremented or decremented.
+* **Meters** are increment-only counters which keep track of the rate of events.
+  They provide mean rates, plus exponentially-weighted moving averages which
+  use the same formula that the UNIX 1-, 5-, and 15-minute load averages use.
+* **Histograms** capture distribution measurements about a metric: the count,
+  maximum, minimum, mean, standard deviation, median, 75th percentile, 95th
+  percentile, 98th percentile, 99th percentile, and 99.9th percentile of the
+  recorded values. (They do so using a method called reservoir sampling which
+  allows them to efficiently keep a small, statistically representative sample
+  of all the measurements.)
+* **Timers** record the duration as well as the rate of events. In addition to
+  the rate information that meters provide, timers also provide the same metrics
+  as histograms about the recorded durations. (The samples that timers keep in
+  order to calculate percentiles and such are biased towards more recent data,
+  since you probably care more about how your application is doing *now* as
+  opposed to how it's done historically.)
+
+Metrics also has support for health checks:
+
+	HealthChecks.Register("database", () =>
+	{
+		if (Database.IsConnected)
+		{
+			return HealthCheck.Healthy;
+		}
+		else
+		{
+			return HealthCheck.Unhealthy("Not connected to database");
+		}
+	});
+
+**Third**, start collecting your metrics.
+
+If you're simply running a benchmark, you can print registered metrics to 
+standard error every 10s like this:
+
+	// Print to Console.Error every 10 seconds
+    Metrics.EnableConsoleReporting(10, TimeUnit.Seconds) 
+
+If you're writing a ASP.NET MVC-based web service, you can reference `Metrics.AspNetMvc` in
+your web application project and register default routes:
+
+	using metrics;
+
+	public class MvcApplication : HttpApplication
+    {
+        // ...
+		
+		protected void Application_Start()
+        {
+            AspNetMvc.Metrics.RegisterRoutes();
+            
+			// ...            
+        }
+
+		// ...
+    }
+    
+The default routes will respond to the following URIs:
+
+* `/metrics`: A JSON object of all registered metrics and a host of CLR metrics.
+* `/ping`: A simple `text/plain` "pong" for load-balancers.
+* `/healthcheck`: Runs through all registered `HealthCheck` instances and reports the results. Returns a `200 OK` if all succeeded, or a `500 Internal Server Error` if any failed.
+* `/threads`: A `text/plain` dump of all threads and their stack traces.
+
+The URIs of these resources can be configured by setting properties prior to registering routes.
+You may also choose to protect these URIs with HTTP Basic authentication:
+
+	using metrics;
+
+	public class MvcApplication : HttpApplication
+    {
+        // ...
+		
+		protected void Application_Start()
+        {
+			AspNetMvc.Metrics.HealthCheckPath = "my-healthcheck-uri";
+            AspNetMvc.Metrics.PingPath = "my-ping-uri";
+            AspNetMvc.Metrics.MetricsPath = "my-metrics-uri";
+            AspNetMvc.Metrics.ThreadsPath = "my-threads-uri";
+
+            AspNetMvc.Metrics.RegisterRoutes("username", "password");
+            
+			// ...            
+        }
+
+		// ...
+    }
+		
+License
+-------
+The original Metrics project is Copyright (c) 2010-2011 Coda Hale, Yammer.com
+
+This idiomatic port of Metrics to C# and .NET is Copyright (c) 2011 Daniel Crenna, Wildbit.com
+
+Both works are published under The MIT License, see LICENSE
