@@ -5,7 +5,7 @@ namespace metrics.Support
     /// <summary>
     /// Provides support for volatile operations around a typed value
     /// </summary>
-    public struct Volatile<T>
+    internal struct Volatile<T>
     {
         private object _value;
 

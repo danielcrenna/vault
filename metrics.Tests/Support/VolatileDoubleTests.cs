@@ -10,7 +10,7 @@ namespace metrics.Tests.Support
         [Test]
         public void Can_add_through_wrapper()
         {
-            double rate1 = 15.50;
+            var rate1 = 15.50;
             rate1 += (2 * 10 - rate1);
             Trace.WriteLine(rate1);
 

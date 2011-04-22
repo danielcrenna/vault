@@ -3,9 +3,9 @@ using metrics.Core;
 
 namespace metrics.Util
 {
-    public static class Utils
+    internal static class Utils
     {
-        public static IDictionary<string, IDictionary<string, IMetric>> SortMetrics(IDictionary<MetricName, IMetric> metrics)
+        internal static IDictionary<string, IDictionary<string, IMetric>> SortMetrics(IDictionary<MetricName, IMetric> metrics)
         {
             var sortedMetrics = new SortedDictionary<string, IDictionary<string, IMetric>>();
 

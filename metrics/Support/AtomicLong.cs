@@ -5,7 +5,7 @@ namespace metrics.Support
     /// <summary>
     /// Provides support for atomic operations around a <see cref="long" /> value
     /// </summary>
-    public class AtomicLong
+    internal class AtomicLong
     {
         private long _value;
 

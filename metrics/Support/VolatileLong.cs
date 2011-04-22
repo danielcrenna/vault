@@ -5,7 +5,7 @@ namespace metrics.Support
     /// <summary>
     /// Provides support for volatile operations around a <see cref="long" /> value
     /// </summary>
-    public struct VolatileLong
+    internal struct VolatileLong
     {
         private long _value;
 

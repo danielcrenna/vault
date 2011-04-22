@@ -8,7 +8,7 @@ namespace metrics.Support
     /// <summary>
     /// Provides a thread group for tracking
     /// </summary>
-    public class ThreadGroup : IEnumerable<Thread>
+    internal class ThreadGroup : IEnumerable<Thread>
     {
         private readonly string _name;
         private readonly ConcurrentDictionary<int,Thread> _threads;
