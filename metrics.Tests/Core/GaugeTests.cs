@@ -23,5 +23,14 @@ namespace metrics.Tests.Core
             queue.Dequeue();
             Assert.AreEqual(0, gauge.Value);
         }
+
+        [Test]
+        public void Can_use_gauge_metric()
+        {
+            var queue = new Queue<int>();
+            var gauge = Metrics.Gauge(typeof(GaugeTests), "Can_use_gauge_metric", () => queue.Count);
+            queue.Enqueue(5);
+            Assert.AreEqual(1, gauge.Value);
+        }
     }
 }

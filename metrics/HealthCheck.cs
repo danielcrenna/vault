@@ -39,12 +39,6 @@ namespace metrics
 
             public static Result Healthy { get { return _healthy; } }
 
-            public string Message { get; private set; }
-            
-            public Exception Error { get; private set; }
-
-            public bool IsHealthy { get; private set; }
-            
             public static Result Unhealthy(string errorMessage)
             {
                 return new Result(false, errorMessage, null);
@@ -55,6 +49,12 @@ namespace metrics
                 return new Result(false, error.Message, error);
             }
 
+            public string Message { get; private set; }
+            
+            public Exception Error { get; private set; }
+
+            public bool IsHealthy { get; private set; }
+            
             private Result(bool isHealthy, string message, Exception error)
             {
                 IsHealthy = isHealthy;

@@ -3,17 +3,22 @@ using Newtonsoft.Json;
 
 namespace metrics.Core
 {
+    public abstract class GaugeMetric
+    {
+        public abstract string ValueAsString { get; }
+    }
+
     /// <summary>
     /// A gauge metric is an instantaneous reading of a partiular value. To
     /// instrument a queue's depth, for example:
     /// <example>
     /// <code> 
-    /// var queue = new Queue<int>();
-    /// var gauge = new GaugeMetric<int>(() => queue.Count);
+    /// var queue = new Queue{int}();
+    /// var gauge = new GaugeMetric{int}(() => queue.Count);
     /// </code>
     /// </example>
     /// </summary>
-    public sealed class GaugeMetric<T> : IMetric
+    public sealed class GaugeMetric<T> : GaugeMetric, IMetric
     {
         private readonly Func<T> _evaluator;
 
@@ -31,6 +36,11 @@ namespace metrics.Core
         public T Value
         {
             get { return _evaluator.Invoke(); }
+        }
+
+        public override string ValueAsString
+        {
+            get { return Value.ToString(); }
         }
     }
 }

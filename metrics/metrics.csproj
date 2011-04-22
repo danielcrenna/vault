@@ -43,13 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\HistogramMetric.cs" />
+    <Compile Include="Core\TimerMetric.cs" />
+    <Compile Include="Reporting\ConsoleReporter.cs" />
     <Compile Include="Support\Volatile.cs" />
     <Compile Include="Support\VolatileDouble.cs" />
     <Compile Include="Support\AtomicLong.cs" />
     <Compile Include="Core\CLRProfiler.cs" />
     <Compile Include="Core\CounterMetric.cs" />
     <Compile Include="Core\GaugeMetric.cs" />
-    <Compile Include="Core\HealthCheck.cs" />
+    <Compile Include="HealthCheck.cs" />
     <Compile Include="HealthChecks.cs" />
     <Compile Include="Core\ICopyable.cs" />
     <Compile Include="Core\IMetered.cs" />
@@ -71,10 +74,12 @@
     <Compile Include="Support\VolatileLong.cs" />
     <Compile Include="Util\NamedThreadFactory.cs" />
     <Compile Include="Support\ThreadGroup.cs" />
+    <Compile Include="Util\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

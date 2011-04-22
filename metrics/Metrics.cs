@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using metrics.Core;
+using metrics.Reporting;
 using metrics.Support;
 
 namespace metrics
@@ -19,18 +20,30 @@ namespace metrics
         /// Creates a new counter gauge
         /// </summary>
         /// <typeparam name="T">The type the gauge measures</typeparam>
+        /// <param name="type">The type that owns the metric</param>
         /// <param name="name">The metric name</param>
         /// <param name="evaluator">The gauge evaluation function</param>
         /// <returns></returns>
-        public static GaugeMetric<T> Gauge<T>(string name, Func<T> evaluator)
+        public static GaugeMetric<T> Gauge<T>(Type type, string name, Func<T> evaluator)
         {
-            return GetOrAdd(new MetricName(typeof (T), name), new GaugeMetric<T>(evaluator));
+            return GetOrAdd(new MetricName(type, name), new GaugeMetric<T>(evaluator));
+        }
+
+        /// <summary>
+        /// Enables the console reporter and causes it to print to STDOUT with the specified period
+        /// </summary>
+        /// <param name="period">The period between successive outputs</param>
+        /// <param name="unit">The time unit of the period</param>
+        public static void EnableConsoleReporting(long period, TimeUnit unit)
+        {
+            var reporter = new ConsoleReporter(Console.Out);
+            reporter.Start(period, unit);
         }
 
         /// <summary>
         /// Creates a new counter metric
         /// </summary>
-        /// <param name="type">The type that owns the counter</param>
+        /// <param name="type">The type that owns the metric</param>
         /// <param name="name">The metric name</param>
         /// <returns></returns>
         public static CounterMetric Counter(Type type, string name)

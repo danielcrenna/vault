@@ -55,7 +55,7 @@ Metrics also has support for health checks:
 **Third**, start collecting your metrics.
 
 If you're simply running a benchmark, you can print registered metrics to 
-standard error every 10s like this:
+standard output, every 10 seconds like this:
 
 	// Print to Console.Error every 10 seconds
     Metrics.EnableConsoleReporting(10, TimeUnit.Seconds) 
@@ -109,6 +109,12 @@ You may also choose to protect these URIs with HTTP Basic authentication:
 
 		// ...
     }
+
+Known Deviations
+----------------
+* This implementation uses ConcurrentDictionary vs. Java's ConcurrentSkipListMap, so expect lookups to suffer
+* This implementation uses SortedDictionary vs. Java's TreeMap
+* The CLR is not as flexible when it comes to introspection; CLR metrics and thread dumps are a work in progress
 		
 License
 -------

@@ -25,7 +25,7 @@ namespace metrics.Example
         protected void Application_Start()
         {
             HealthChecks.Register("duran-duran-is-neither-a-duran-nor-a-duran", () => HealthCheck.Result.Healthy);
-            Metrics.Gauge("module-count", () => Modules.Count);
+            Metrics.Gauge(GetType(), "module-count", () => Modules.Count);
             AspNetMvc.Metrics.RegisterRoutes();
             
             AreaRegistration.RegisterAllAreas();
