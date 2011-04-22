@@ -112,8 +112,8 @@ You may also choose to protect these URIs with HTTP Basic authentication:
 
 Known Deviations
 ----------------
-* This implementation uses ConcurrentDictionary vs. Java's ConcurrentSkipListMap, so expect lookups to suffer
-* This implementation uses SortedDictionary vs. Java's TreeMap
+* This implementation uses `ConcurrentDictionary` vs. Java's `ConcurrentSkipListMap`, so expect lookups to suffer
+* This implementation uses `SortedDictionary` vs. Java's `TreeMap`
 * The CLR is not as flexible when it comes to introspection; CLR metrics and thread dumps are a work in progress
 		
 License
