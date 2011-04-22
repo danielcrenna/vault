@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ClrProfiler.cs" />
+    <Compile Include="Core\CLRProfiler.cs" />
     <Compile Include="Core\CounterMetric.cs" />
     <Compile Include="Core\GaugeMetric.cs" />
     <Compile Include="Core\HealthCheck.cs" />

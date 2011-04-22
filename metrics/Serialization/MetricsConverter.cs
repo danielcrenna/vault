@@ -6,17 +6,17 @@ using Newtonsoft.Json;
 
 namespace metrics.Serialization
 {
-    internal class MetricItem
-    {
-        public string Name { get; set; }
-        public IMetric Metric { get; set; }
-    }
-
     /// <summary>
     /// Properly serializes a metrics hash
     /// </summary>
     internal class MetricsConverter : JsonConverter
     {
+        internal class MetricItem
+        {
+            public string Name { get; set; }
+            public IMetric Metric { get; set; }
+        }
+
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             if (!(value is IDictionary<MetricName, IMetric>))

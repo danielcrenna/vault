@@ -7,7 +7,7 @@ namespace metrics.Core
     /// A gauge metric is an instantaneous reading of a partiular value. To
     /// instrument a queue's depth, for example:
     /// <example>
-    /// <code>
+    /// <code> 
     /// var queue = new Queue<int>();
     /// var gauge = new GaugeMetric<int>(() => queue.Count);
     /// </code>

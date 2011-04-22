@@ -7,6 +7,10 @@ namespace metrics
     /// </summary>
     public class HealthCheck
     {
+        public static Result Healthy { get { return Result.Healthy; } }
+        public static Result Unhealthy(string message) { return Result.Unhealthy(message); }
+        public static Result Unhealthy(Exception error) { return Result.Unhealthy(error); } 
+
         private readonly Func<Result> _check;
 
         public String Name { get; private set; }
