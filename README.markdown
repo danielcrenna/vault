@@ -32,7 +32,7 @@ How To Use
         {
             // Perform an action which gets timed
             var results = _dbTimer.Time(() => {                            
-                Database.query("WHOO");
+                Database.Query("SELECT Unicorns FROM Awesome");
             }
             
             // Calculate the rate of new things found
