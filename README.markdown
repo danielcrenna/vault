@@ -16,7 +16,31 @@ How To Use
 
     PM> Install-Package Metrics
 
-**Second** ...
+**Second**, instrument your classes:
+
+    using Metrics;
+
+    public class ThingFinder
+    {
+        // Measure the # of records per second returned
+        private IMetric _resultsMeter = Metrics.Meter(typeof(ThingFinder), "results", TimeUnit.Seconds)
+      
+        // Measure the # of milliseconds each query takes and the number of queries per second being performed
+        private IMetric _dbTimer = Metrics.Timer(typeof(ThingFinder), "database", TimeUnit.Milliseconds, TimeUnit.Seconds)
+      
+        public void FindThings()
+        {
+            // Perform an action which gets timed
+            var results = _dbTimer.Time(() => {                            
+                Database.query("WHOO");
+            }
+            
+            // Calculate the rate of new things found
+            _resultsMeter.Mark(results.Count)                
+            
+            // etc.
+        }
+    }
 
 Metrics comes with five types of metrics:
 
