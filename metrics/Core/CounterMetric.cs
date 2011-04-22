@@ -1,4 +1,4 @@
-﻿using System.Threading;
+﻿using metrics.Support;
 using Newtonsoft.Json;
 
 namespace metrics.Core
@@ -8,7 +8,7 @@ namespace metrics.Core
     /// </summary>
     public sealed class CounterMetric : IMetric
     {
-        private /* atomic */ long _count;
+        private readonly AtomicLong _count = new AtomicLong(0);
 
         public CounterMetric()
         {
@@ -17,43 +17,43 @@ namespace metrics.Core
 
         private CounterMetric(long count)
         {
-            Interlocked.Exchange(ref _count, count);
+            _count.Set(count);
         }
 
         public void Increment()
         {
-            Interlocked.Increment(ref _count);
+            Increment(1);
         }
 
         public void Increment(long amount)
         {
-            Interlocked.Add(ref _count, amount);
+            _count.AddAndGet(amount);
         }
 
         public void Decrement()
         {
-            Interlocked.Decrement(ref _count);
+            Decrement(1);
         }
 
         public void Decrement(long amount)
         {
-            Increment(-amount);
+            _count.AddAndGet(0 - amount);
         }
 
         public void Clear()
         {
-            Interlocked.Exchange(ref _count, 0);
+            _count.Set(0);
         }
 
         public long Count
         {
-            get { return Interlocked.Read(ref _count); }
+            get { return _count.Get(); }
         }
 
         [JsonIgnore]
         public IMetric Copy
         {
-            get { return new CounterMetric(_count); }
+            get { return new CounterMetric(_count.Get()); }
         }
     }
 }

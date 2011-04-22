@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Support\VolatileDouble.cs" />
+    <Compile Include="Support\AtomicLong.cs" />
     <Compile Include="Core\CLRProfiler.cs" />
     <Compile Include="Core\CounterMetric.cs" />
     <Compile Include="Core\GaugeMetric.cs" />

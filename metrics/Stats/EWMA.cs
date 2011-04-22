@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using metrics.Support;
 
 namespace metrics.Stats
@@ -15,11 +14,11 @@ namespace metrics.Stats
         private static readonly double M5Alpha = 1 - Math.Exp(-5 / 60.0 / 5);
         private static readonly double M15Alpha = 1 - Math.Exp(-5 / 60.0 / 15);
 
-        private /* atomic */ long _uncounted;
+        private readonly AtomicLong _uncounted = new AtomicLong(0);
         private readonly double _alpha;
         private readonly double _interval;
         private volatile bool _initialized;
-        private /* volatile */ double _rate;
+        private VolatileDouble _rate;
 
         /// <summary>
         /// Creates a new EWMA which is equivalent to the UNIX one minute load average and which expects to be ticked every 5 seconds.
@@ -59,13 +58,13 @@ namespace metrics.Stats
             _alpha = alpha;
         }
 
-       /// <summary>
+        /// <summary>
         ///  Update the moving average with a new value.
-       /// </summary>
-       /// <param name="n"></param>
+        /// </summary>
+        /// <param name="n"></param>
         public void Update(long n)
         {
-            Interlocked.Exchange(ref _uncounted, n);
+            _uncounted.AddAndGet(n);
         }
 
         /// <summary>
@@ -73,15 +72,15 @@ namespace metrics.Stats
         /// </summary>
         public void Tick()
         {
-            var count = Interlocked.Read(ref _uncounted);
+            var count = _uncounted.GetAndSet(0);
             var instantRate = count / _interval;
             if (_initialized)
             {
-                Thread.VolatileWrite(ref _rate, (_alpha * (instantRate - Thread.VolatileRead(ref _rate))));
+                _rate += _alpha * (instantRate - _rate);
             }
             else
             {
-                Thread.VolatileWrite(ref _rate, instantRate);
+                _rate.Set(instantRate);
                 _initialized = true;
             }
         }
@@ -91,7 +90,7 @@ namespace metrics.Stats
         /// </summary>
         public double Rate(TimeUnit rateUnit)
         {
-            return Thread.VolatileRead(ref _rate) * rateUnit.ToNanos(1);
+            return _rate * rateUnit.ToNanos(1);
         }
     }
 }
