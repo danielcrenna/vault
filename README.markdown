@@ -81,7 +81,7 @@ Metrics also has support for health checks:
 If you're simply running a benchmark, you can print registered metrics to 
 standard output, every 10 seconds like this:
 
-	// Print to Console.Error every 10 seconds
+	// Print to Console.Out every 10 seconds
     Metrics.EnableConsoleReporting(10, TimeUnit.Seconds) 
 
 If you're writing a ASP.NET MVC-based web service, you can reference `Metrics.AspNetMvc` in
