@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using metrics.Support;
 
 namespace metrics.Stats
 {
@@ -11,7 +12,7 @@ namespace metrics.Stats
     /// </summary>
     public class UniformSample : ISample
     {
-        private /* atomic */ long _count;
+        private readonly AtomicLong _count = new AtomicLong(0);
         private /* atomic */ readonly long[] _values;
         
         public UniformSample(int reservoirSize)
@@ -29,7 +30,7 @@ namespace metrics.Stats
             {
                 Interlocked.Exchange(ref _values[i], 0);
             }
-            Interlocked.Exchange(ref _count, 0);
+            _count.Set(0);
         }
 
         /// <summary>
@@ -39,7 +40,7 @@ namespace metrics.Stats
         {
             get
             {
-                var c = Interlocked.Read(ref _count);
+                var c = _count.Get();
                 if (c > _values.Length)
                 {
                     return _values.Length;
@@ -53,7 +54,7 @@ namespace metrics.Stats
         /// </summary>
         public void Update(long value)
         {
-            var count = Interlocked.Add(ref _count, 1);
+            var count = _count.IncrementAndGet();
             if (count <= _values.Length)
             {
                 var index = (int) count - 1;

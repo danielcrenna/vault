@@ -5,11 +5,11 @@ namespace metrics.Support
     /// <summary>
     /// Provides support for atomic operations around a <see cref="long" /> value
     /// </summary>
-    public struct AtomicLong
+    public class AtomicLong
     {
         private long _value;
 
-        public AtomicLong(long value) : this()
+        public AtomicLong(long value)
         {
             Set(value);
         }
@@ -37,6 +37,32 @@ namespace metrics.Support
         {
             Interlocked.Add(ref _value, amount);
             return Get();
+        }
+
+        /// <summary>
+        /// Atomically increments by one and returns the current value
+        /// </summary>
+        /// <returns></returns>
+        public long IncrementAndGet()
+        {
+            Interlocked.Increment(ref _value);
+            return Get();
+        }
+
+        /// <summary>
+        /// Atomically set the value to the given updated value if the current value == expected value
+        /// </summary>
+        /// <param name="expected">The expected value</param>
+        /// <param name="updated">The new value</param>
+        /// <returns></returns>
+        public bool CompareAndSet(long expected, long updated)
+        {
+            if(Get() == expected)
+            {
+                Set(updated);
+                return true;
+            }
+            return false;
         }
 
         public static implicit operator AtomicLong(long value)

@@ -15,7 +15,7 @@ namespace metrics.Support
 
     public static class TimeUnitExtensions
     {
-        internal static double ToNanos(this TimeUnit unit, long interval)
+        internal static long ToNanos(this TimeUnit unit, long interval)
         {
             throw new NotImplementedException();
         }

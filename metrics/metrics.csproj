@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Support\Volatile.cs" />
     <Compile Include="Support\VolatileDouble.cs" />
     <Compile Include="Support\AtomicLong.cs" />
     <Compile Include="Core\CLRProfiler.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Support\Random.cs" />
     <Compile Include="Support\ReadOnlyDictionary.cs" />
     <Compile Include="Support\TimeUnit.cs" />
+    <Compile Include="Support\VolatileLong.cs" />
     <Compile Include="Util\NamedThreadFactory.cs" />
     <Compile Include="Support\ThreadGroup.cs" />
   </ItemGroup>
