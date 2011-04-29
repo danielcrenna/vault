@@ -22,12 +22,6 @@ namespace metrics.Core
     {
         private readonly Func<T> _evaluator;
 
-        [JsonIgnore]
-        public IMetric Copy
-        {
-            get { return new GaugeMetric<T>(_evaluator); }
-        }
-
         public GaugeMetric(Func<T> evaluator)
         {
             _evaluator = evaluator;
@@ -41,6 +35,12 @@ namespace metrics.Core
         public override string ValueAsString
         {
             get { return Value.ToString(); }
+        }
+
+        [JsonIgnore]
+        public IMetric Copy
+        {
+            get { return new GaugeMetric<T>(_evaluator); }
         }
     }
 }

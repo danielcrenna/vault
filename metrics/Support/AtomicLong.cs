@@ -9,6 +9,11 @@ namespace metrics.Support
     {
         private long _value;
 
+        public AtomicLong()
+        {
+            Set(0);
+        }
+
         public AtomicLong(long value)
         {
             Set(value);
@@ -65,16 +70,6 @@ namespace metrics.Support
             return false;
         }
 
-        public static implicit operator AtomicLong(long value)
-        {
-            return new AtomicLong(value);
-        }
-
-        public static implicit operator long(AtomicLong value)
-        {
-            return value.Get();
-        }
-
         /// <summary>
         /// Set to the given value and return the previous value
         /// </summary>
@@ -83,6 +78,26 @@ namespace metrics.Support
             var previous = Get();
             Set(value);
             return previous;
+        }
+
+        /// <summary>
+        /// Adds the given value and return the previous value
+        /// </summary>
+        public long GetAndAdd(long value)
+        {
+            var previous = Get();
+            Interlocked.Add(ref _value, value);
+            return previous;
+        }
+
+        public static implicit operator AtomicLong(long value)
+        {
+            return new AtomicLong(value);
+        }
+
+        public static implicit operator long(AtomicLong value)
+        {
+            return value.Get();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using metrics.Support;
+using Newtonsoft.Json;
 
 namespace metrics.Stats
 {
@@ -10,7 +11,7 @@ namespace metrics.Stats
     /// produce a statistically representative sample.
     /// <see href="http://www.cs.umd.edu/~samir/498/vitter.pdf">Random Sampling with a Reservoir</see>
     /// </summary>
-    public class UniformSample : ISample
+    public class UniformSample : ISample<UniformSample>
     {
         private readonly AtomicLong _count = new AtomicLong(0);
         private /* atomic */ readonly long[] _values;
@@ -19,6 +20,11 @@ namespace metrics.Stats
         {
             _values = new long[reservoirSize];
             Clear();
+        }
+
+        private UniformSample(long[] values)
+        {
+            _values = values;
         }
 
         /// <summary>
@@ -36,7 +42,7 @@ namespace metrics.Stats
         /// <summary>
         /// Returns the number of values recorded
         /// </summary>
-        public int Size
+        public int Count
         {
             get
             {
@@ -78,13 +84,24 @@ namespace metrics.Stats
         {
             get
             {
-                var size = Size;
+                var size = Count;
                 var copy = new List<long>(size);
                 for (var i = 0; i < size; i++)
                 {
                     copy.Add(Interlocked.Read(ref _values[i]));
                 }
                 return copy;       
+            }
+        }
+
+        [JsonIgnore]
+        public UniformSample Copy
+        {
+            get
+            { 
+                var copy = new UniformSample(_values);
+                copy._count.Set(_count);
+                return copy;
             }
         }
     }

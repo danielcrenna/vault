@@ -70,7 +70,7 @@
     <Compile Include="Stats\UniformSample.cs" />
     <Compile Include="Support\Random.cs" />
     <Compile Include="Support\ReadOnlyDictionary.cs" />
-    <Compile Include="Support\TimeUnit.cs" />
+    <Compile Include="TimeUnit.cs" />
     <Compile Include="Support\VolatileLong.cs" />
     <Compile Include="Util\NamedThreadFactory.cs" />
     <Compile Include="Support\ThreadGroup.cs" />

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using metrics.Support;
+using Newtonsoft.Json;
 
 namespace metrics.Stats
 {
@@ -18,7 +19,7 @@ namespace metrics.Stats
     /// Systems. ICDE '09: Proceedings of the 2009 IEEE International Conference on
     /// Data Engineering (2009)
     /// </see>
-    public class ExponentiallyDecayingSample : ISample
+    public class ExponentiallyDecayingSample : ISample<ExponentiallyDecayingSample>
     {
         private static readonly long RescaleThreshold = TimeUnit.Hours.ToNanos(1);
         /* Implemented originally as ConcurrentSkipListMap, so lookups will be much slower */
@@ -34,8 +35,8 @@ namespace metrics.Stats
         /// <param name="alpha">The exponential decay factor; the higher this is, the more biased the sample will be towards newer values</param>
         public ExponentiallyDecayingSample(int reservoirSize, double alpha)
         {
-            _values = new ConcurrentDictionary<double, long>();
             _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
+            _values = new ConcurrentDictionary<double, long>();
             _alpha = alpha;
             _reservoirSize = reservoirSize;
             Clear();
@@ -54,7 +55,7 @@ namespace metrics.Stats
         /// <summary>
         /// Returns the number of values recorded
         /// </summary>
-        public int Size
+        public int Count
         {
             get { return (int) Math.Min(_reservoirSize, _count); }
         }
@@ -179,6 +180,23 @@ namespace metrics.Stats
             finally
             {
                 _lock.ExitWriteLock();
+            }
+        }
+
+        [JsonIgnore]
+        public ExponentiallyDecayingSample Copy
+        {
+            get
+            {
+                var copy = new ExponentiallyDecayingSample(_reservoirSize, _alpha);
+                copy._startTime.Set(_startTime);
+                copy._count.Set(_count);
+                copy._nextScaleTime.Set(_nextScaleTime);
+                foreach(var value in _values)
+                {
+                    copy._values.AddOrUpdate(value.Key, value.Value, (k, v) => v);
+                }
+                return copy;
             }
         }
     }
