@@ -8,9 +8,9 @@
 		<description>Capturing CLR and application-level metrics. So you know what's going on. An idiomatic port of Coda Hale's Metrics for Scala and the JVM.</description>
 		<summary>Capturing CLR and application-level metrics. So you know what's going on.</summary>
 		<language>en-US</language>
-		<projectUrl>http://github.com/danielcrenna/metrics/</projectUrl>
-		<licenseUrl>http://github.com/danielcrenna/metrics/blob/master/LICENSE</licenseUrl>
-    <iconUrl>http://apitize.com.s3.amazonaws.com/logo_metrics.png</iconUrl>
+		<projectUrl>http://github.com/danielcrenna/metrics-net</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/metrics-net/blob/master/LICENSE</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_metrics.png</iconUrl>
 		<tags>CLR metrics</tags>   
 	</metadata>
 </package>
