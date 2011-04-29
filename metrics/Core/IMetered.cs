@@ -1,7 +1,4 @@
-﻿using System;
-using metrics.Support;
-
-namespace metrics.Core
+﻿namespace metrics.Core
 {
     public interface IMetered
     {
@@ -15,7 +12,7 @@ namespace metrics.Core
         /// Returns the type of events the meter is measuring
         /// </summary>
         /// <returns></returns>
-        String EventType { get; }
+        string EventType { get; }
 
         /// <summary>
         ///  Returns the number of events which have been marked

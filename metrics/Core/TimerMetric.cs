@@ -1,60 +1,235 @@
 ﻿using System;
-using metrics.Support;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace metrics.Core
 {
+    /// <summary>
+    /// A timer metric which aggregates timing durations and provides duration
+    /// statistics, plus throughput statistics via <see cref="MeterMetric" />.
+    /// </summary>
     public class TimerMetric : IMetric, IMetered
     {
-        public TimeUnit DurationUnit { get; set; }
+        private readonly TimeUnit _durationUnit;
+        private readonly TimeUnit _rateUnit;
+	    private readonly MeterMetric _meter;
+        private readonly HistogramMetric _histogram;
 
-        public IMetric Copy
+        public TimerMetric(TimeUnit durationUnit, TimeUnit rateUnit)
+            : this(durationUnit, rateUnit, MeterMetric.New("calls", rateUnit), new HistogramMetric(HistogramMetric.SampleType.Biased), true /* clear */)
         {
-            get { throw new NotImplementedException(); }
+
         }
 
+        private TimerMetric(TimeUnit durationUnit, TimeUnit rateUnit, MeterMetric meter, HistogramMetric histogram, bool clear)
+        {
+            _durationUnit = durationUnit;
+            _rateUnit = rateUnit;
+            _meter = meter;
+            _histogram = histogram;
+            if(clear)
+            {
+                Clear();
+            }
+        }
+
+        /// <summary>
+        ///  Returns the timer's duration scale unit
+        /// </summary>
+        public TimeUnit DurationUnit
+        {
+            get { return _durationUnit; }
+        }
+
+        /// <summary>
+        /// Returns the meter's rate unit
+        /// </summary>
+        /// <returns></returns>
         public TimeUnit RateUnit
         {
-            get { throw new NotImplementedException(); }
+            get { return _rateUnit; }
         }
 
-        public string EventType
+        /// <summary>
+        /// Clears all recorded durations
+        /// </summary>
+        public void Clear()
         {
-            get { throw new NotImplementedException(); }
+            _histogram.Clear();
         }
 
+        public void Update(long duration, TimeUnit unit)
+        {
+            Update(unit.ToNanos(duration));
+        }
+
+        /// <summary>
+        /// Times and records the duration of an event
+        /// </summary>
+        /// <typeparam name="T">The type of the value returned by the event</typeparam>
+        /// <param name="event">A function whose duration should be timed</param>
+        public T Time<T>(Func<T> @event)
+        {
+            var stopwatch = new Stopwatch();
+            try
+            {
+                stopwatch.Start();
+                return @event.Invoke();
+            }
+            finally
+            {
+                stopwatch.Stop();
+                Update(stopwatch.Elapsed.Ticks);
+            }
+        }
+
+        /// <summary>
+        ///  Returns the number of events which have been marked
+        /// </summary>
+        /// <returns></returns>
         public long Count
         {
-            get { throw new NotImplementedException(); }
+            get { return _histogram.Count; }
         }
 
-        public double Min { get; set; }
-        public double Max { get; set; }
-        public double Mean { get; set; }
-        public double StdDev { get; set; }
-
+        /// <summary>
+        /// Returns the fifteen-minute exponentially-weighted moving average rate at
+        /// which events have occured since the meter was created
+        /// <remarks>
+        /// This rate has the same exponential decay factor as the fifteen-minute load
+        /// average in the top Unix command.
+        /// </remarks> 
+        /// </summary>
         public double FifteenMinuteRate()
         {
-            throw new NotImplementedException();
+            return _meter.FifteenMinuteRate();
         }
 
+        /// <summary>
+        /// Returns the five-minute exponentially-weighted moving average rate at
+        /// which events have occured since the meter was created
+        /// <remarks>
+        /// This rate has the same exponential decay factor as the five-minute load
+        /// average in the top Unix command.
+        /// </remarks>
+        /// </summary>
         public double FiveMinuteRate()
         {
-            throw new NotImplementedException();
+            return _meter.FiveMinuteRate();
         }
 
+        /// <summary>
+        /// Returns the mean rate at which events have occured since the meter was created
+        /// </summary>
         public double MeanRate()
         {
-            throw new NotImplementedException();
+            return _meter.MeanRate();
         }
 
+        /// <summary>
+        /// Returns the one-minute exponentially-weighted moving average rate at
+        /// which events have occured since the meter was created
+        /// <remarks>
+        /// This rate has the same exponential decay factor as the one-minute load
+        /// average in the top Unix command.
+        /// </remarks>
+        /// </summary>
+        /// <returns></returns>
         public double OneMinuteRate()
         {
-            throw new NotImplementedException();
+            return _meter.OneMinuteRate();
         }
 
-        public double[] Percentiles(params double[] args)
+        /// <summary>
+        /// Returns the longest recorded duration
+        /// </summary>
+        public double Max
         {
-            throw new NotImplementedException();
+            get { return ConvertFromNanos(_histogram.Max); }
+        }
+
+        /// <summary>
+        /// Returns the shortest recorded duration
+        /// </summary>
+        public double Min
+        {
+            get { return ConvertFromNanos(_histogram.Min); }
+        }
+
+        /// <summary>
+        ///  Returns the arithmetic mean of all recorded durations
+        /// </summary>
+        public double Mean
+        {
+            get { return ConvertFromNanos(_histogram.Mean); }
+        }
+
+        /// <summary>
+        /// Returns the standard deviation of all recorded durations
+        /// </summary>
+        public double StdDev
+        {
+            get { return ConvertFromNanos(_histogram.StdDev); }
+        }
+
+        /// <summary>
+        /// Returns an array of durations at the given percentiles
+        /// </summary>
+        public double[] Percentiles(params double[] percentiles)
+        {
+            var scores = _histogram.Percentiles(percentiles);
+            for (var i = 0; i < scores.Length; i++)
+            {
+                scores[i] = ConvertFromNanos(scores[i]);
+            }
+
+            return scores;
+        }
+
+        /// <summary>
+        /// Returns the type of events the meter is measuring
+        /// </summary>
+        /// <returns></returns>
+        public string EventType
+        {
+            get { return _meter.EventType; }
+        }
+
+        /// <summary>
+        /// Returns a list of all recorded durations in the timers's sample
+        /// </summary>
+        public ICollection<double> Values
+        {
+            get
+            {
+                return _histogram.Values.Select(value => ConvertFromNanos(value)).ToList();
+            }
+        }
+		
+        private void Update(long duration)
+        {
+            if (duration < 0) return;
+            _histogram.Update(duration);
+            _meter.Mark();
+        }
+
+        private double ConvertFromNanos(double nanos)
+        {
+            return nanos / TimeUnit.Nanoseconds.Convert(1, _durationUnit);
+        }
+        
+        [JsonIgnore]
+        public IMetric Copy
+        {
+            get
+            {
+                var copy = new TimerMetric(
+                    _durationUnit, _rateUnit, _meter, _histogram, false /* clear */
+                    );
+                return copy;
+            }
         }
     }
 }
