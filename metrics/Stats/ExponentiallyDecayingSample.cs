@@ -128,7 +128,7 @@ namespace metrics.Stats
 
         private static long Tick()
         {
-            return DateTime.Now.Millisecond / 1000;
+            return DateTime.Now.Ticks;
         }
 
         private double Weight(long t)

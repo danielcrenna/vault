@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading;
 using metrics.Core;
-using metrics.Support;
 using metrics.Util;
 
 namespace metrics.Reporting
@@ -12,7 +11,7 @@ namespace metrics.Reporting
     /// </summary>
     public class ConsoleReporter
     {
-        private readonly NamedThreadFactory _factory = new NamedThreadFactory("metrics-console-reporter");
+        private static readonly NamedThreadFactory _factory = new NamedThreadFactory("metrics-console-reporter");
         private Thread _tickThread;
         private readonly TextWriter _out;
 
@@ -21,13 +20,28 @@ namespace metrics.Reporting
             _out = @out;
         }
 
+        /// <summary>
+        /// Starts printing output to the specified <see cref="TextWriter" />
+        /// </summary>
+        /// <param name="period">The period between successive displays</param>
+        /// <param name="unit">The period time unit</param>
         public void Start(long period, TimeUnit unit)
         {
+            var seconds = unit.Convert(period, TimeUnit.Seconds);
+            var interval = TimeSpan.FromSeconds(seconds);
+
             if(_tickThread != null)
             {
                 _tickThread.Abort();
             }
-            _tickThread = _factory.New(() => { });
+
+            _tickThread = _factory.New(
+                () =>
+                    {
+                        new Timer(s => Run(), null, interval, interval);
+                    }
+                );
+            _tickThread.Start();
         }
 
         public void Run()

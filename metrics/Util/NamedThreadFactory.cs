@@ -11,7 +11,7 @@ namespace metrics.Util
     {
         private long _number = 1;
         private readonly string _prefix;
-        private static ThreadGroup _group;
+        private static readonly ThreadGroup _group;
 
         static NamedThreadFactory()
         {

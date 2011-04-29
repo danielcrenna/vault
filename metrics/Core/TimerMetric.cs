@@ -12,9 +12,7 @@ namespace metrics.Core
     /// </summary>
     public class TimerMetric : IMetric, IMetered
     {
-        private readonly TimeUnit _durationUnit;
-        private readonly TimeUnit _rateUnit;
-	    private readonly MeterMetric _meter;
+        private readonly MeterMetric _meter;
         private readonly HistogramMetric _histogram;
 
         public TimerMetric(TimeUnit durationUnit, TimeUnit rateUnit)
@@ -25,8 +23,8 @@ namespace metrics.Core
 
         private TimerMetric(TimeUnit durationUnit, TimeUnit rateUnit, MeterMetric meter, HistogramMetric histogram, bool clear)
         {
-            _durationUnit = durationUnit;
-            _rateUnit = rateUnit;
+            DurationUnit = durationUnit;
+            RateUnit = rateUnit;
             _meter = meter;
             _histogram = histogram;
             if(clear)
@@ -38,19 +36,13 @@ namespace metrics.Core
         /// <summary>
         ///  Returns the timer's duration scale unit
         /// </summary>
-        public TimeUnit DurationUnit
-        {
-            get { return _durationUnit; }
-        }
+        public TimeUnit DurationUnit { get; private set; }
 
         /// <summary>
         /// Returns the meter's rate unit
         /// </summary>
         /// <returns></returns>
-        public TimeUnit RateUnit
-        {
-            get { return _rateUnit; }
-        }
+        public TimeUnit RateUnit { get; private set; }
 
         /// <summary>
         /// Clears all recorded durations
@@ -217,7 +209,7 @@ namespace metrics.Core
 
         private double ConvertFromNanos(double nanos)
         {
-            return nanos / TimeUnit.Nanoseconds.Convert(1, _durationUnit);
+            return nanos / TimeUnit.Nanoseconds.Convert(1, DurationUnit);
         }
         
         [JsonIgnore]
@@ -226,7 +218,7 @@ namespace metrics.Core
             get
             {
                 var copy = new TimerMetric(
-                    _durationUnit, _rateUnit, _meter, _histogram, false /* clear */
+                    DurationUnit, RateUnit, _meter, _histogram, false /* clear */
                     );
                 return copy;
             }

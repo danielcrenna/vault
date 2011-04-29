@@ -63,6 +63,7 @@
     <Compile Include="Reporting\ConsoleReporterTests.cs" />
     <Compile Include="Support\RandomTests.cs" />
     <Compile Include="Support\VolatileDoubleTests.cs" />
+    <Compile Include="TimeUnitTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

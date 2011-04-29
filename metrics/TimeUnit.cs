@@ -5,6 +5,7 @@ namespace metrics
 {
     /// <summary>
     /// Provides support for timing values
+    /// <see href="http://download.oracle.com/javase/6/docs/api/java/util/concurrent/TimeUnit.html"/>
     /// </summary>
     public enum TimeUnit
     {
@@ -24,9 +25,9 @@ namespace metrics
     {
         private static readonly long[] _timings = new[]
                                                      {
-                                                         Stopwatch.Frequency/(1000L),
-                                                         Stopwatch.Frequency/(1000L*1000L),
-                                                         Stopwatch.Frequency/(1000L*1000L*1000L)
+                                                         1000L,
+                                                         1000L*1000L,
+                                                         1000L*1000L*1000L
                                                      };
 
         public static long ToNanos(this TimeUnit source, long interval)
@@ -44,6 +45,26 @@ namespace metrics
             return Convert(source, interval, TimeUnit.Milliseconds);
         }
 
+        public static long ToSeconds(this TimeUnit source, long interval)
+        {
+            return Convert(source, interval, TimeUnit.Seconds);
+        }
+
+        public static long ToMinutes(this TimeUnit source, long interval)
+        {
+            return Convert(source, interval, TimeUnit.Minutes);
+        }
+
+        public static long ToHours(this TimeUnit source, long interval)
+        {
+            return Convert(source, interval, TimeUnit.Hours);
+        }
+
+        public static long ToDays(this TimeUnit source, long interval)
+        {
+            return Convert(source, interval, TimeUnit.Days);
+        }
+
         public static long Convert(this TimeUnit source, long duration, TimeUnit target)
         {
            switch(source)
@@ -58,7 +79,13 @@ namespace metrics
                        case TimeUnit.Milliseconds:
                            return duration / _timings[1];
                        case TimeUnit.Seconds:
-                           return duration / _timings[2];
+                           return NanosecondsToSeconds(duration);
+                       case TimeUnit.Minutes:
+                           return NanosecondsToSeconds(duration) / 60;
+                       case TimeUnit.Hours:
+                           return NanosecondsToSeconds(duration) / 60 / 60;
+                       case TimeUnit.Days:
+                           return NanosecondsToSeconds(duration) / 60 / 60 / 24;
                        default:
                            throw new ArgumentOutOfRangeException("target");
                    }
@@ -72,7 +99,13 @@ namespace metrics
                        case TimeUnit.Milliseconds:
                            return duration / _timings[0];
                        case TimeUnit.Seconds:
-                           return duration / _timings[1];
+                           return MicrosecondsToSeconds(duration);
+                       case TimeUnit.Minutes:
+                           return MicrosecondsToSeconds(duration) / 60;
+                       case TimeUnit.Hours:
+                           return MicrosecondsToSeconds(duration) / 60 / 60;
+                       case TimeUnit.Days:
+                           return MicrosecondsToSeconds(duration) / 60 / 60 / 24;
                        default:
                            throw new ArgumentOutOfRangeException("target");
                    }
@@ -86,7 +119,13 @@ namespace metrics
                        case TimeUnit.Milliseconds:
                            return duration;
                        case TimeUnit.Seconds:
-                           return duration / _timings[0];
+                           return MillisecondsToSeconds(duration);
+                       case TimeUnit.Minutes:
+                           return MillisecondsToSeconds(duration) / 60;
+                       case TimeUnit.Hours:
+                           return MillisecondsToSeconds(duration) / 60 / 60;
+                       case TimeUnit.Days:
+                           return MillisecondsToSeconds(duration) / 60 / 60 / 24;
                        default:
                            throw new ArgumentOutOfRangeException("target");
                    }
@@ -101,12 +140,33 @@ namespace metrics
                            return duration * _timings[0];
                        case TimeUnit.Seconds:
                            return duration;
+                       case TimeUnit.Minutes:
+                           return duration / 60;
+                       case TimeUnit.Hours:
+                           return duration / 60 / 60;
+                       case TimeUnit.Days:
+                           return duration / 60 / 60 / 24;
                        default:
                            throw new ArgumentOutOfRangeException("target");
                    }
                default:
                    throw new ArgumentOutOfRangeException("source");
            }
+        }
+
+        private static long NanosecondsToSeconds(long duration)
+        {
+            return duration / _timings[2];
+        }
+
+        private static long MicrosecondsToSeconds(long duration)
+        {
+            return duration / _timings[1];
+        }
+
+        private static long MillisecondsToSeconds(long duration)
+        {
+            return duration / _timings[0];
         }
     }
 }
