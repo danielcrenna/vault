@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace metrics
 {
@@ -146,6 +145,66 @@ namespace metrics
                            return duration / 60 / 60;
                        case TimeUnit.Days:
                            return duration / 60 / 60 / 24;
+                       default:
+                           throw new ArgumentOutOfRangeException("target");
+                   }
+               case TimeUnit.Minutes:
+                   switch (target)
+                   {
+                       case TimeUnit.Nanoseconds:
+                           return duration * 60 * _timings[2];
+                       case TimeUnit.Microseconds:
+                           return duration * 60 * _timings[1];
+                       case TimeUnit.Milliseconds:
+                           return duration * 60 * _timings[0];
+                       case TimeUnit.Seconds:
+                           return duration * 60;
+                       case TimeUnit.Minutes:
+                           return duration;
+                       case TimeUnit.Hours:
+                           return duration / 60;
+                       case TimeUnit.Days:
+                           return duration / 60 / 24;
+                       default:
+                           throw new ArgumentOutOfRangeException("target");
+                   }
+               case TimeUnit.Hours:
+                   switch (target)
+                   {
+                       case TimeUnit.Nanoseconds:
+                           return duration * 60 * 60 * _timings[2];
+                       case TimeUnit.Microseconds:
+                           return duration * 60 * 60 * _timings[1];
+                       case TimeUnit.Milliseconds:
+                           return duration * 60 * 60 *  _timings[0];
+                       case TimeUnit.Seconds:
+                           return duration * 60 * 60;
+                       case TimeUnit.Minutes:
+                           return duration * 60;
+                       case TimeUnit.Hours:
+                           return duration;
+                       case TimeUnit.Days:
+                           return duration / 24;
+                       default:
+                           throw new ArgumentOutOfRangeException("target");
+                   }
+               case TimeUnit.Days:
+                   switch (target)
+                   {
+                       case TimeUnit.Nanoseconds:
+                           return duration * 24 * 60 * 60 * _timings[2];
+                       case TimeUnit.Microseconds:
+                           return duration * 24 * 60 * 60 * _timings[1];
+                       case TimeUnit.Milliseconds:
+                           return duration * 24 * 60 * 60 * _timings[0];
+                       case TimeUnit.Seconds:
+                           return duration * 24 * 60 * 60;
+                       case TimeUnit.Minutes:
+                           return duration * 24 * 60;
+                       case TimeUnit.Hours:
+                           return duration * 24;
+                       case TimeUnit.Days:
+                           return duration;
                        default:
                            throw new ArgumentOutOfRangeException("target");
                    }

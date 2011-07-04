@@ -118,10 +118,10 @@ namespace metrics.Reporting
         {
             var unit = Abbreviate(meter.RateUnit);
             _out.Write("             count = {0}\n", meter.Count);
-            _out.Write("         mean rate = {0} {1}/{2}\n", meter.MeanRate(), meter.EventType, unit);
-            _out.Write("     1-minute rate = {0} {1}/{2}\n", meter.OneMinuteRate(), meter.EventType, unit);
-            _out.Write("     5-minute rate = {0} {1}/{2}\n", meter.FiveMinuteRate(), meter.EventType, unit);
-            _out.Write("    15-minute rate = {0} {1}/{2}\n", meter.FifteenMinuteRate(), meter.EventType, unit);
+            _out.Write("         mean rate = {0} {1}/{2}\n", meter.MeanRate, meter.EventType, unit);
+            _out.Write("     1-minute rate = {0} {1}/{2}\n", meter.OneMinuteRate, meter.EventType, unit);
+            _out.Write("     5-minute rate = {0} {1}/{2}\n", meter.FiveMinuteRate, meter.EventType, unit);
+            _out.Write("    15-minute rate = {0} {1}/{2}\n", meter.FifteenMinuteRate, meter.EventType, unit);
         }
 
         private void WriteHistogram(HistogramMetric histogram)

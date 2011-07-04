@@ -94,9 +94,9 @@ namespace metrics.Core
         /// average in the top Unix command.
         /// </remarks> 
         /// </summary>
-        public double FifteenMinuteRate()
+        public double FifteenMinuteRate
         {
-            return _meter.FifteenMinuteRate();
+            get { return _meter.FifteenMinuteRate; }
         }
 
         /// <summary>
@@ -107,17 +107,17 @@ namespace metrics.Core
         /// average in the top Unix command.
         /// </remarks>
         /// </summary>
-        public double FiveMinuteRate()
+        public double FiveMinuteRate
         {
-            return _meter.FiveMinuteRate();
+            get { return _meter.FiveMinuteRate; }
         }
 
         /// <summary>
         /// Returns the mean rate at which events have occured since the meter was created
         /// </summary>
-        public double MeanRate()
+        public double MeanRate
         {
-            return _meter.MeanRate();
+            get { return _meter.MeanRate; }
         }
 
         /// <summary>
@@ -129,9 +129,9 @@ namespace metrics.Core
         /// </remarks>
         /// </summary>
         /// <returns></returns>
-        public double OneMinuteRate()
+        public double OneMinuteRate
         {
-            return _meter.OneMinuteRate();
+            get { return _meter.OneMinuteRate; }
         }
 
         /// <summary>

@@ -55,7 +55,9 @@ namespace metrics.Support
 
         public static implicit operator VolatileLong(long value)
         {
-            return new VolatileLong(value);
+            var result = new VolatileLong();
+            result.Set(value);
+            return result;
         }
 
         public static implicit operator long(VolatileLong value)

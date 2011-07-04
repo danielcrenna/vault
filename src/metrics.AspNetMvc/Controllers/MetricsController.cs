@@ -109,23 +109,39 @@ namespace metrics.AspNetMvc.Controllers
 
             if (String.IsNullOrEmpty(auth))
             {
+                var userInfo = ControllerContext.HttpContext.Request.Url.UserInfo;
+                if(!string.IsNullOrWhiteSpace(userInfo))
+                {
+                    auth = string.Concat("Basic ", Convert.ToBase64String(Encoding.UTF8.GetBytes(userInfo)));
+                }
+            }
+            
+            if (String.IsNullOrEmpty(auth))
+            {
                 return false;
             }
 
             try
             {
-                var encodedDataAsBytes = Convert.FromBase64String(auth.Replace("Basic ", ""));
-                var value = Encoding.ASCII.GetString(encodedDataAsBytes);
-                var userpass = value;
-                var user = userpass.Substring(0, userpass.IndexOf(':'));
-                var pass = userpass.Substring(userpass.IndexOf(':') + 1);
-                
+                string pass;
+                var user = DecodeAuthorizationHeader(auth, out pass);
+
                 return user.ToLowerInvariant().Equals(username) && pass.HashWithMd5().Equals(password);;
             }
             catch (Exception)
             {
                 return false;
             }
+        }
+
+        private static string DecodeAuthorizationHeader(string auth, out string pass)
+        {
+            var encodedDataAsBytes = Convert.FromBase64String(auth.Replace("Basic ", ""));
+            var value = Encoding.ASCII.GetString(encodedDataAsBytes);
+            var userpass = value;
+            var user = userpass.Substring(0, userpass.IndexOf(':'));
+            pass = userpass.Substring(userpass.IndexOf(':') + 1);
+            return user;
         }
     }
 }

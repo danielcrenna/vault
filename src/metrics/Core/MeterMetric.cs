@@ -42,8 +42,13 @@ namespace metrics.Core
 
         private MeterMetric(string eventType, TimeUnit rateUnit)
         {
-            RateUnit = rateUnit;
             EventType = eventType;
+            RateUnit = rateUnit;
+        }
+
+        private MeterMetric(string eventType, TimeUnit rateUnit, Thread tickThread) : this(eventType, rateUnit)
+        {
+            _tickThread = tickThread;
         }
 
         /// <summary>
@@ -101,9 +106,12 @@ namespace metrics.Core
         /// average in the top Unix command.
         /// </remarks> 
         /// </summary>
-        public double FifteenMinuteRate()
+        public double FifteenMinuteRate
         {
-            return _m15Rate.Rate(RateUnit);
+            get
+            {
+                return _m15Rate.Rate(RateUnit);
+            }
         }
 
         /// <summary>
@@ -114,22 +122,28 @@ namespace metrics.Core
         /// average in the top Unix command.
         /// </remarks>
         /// </summary>
-        public double FiveMinuteRate()
+        public double FiveMinuteRate
         {
-            return _m5Rate.Rate(RateUnit);
+            get
+            {
+                return _m5Rate.Rate(RateUnit);
+            }
         }
 
         /// <summary>
         /// Returns the mean rate at which events have occured since the meter was created
         /// </summary>
-        public double MeanRate()
+        public double MeanRate
         {
-            if (Count != 0)
+            get
             {
-                var elapsed = (DateTime.Now.Ticks - _startTime);
-                return ConvertNanosRate(Count/(double) elapsed);
+                if (Count != 0)
+                {
+                    var elapsed = (DateTime.Now.Ticks - _startTime);
+                    return ConvertNanosRate(Count / (double)elapsed);
+                }
+                return 0.0;
             }
-            return 0.0;
         }
 
         /// <summary>
@@ -141,9 +155,12 @@ namespace metrics.Core
         /// </remarks>
         /// </summary>
         /// <returns></returns>
-        public double OneMinuteRate()
+        public double OneMinuteRate
         {
-            return _m1Rate.Rate(RateUnit);
+            get
+            {
+                return _m1Rate.Rate(RateUnit);    
+            }
         }
         
         private double ConvertNanosRate(double ratePerNs)
@@ -154,7 +171,7 @@ namespace metrics.Core
         [JsonIgnore]
         public IMetric Copy
         {
-            get { throw new NotImplementedException(); }
+            get { return new MeterMetric(EventType, RateUnit, _tickThread);}
         }
     }
 }
