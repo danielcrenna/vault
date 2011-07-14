@@ -18,29 +18,31 @@ How To Use
 
 **Second**, instrument your classes:
 
-    using Metrics;
+```csharp
+using Metrics;
 
-    public class ThingFinder
+public class ThingFinder
+{
+    // Measure the # of records per second returned
+    private IMetric _resultsMeter = Metrics.Meter(typeof(ThingFinder), "results", TimeUnit.Seconds)
+  
+    // Measure the # of milliseconds each query takes and the number of queries per second being performed
+    private IMetric _dbTimer = Metrics.Timer(typeof(ThingFinder), "database", TimeUnit.Milliseconds, TimeUnit.Seconds)
+  
+    public void FindThings()
     {
-        // Measure the # of records per second returned
-        private IMetric _resultsMeter = Metrics.Meter(typeof(ThingFinder), "results", TimeUnit.Seconds)
-      
-        // Measure the # of milliseconds each query takes and the number of queries per second being performed
-        private IMetric _dbTimer = Metrics.Timer(typeof(ThingFinder), "database", TimeUnit.Milliseconds, TimeUnit.Seconds)
-      
-        public void FindThings()
-        {
-            // Perform an action which gets timed
-            var results = _dbTimer.Time(() => {                            
-                Database.Query("SELECT Unicorns FROM Awesome");
-            }
-            
-            // Calculate the rate of new things found
-            _resultsMeter.Mark(results.Count)                
-            
-            // etc.
+        // Perform an action which gets timed
+	var results = _dbTimer.Time(() => {                            
+            Database.Query("SELECT Unicorns FROM Awesome");
         }
+
+        // Calculate the rate of new things found
+        _resultsMeter.Mark(results.Count)                
+	
+        // etc.
     }
+}
+```
 
 Metrics comes with five types of metrics:
 
@@ -63,45 +65,50 @@ Metrics comes with five types of metrics:
   opposed to how it's done historically.)
 
 Metrics also has support for health checks:
-
-	HealthChecks.Register("database", () =>
-	{
-		if (Database.IsConnected)
-		{
-			return HealthCheck.Healthy;
-		}
-		else
-		{
-			return HealthCheck.Unhealthy("Not connected to database");
-		}
-	});
+```csharp
+HealthChecks.Register("database", () =>
+{
+    if (Database.IsConnected)
+    {
+        return HealthCheck.Healthy;
+    }
+    else
+    {
+        return HealthCheck.Unhealthy("Not connected to database");
+    }
+});
+```
 
 **Third**, start collecting your metrics.
 
 If you're simply running a benchmark, you can print registered metrics to 
 standard output, every 10 seconds like this:
 
-	// Print to Console.Out every 10 seconds
-    Metrics.EnableConsoleReporting(10, TimeUnit.Seconds) 
+```csharp
+// Print to Console.Out every 10 seconds
+Metrics.EnableConsoleReporting(10, TimeUnit.Seconds) 
+```
 
 If you're writing a ASP.NET MVC-based web service, you can reference `Metrics.AspNetMvc` in
 your web application project and register default routes:
 
-	using metrics;
+```csharp
+using metrics;
 
-	public class MvcApplication : HttpApplication
-    {
-        // ...
+public class MvcApplication : HttpApplication
+{
+	// ...
+	
+	protected void Application_Start()
+	{
+		AspNetMvc.Metrics.RegisterRoutes();
 		
-		protected void Application_Start()
-        {
-            AspNetMvc.Metrics.RegisterRoutes();
-            
-			// ...            
-        }
+		// ...            
+	}
 
-		// ...
-    }
+	// ...
+}
+```
     
 The default routes will respond to the following URIs:
 
@@ -113,26 +120,28 @@ The default routes will respond to the following URIs:
 The URIs of these resources can be configured by setting properties prior to registering routes.
 You may also choose to protect these URIs with HTTP Basic authentication:
 
-	using metrics;
+```csharp
+using metrics;
 
-	public class MvcApplication : HttpApplication
-    {
-        // ...
+public class MvcApplication : HttpApplication
+{
+	// ...
+	
+	protected void Application_Start()
+	{
+		AspNetMvc.Metrics.HealthCheckPath = "my-healthcheck-uri";
+		AspNetMvc.Metrics.PingPath = "my-ping-uri";
+		AspNetMvc.Metrics.MetricsPath = "my-metrics-uri";
+		AspNetMvc.Metrics.ThreadsPath = "my-threads-uri";
+
+		AspNetMvc.Metrics.RegisterRoutes("username", "password");
 		
-		protected void Application_Start()
-        {
-			AspNetMvc.Metrics.HealthCheckPath = "my-healthcheck-uri";
-            AspNetMvc.Metrics.PingPath = "my-ping-uri";
-            AspNetMvc.Metrics.MetricsPath = "my-metrics-uri";
-            AspNetMvc.Metrics.ThreadsPath = "my-threads-uri";
+		// ...            
+	}
 
-            AspNetMvc.Metrics.RegisterRoutes("username", "password");
-            
-			// ...            
-        }
-
-		// ...
-    }
+	// ...
+}
+```
 
 Known Deviations
 ----------------
