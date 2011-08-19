@@ -86,5 +86,32 @@ namespace metrics.Tests
             Trace.WriteLine(actual);
             Assert.AreEqual(166, actual);
         }
+
+		[Test]
+		public void Can_convert_minutes_to_milliseconds()
+		{
+			const long duration = 1000;
+			var actual = TimeUnit.Minutes.ToMillis(duration);
+			Trace.WriteLine(actual);
+			Assert.AreEqual(60000000L, actual);
+		}
+
+		[Test]
+		public void Can_convert_days_to_nanoseconds()
+		{
+			const long duration = 7;
+			var actual = TimeUnit.Days.ToNanos(duration);
+			Trace.WriteLine(actual);
+			long expected = duration * 24 * 60 * 60 * 1000 * 1000 * 1000;
+			Assert.AreEqual(expected, actual);
+		}
+
+		[Test]
+		public void Can_convert_nanoseconds_to_days()
+		{
+			const long duration = 172800000123456L; // Two days and some change
+			var actual = TimeUnit.Nanoseconds.ToDays(duration);
+			Assert.AreEqual(2, actual);
+		}
     }
 }

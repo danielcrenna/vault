@@ -7,8 +7,8 @@ namespace metrics.Tests
     [TestFixture]
     public class MetricsTests
     {
-        [TearDown]
-        public void TearDown()
+        [SetUp]
+        public void SetUp()
         {
             Metrics.Clear();
         }
