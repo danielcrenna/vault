@@ -22,14 +22,51 @@ namespace metrics
     /// </summary>
     public static class TimeUnitExtensions
     {
-        private static readonly long[] _timings = new[]
-                                                     {
-                                                         1000L,
-                                                         1000L*1000L,
-                                                         1000L*1000L*1000L
-                                                     };
+		private static readonly long[][] _conversionMatrix = BuildConversionMatrix();
 
-        public static long ToNanos(this TimeUnit source, long interval)
+		private static long[][] BuildConversionMatrix()
+		{
+			var unitsCount = Enum.GetValues(typeof(TimeUnit)).Length;
+			var timingFactors = new[] 
+			{
+				1000L, // nanos to micros
+				1000L, // micros to millis
+				1000L, // millis to seconds
+				60L, // seconds to minutes
+				60L, // minutes to hours
+				24L // hours to days
+			};
+
+			// matrix[i, j] holds the timing factor we need to divide by to get from i to j.
+			// we'll only populate the part of the matrix where j < i since the other half uses the same factors.
+			var matrix = new long[unitsCount][];
+			for (var source = 0; source < unitsCount; source++)
+			{
+				matrix[source] = new long[source];
+				var cumulativeFactor = 1L;
+				for (var target = source - 1; target >= 0; target--)
+				{
+					cumulativeFactor *= timingFactors[target];
+					matrix[source][target] = cumulativeFactor;
+				}
+			}
+
+			return matrix;
+		}
+
+		public static long Convert(this TimeUnit source, long duration, TimeUnit target)
+		{
+			if (source == target) return duration;
+
+			var sourceIndex = (int)source;
+			var targetIndex = (int)target;
+
+			return (sourceIndex > targetIndex) ?
+				duration * _conversionMatrix[sourceIndex][targetIndex] :
+				duration / _conversionMatrix[targetIndex][sourceIndex];
+		}
+
+		public static long ToNanos(this TimeUnit source, long interval)
         {
             return Convert(source, interval, TimeUnit.Nanoseconds);
         }
@@ -62,170 +99,6 @@ namespace metrics
         public static long ToDays(this TimeUnit source, long interval)
         {
             return Convert(source, interval, TimeUnit.Days);
-        }
-
-        public static long Convert(this TimeUnit source, long duration, TimeUnit target)
-        {
-           switch(source)
-           {
-               case TimeUnit.Nanoseconds:
-                   switch(target)
-                   {
-                       case TimeUnit.Nanoseconds:
-                           return duration;
-                       case TimeUnit.Microseconds:
-                           return duration / _timings[0];
-                       case TimeUnit.Milliseconds:
-                           return duration / _timings[1];
-                       case TimeUnit.Seconds:
-                           return NanosecondsToSeconds(duration);
-                       case TimeUnit.Minutes:
-                           return NanosecondsToSeconds(duration) / 60;
-                       case TimeUnit.Hours:
-                           return NanosecondsToSeconds(duration) / 60 / 60;
-                       case TimeUnit.Days:
-                           return NanosecondsToSeconds(duration) / 60 / 60 / 24;
-                       default:
-                           throw new ArgumentOutOfRangeException("target");
-                   }
-               case TimeUnit.Microseconds:
-                   switch(target)
-                   {
-                       case TimeUnit.Nanoseconds:
-                           return duration * _timings[0];
-                       case TimeUnit.Microseconds:
-                           return duration;
-                       case TimeUnit.Milliseconds:
-                           return duration / _timings[0];
-                       case TimeUnit.Seconds:
-                           return MicrosecondsToSeconds(duration);
-                       case TimeUnit.Minutes:
-                           return MicrosecondsToSeconds(duration) / 60;
-                       case TimeUnit.Hours:
-                           return MicrosecondsToSeconds(duration) / 60 / 60;
-                       case TimeUnit.Days:
-                           return MicrosecondsToSeconds(duration) / 60 / 60 / 24;
-                       default:
-                           throw new ArgumentOutOfRangeException("target");
-                   }
-               case TimeUnit.Milliseconds:
-                   switch(target)
-                   {
-                       case TimeUnit.Nanoseconds:
-                           return duration * _timings[1];
-                       case TimeUnit.Microseconds:
-                           return duration * _timings[0];
-                       case TimeUnit.Milliseconds:
-                           return duration;
-                       case TimeUnit.Seconds:
-                           return MillisecondsToSeconds(duration);
-                       case TimeUnit.Minutes:
-                           return MillisecondsToSeconds(duration) / 60;
-                       case TimeUnit.Hours:
-                           return MillisecondsToSeconds(duration) / 60 / 60;
-                       case TimeUnit.Days:
-                           return MillisecondsToSeconds(duration) / 60 / 60 / 24;
-                       default:
-                           throw new ArgumentOutOfRangeException("target");
-                   }
-               case TimeUnit.Seconds:
-                   switch(target)
-                   {
-                       case TimeUnit.Nanoseconds:
-                           return duration * _timings[2];
-                       case TimeUnit.Microseconds:
-                           return duration * _timings[1];
-                       case TimeUnit.Milliseconds:
-                           return duration * _timings[0];
-                       case TimeUnit.Seconds:
-                           return duration;
-                       case TimeUnit.Minutes:
-                           return duration / 60;
-                       case TimeUnit.Hours:
-                           return duration / 60 / 60;
-                       case TimeUnit.Days:
-                           return duration / 60 / 60 / 24;
-                       default:
-                           throw new ArgumentOutOfRangeException("target");
-                   }
-               case TimeUnit.Minutes:
-                   switch (target)
-                   {
-                       case TimeUnit.Nanoseconds:
-                           return duration * 60 * _timings[2];
-                       case TimeUnit.Microseconds:
-                           return duration * 60 * _timings[1];
-                       case TimeUnit.Milliseconds:
-                           return duration * 60 * _timings[0];
-                       case TimeUnit.Seconds:
-                           return duration * 60;
-                       case TimeUnit.Minutes:
-                           return duration;
-                       case TimeUnit.Hours:
-                           return duration / 60;
-                       case TimeUnit.Days:
-                           return duration / 60 / 24;
-                       default:
-                           throw new ArgumentOutOfRangeException("target");
-                   }
-               case TimeUnit.Hours:
-                   switch (target)
-                   {
-                       case TimeUnit.Nanoseconds:
-                           return duration * 60 * 60 * _timings[2];
-                       case TimeUnit.Microseconds:
-                           return duration * 60 * 60 * _timings[1];
-                       case TimeUnit.Milliseconds:
-                           return duration * 60 * 60 *  _timings[0];
-                       case TimeUnit.Seconds:
-                           return duration * 60 * 60;
-                       case TimeUnit.Minutes:
-                           return duration * 60;
-                       case TimeUnit.Hours:
-                           return duration;
-                       case TimeUnit.Days:
-                           return duration / 24;
-                       default:
-                           throw new ArgumentOutOfRangeException("target");
-                   }
-               case TimeUnit.Days:
-                   switch (target)
-                   {
-                       case TimeUnit.Nanoseconds:
-                           return duration * 24 * 60 * 60 * _timings[2];
-                       case TimeUnit.Microseconds:
-                           return duration * 24 * 60 * 60 * _timings[1];
-                       case TimeUnit.Milliseconds:
-                           return duration * 24 * 60 * 60 * _timings[0];
-                       case TimeUnit.Seconds:
-                           return duration * 24 * 60 * 60;
-                       case TimeUnit.Minutes:
-                           return duration * 24 * 60;
-                       case TimeUnit.Hours:
-                           return duration * 24;
-                       case TimeUnit.Days:
-                           return duration;
-                       default:
-                           throw new ArgumentOutOfRangeException("target");
-                   }
-               default:
-                   throw new ArgumentOutOfRangeException("source");
-           }
-        }
-
-        private static long NanosecondsToSeconds(long duration)
-        {
-            return duration / _timings[2];
-        }
-
-        private static long MicrosecondsToSeconds(long duration)
-        {
-            return duration / _timings[1];
-        }
-
-        private static long MillisecondsToSeconds(long duration)
-        {
-            return duration / _timings[0];
         }
     }
 }
