@@ -29,16 +29,16 @@ namespace metrics
 			var unitsCount = Enum.GetValues(typeof(TimeUnit)).Length;
 			var timingFactors = new[] 
 			{
-				1000L, // nanos to micros
-				1000L, // micros to millis
-				1000L, // millis to seconds
-				60L, // seconds to minutes
-				60L, // minutes to hours
-				24L // hours to days
+				1000L,  // Nanos to micros
+				1000L,  // Micros to millis
+				1000L,  // Millis to seconds
+				60L,    // Seconds to minutes
+				60L,    // Minutes to hours
+				24L     // Hours to days
 			};
 
-			// matrix[i, j] holds the timing factor we need to divide by to get from i to j.
-			// we'll only populate the part of the matrix where j < i since the other half uses the same factors.
+			// matrix[i, j] holds the timing factor we need to divide by to get from i to j;
+			// we'll only populate the part of the matrix where j < i since the other half uses the same factors
 			var matrix = new long[unitsCount][];
 			for (var source = 0; source < unitsCount; source++)
 			{

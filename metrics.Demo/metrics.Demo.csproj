@@ -124,10 +124,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\metrics.AspNetMvc\metrics.AspNetMvc.csproj">
-      <Project>{219114B1-8F59-4D19-9A93-076729BC7805}</Project>
-      <Name>metrics.AspNetMvc</Name>
-    </ProjectReference>
     <ProjectReference Include="..\src\metrics\metrics.csproj">
       <Project>{3FBA902F-4F7E-434D-BE22-89C162B6F92D}</Project>
       <Name>metrics</Name>
