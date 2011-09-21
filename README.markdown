@@ -153,6 +153,6 @@ License
 -------
 The original Metrics project is Copyright (c) 2010-2011 Coda Hale, Yammer.com
 
-This idiomatic port of Metrics to C# and .NET is Copyright (c) 2011 Daniel Crenna, Wildbit.com
+This idiomatic port of Metrics to C# and .NET is Copyright (c) 2011 Daniel Crenna
 
 Both works are published under The MIT License, see LICENSE
