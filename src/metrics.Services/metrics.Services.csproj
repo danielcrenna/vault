@@ -2,20 +2,18 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6DAD9669-E49A-41A2-98F8-D0F4E50CC925}</ProjectGuid>
+    <ProjectGuid>{36D3C7FA-86F0-4FCD-9288-8590D7DA10B7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>metrics.Tests</RootNamespace>
-    <AssemblyName>metrics.Tests</AssemblyName>
+    <RootNamespace>metrics.Services</RootNamespace>
+    <AssemblyName>metrics.Services</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,8 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -33,27 +30,14 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\metrics\metrics.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.2.5.9.10348\lib\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>..\..\packages\NUnit.2.5.9.10348\lib\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>..\..\packages\NUnit.2.5.9.10348\lib\pnunit.framework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Metrics.1.0.2\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -61,25 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\CLRProfilerTests.cs" />
-    <Compile Include="Core\GaugeTests.cs" />
-    <Compile Include="MetricsTests.cs" />
+    <Compile Include="Deployment\ServiceBootstrapper.cs" />
+    <Compile Include="InstrumentedServiceBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Core\CounterTests.cs" />
-    <Compile Include="Reporting\ConsoleReporterTests.cs" />
-    <Compile Include="Support\RandomTests.cs" />
-    <Compile Include="Support\VolatileDoubleTests.cs" />
-    <Compile Include="TimeUnitTests.cs" />
-    <Compile Include="Net\MetricsListenerTests.cs" />
+    <Compile Include="Deployment\ServiceDescriptor.cs" />
+    <Compile Include="Deployment\WindowsServiceInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\metrics\metrics.snk">
-      <Link>metrics.snk</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\metrics\metrics.csproj">
+    <ProjectReference Include="..\..\..\metrics-net\src\metrics\metrics.csproj">
       <Project>{3FBA902F-4F7E-434D-BE22-89C162B6F92D}</Project>
       <Name>metrics</Name>
     </ProjectReference>

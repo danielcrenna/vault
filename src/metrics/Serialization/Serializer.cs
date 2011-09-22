@@ -14,6 +14,7 @@ namespace metrics.Serialization
                                 NullValueHandling = NullValueHandling.Ignore,
                                 ContractResolver = new JsonConventionResolver(),
                             };
+
             _settings.Converters.Add(new MetricsConverter());
         }
 

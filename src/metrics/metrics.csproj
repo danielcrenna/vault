@@ -42,7 +42,9 @@
       <HintPath>..\..\packages\Newtonsoft.Json.4.0.1\lib\40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +54,17 @@
   <ItemGroup>
     <Compile Include="Core\HistogramMetric.cs" />
     <Compile Include="Core\TimerMetric.cs" />
+    <Compile Include="MachineMetrics.cs" />
     <Compile Include="Reporting\ConsoleReporter.cs" />
+    <Compile Include="Services\InstrumentedServiceBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Services\ServiceBootstrapper.cs" />
+    <Compile Include="Services\ServiceDescriptor.cs" />
+    <Compile Include="Services\WindowsServiceInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Net\MetricsListener.cs" />
     <Compile Include="Support\Volatile.cs" />
     <Compile Include="Support\VolatileDouble.cs" />
     <Compile Include="Support\AtomicLong.cs" />
@@ -87,7 +99,9 @@
     <None Include="metrics.snk" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Net\Static\index.html" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

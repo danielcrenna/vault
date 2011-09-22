@@ -1,13 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 
 namespace metrics.Core
 {
+    /// <summary>
+    /// A wrapper around available .NET performance counters
+    /// <seealso href="http://msdn.microsoft.com/en-us/library/w8f5kw2e%28v=VS.71%29.aspx" />
+    /// </summary>
     public static class CLRProfiler
     {
         private const string CategoryMemory = ".NET CLR Memory";
+        private const string CategoryExceptions = ".NET CLR Exceptions";
+        private const string CategoryLocksAndThreads = ".NET CLR LocksAndThreads";
+
         private static readonly Process _process;
         private static readonly IDictionary<Process, IDictionary<string, PerformanceCounter>> _counters;
         
@@ -16,7 +21,7 @@ namespace metrics.Core
             _process = Process.GetCurrentProcess();
             _counters = new Dictionary<Process, IDictionary<string, PerformanceCounter>>
                             {
-                                {_process, new Dictionary<string, PerformanceCounter>()}
+                                { _process, new Dictionary<string, PerformanceCounter>() }
                             };
         }
 
@@ -25,45 +30,72 @@ namespace metrics.Core
             return "Not implemented; how about a fork?";
         }
         
-        /// <summary>
-        /// Returns the number of seconds the CLR process has been running
-        /// </summary>
-        public static long Uptime
-        {
-            get { return Convert.ToInt64(_process.TotalProcessorTime.TotalSeconds); }
-        }
-        
-        /// <summary>
-        /// Returns the percentage of the CLR's heap which is being used
-        /// </summary>
-        public static double HeapUsage
+        #region Machine Metrics
+
+        /*
+        _Global_:.NET CLR LocksAndThreads:Total # of Contentions
+        _Global_:.NET CLR LocksAndThreads:Contention Rate / sec
+        _Global_:.NET CLR LocksAndThreads:Current Queue Length
+        _Global_:.NET CLR LocksAndThreads:Queue Length Peak
+        _Global_:.NET CLR LocksAndThreads:Queue Length / sec
+        _Global_:.NET CLR LocksAndThreads:# of current logical Threads
+        _Global_:.NET CLR LocksAndThreads:# of current physical Threads
+        _Global_:.NET CLR LocksAndThreads:# of current recognized threads
+        _Global_:.NET CLR LocksAndThreads:# of total recognized threads
+        _Global_:.NET CLR LocksAndThreads:rate of recognized threads / sec
+        */
+
+        public static double MachineTotalContentions
         {
             get
             {
-                var counter = GetOrInstallCounter("HeapUsage", CategoryMemory);
-                var used = WaitForNextRawValue(counter);
-
-                var available = _process.PrivateMemorySize64;
-                var usage = (double)used / available;
-                return usage;
+                var counter = GetOrInstallCounter("MachineTotalContentions", "Total # of Contentions", CategoryLocksAndThreads, "_Global_");
+                var value = counter.NextValue();
+                return value;
             }
         }
 
-        private static long WaitForNextRawValue(PerformanceCounter counter)
+        public static double MachineContentionRatePerSecond
         {
-            long used;
-            while((used = counter.NextSample().RawValue) == 0)
+            get
             {
-                Thread.Sleep(10);
+                var counter = GetOrInstallCounter("MachineContentionRatePerSecond", "Contention Rate / sec", CategoryLocksAndThreads, "_Global_");
+                var value = counter.NextValue();
+                return value;
             }
-            return used;
         }
 
-        private static PerformanceCounter GetOrInstallCounter(string property, string category)
+        public static double MachineCurrentQueueLength
+        {
+            get
+            {
+                var counter = GetOrInstallCounter("MachineCurrentQueueLength", "Current Queue Length", CategoryLocksAndThreads, "_Global_");
+                var value = counter.NextValue();
+                return value;
+            }
+        }
+
+        public static double MachineQueueLengthPeak
+        {
+            get
+            {
+                var counter = GetOrInstallCounter("MachineQueueLengthPeak", "Queue Length Peak", CategoryLocksAndThreads, "_Global_");
+                var value = counter.NextValue();
+                return value;
+            }
+        }                                                                                    
+
+
+        #endregion
+
+
+        private static PerformanceCounter GetOrInstallCounter(string property, string name, string category, string instance = null)
         {
             if (!_counters[_process].ContainsKey(property))
             {
-                _counters[_process].Add(property, new PerformanceCounter(category, "# bytes in all heaps", _process.ProcessName));
+                var counter = new PerformanceCounter(category, name, instance ?? _process.ProcessName, true);
+
+                _counters[_process].Add(property, counter);
             }
             return _counters[_process][property];
         }

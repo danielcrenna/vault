@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using metrics.Core;
 using metrics.Reporting;
 using metrics.Support;
@@ -15,6 +16,31 @@ namespace metrics
     public class Metrics
     {
         private static readonly ConcurrentDictionary<MetricName, IMetric> _metrics = new ConcurrentDictionary<MetricName, IMetric>();
+
+        /// <summary>
+        /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />.
+        /// </summary>
+        /// <param name="category">The performance counter category</param>
+        /// <param name="counter">The performance counter name</param>
+        /// <param name="instance">The performance counter instance, if applicable</param>
+        /// <param name="label">A label to distinguish the metric in polling reports</param>
+        public static void InstallPerformanceCounterGauge(string category, string counter, string instance, string label)
+        {
+            var performanceCounter = new PerformanceCounter(category, counter, instance, true);
+            GetOrAdd(new MetricName(typeof(Metrics), Environment.MachineName + label), new GaugeMetric<double>(() => performanceCounter.NextValue()));
+        }
+
+        /// <summary>
+        /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />.
+        /// </summary>
+        /// <param name="category">The performance counter category</param>
+        /// <param name="counter">The performance counter name</param>
+        /// <param name="label">A label to distinguish the metric in polling reports</param>
+        public static void InstallPerformanceCounterGauge(string category, string counter, string label)
+        {
+            var performanceCounter = new PerformanceCounter(category, counter, true);
+            GetOrAdd(new MetricName(typeof(Metrics), Environment.MachineName + label), new GaugeMetric<double>(() => performanceCounter.NextValue()));
+        }
 
         /// <summary>
         /// Creates a new gauge metric and registers it under the given type and name
