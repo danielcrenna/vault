@@ -15,6 +15,7 @@ How To Use
 **First**, specify Metrics as a dependency:
 
     PM> Install-Package Metrics
+    PM> Install-Package Metrics.Mvc
 
 **Second**, instrument your classes:
 
@@ -32,13 +33,13 @@ public class ThingFinder
     public void FindThings()
     {
         // Perform an action which gets timed
-	var results = _dbTimer.Time(() => {                            
+        var results = _dbTimer.Time(() => {                            
             Database.Query("SELECT Unicorns FROM Awesome");
         }
 
         // Calculate the rate of new things found
         _resultsMeter.Mark(results.Count)                
-	
+    
         // etc.
     }
 }
