@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html>
+    <head>
+		<title>Metrics.NET</title>
+        <script type="text/javascript" src="@Url.Content("~/Content/jquery.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/jquery.flot.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/jshashtable.js")"></script>
+	</head>
+	<body>
+               
+        <select id="pollInterval">
+            <option value="1000" selected="selected">1 second</option>        
+            <option value="2000">2 seconds</option>        
+            <option value="3000">3 seconds</option>        
+            <option value="4000">4 seconds</option>        
+            <option value="5000">5 seconds</option>        
+            <option value="6000">6 seconds</option>        
+            <option value="7000">7 seconds</option>        
+            <option value="8000">8 seconds</option>        
+            <option value="9000">9 seconds</option>        
+            <option value="10000">10 seconds</option>        
+        </select>
+
+        <input type="button" value="Poll" onclick="pollSamples()">
+        
+        <div id="placeholder" style="width:1200px;height:800px"></div>
+
+        @RenderBody()
+	</body>
+    <script type="text/javascript">
+        
+        var samples = {};
+
+        function callback() {
+            getSample();
+            var interval = $("#pollInterval option:selected").val();
+            window.t = setTimeout("callback()", interval);
+        }
+
+        function pollSamples() {
+            callback();
+        }
+        
+        function getSample() {
+
+            var url = "http://localhost:51444/Home/GetSample";
+
+            $.getJSON(url, function (data) {
+                var sample = [];
+
+                $.each(data, function (key, val) {
+                    var n = val['name'];
+                    var v = val['metric']['value'];
+
+                    if (samples[n] == null) {
+                        samples[n] = [];
+                    }
+                    
+                    var bag = samples[n];
+                    var i = bag.length;
+                    bag.push([i, v]);
+
+                    sample.push({ label: val['name'], data: bag /*, points: { symbol: "circle"}*/ });
+                });
+
+                $.plot($("#placeholder"), sample, {
+                    //series: { points: { show: true, radius: 3} },
+                    series: { lines: { show: true, fill:true } },
+                    grid: { hoverable: true }
+                });
+            });
+        }
+        
+        $(function () {
+
+            getSample();
+            
+        });
+    </script>
+</html>
+
