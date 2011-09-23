@@ -222,7 +222,7 @@ namespace metrics.Core
 
         private double ConvertFromNanos(double nanos)
         {
-            return nanos / TimeUnit.Nanoseconds.Convert(1, DurationUnit);
+            return nanos / DurationUnit.Convert(1, TimeUnit.Nanoseconds);
         }
         
         [JsonIgnore]
