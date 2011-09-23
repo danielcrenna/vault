@@ -56,9 +56,6 @@
     <Compile Include="Core\TimerMetric.cs" />
     <Compile Include="MachineMetrics.cs" />
     <Compile Include="Reporting\ConsoleReporter.cs" />
-    <Compile Include="Services\InstrumentedServiceBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Services\ServiceBootstrapper.cs" />
     <Compile Include="Services\ServiceDescriptor.cs" />
     <Compile Include="Services\WindowsServiceInstaller.cs">
@@ -101,6 +98,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Net\Static\index.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Net\Static\jquery.flot.min.js" />
+    <EmbeddedResource Include="Net\Static\jquery.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

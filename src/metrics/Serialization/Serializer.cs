@@ -2,7 +2,7 @@
 
 namespace metrics.Serialization
 {
-    internal class Serializer
+    public class Serializer
     {
         private static readonly JsonSerializerSettings _settings;
 

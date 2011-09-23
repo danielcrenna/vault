@@ -44,6 +44,10 @@ namespace metrics.Services
                 {
                     Console.Out.WriteLine(ex.Message);
                 }
+                else if (ex.NativeErrorCode == 1072) // // "The specified service has been marked for deletion"
+                {
+                    Console.Out.WriteLine(ex.Message);
+                }
                 else
                 {
                     throw;

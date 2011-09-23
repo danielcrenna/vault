@@ -10,8 +10,6 @@ namespace metrics.Net
     {
         public const string NotFoundResponse = "<!doctype html><html><body>Resource not found</body></html>";
         public const string PingResponse = "pong";
-        private const string IndexHtmlResourceName = "metrics.Net.Static.index.html";
-
         private HttpListener _listener;
         private bool _running;
 
@@ -66,17 +64,19 @@ namespace metrics.Net
             
             switch (request.RawUrl)
             {
+                case "/static/jquery.js":
+                    RespondWithFile(response, "jquery.js");
+                    break;
+                case "/static/jquery.flot.min.js":
+                    RespondWithFile(response, "jquery.flot.min.js");
+                    break;
                 case "/":
                     switch(mimeType)
                     {
                         case "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8":
-                            response.StatusCode = 200;
-                            response.StatusDescription = "OK";
-                            var html = ReadFromManifestResourceStream(IndexHtmlResourceName);
-                            WriteFinal(html, response);
+                            RespondWithFile(response, "index.html");
                             break;
-                        case "application/json":
-                        default:
+                        default: // "application/json"
                             RespondWithNotFound(response);
                             break;
                     }
@@ -95,8 +95,7 @@ namespace metrics.Net
                         case "text/html":
                             WriteFinal(Serializer.Serialize(Metrics.All), response);
                             break;
-                        case "application/json":
-                        default:
+                        default: // "application/json"
                             WriteFinal(Serializer.Serialize(Metrics.All), response);
                             break;
                     }
@@ -106,6 +105,14 @@ namespace metrics.Net
                     RespondWithNotFound(response);
                     break;
             }
+        }
+
+        private static void RespondWithFile(HttpListenerResponse response, string filename)
+        {
+            response.StatusCode = 200;
+            response.StatusDescription = "OK";
+            var file = ReadFromManifestResourceStream("metrics.Net.Static." + filename);
+            WriteFinal(file, response);
         }
 
         private static void RespondWithNotFound(HttpListenerResponse response)
