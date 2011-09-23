@@ -78,6 +78,19 @@ namespace metrics.Core
         }
 
         /// <summary>
+        /// Times and records the duration of an event
+        /// </summary>
+        /// <param name="event">An action whose duration should be timed</param>
+        public void Time(Action @event)
+        {
+            Time(() =>
+            {
+                @event.Invoke();
+                return null as object;
+            });
+        }
+
+        /// <summary>
         ///  Returns the number of events which have been marked
         /// </summary>
         /// <returns></returns>
