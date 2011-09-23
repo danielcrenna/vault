@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using metrics.Stats;
 using metrics.Support;
-using metrics.Util;
 using Newtonsoft.Json;
 
 namespace metrics.Core
@@ -13,22 +13,20 @@ namespace metrics.Core
     /// <see href="http://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average">EMA</see>
     public class MeterMetric : IMetric, IMetered 
     {
-        private static readonly NamedThreadFactory _factory = new NamedThreadFactory("metrics-meter-tick");
         private static readonly long _interval = TimeSpan.FromSeconds(5).Ticks;
-        private Thread _tickThread;
 
         public static MeterMetric New(string eventType, TimeUnit rateUnit)
         {
             var meter = new MeterMetric(eventType, rateUnit);
-            
-            meter._tickThread = _factory.New(
-                ()=>
-                    {
-                        new Timer(s => meter.Tick(), null, _interval, _interval);            
-                    }
-                );
 
-            meter._tickThread.Start();
+            new TaskFactory().StartNew(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(TimeSpan.FromTicks(_interval));
+                    meter.Tick();
+                }
+            });
             
             return meter;
         }
@@ -44,11 +42,6 @@ namespace metrics.Core
         {
             EventType = eventType;
             RateUnit = rateUnit;
-        }
-
-        private MeterMetric(string eventType, TimeUnit rateUnit, Thread tickThread) : this(eventType, rateUnit)
-        {
-            _tickThread = tickThread;
         }
 
         /// <summary>
@@ -171,7 +164,7 @@ namespace metrics.Core
         [JsonIgnore]
         public IMetric Copy
         {
-            get { return new MeterMetric(EventType, RateUnit, _tickThread);}
+            get { return new MeterMetric(EventType, RateUnit);}
         }
     }
 }
