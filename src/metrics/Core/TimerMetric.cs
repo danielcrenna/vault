@@ -73,7 +73,7 @@ namespace metrics.Core
             finally
             {
                 stopwatch.Stop();
-                Update(stopwatch.Elapsed.Ticks);
+                Update(stopwatch.ElapsedTicks * (1000L * 1000L * 1000L) / Stopwatch.Frequency);
             }
         }
 
