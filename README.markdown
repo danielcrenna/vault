@@ -10,7 +10,7 @@ Introduction
 In a post-agile world, we are asked to look beyond the technologies that enable our practice, and find ways to ensure 
 the choices we make are informed by customers and stand up to reality. Experiment-driven (or evidence-based) development
 is a way of combining run-time metrics with automated experiments, resulting in software that is “natural”, based on 
-actual use rather than the strongest opinion.
+actual use and runtime performance rather than the strongest opinion.
 
 This library fulfills the run-time aspect for practicing EDD in a .NET development environment.
 
