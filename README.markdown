@@ -1,14 +1,23 @@
-Metrics
-=======
+Metrics.NET
+===========
 
 *Capturing CLR and application-level metrics. So you know what's going on.*
 
-####(This work is a port of @codahale's [metrics](http://github.com/codahale/metrics) for Scala and the JVM.)
+####(This work began as a port of @codahale's [metrics](http://github.com/codahale/metrics) for Scala and the JVM.)
+
+Introduction
+------------
+In a post-agile world, we are asked to look beyond the technologies that enable our practice, and find ways to ensure 
+the choices we make are informed by customers and stand up to reality. Experiment-driven (or evidence-based) development
+is a way of combining run-time metrics with automated experiments, resulting in software that is “natural”, based on 
+actual use rather than the strongest opinion.
+
+This library fulfills the run-time aspect for practicing EDD in a .NET development environment.
 
 Requirements
 ------------
-* .NET 4.0
-* ASP.NET MVC 3 (for reporting via HTTP)
+* .NET 4.0 (reporting via HTTP available via `MetricsListener` class)
+* ASP.NET MVC 3 (reporting via HTTP available via route registrations)
 
 How To Use
 ----------
@@ -148,7 +157,7 @@ Known Deviations
 ----------------
 * This implementation uses `ConcurrentDictionary` vs. Java's `ConcurrentSkipListMap`, so expect lookups to suffer
 * This implementation uses `SortedDictionary` vs. Java's `TreeMap`
-* The CLR is not as flexible when it comes to introspection; CLR metrics and thread dumps are a work in progress
+* The CLR is not as flexible when it comes to introspection; CLR metrics and thread dumps are a work in progress, but are largely based on PerformanceCounters
 		
 License
 -------
