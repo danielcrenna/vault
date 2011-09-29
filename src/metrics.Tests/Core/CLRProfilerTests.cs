@@ -4,12 +4,31 @@ using System.Linq;
 using System.Text;
 using metrics.Core;
 using NUnit.Framework;
+using metrics.Util;
 
 namespace metrics.Tests.Core
 {
     [TestFixture]
     public class CLRProfilerTests
     {
+        [Test]
+        public void Can_dump_tracked_threads()
+        {
+            var factory = new NamedThreadFactory("Can_dump_managed_threads");
+
+            var thread = factory.New(() =>
+                                         {
+                                             while (true)
+                                             {
+                                                 Debug.Assert("This".Equals("This"));
+                                             }
+                                         });
+
+            thread.Start();
+            
+            Console.WriteLine(CLRProfiler.DumpTrackedThreads());
+        }
+
         [Test]
         public void Can_get_machine_metrics()
         {

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using metrics.Core;
 
 namespace metrics.Util
@@ -25,6 +28,13 @@ namespace metrics.Util
                 submetrics.Add(entry.Key.Name, entry.Value);
             }
             return sortedMetrics;
+        }
+
+        internal static CancellationTokenSource StartCancellableTask(Action closure)
+        {
+            var source = new CancellationTokenSource();
+            new TaskFactory().StartNew(closure, source.Token);
+            return source;
         }
     }
 }

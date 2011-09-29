@@ -88,10 +88,12 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\metrics-net\src\metrics\metrics.csproj">
+    <ProjectReference Include="..\src\metrics\metrics.csproj">
       <Project>{3FBA902F-4F7E-434D-BE22-89C162B6F92D}</Project>
       <Name>metrics</Name>
     </ProjectReference>

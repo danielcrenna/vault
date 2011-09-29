@@ -25,7 +25,7 @@ namespace metrics.Core
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            return obj.GetType() == typeof (MetricName) && Equals((MetricName) obj);
+            return obj is MetricName && Equals((MetricName) obj);
         }
 
         public override int GetHashCode()
@@ -36,14 +36,19 @@ namespace metrics.Core
             }
         }
 
-        public static bool operator ==(MetricName left, MetricName right)
+        public static bool operator == (MetricName left, MetricName right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(MetricName left, MetricName right)
+        public static bool operator != (MetricName left, MetricName right)
         {
             return !left.Equals(right);
+        }
+
+        public override string ToString()
+        {
+            return string.Concat(Class.Name, ".", Name);
         }
     }
 }

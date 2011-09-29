@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using metrics.Support;
 
 namespace metrics.Util
 {
     /// <summary>
-    /// A simple named thread factory
+    /// A simple named thread factory, used to track interesting threads (whose traces can be dumped).
     /// </summary>
     public class NamedThreadFactory
     {
@@ -20,22 +21,28 @@ namespace metrics.Util
 
         public NamedThreadFactory(string name)
         {
-            _prefix = string.Concat(name, "-thread-");
+            _prefix = string.Concat(name, "_thread-");
         }
 
-        public Thread New(Action closure)
+        /// <summary>
+        /// Dumps all threads that have been added via <see cref="New" />.
+        /// <remarks>
+        ///     - It's not possible to enumerate managed CLR threads at runtime in code
+        /// </remarks>
+        /// </summary> 
+        /// <returns></returns>
+        public static IEnumerable<Thread> Dump()
         {
-            // .NET doesn't manage threads in groups, so likely need to find a better way 
-            // to watch spawned child threads if the system won't do it for us
+            return _group;
+        }
 
-            /* final SecurityManager s = System.getSecurityManager();
-		       this.group = (s != null) ? s.getThreadGroup() : Thread.currentThread().getThreadGroup(); */
-
+        public Thread New(Action closure, ThreadPriority priority = ThreadPriority.Normal)
+        {
             var thread = new Thread(new ThreadStart(closure));
             var number = Interlocked.Read(ref _number);
             Interlocked.Increment(ref _number);
             thread.Name = string.Concat(_prefix, number);
-            thread.Priority = ThreadPriority.Normal;
+            thread.Priority = priority;
 
             _group.Add(thread);
             return thread;

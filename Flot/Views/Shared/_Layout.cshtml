@@ -3,12 +3,12 @@
     <head>
 		<title>Metrics.NET</title>
         <script type="text/javascript" src="@Url.Content("~/Content/jquery.js")"></script>
-        <script type="text/javascript" src="@Url.Content("~/Content/jquery.flot.min.js")"></script>
-        <script type="text/javascript" src="@Url.Content("~/Content/jshashtable.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/jquery.flot.min.js")"></script>        
 	</head>
 	<body>
                
         <select id="pollInterval">
+            <option value="10">realtime</option>        
             <option value="1000" selected="selected">1 second</option>        
             <option value="2000">2 seconds</option>        
             <option value="3000">3 seconds</option>        
@@ -21,60 +21,112 @@
             <option value="10000">10 seconds</option>        
         </select>
 
-        <input type="button" value="Poll" onclick="pollSamples()">
+        <input id="poll" type="button" value="Poll">
         
-        <div id="placeholder" style="width:1200px;height:800px"></div>
+        <h1 id="machine"></h1>
+            <div id="metrics">       
+        </div>
 
         @RenderBody()
 	</body>
     <script type="text/javascript">
-        
-        var samples = {};
+
+        var samples = {};        // Sample dictionary
+        var r = 10;              // Sample reservoir size
 
         function callback() {
             getSample();
+            setInterval();
+        }
+        
+        function setInterval() {
             var interval = $("#pollInterval option:selected").val();
             window.t = setTimeout("callback()", interval);
         }
 
-        function pollSamples() {
-            callback();
-        }
-        
         function getSample() {
 
             var url = "http://localhost:51444/Home/GetSample";
 
             $.getJSON(url, function (data) {
-                var sample = [];
+
+                // Parse the machine name
+                var f = data[0]['name'];
+                var m = f.substring(0, f.indexOf('.'));
+                $('#machine').text(m);
+
+                // Parse categories and initialize category hash
+                var cats = [];
+                $.each(data, function (key, val) {
+                    var n = val['name'].replace(m + '.', '');
+                    var c = n.substring(0, n.indexOf('.'));
+                    if (cats.indexOf(c) == -1) {
+                        cats.push(c);
+                    }
+                    if (samples[c] == null) {
+                        samples[c] = {};
+                    }
+                });
 
                 $.each(data, function (key, val) {
-                    var n = val['name'];
+                    var n = val['name'].replace(m + '.', '');
+                    var c = n.substring(0, n.indexOf('.'));
                     var v = val['metric']['value'];
-
-                    if (samples[n] == null) {
-                        samples[n] = [];
-                    }
                     
-                    var bag = samples[n];
-                    var i = bag.length;
-                    bag.push([i, v]);
+                    // Ensure plot container exists for this category
+                    var plot = "plot-" + m + "-" + c;
+                    if ($('#' + plot).length == 0) {
+                        $('#metrics').append("<h2>" + c + "</h2>");
+                        $('#metrics').append('<div id="' + plot + '" style="width:1200px;height:800px"></div>');
+                    }
 
-                    sample.push({ label: val['name'], data: bag /*, points: { symbol: "circle"}*/ });
+                    if (samples[c][n] == null) {
+                        samples[c][n] = [];
+                    }
+
+                    var bag = samples[c][n];
+                    if (bag.length > r) {
+                        bag = bag.slice(1);
+                    }
+
+                    var ticks = new Date().getTime();
+                    bag.push([ticks, v]);
+                    samples[c][n] = bag;
                 });
 
-                $.plot($("#placeholder"), sample, {
-                    //series: { points: { show: true, radius: 3} },
-                    series: { lines: { show: true, fill:true } },
-                    grid: { hoverable: true }
+                $.each(cats, function (i, c) {
+                    var g = $("#plot-" + m + "-" + c);
+                    var s = [];
+                    
+                    $.each(data, function (k, v) {
+                        var n = v['name'].replace(m + '.', '');
+                        var bag = samples[c][n];
+                        s.push({ label: n.replace(c + ".", ""), data: bag });
+                    });
+
+                    $.plot(g, s, {
+                        series: { lines: { show: true, fill: true} },
+                        grid: { hoverable: true }
+                    });
                 });
+
             });
+                
         }
-        
+
         $(function () {
 
+            $('#pollInterval').change(function () {
+                clearInterval(window.t);
+                setInterval();
+            });
+
+            $('#poll').click(function () {
+                clearInterval(window.t);
+                callback();
+            });
+
             getSample();
-            
         });
     </script>
 </html>

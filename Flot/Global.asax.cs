@@ -28,10 +28,17 @@ namespace Flot
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
-
             RegisterRoutes(RouteTable.Routes);
 
             MachineMetrics.InstallPhysicalDisk();
+            MachineMetrics.InstallLogicalDisk();
+            MachineMetrics.InstallCLRLocksAndThreads();
+
+            Metrics.Gauge(typeof (MvcApplication), "hey_you_guys", () =>
+                                                                       {
+                                                                           return 12;
+                                                                       });
+
         }
     }
 }

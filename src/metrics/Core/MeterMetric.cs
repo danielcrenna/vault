@@ -2,8 +2,8 @@
 using System.Threading;
 using metrics.Stats;
 using metrics.Support;
-using metrics.Util;
 using Newtonsoft.Json;
+using metrics.Util;
 
 namespace metrics.Core
 {
@@ -11,44 +11,38 @@ namespace metrics.Core
     /// A meter metric which measures mean throughput and one-, five-, and fifteen-minute exponentially-weighted moving average throughputs
     /// </summary>
     /// <see href="http://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average">EMA</see>
-    public class MeterMetric : IMetric, IMetered 
+    public class MeterMetric : IMetric, IMetered, IDisposable
     {
-        private static readonly NamedThreadFactory _factory = new NamedThreadFactory("metrics-meter-tick");
-        private static readonly long _interval = TimeSpan.FromSeconds(5).Ticks;
-        private Thread _tickThread;
-
-        public static MeterMetric New(string eventType, TimeUnit rateUnit)
-        {
-            var meter = new MeterMetric(eventType, rateUnit);
-            
-            meter._tickThread = _factory.New(
-                ()=>
-                    {
-                        new Timer(s => meter.Tick(), null, _interval, _interval);            
-                    }
-                );
-
-            meter._tickThread.Start();
-            
-            return meter;
-        }
+        private readonly AtomicLong _count = new AtomicLong();
+        private readonly long _startTime = DateTime.Now.Ticks;
+        private static readonly TimeSpan Interval = TimeSpan.FromSeconds(5);
 
         private readonly EWMA _m1Rate = EWMA.OneMinuteEWMA();
         private readonly EWMA _m5Rate = EWMA.FiveMinuteEWMA();
         private readonly EWMA _m15Rate = EWMA.FifteenMinuteEWMA();
         
-        private readonly AtomicLong _count = new AtomicLong();
-        private readonly long _startTime = DateTime.Now.Ticks;
+        private CancellationTokenSource _token;
+
+        public static MeterMetric New(string eventType, TimeUnit rateUnit)
+        {
+            var meter = new MeterMetric(eventType, rateUnit);
+
+            meter._token = Utils.StartCancellableTask(() =>
+            {
+                while (!meter._token.IsCancellationRequested)
+                {
+                    Thread.Sleep(Interval);
+                    meter.Tick();
+                }
+            });
+
+            return meter;
+        }
 
         private MeterMetric(string eventType, TimeUnit rateUnit)
         {
             EventType = eventType;
             RateUnit = rateUnit;
-        }
-
-        private MeterMetric(string eventType, TimeUnit rateUnit, Thread tickThread) : this(eventType, rateUnit)
-        {
-            _tickThread = tickThread;
         }
 
         /// <summary>
@@ -171,7 +165,12 @@ namespace metrics.Core
         [JsonIgnore]
         public IMetric Copy
         {
-            get { return new MeterMetric(EventType, RateUnit, _tickThread);}
+            get { return new MeterMetric(EventType, RateUnit);}
+        }
+
+        public void Dispose()
+        {
+            _token.Cancel();
         }
     }
 }

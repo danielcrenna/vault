@@ -9,16 +9,17 @@ namespace metrics.Reporting
     /// <summary>
     ///  A simple reporters which prints out application metrics to a <see cref="TextWriter" /> periodically
     /// </summary>
-    public class ConsoleReporter
+    public class ConsoleReporter : IDisposable
     {
-        private static readonly NamedThreadFactory _factory = new NamedThreadFactory("metrics-console-reporter");
-        private Thread _tickThread;
+        private CancellationTokenSource _token;
         private readonly TextWriter _out;
 
         public ConsoleReporter(TextWriter @out)
         {
             _out = @out;
         }
+
+        internal int Runs { get; set; }
 
         /// <summary>
         /// Starts printing output to the specified <see cref="TextWriter" />
@@ -30,26 +31,22 @@ namespace metrics.Reporting
             var seconds = unit.Convert(period, TimeUnit.Seconds);
             var interval = TimeSpan.FromSeconds(seconds);
 
-            if(_tickThread != null)
+            _token = Utils.StartCancellableTask(() =>
             {
-                _tickThread.Abort();
-            }
-
-            _tickThread = _factory.New(
-                () =>
-                    {
-                        new Timer(s => Run(), null, interval, interval);
-                    }
-                );
-            _tickThread.Start();
+                while(!_token.IsCancellationRequested)
+                {
+                    Thread.Sleep(interval);
+                    Run();
+                }
+            });
         }
-
+        
         public void Run()
         {
             try
             {
                 var now = DateTime.Now;
-                var dateTime = now.ToShortDateString() + " " + now.ToShortTimeString();
+                var dateTime = string.Format("{0} {1}", now.ToShortDateString(), now.ToShortTimeString());
                 _out.Write(dateTime);
                 _out.Write(' ');
                 for (var i = 0; i < (80 - dateTime.Length - 1); i++)
@@ -95,6 +92,8 @@ namespace metrics.Reporting
                     _out.WriteLine();
                     _out.Flush();
                 }
+
+                Runs++;
             }
             catch (Exception e)
             {
@@ -181,6 +180,11 @@ namespace metrics.Reporting
                 default:
                     throw new ArgumentOutOfRangeException("unit");
             }
+        }
+
+        public void Dispose()
+        {
+            _token.Cancel();
         }
     }
 }

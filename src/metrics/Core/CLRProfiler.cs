@@ -1,5 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Security;
+using System.Text;
+using System.Threading;
+using metrics.Serialization;
+using metrics.Util;
 
 namespace metrics.Core
 {
@@ -25,11 +32,114 @@ namespace metrics.Core
                             };
         }
 
-        public static string DumpThreads()
+        internal class ThreadInfo
         {
-            return "Not implemented; how about a fork?";
+            public string Name { get; set; }
+            public ThreadPriority Priority { get; set; }
+            public IEnumerable<StackFrameInfo> StackFrames { get; set; }
         }
-        
+
+        internal class StackFrameInfo
+        {
+            public string Namespace { get; set; }
+            public string MethodName { get; set; }
+            public string FileName { get; set; }
+            public int? LineNumber { get; set; }
+            
+            public StackFrameInfo(StackFrame frame)
+            {
+                SetStackMeta(frame);
+
+                if (frame.GetILOffset() == -1)
+                {
+                    return;
+                }
+
+                string filename = null;
+                try
+                {
+                    filename = frame.GetFileName();
+                    if(filename != null)
+                    {
+                        LineNumber = frame.GetFileLineNumber();
+                    }
+                }
+                catch (SecurityException)
+                {
+
+                }
+               
+                FileName = filename;
+            }
+
+            private void SetStackMeta(StackFrame frame)
+            {
+                var methodBase = frame.GetMethod();
+
+                var sb = new StringBuilder();
+
+                sb.Append(methodBase.DeclaringType.Namespace)
+                    .Append(".")
+                    .Append(methodBase.DeclaringType.Name)
+                    .Append(".")
+                    .Append(methodBase.Name)
+                    .Append("(");
+
+                var parameterInfo = methodBase.GetParameters();
+                for (var i = 0; (i < parameterInfo.Length); i++)
+                {
+                    var parameterName = parameterInfo[i].ParameterType.Name;
+                    sb.Append(String.Concat(((i != 0) ? ", " : ""), parameterName, " ", parameterInfo[i].Name));
+                }
+
+                sb.Append(")");
+
+                MethodName = methodBase.DeclaringType.Name;
+                Namespace = methodBase.DeclaringType.Namespace;
+            }
+
+            public static IEnumerable<StackFrameInfo> GetStackFrameInfo(IEnumerable<StackFrame> frames)
+            {
+                return frames.Select(f => new StackFrameInfo(f));
+            }
+        }
+
+        /// <summary>
+        /// Dumps all alive threads created via the <see cref="NamedThreadFactory" />
+        /// </summary>
+        /// <returns></returns>
+        public static string DumpTrackedThreads()
+        {
+            var threads = NamedThreadFactory.Dump();
+
+            var results = threads.Select(thread => new ThreadInfo
+                                                       {
+                                                           Name = thread.Name,
+                                                           Priority = thread.Priority,
+                                                           StackFrames = StackFrameInfo.GetStackFrameInfo(GetStackFramesForThread(thread))
+                                                       });
+
+            return Serializer.Serialize(results);
+        }
+
+        private static IEnumerable<StackFrame> GetStackFramesForThread(Thread thread)
+        {
+            StackTrace trace;
+            switch (thread.ThreadState)
+            {
+                case System.Threading.ThreadState.Running:
+                    thread.Suspend();
+                    trace = new StackTrace(thread, true);
+                    thread.Resume();
+                    break;
+                default:
+                    trace = new StackTrace(thread, true);
+                    break;
+            }
+
+            return trace.GetFrames();
+        }
+
         #region Machine Metrics
 
         /*

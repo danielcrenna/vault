@@ -18,7 +18,7 @@ namespace metrics
         private static readonly ConcurrentDictionary<MetricName, IMetric> _metrics = new ConcurrentDictionary<MetricName, IMetric>();
 
         /// <summary>
-        /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />.
+        /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />
         /// </summary>
         /// <param name="category">The performance counter category</param>
         /// <param name="counter">The performance counter name</param>
@@ -31,7 +31,7 @@ namespace metrics
         }
 
         /// <summary>
-        /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />.
+        /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />
         /// </summary>
         /// <param name="category">The performance counter category</param>
         /// <param name="counter">The performance counter name</param>
@@ -146,6 +146,7 @@ namespace metrics
             var reporter = new ConsoleReporter(Console.Out);
             reporter.Start(period, unit);
         }
+
         /// <summary>
         /// Returns a copy of all currently registered metrics in an immutable collection
         /// </summary>
