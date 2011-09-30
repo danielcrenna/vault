@@ -63,6 +63,8 @@
   <ItemGroup>
     <Compile Include="Core\CLRProfilerTests.cs" />
     <Compile Include="Core\GaugeTests.cs" />
+    <Compile Include="Core\MeterTests.cs" />
+    <Compile Include="Core\TimerTests.cs" />
     <Compile Include="MachineMetricsTests.cs" />
     <Compile Include="MetricsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
