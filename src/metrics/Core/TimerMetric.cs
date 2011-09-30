@@ -73,8 +73,21 @@ namespace metrics.Core
             finally
             {
                 stopwatch.Stop();
-                Update(stopwatch.Elapsed.Ticks);
+                Update(stopwatch.ElapsedTicks * (1000L * 1000L * 1000L) / Stopwatch.Frequency);
             }
+        }
+
+        /// <summary>
+        /// Times and records the duration of an event
+        /// </summary>
+        /// <param name="event">An action whose duration should be timed</param>
+        public void Time(Action @event)
+        {
+            Time(() =>
+                     {
+                         @event();
+                         return null as object;
+                     });
         }
 
         /// <summary>
@@ -209,7 +222,7 @@ namespace metrics.Core
 
         private double ConvertFromNanos(double nanos)
         {
-            return nanos / TimeUnit.Nanoseconds.Convert(1, DurationUnit);
+            return nanos / DurationUnit.Convert(1, TimeUnit.Nanoseconds);
         }
         
         [JsonIgnore]

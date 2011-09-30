@@ -5,7 +5,6 @@ using System.Diagnostics;
 using metrics.Core;
 using metrics.Reporting;
 using metrics.Support;
-using metrics.Util;
 
 namespace metrics
 {
