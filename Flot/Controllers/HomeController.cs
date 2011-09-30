@@ -1,7 +1,8 @@
-﻿using System.IO;
-using System.Net;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using metrics;
+using metrics.Core;
 using metrics.Serialization;
 
 namespace Flot.Controllers
@@ -10,19 +11,12 @@ namespace Flot.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Message = "Welcome to ASP.NET MVC!";
-
             return View();
         }
-
-        public ActionResult About()
-        {
-            return View();
-        }
-
+        
         public ActionResult GetSample()
         {
-            var content = Serializer.Serialize(Metrics.All);
+            var content = Serializer.Serialize(Metrics.AllSorted);
             return Content(content);
         }
     }

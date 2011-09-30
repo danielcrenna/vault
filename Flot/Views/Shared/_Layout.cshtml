@@ -21,7 +21,8 @@
             <option value="10000">10 seconds</option>        
         </select>
 
-        <input id="poll" type="button" value="Poll">
+        <input id="start" type="button" value="Start">
+        <input id="stop" type="button" value="Stop">
         
         <h1 id="machine"></h1>
             <div id="metrics">       
@@ -72,22 +73,26 @@
                     var n = val['name'].replace(m + '.', '');
                     var c = n.substring(0, n.indexOf('.'));
                     var v = val['metric']['value'];
-                    
+
                     // Ensure plot container exists for this category
                     var plot = "plot-" + m + "-" + c;
                     if ($('#' + plot).length == 0) {
                         $('#metrics').append("<h2>" + c + "</h2>");
                         $('#metrics').append('<div id="' + plot + '" style="width:1200px;height:800px"></div>');
+                        $('#metrics').append('<input id="' + plot + '-back" type="button" value="<"></div>');
+                        $('#metrics').append('<input id="' + plot + '-forward" type="button" value=">"></div>');
+
+                        $('#' + plot + '-forward').click(function () {
+
+                            alert('forward!');
+
+                        });
                     }
 
                     if (samples[c][n] == null) {
                         samples[c][n] = [];
                     }
-
                     var bag = samples[c][n];
-                    if (bag.length > r) {
-                        bag = bag.slice(1);
-                    }
 
                     var ticks = new Date().getTime();
                     bag.push([ticks, v]);
@@ -97,10 +102,15 @@
                 $.each(cats, function (i, c) {
                     var g = $("#plot-" + m + "-" + c);
                     var s = [];
-                    
+
                     $.each(data, function (k, v) {
                         var n = v['name'].replace(m + '.', '');
+
                         var bag = samples[c][n];
+                        if (bag && bag.length > r) {
+                            bag = bag.slice(-r);
+                        }
+
                         s.push({ label: n.replace(c + ".", ""), data: bag });
                     });
 
@@ -109,7 +119,6 @@
                         grid: { hoverable: true }
                     });
                 });
-
             });
                 
         }
@@ -121,9 +130,13 @@
                 setInterval();
             });
 
-            $('#poll').click(function () {
+            $('#start').click(function () {
                 clearInterval(window.t);
                 callback();
+            });
+
+            $('#stop').click(function () {
+                clearInterval(window.t);
             });
 
             getSample();
