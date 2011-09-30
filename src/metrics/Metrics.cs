@@ -5,6 +5,7 @@ using System.Diagnostics;
 using metrics.Core;
 using metrics.Reporting;
 using metrics.Support;
+using metrics.Util;
 
 namespace metrics
 {
@@ -155,6 +156,17 @@ namespace metrics
             get
             {
                 return new ReadOnlyDictionary<MetricName, IMetric>(_metrics);   
+            }
+        }
+
+        /// <summary>
+        /// Returns a copy of all currently registered metrics in an immutable collection
+        /// </summary>
+        public static IDictionary<MetricName, IMetric> AllSorted
+        {
+            get
+            {
+                return new ReadOnlyDictionary<MetricName, IMetric>(new SortedDictionary<MetricName, IMetric>(_metrics));
             }
         }
 

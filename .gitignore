@@ -33,3 +33,4 @@ Examples*/
 *.testrunconfig
 publish.xml
 TestResults
+metrics.1.1.dotCover

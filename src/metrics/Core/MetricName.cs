@@ -5,7 +5,7 @@ namespace metrics.Core
     /// <summary>
     /// A hash key for storing metrics associated by the parent class and name pair
     /// </summary>
-    public struct MetricName
+    public struct MetricName : IComparable<MetricName>
     {
         public Type Class { get; private set; }
 
@@ -44,6 +44,11 @@ namespace metrics.Core
         public static bool operator != (MetricName left, MetricName right)
         {
             return !left.Equals(right);
+        }
+
+        public int CompareTo(MetricName other)
+        {
+            return string.Concat(Class, ".", Name).CompareTo(string.Concat(other.Class, ".", other.Name));
         }
 
         public override string ToString()
