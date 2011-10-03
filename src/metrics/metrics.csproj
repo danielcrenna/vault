@@ -53,9 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\HistogramMetric.cs" />
+    <Compile Include="Core\ReporterBase.cs" />
     <Compile Include="Core\TimerMetric.cs" />
     <Compile Include="MachineMetrics.cs" />
     <Compile Include="Reporting\ConsoleReporter.cs" />
+    <Compile Include="Core\IReporter.cs" />
+    <Compile Include="Reporting\FileReporter.cs" />
     <Compile Include="Services\ServiceBootstrapper.cs" />
     <Compile Include="Services\ServiceDescriptor.cs" />
     <Compile Include="Services\WindowsServiceInstaller.cs">
