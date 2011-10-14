@@ -27,6 +27,18 @@ namespace metrics.Tests.Reporting
         }
 
         [Test]
+        public void File_is_created()
+        {
+            RegisterMetrics();
+
+            using (var reporter = new FileReporter(_filename))
+            {
+                reporter.Run();
+                Assert.IsTrue(File.Exists(_filename));
+            }
+        }
+
+        [Test]
         public void Can_run_with_known_counters()
         {
             RegisterMetrics();

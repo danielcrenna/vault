@@ -1,7 +1,7 @@
-﻿namespace metrics.Core
-{
-    using System;
+﻿using System;
 
+namespace metrics.Core
+{
     interface IReporter : IDisposable
     {
         void Run();

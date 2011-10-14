@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Threading;
 using metrics.Core;
-using metrics.Util;
 
 namespace metrics.Reporting
 {

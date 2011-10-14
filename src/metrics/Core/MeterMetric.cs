@@ -2,8 +2,8 @@
 using System.Threading;
 using metrics.Stats;
 using metrics.Support;
-using Newtonsoft.Json;
 using metrics.Util;
+using Newtonsoft.Json;
 
 namespace metrics.Core
 {
