@@ -143,7 +143,7 @@ namespace metrics
         /// <param name="unit">The time unit of the period</param>
         public static void EnableConsoleReporting(long period, TimeUnit unit)
         {
-            var reporter = new ConsoleReporter(Console.Out);
+            var reporter = new ConsoleReporter();
             reporter.Start(period, unit);
         }
 
