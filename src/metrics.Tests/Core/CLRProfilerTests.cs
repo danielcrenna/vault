@@ -99,10 +99,18 @@ namespace metrics.Tests.Core
 
                 foreach (var counterInstance in counterCategory.GetInstanceNames())
                 {
-                    foreach (var counter in counterCategory.GetCounters(counterInstance))
+                    try
                     {
-                        sb.AppendLine(string.Format("{0}:{1}:{2}", counterInstance, category, counter.CounterName));
+                        foreach (var counter in counterCategory.GetCounters(counterInstance))
+                        {
+                            sb.AppendLine(string.Format("{0}:{1}:{2}", counterInstance, category, counter.CounterName));
+                        }
                     }
+                    catch
+                    {
+                        // Drop it on the floor
+                    }
+                    
                 }
             }
 
