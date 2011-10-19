@@ -3,7 +3,7 @@
 namespace metrics.Tests.Core
 {
     [TestFixture]
-    public class CounterTests
+    public class CounterTests : MetricTestBase
     {
         [Test]
         public void Can_count()

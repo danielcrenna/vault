@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace metrics.Tests.Core
 {
     [TestFixture]
-    public class GaugeTests
+    public class GaugeTests : MetricTestBase
     {
         [Test]
         public void Can_gauge_scalar_value()
