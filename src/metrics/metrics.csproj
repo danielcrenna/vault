@@ -61,11 +61,6 @@
     <Compile Include="Reporting\IReporter.cs" />
     <Compile Include="Reporting\FileReporter.cs" />
     <Compile Include="Reporting\SampledFileReporter.cs" />
-    <Compile Include="Services\ServiceBootstrapper.cs" />
-    <Compile Include="Services\ServiceDescriptor.cs" />
-    <Compile Include="Services\WindowsServiceInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Net\MetricsListener.cs" />
     <Compile Include="Support\Volatile.cs" />
     <Compile Include="Support\VolatileDouble.cs" />
