@@ -70,6 +70,26 @@ namespace metrics.Tests.Reporting
         }
 
         [Test]
+        public void Can_stop()
+        {
+            var block = new ManualResetEvent(false);
+
+            RegisterMetrics();
+
+            ThreadPool.QueueUserWorkItem(
+                s =>
+                {
+                    var reporter = new FileReporter(Path.GetTempFileName());
+                    reporter.Start(1, TimeUnit.Seconds);
+                    reporter.Stopped += delegate { block.Set(); };
+                    Thread.Sleep(2000);
+                    reporter.Stop();
+                });
+
+            block.WaitOne();
+        }
+
+        [Test]
         public void Can_run_in_background()
         {
             const int ticks = 3;

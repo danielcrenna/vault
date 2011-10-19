@@ -56,6 +56,26 @@ namespace metrics.Tests.Reporting
             block.WaitOne(TimeSpan.FromSeconds(5));
         }
 
+        [Test]
+        public void Can_stop()
+        {
+            var block = new ManualResetEvent(false);
+
+            RegisterMetrics();
+
+            ThreadPool.QueueUserWorkItem(
+                s =>
+                {
+                    var reporter = new ConsoleReporter();
+                    reporter.Start(1, TimeUnit.Seconds);
+                    reporter.Stopped += delegate { block.Set(); };
+                    Thread.Sleep(2000);
+                    reporter.Stop();
+                });
+
+            block.WaitOne();
+        }
+
         private static void RegisterMetrics()
         {
             var counter = Metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
@@ -66,6 +86,5 @@ namespace metrics.Tests.Reporting
             queue.Enqueue(1);
             queue.Enqueue(2);
         }
-
     }
 }

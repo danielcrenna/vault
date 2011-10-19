@@ -72,7 +72,7 @@
     <Compile Include="Core\CounterTests.cs" />
     <Compile Include="Reporting\ConsoleReporterTests.cs" />
     <Compile Include="Reporting\FileReporterTests.cs" />
-    <Compile Include="Reporting\JsonReporterTests.cs" />
+    <Compile Include="Reporting\SampleFileReporterTests.cs" />
     <Compile Include="Support\RandomTests.cs" />
     <Compile Include="Support\VolatileDoubleTests.cs" />
     <Compile Include="TimeUnitTests.cs" />

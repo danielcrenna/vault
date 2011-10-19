@@ -44,6 +44,8 @@ namespace metrics.Tests.Net
         [Test]
         public void Can_respond_to_metrics_request_when_metrics_are_registered()
         {
+            Metrics.Clear();
+
             var counter = Metrics.Counter(typeof(MetricsListenerTests), "counter");
             counter.Increment();
 

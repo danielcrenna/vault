@@ -38,12 +38,39 @@ namespace metrics.Reporting
 
             Token = Utils.StartCancellableTask(() =>
             {
+                OnStarted();
                 while (!Token.IsCancellationRequested)
                 {
                     Thread.Sleep(interval);
                     Run();
                 }
             });
+        }
+
+        public void Stop()
+        {
+            Token.Cancel();
+            OnStopped();
+        }
+
+        public event EventHandler<EventArgs> Started;
+        public void OnStarted()
+        {
+            var handler = Started;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler<EventArgs> Stopped;
+        public void OnStopped()
+        {
+            var handler = Stopped;
+            if (handler != null)
+            {
+                handler(this, EventArgs.Empty);
+            }
         }
 
         public virtual void Run()
