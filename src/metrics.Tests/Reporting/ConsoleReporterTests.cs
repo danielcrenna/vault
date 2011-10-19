@@ -11,11 +11,20 @@ namespace metrics.Tests.Reporting
     public class ConsoleReporterTests
     {
         [Test]
-        public void Can_run_with_known_counters()
+        public void Can_run_with_known_counters_and_human_readable_format()
         {
             RegisterMetrics();
 
             var reporter = new ConsoleReporter();
+            reporter.Run();
+        }
+
+        [Test]
+        public void Can_run_with_known_counters_and_json_format()
+        {
+            RegisterMetrics();
+
+            var reporter = new ConsoleReporter(new JsonReportFormatter());
             reporter.Run();
         }
 

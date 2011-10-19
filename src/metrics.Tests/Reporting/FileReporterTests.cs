@@ -23,11 +23,13 @@ namespace metrics.Tests.Reporting
         public void Cleanup()
         {
             if (File.Exists(_filename))
+            {
                 File.Delete(_filename);
+            }
         }
 
         [Test]
-        public void File_is_created()
+        public void File_is_created_with_human_readable_content()
         {
             RegisterMetrics();
 
@@ -36,6 +38,24 @@ namespace metrics.Tests.Reporting
                 reporter.Run();
                 Assert.IsTrue(File.Exists(_filename));
             }
+
+            var contents = File.ReadAllText(_filename);
+            Console.WriteLine(contents);
+        }
+
+        [Test]
+        public void File_is_created_with_json_content()
+        {
+            RegisterMetrics();
+
+            using (var reporter = new FileReporter(_filename, new JsonReportFormatter()))
+            {
+                reporter.Run();
+                Assert.IsTrue(File.Exists(_filename));
+            }
+
+            var contents = File.ReadAllText(_filename);
+            Console.WriteLine(contents);
         }
 
         [Test]
