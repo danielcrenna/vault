@@ -3,13 +3,16 @@ using Newtonsoft.Json;
 
 namespace metrics.Core
 {
+    /// <summary>
+    /// An untyped version of a gauge for reporting purposes
+    /// </summary>
     public abstract class GaugeMetric
     {
         public abstract string ValueAsString { get; }
     }
 
     /// <summary>
-    /// A gauge metric is an instantaneous reading of a partiular value. To
+    /// A gauge metric is an instantaneous reading of a particular value. To
     /// instrument a queue's depth, for example:
     /// <example>
     /// <code> 

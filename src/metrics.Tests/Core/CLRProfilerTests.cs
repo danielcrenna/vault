@@ -32,27 +32,31 @@ namespace metrics.Tests.Core
         [Test]
         public void Can_get_machine_metrics()
         {
-            var value = CLRProfiler.MachineTotalContentions;
+            var value = CLRProfiler.GlobalTotalNumberOfContentions;
             AssertProfilerHasValue(value);
 
-            value = CLRProfiler.MachineContentionRatePerSecond;
+            value = CLRProfiler.GlobalContentionRatePerSecond;
             AssertProfilerHasValue(value);
 
-            value = CLRProfiler.MachineCurrentQueueLength;
+            value = CLRProfiler.GlobalCurrentQueueLength;
             AssertProfilerHasValue(value);
 
-            value = CLRProfiler.MachineQueueLengthPeak;
+            value = CLRProfiler.GlobalQueueLengthPeak;
             AssertProfilerHasValue(value);
         }
 
         [Test]
         public void Can_enumerate_machine_categories()
         {
-            EnumerateCountersFor(".NET CLR LocksAndThreads", "_Global_");
-            EnumerateCountersFor("PhysicalDisk", "_Total");
+            // http://technet.microsoft.com/en-us/library/cc768048.aspx
+            EnumerateCountersFor("System");
+            EnumerateCountersFor("Processor");
+            EnumerateCountersFor("Memory");
             EnumerateCountersFor("Network Interface");
+            EnumerateCountersFor("PhysicalDisk", "_Total");
+            EnumerateCountersFor("LogicalDisk", "_Total");
         }
-
+        
         [Test]
         public void Can_enumerate_all_counters()
         {
@@ -76,11 +80,21 @@ namespace metrics.Tests.Core
             var sb = new StringBuilder();
             var counterCategory = new PerformanceCounterCategory(category);
 
-            foreach (var counterInstance in counterCategory.GetInstanceNames())
+            if(counterCategory.CategoryType == PerformanceCounterCategoryType.SingleInstance)
             {
-                foreach (var counter in counterCategory.GetCounters(counterInstance))
+                foreach (var counter in counterCategory.GetCounters())
                 {
-                    sb.AppendLine(string.Format("{0}:{1}:{2}", counterInstance, category, counter.CounterName));
+                    sb.AppendLine(string.Format("{0}:{1}", category, counter.CounterName));
+                }
+            }
+            else
+            {
+                foreach (var counterInstance in counterCategory.GetInstanceNames())
+                {
+                    foreach (var counter in counterCategory.GetCounters(counterInstance))
+                    {
+                        sb.AppendLine(string.Format("{0}:{1}:{2}", counterInstance, category, counter.CounterName));
+                    }
                 }
             }
 

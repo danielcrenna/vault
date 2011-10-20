@@ -175,6 +175,7 @@ namespace metrics
         public static void Clear()
         {
             _metrics.Clear();
+            PerformanceCounter.CloseSharedResources();
         }
 
         private static T GetOrAdd<T>(MetricName name, T metric) where T : IMetric
