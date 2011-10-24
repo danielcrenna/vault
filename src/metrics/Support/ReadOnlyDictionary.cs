@@ -84,7 +84,10 @@ namespace metrics.Support
 
         public TK this[T key]
         {
-            get { return _inner[key].Copy; }
+            get
+            {
+                return _inner[key].Copy;
+            }
             set { /* read-only */ }
         }
 

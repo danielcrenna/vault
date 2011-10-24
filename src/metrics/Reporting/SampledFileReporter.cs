@@ -53,7 +53,7 @@ namespace metrics.Reporting
         {
             using (Out = new StreamWriter(GenerateFilePath(), false, _encoding))
             {
-                Out.Write(Serializer.Serialize(Metrics.All));
+                Out.Write(Serializer.Serialize(Metrics.AllSorted));
                 Out.Flush();
             }
         }

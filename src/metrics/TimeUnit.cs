@@ -61,9 +61,11 @@ namespace metrics
 			var sourceIndex = (int)source;
 			var targetIndex = (int)target;
 
-			return (sourceIndex > targetIndex) ?
-				duration * _conversionMatrix[sourceIndex][targetIndex] :
+			var result = (sourceIndex > targetIndex) ?
+				duration * _conversionMatrix[sourceIndex][targetIndex]:
 				duration / _conversionMatrix[targetIndex][sourceIndex];
+
+		    return result;
 		}
 
 		public static long ToNanos(this TimeUnit source, long interval)

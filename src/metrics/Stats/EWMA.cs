@@ -90,7 +90,8 @@ namespace metrics.Stats
         /// </summary>
         public double Rate(TimeUnit rateUnit)
         {
-            return _rate * rateUnit.ToNanos(1);
+            var nanos = rateUnit.ToNanos(1);
+            return _rate * nanos;
         }
     }
 }

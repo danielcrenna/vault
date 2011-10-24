@@ -152,21 +152,15 @@ namespace metrics
         /// </summary>
         public static IDictionary<MetricName, IMetric> All
         {
-            get
-            {
-                return new ReadOnlyDictionary<MetricName, IMetric>(_metrics);   
-            }
+            get { return new ReadOnlyDictionary<MetricName, IMetric>(_metrics); }
         }
 
         /// <summary>
-        /// Returns a copy of all currently registered metrics in an immutable collection
+        /// Returns a copy of all currently registered metrics in an immutable collection, sorted by owner and name
         /// </summary>
         public static IDictionary<MetricName, IMetric> AllSorted
         {
-            get
-            {
-                return new ReadOnlyDictionary<MetricName, IMetric>(new SortedDictionary<MetricName, IMetric>(_metrics));
-            }
+            get { return new ReadOnlyDictionary<MetricName, IMetric>(new SortedDictionary<MetricName, IMetric>(_metrics)); }
         }
 
         /// <summary>
@@ -180,7 +174,7 @@ namespace metrics
 
         private static T GetOrAdd<T>(MetricName name, T metric) where T : IMetric
         {
-            if(_metrics.ContainsKey(name))
+            if (_metrics.ContainsKey(name))
             {
                 return (T) _metrics[name];
             }

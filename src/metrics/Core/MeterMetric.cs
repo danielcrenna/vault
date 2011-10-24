@@ -8,18 +8,18 @@ using Newtonsoft.Json;
 namespace metrics.Core
 {
     /// <summary>
-    /// A meter metric which measures mean throughput and one-, five-, and fifteen-minute exponentially-weighted moving average throughputs
+    /// A meter metric which measures mean throughput and one-, five-, and fifteen-minute exponentially-weighted moving average throughputs.
     /// </summary>
     /// <see href="http://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average">EMA</see>
     public class MeterMetric : IMetric, IMetered, IDisposable
     {
-        private readonly AtomicLong _count = new AtomicLong();
+        private AtomicLong _count = new AtomicLong();
         private readonly long _startTime = DateTime.Now.Ticks;
         private static readonly TimeSpan Interval = TimeSpan.FromSeconds(5);
 
-        private readonly EWMA _m1Rate = EWMA.OneMinuteEWMA();
-        private readonly EWMA _m5Rate = EWMA.FiveMinuteEWMA();
-        private readonly EWMA _m15Rate = EWMA.FifteenMinuteEWMA();
+        private EWMA _m1Rate = EWMA.OneMinuteEWMA();
+        private EWMA _m5Rate = EWMA.FiveMinuteEWMA();
+        private EWMA _m15Rate = EWMA.FifteenMinuteEWMA();
         
         private CancellationTokenSource _token;
 
@@ -165,7 +165,17 @@ namespace metrics.Core
         [JsonIgnore]
         public IMetric Copy
         {
-            get { return new MeterMetric(EventType, RateUnit);}
+            get
+            {
+                var metric = new MeterMetric(EventType, RateUnit)
+                                 {
+                                     _count = Count,
+                                     _m1Rate = _m1Rate,
+                                     _m5Rate = _m5Rate,
+                                     _m15Rate = _m15Rate
+                                 };
+                return metric;
+            }
         }
 
         public void Dispose()

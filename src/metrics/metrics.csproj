@@ -54,7 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\HistogramMetric.cs" />
+    <Compile Include="Reporting\HumanReadableReportFormatter.cs" />
     <Compile Include="Reporting\IReportFormatter.cs" />
+    <Compile Include="Reporting\JsonReportFormatter.cs" />
     <Compile Include="Reporting\ReporterBase.cs" />
     <Compile Include="Core\TimerMetric.cs" />
     <Compile Include="MachineMetrics.cs" />
@@ -95,7 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="metrics.snk" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Net\Static\index.html" />
