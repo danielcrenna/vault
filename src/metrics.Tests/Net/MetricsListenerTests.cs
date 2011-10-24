@@ -26,6 +26,14 @@ namespace metrics.Tests.Net
         }
 
         [Test]
+        public void Can_stop_gracefully()
+        {
+            Can_respond_to_ping_request();
+            _listener.Stop();
+            _listener.Stop();
+        }
+
+        [Test]
         public void Can_respond_with_not_found_with_body_when_path_is_not_found()
         {
             var content = GetResponseForRequest("http://localhost:" + _port + "/unknown");

@@ -33,7 +33,7 @@ namespace metrics.Util
         internal static CancellationTokenSource StartCancellableTask(Action closure)
         {
             var source = new CancellationTokenSource();
-            new TaskFactory().StartNew(closure, source.Token);
+            Task.Factory.StartNew(closure, source.Token);
             return source;
         }
     }

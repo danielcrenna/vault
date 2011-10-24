@@ -2,7 +2,9 @@
 using System.IO;
 using System.Net;
 using System.Threading;
+using System.Threading.Tasks;
 using metrics.Serialization;
+using metrics.Util;
 
 namespace metrics.Net
 {
@@ -11,7 +13,7 @@ namespace metrics.Net
         public const string NotFoundResponse = "<!doctype html><html><body>Resource not found</body></html>";
         public const string PingResponse = "pong";
         private HttpListener _listener;
-        private bool _running;
+        private CancellationTokenSource _task;
 
         private static HttpListener InitializeListenerOnPort(int port)
         {
@@ -36,20 +38,18 @@ namespace metrics.Net
 
         public void Start(int port)
         {
-            _running = true;
             _listener = _listener ?? InitializeListenerOnPort(port);
             _listener.Start();
 
-            ThreadPool.QueueUserWorkItem(s =>
-                    {
-                        while (_running)
-                        {
-                            var context = _listener.GetContext();
+            _task = Utils.StartCancellableTask(()=>
+            {
+                while (!_task.IsCancellationRequested)
+                {
+                    var context = _listener.GetContext();
 
-                            ThreadPool.QueueUserWorkItem(_ => HandleContext(context));
-                        }
-                    }
-                );
+                    ThreadPool.QueueUserWorkItem(_ => HandleContext(context));
+                }
+            });
         }
 
         private static void HandleContext(HttpListenerContext context)
@@ -93,10 +93,10 @@ namespace metrics.Net
                     switch(mimeType)
                     {
                         case "text/html":
-                            WriteFinal(Serializer.Serialize(Metrics.All), response);
+                            WriteFinal(Serializer.Serialize(Metrics.AllSorted), response);
                             break;
                         default: // "application/json"
-                            WriteFinal(Serializer.Serialize(Metrics.All), response);
+                            WriteFinal(Serializer.Serialize(Metrics.AllSorted), response);
                             break;
                     }
                     
@@ -133,7 +133,11 @@ namespace metrics.Net
 
         public void Stop()
         {
-            _running = false;
+            if(!_task.IsCancellationRequested)
+            {
+                _task.Cancel();
+            }
+            _listener.Stop();
         }
 
         private static string ReadFromManifestResourceStream(string name)
