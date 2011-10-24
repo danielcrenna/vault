@@ -13,7 +13,7 @@
 		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_metrics.png</iconUrl>
 		<tags>CLR metrics</tags>
     <dependencies>
-      <dependency id="Metrics" version="1.0.4" />
+      <dependency id="Metrics" version="1.0.5" />
     </dependencies>
 	</metadata>
 </package>
