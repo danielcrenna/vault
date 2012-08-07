@@ -124,17 +124,42 @@ namespace metrics
         /// <returns></returns>
         public static TimerMetric Timer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
         {
-            var metricName = new MetricName(owner, name);
-            IMetric existingMetric;
-            if (_metrics.TryGetValue(metricName, out existingMetric))
-            {
-                return (TimerMetric) existingMetric;
-            }
+           var metricName = new MetricName(owner, name);
+           IMetric existingMetric;
+           if (_metrics.TryGetValue(metricName, out existingMetric))
+           {
+              return (TimerMetric)existingMetric;
+           }
 
-            var metric = new TimerMetric(durationUnit, rateUnit);
-            var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
-            return justAddedMetric == null ? metric : (TimerMetric) justAddedMetric;
+           var metric = new TimerMetric(durationUnit, rateUnit);
+           var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+           return justAddedMetric == null ? metric : (TimerMetric)justAddedMetric;
         }
+
+
+        /// <summary>
+        /// Creates a new timer metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="owner">The type that owns the metric</param>
+        /// <param name="name">The metric name</param>
+        /// <param name="durationUnit">The duration scale unit of the new timer</param>
+        /// <param name="rateUnit">The rate unit of the new timer</param>
+        /// <returns></returns>
+        public static CallbackTimerMetric CallbackTimer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+        {
+           var metricName = new MetricName(owner, name);
+           IMetric existingMetric;
+           if (_metrics.TryGetValue(metricName, out existingMetric))
+           {
+              return (CallbackTimerMetric)existingMetric;
+           }
+
+           var metric = new CallbackTimerMetric(durationUnit, rateUnit);
+           var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+           return justAddedMetric == null ? metric : (CallbackTimerMetric)justAddedMetric;
+        }
+
+
 
         /// <summary>
         /// Enables the console reporter and causes it to print to STDOUT with the specified period
