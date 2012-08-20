@@ -159,7 +159,29 @@ namespace metrics
            return justAddedMetric == null ? metric : (CallbackTimerMetric)justAddedMetric;
         }
 
+       /// <summary>
+       /// Creates a new metric that can be used to add manual timings into the system. A manual timing
+       /// is a timing that is measured not by the metrics system but by the client site and must be added
+       /// into metrics as an additional measurement.
+       /// </summary>
+       /// <param name="owner">The type that owns the metric</param>
+       /// <param name="name">The metric name</param>
+       /// <param name="durationUnit">The duration scale unit of the new timer</param>
+       /// <param name="rateUnit">The rate unit of the new timer</param>
+       /// <returns></returns>
+       public static ManualTimerMetric ManualTimer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+       {
+          var metricName = new MetricName(owner, name);
+          IMetric existingMetric;
+          if (_metrics.TryGetValue(metricName, out existingMetric))
+          {
+             return (ManualTimerMetric)existingMetric;
+          }
 
+          var metric = new ManualTimerMetric(durationUnit, rateUnit);
+          var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+          return justAddedMetric == null ? metric : (ManualTimerMetric)justAddedMetric;
+       }
 
         /// <summary>
         /// Enables the console reporter and causes it to print to STDOUT with the specified period
