@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using metrics.Util;
+using System.Threading.Tasks;
 
 namespace metrics.Reporting
 {
@@ -36,7 +36,8 @@ namespace metrics.Reporting
             var seconds = unit.Convert(period, TimeUnit.Seconds);
             var interval = TimeSpan.FromSeconds(seconds);
 
-            Token = Utils.StartCancellableTask(() =>
+            Token = new CancellationTokenSource();
+            Task.Factory.StartNew(() =>
             {
                 OnStarted();
                 while (!Token.IsCancellationRequested)
@@ -44,7 +45,7 @@ namespace metrics.Reporting
                     Thread.Sleep(interval);
                     Run();
                 }
-            });
+            }, Token.Token);
         }
 
         public void Stop()
