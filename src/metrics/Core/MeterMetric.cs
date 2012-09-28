@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using metrics.Stats;
 using metrics.Support;
-using metrics.Util;
 using Newtonsoft.Json;
 
 namespace metrics.Core
@@ -21,20 +21,20 @@ namespace metrics.Core
         private EWMA _m5Rate = EWMA.FiveMinuteEWMA();
         private EWMA _m15Rate = EWMA.FifteenMinuteEWMA();
         
-        private CancellationTokenSource _token;
+        private readonly CancellationTokenSource _token = new CancellationTokenSource();
 
         public static MeterMetric New(string eventType, TimeUnit rateUnit)
         {
             var meter = new MeterMetric(eventType, rateUnit);
 
-            meter._token = Utils.StartCancellableTask(() =>
+            Task.Factory.StartNew(() =>
             {
                 while (!meter._token.IsCancellationRequested)
                 {
                     Thread.Sleep(Interval);
                     meter.Tick();
                 }
-            });
+            }, meter._token.Token);
 
             return meter;
         }

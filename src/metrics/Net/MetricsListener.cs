@@ -4,7 +4,6 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using metrics.Serialization;
-using metrics.Util;
 
 namespace metrics.Net
 {
@@ -41,7 +40,8 @@ namespace metrics.Net
             _listener = _listener ?? InitializeListenerOnPort(port);
             _listener.Start();
 
-            _task = Utils.StartCancellableTask(()=>
+            _task = new CancellationTokenSource();
+            Task.Factory.StartNew(() =>
             {
                 while (!_task.IsCancellationRequested)
                 {
@@ -49,7 +49,7 @@ namespace metrics.Net
 
                     ThreadPool.QueueUserWorkItem(_ => HandleContext(context));
                 }
-            });
+            }, _task.Token);
         }
 
         private static void HandleContext(HttpListenerContext context)
