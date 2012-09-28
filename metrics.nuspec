@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>Metrics</id>
-		<version>1.0.5</version>
+		<version>1.0.6</version>
 		<authors>Daniel Crenna</authors>
 		<owners>Daniel Crenna</owners>
 		<description>Capturing CLR and application-level metrics. So you know what's going on. An idiomatic port of Coda Hale's Metrics for Scala and the JVM.</description>
@@ -13,7 +13,7 @@
 		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_metrics.png</iconUrl>
 		<tags>CLR metrics</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="4.0.3" />
+      <dependency id="Newtonsoft.Json" version="4.5.9" />
     </dependencies>
 	</metadata>
 </package>

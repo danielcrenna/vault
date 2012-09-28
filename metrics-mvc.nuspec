@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>Metrics.Mvc</id>
-		<version>1.0.4</version>
+		<version>1.0.6</version>
 		<authors>Daniel Crenna</authors>
 		<owners>Daniel Crenna</owners>
 		<description>MVC support for the metrics library.</description>
@@ -13,7 +13,7 @@
 		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_metrics.png</iconUrl>
 		<tags>CLR metrics</tags>
     <dependencies>
-      <dependency id="Metrics" version="1.0.5" />
+      <dependency id="Metrics" version="1.0.6" />
     </dependencies>
 	</metadata>
 </package>

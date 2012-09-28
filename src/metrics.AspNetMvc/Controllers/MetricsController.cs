@@ -44,11 +44,11 @@ namespace metrics.AspNetMvc.Controllers
             }
 
             var result = new ContentResult
-                             {
-                                 Content = "pong",
-                                 ContentType = "text/plain",
-                                 ContentEncoding = Encoding.UTF8
-                             };
+            {
+                Content = "pong",
+                ContentType = "text/plain",
+                ContentEncoding = Encoding.UTF8
+            };
 
             return result;
         }
@@ -89,7 +89,7 @@ namespace metrics.AspNetMvc.Controllers
 
             var result = new ContentResult
             {
-                Content = CLRProfiler.DumpThreads(),
+                Content = CLRProfiler.DumpTrackedThreads(),
                 ContentType = "text/plain",
                 ContentEncoding = Encoding.UTF8
             };

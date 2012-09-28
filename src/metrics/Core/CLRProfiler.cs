@@ -22,15 +22,15 @@ namespace metrics.Core
         private const string CategoryNetworking = ".NET CLR Networking";
         private const string GlobalInstance = "_Global_";
 
-        private static readonly string _process;
-        private static readonly IDictionary<string, IDictionary<string, PerformanceCounter>> _counters;
+        private static readonly string Process;
+        private static readonly IDictionary<string, IDictionary<string, PerformanceCounter>> Counters;
         
         static CLRProfiler()
         {
-            _process = Process.GetCurrentProcess().ProcessName;
-            _counters = new Dictionary<string, IDictionary<string, PerformanceCounter>>
+            Process = System.Diagnostics.Process.GetCurrentProcess().ProcessName;
+            Counters = new Dictionary<string, IDictionary<string, PerformanceCounter>>
                             {
-                                { _process, new Dictionary<string, PerformanceCounter>() }
+                                { Process, new Dictionary<string, PerformanceCounter>() }
                             };
         }
 
@@ -39,7 +39,7 @@ namespace metrics.Core
         /// </summary>
         public static void ClearCounters()
         {
-            _counters.Clear();
+            Counters.Clear();
         }
 
         /// <summary>
@@ -824,7 +824,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfBytesInAllHeaps", "# Bytes in all Heaps", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfBytesInAllHeaps", "# Bytes in all Heaps", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -837,7 +837,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfGCHandles", "# GC Handles", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfGCHandles", "# GC Handles", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -852,7 +852,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfGen0Collections", "# Gen 0 Collections", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfGen0Collections", "# Gen 0 Collections", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -867,7 +867,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfGen1Collections", "# Gen 1 Collections", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfGen1Collections", "# Gen 1 Collections", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -881,7 +881,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfGen2Collections", "# Gen 2 Collections", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfGen2Collections", "# Gen 2 Collections", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -894,7 +894,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfInducedGC", "# Induced GC", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfInducedGC", "# Induced GC", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -907,7 +907,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfPinnedObjects", "# of Pinned Objects", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfPinnedObjects", "# of Pinned Objects", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -920,7 +920,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfSinkBlocksInUse", "# of Sink Blocks in use", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfSinkBlocksInUse", "# of Sink Blocks in use", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -933,7 +933,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfTotalCommittedBytes", "# Total committed Bytes", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfTotalCommittedBytes", "# Total committed Bytes", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -946,7 +946,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfTotalReservedBytes", "# Total reserved Bytes", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfTotalReservedBytes", "# Total reserved Bytes", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -959,7 +959,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessPercentTimeInGC", "% Time in GC", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessPercentTimeInGC", "% Time in GC", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -972,7 +972,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessAllocatedBytesPerSecond", "Allocated Bytes/second", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessAllocatedBytesPerSecond", "Allocated Bytes/second", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -986,7 +986,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessFinalizationSurvivors", "Finalization Survivors", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessFinalizationSurvivors", "Finalization Survivors", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1001,7 +1001,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessGen0HeapSize", "Gen 0 heap size", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessGen0HeapSize", "Gen 0 heap size", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1015,7 +1015,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessGen0PromotedBytesPerSecond", "Gen 0 Promoted Bytes/Sec", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessGen0PromotedBytesPerSecond", "Gen 0 Promoted Bytes/Sec", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1028,7 +1028,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessGen1HeapSize", "Gen 1 heap size", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessGen1HeapSize", "Gen 1 heap size", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1043,7 +1043,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessGen1PromotedBytesPerSecond", "Gen 1 Promoted Bytes/Sec", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessGen1PromotedBytesPerSecond", "Gen 1 Promoted Bytes/Sec", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1056,7 +1056,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessGen2HeapSize", "Gen 2 heap size", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessGen2HeapSize", "Gen 2 heap size", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1069,7 +1069,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessLargeObjectHeapSize", "Large Object Heap size", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessLargeObjectHeapSize", "Large Object Heap size", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1082,7 +1082,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessId", "Process ID", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessId", "Process ID", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1095,7 +1095,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessPromotedFinalizationMemoryFromGen0", "Promoted Finalization-Memory from Gen 0", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessPromotedFinalizationMemoryFromGen0", "Promoted Finalization-Memory from Gen 0", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1108,7 +1108,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessPromotedMemoryFromGen0", "Promoted Memory from Gen 0", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessPromotedMemoryFromGen0", "Promoted Memory from Gen 0", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1121,7 +1121,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessPromotedMemoryFromGen1", "Promoted Memory from Gen 1", CategoryMemory, _process);
+                var counter = GetOrInstallCounter("ProcessPromotedMemoryFromGen1", "Promoted Memory from Gen 1", CategoryMemory, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1138,7 +1138,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfCurrentLogicalThreads", "# of current logical Threads", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfCurrentLogicalThreads", "# of current logical Threads", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1151,7 +1151,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfCurrentPhysicalThreads", "# of current physical Threads", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfCurrentPhysicalThreads", "# of current physical Threads", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1165,7 +1165,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfCurrentRecognizedThreads", "# of current recognized threads", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfCurrentRecognizedThreads", "# of current recognized threads", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1179,7 +1179,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfTotalRecognizedThreads", "# of total recognized threads", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfTotalRecognizedThreads", "# of total recognized threads", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1192,7 +1192,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessContentionRatePerSecond", "Contention Rate / sec", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessContentionRatePerSecond", "Contention Rate / sec", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1205,7 +1205,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessCurrentQueueLength", "Current Queue Length", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessCurrentQueueLength", "Current Queue Length", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1218,7 +1218,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessQueueLengthPerSecond", "Queue Length / sec", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessQueueLengthPerSecond", "Queue Length / sec", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1231,7 +1231,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessQueueLengthPeak", "Queue Length Peak", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessQueueLengthPeak", "Queue Length Peak", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1246,7 +1246,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessRateOfRecognizedThreadsPerSecond", "rate of recognized threads / sec", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessRateOfRecognizedThreadsPerSecond", "rate of recognized threads / sec", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1259,7 +1259,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessTotalNumberOfContentions", "Total # of Contentions", CategoryLocksAndThreads, _process);
+                var counter = GetOrInstallCounter("ProcessTotalNumberOfContentions", "Total # of Contentions", CategoryLocksAndThreads, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1276,7 +1276,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessBytesReceived", "Bytes Received", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessBytesReceived", "Bytes Received", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1289,7 +1289,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessBytesSent", "Bytes Sent", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessBytesSent", "Bytes Sent", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1302,7 +1302,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessConnectionsEstablished", "Connections Established", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessConnectionsEstablished", "Connections Established", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1315,7 +1315,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessDatagramsReceived", "Datagrams Received", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessDatagramsReceived", "Datagrams Received", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1328,7 +1328,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessDatagramsSent", "Datagrams Sent", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessDatagramsSent", "Datagrams Sent", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1341,7 +1341,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessHttpWebRequestAverageLifetime", "HttpWebRequest Average Lifetime", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessHttpWebRequestAverageLifetime", "HttpWebRequest Average Lifetime", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1354,7 +1354,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessHttpWebRequestAverageQueueTime", "HttpWebRequest Average Queue Time", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessHttpWebRequestAverageQueueTime", "HttpWebRequest Average Queue Time", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1367,7 +1367,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessHttpWebRequestsCreatedPerSecond", "HttpWebRequests Created/sec", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessHttpWebRequestsCreatedPerSecond", "HttpWebRequests Created/sec", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1380,7 +1380,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessHttpWebRequestsQueuedPerSecond", "HttpWebRequests Queued/sec", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessHttpWebRequestsQueuedPerSecond", "HttpWebRequests Queued/sec", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1393,7 +1393,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessHttpWebRequestsAbortedPerSecond", "HttpWebRequests Aborted/sec", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessHttpWebRequestsAbortedPerSecond", "HttpWebRequests Aborted/sec", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1406,7 +1406,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessHttpWebRequestsFailedPerSecond", "HttpWebRequests Failed/sec", CategoryNetworking, _process);
+                var counter = GetOrInstallCounter("ProcessHttpWebRequestsFailedPerSecond", "HttpWebRequests Failed/sec", CategoryNetworking, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1424,7 +1424,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfExceptionsThrown", "# of Exceps Thrown", CategoryExceptions, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfExceptionsThrown", "# of Exceps Thrown", CategoryExceptions, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1438,7 +1438,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfExceptionsThrownPerSecond", "# of Exceps Thrown / Sec", CategoryExceptions, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfExceptionsThrownPerSecond", "# of Exceps Thrown / Sec", CategoryExceptions, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1452,7 +1452,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfExceptionFiltersPerSecond", "# of Filters / Sec", CategoryExceptions, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfExceptionFiltersPerSecond", "# of Filters / Sec", CategoryExceptions, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1466,7 +1466,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfExceptionFinallysPerSecond", "# of Finallys / Sec", CategoryExceptions, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfExceptionFinallysPerSecond", "# of Finallys / Sec", CategoryExceptions, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1480,7 +1480,7 @@ namespace metrics.Core
         {
             get
             {
-                var counter = GetOrInstallCounter("ProcessNumberOfExceptionFinallysPerSecond", "Throw to Catch Depth / Sec", CategoryExceptions, _process);
+                var counter = GetOrInstallCounter("ProcessNumberOfExceptionFinallysPerSecond", "Throw to Catch Depth / Sec", CategoryExceptions, Process);
                 var value = counter.NextValue();
                 return value;
             }
@@ -1492,13 +1492,13 @@ namespace metrics.Core
         
         private static PerformanceCounter GetOrInstallCounter(string property, string name, string category, string instance = null)
         {
-            if (!_counters[_process].ContainsKey(property))
+            if (!Counters[Process].ContainsKey(property))
             {
-                var counter = new PerformanceCounter(category, name, instance ?? _process, true);
+                var counter = new PerformanceCounter(category, name, instance ?? Process, true);
 
-                _counters[_process].Add(property, counter);
+                Counters[Process].Add(property, counter);
             }
-            return _counters[_process][property];
+            return Counters[Process][property];
         }
     }
 }
