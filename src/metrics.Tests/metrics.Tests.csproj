@@ -39,7 +39,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\metrics\metrics.snk</AssemblyOriginatorKeyFile>
@@ -83,9 +83,6 @@
     <Compile Include="Net\MetricsListenerTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\metrics\metrics.snk">
-      <Link>metrics.snk</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

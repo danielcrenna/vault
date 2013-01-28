@@ -1,5 +1,5 @@
-﻿using metrics.Support;
-using Newtonsoft.Json;
+﻿using System.Runtime.Serialization;
+using metrics.Support;
 
 namespace metrics.Core
 {
@@ -50,7 +50,7 @@ namespace metrics.Core
             get { return _count.Get(); }
         }
 
-        [JsonIgnore]
+        [IgnoreDataMember]
         public IMetric Copy
         {
             get { return new CounterMetric(_count.Get()); }

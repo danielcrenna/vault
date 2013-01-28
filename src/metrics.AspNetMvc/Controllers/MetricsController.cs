@@ -65,7 +65,7 @@ namespace metrics.AspNetMvc.Controllers
             }
 
             var health = HealthChecks.RunHealthChecks();
-            ControllerContext.HttpContext.Response.StatusCode = health.Values.Where(v => v.IsHealthy).Count() != health.Values.Count ? 500 : 200;
+            ControllerContext.HttpContext.Response.StatusCode = health.Values.Count(v => v.IsHealthy) != health.Values.Count ? 500 : 200;
 
             var result = new ContentResult
             {
@@ -107,16 +107,19 @@ namespace metrics.AspNetMvc.Controllers
 
             var auth = ControllerContext.HttpContext.Request.Headers["Authorization"];
 
-            if (String.IsNullOrEmpty(auth))
+            if (string.IsNullOrEmpty(auth))
             {
-                var userInfo = ControllerContext.HttpContext.Request.Url.UserInfo;
-                if(!string.IsNullOrWhiteSpace(userInfo))
+                if (ControllerContext.HttpContext.Request.Url != null)
                 {
-                    auth = string.Concat("Basic ", Convert.ToBase64String(Encoding.UTF8.GetBytes(userInfo)));
+                    var userInfo = ControllerContext.HttpContext.Request.Url.UserInfo;
+                    if(!string.IsNullOrWhiteSpace(userInfo))
+                    {
+                        auth = string.Concat("Basic ", Convert.ToBase64String(Encoding.UTF8.GetBytes(userInfo)));
+                    }
                 }
             }
             
-            if (String.IsNullOrEmpty(auth))
+            if (string.IsNullOrEmpty(auth))
             {
                 return false;
             }
@@ -126,7 +129,7 @@ namespace metrics.AspNetMvc.Controllers
                 string pass;
                 var user = DecodeAuthorizationHeader(auth, out pass);
 
-                return user.ToLowerInvariant().Equals(username) && pass.HashWithMd5().Equals(password);;
+                return user.ToLowerInvariant().Equals(username) && pass.HashWithMd5().Equals(password);
             }
             catch (Exception)
             {

@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using metrics.Stats;
 using metrics.Support;
-using Newtonsoft.Json;
 
 namespace metrics.Core
 {
@@ -162,7 +162,7 @@ namespace metrics.Core
             return ratePerNs * RateUnit.ToNanos(1);
         }
 
-        [JsonIgnore]
+        [IgnoreDataMember]
         public IMetric Copy
         {
             get

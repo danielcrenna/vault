@@ -14,8 +14,8 @@ using System.Security;
 [assembly: AssemblyCopyright("Copyright © Daniel Crenna 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("metrics.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100ab3c07a881056fe2c8fbf6b33623c58583151604b18d255c604c2b61bb8f208964c4ebb0697026b5df79875894f29487668758feea60e7878a12822588a10b557580ab7b3b0ce913c3d53eb32a1625c4ee3b46fa65c2ccda06b0c8dffcc0e9a5978292d52048405a05b40d885628c3e091f431380ef5d4a51cadd7c66563809a")]
-[assembly: InternalsVisibleTo("metrics.AspNetMvc, PublicKey=0024000004800000940000000602000000240000525341310004000001000100ab3c07a881056fe2c8fbf6b33623c58583151604b18d255c604c2b61bb8f208964c4ebb0697026b5df79875894f29487668758feea60e7878a12822588a10b557580ab7b3b0ce913c3d53eb32a1625c4ee3b46fa65c2ccda06b0c8dffcc0e9a5978292d52048405a05b40d885628c3e091f431380ef5d4a51cadd7c66563809a")]
+[assembly: InternalsVisibleTo("metrics.Tests")]
+[assembly: InternalsVisibleTo("metrics.AspNetMvc")]
 [assembly: AllowPartiallyTrustedCallers]
 [assembly: SecurityRules(SecurityRuleSet.Level1)]
 

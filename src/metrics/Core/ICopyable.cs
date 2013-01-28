@@ -1,5 +1,5 @@
-﻿using metrics.Support;
-using Newtonsoft.Json;
+﻿using System.Runtime.Serialization;
+using metrics.Support;
 
 namespace metrics.Core
 {
@@ -12,7 +12,7 @@ namespace metrics.Core
         /// <summary>
         /// Obtains a copy of the current type that is used in <see cref="ReadOnlyDictionary{T,TK}" /> to provide immutability
         /// </summary>
-        [JsonIgnore]
+        [IgnoreDataMember]
         T Copy { get; }
     }
 }

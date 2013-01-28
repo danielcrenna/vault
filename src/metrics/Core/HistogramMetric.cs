@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using metrics.Stats;
 using metrics.Support;
-using Newtonsoft.Json;
 
 namespace metrics.Core
 {
@@ -240,7 +240,7 @@ namespace metrics.Core
 			}
 		}
 
-		[JsonIgnore]
+		[IgnoreDataMember]
 		public IMetric Copy
 		{
 			get

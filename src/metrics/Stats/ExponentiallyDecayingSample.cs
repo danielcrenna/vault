@@ -2,9 +2,9 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading;
 using metrics.Support;
-using Newtonsoft.Json;
 
 namespace metrics.Stats
 {
@@ -183,7 +183,7 @@ namespace metrics.Stats
             }
         }
 
-        [JsonIgnore]
+        [IgnoreDataMember]
         public ExponentiallyDecayingSample Copy
         {
             get

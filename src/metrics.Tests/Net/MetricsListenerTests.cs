@@ -10,13 +10,13 @@ namespace metrics.Tests.Net
     public class MetricsListenerTests
     {
         private MetricsListener _listener;
-        private const int _port = 9898;
+        private const int Port = 9898;
 
         [TestFixtureSetUp]
         public void SetUp()
         {
             _listener = new MetricsListener();
-            _listener.Start(_port);
+            _listener.Start(Port);
         }
 
         [TestFixtureTearDown]
@@ -36,7 +36,7 @@ namespace metrics.Tests.Net
         [Test]
         public void Can_respond_with_not_found_with_body_when_path_is_not_found()
         {
-            var content = GetResponseForRequest("http://localhost:" + _port + "/unknown");
+            var content = GetResponseForRequest("http://localhost:" + Port + "/unknown");
 
             Assert.AreEqual("<!doctype html><html><body>Resource not found</body></html>", content);
         }
@@ -44,7 +44,7 @@ namespace metrics.Tests.Net
         [Test]
         public void Can_respond_to_ping_request()
         {
-            var content = GetResponseForRequest("http://localhost:" + _port + "/ping");
+            var content = GetResponseForRequest("http://localhost:" + Port + "/ping");
             
             Assert.AreEqual("pong", content);
         }
@@ -57,23 +57,16 @@ namespace metrics.Tests.Net
             var counter = Metrics.Counter(typeof(MetricsListenerTests), "counter");
             counter.Increment();
 
-            var content = GetResponseForRequest("http://localhost:" + _port + "/metrics");
+            var content = GetResponseForRequest("http://localhost:" + Port + "/metrics");
 
-            const string expected = @"[
-  {
-    ""name"": ""counter"",
-    ""metric"": {
-      ""count"": 1
-    }
-  }
-]";
+            const string expected = @"[{""name"":""counter"",""metric"":{""count"":1}}]";
             Assert.AreEqual(expected, content);
         }
 
         [Test]
         public void Can_request_base_url_in_html()
         {
-            var content = GetResponseForRequest("http://localhost:" + _port + "/", "text/html");
+            var content = GetResponseForRequest("http://localhost:" + Port + "/", "text/html");
             
             Trace.WriteLine(content);
         }
@@ -83,7 +76,7 @@ namespace metrics.Tests.Net
         {
             Metrics.Clear();
 
-            var content = GetResponseForRequest("http://localhost:" + _port + "/metrics");
+            var content = GetResponseForRequest("http://localhost:" + Port + "/metrics");
 
             Assert.AreEqual("[]", content);
         }

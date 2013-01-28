@@ -1,5 +1,5 @@
 ﻿using System;
-using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
 namespace metrics.Core
 {
@@ -40,7 +40,7 @@ namespace metrics.Core
             get { return Value.ToString(); }
         }
 
-        [JsonIgnore]
+        [IgnoreDataMember]
         public IMetric Copy
         {
             get { return new GaugeMetric<T>(_evaluator); }
