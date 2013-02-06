@@ -71,6 +71,9 @@
     <Compile Include="Reporting\FileReporter.cs" />
     <Compile Include="Reporting\SampledFileReporter.cs" />
     <Compile Include="Net\MetricsListener.cs" />
+    <Compile Include="Stats\DateTimeSupplier.cs" />
+    <Compile Include="Stats\IDateTimeSupplier.cs" />
+    <Compile Include="Stats\LimitedTimeSample.cs" />
     <Compile Include="Support\Volatile.cs" />
     <Compile Include="Support\VolatileDouble.cs" />
     <Compile Include="Support\AtomicLong.cs" />
