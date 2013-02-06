@@ -77,6 +77,7 @@
     <Compile Include="Reporting\JsonReportFormatterTests.cs" />
     <Compile Include="Reporting\SampleFileReporterTests.cs" />
     <Compile Include="Stats\EWMATests.cs" />
+    <Compile Include="Stats\LimitedTimeSampleTests.cs" />
     <Compile Include="Support\RandomTests.cs" />
     <Compile Include="Support\VolatileDoubleTests.cs" />
     <Compile Include="TimeUnitTests.cs" />
