@@ -58,7 +58,7 @@ namespace metrics.Stats
         /// <summary>
         /// Adds a new recorded value to the sample
         /// </summary>
-        public void Update(long value)
+        public virtual void Update(long value)
         {
             var count = _count.IncrementAndGet();
             if (count <= _values.Length)

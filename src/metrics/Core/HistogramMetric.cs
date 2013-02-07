@@ -255,6 +255,26 @@ namespace metrics.Core
 				return copy;
 			}
 		}
+
+	    public double SampleMean
+	    {
+	        get { return _sample.Count == 0 ? 0 : _sample.Values.Average(); }
+	    }
+
+	    public int SampleCount
+	    {
+            get { return _sample.Count; }
+	    }
+
+	    public long SampleMin
+	    {
+            get { return _sample.Count == 0 ? 0 : _sample.Values.Min(); }
+	    }
+
+	    public double SampleMax
+	    {
+            get { return _sample.Count == 0 ? 0 : _sample.Values.Max(); }
+	    }
 	}
 
 	internal static class SampleExtensions
