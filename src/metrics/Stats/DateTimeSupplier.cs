@@ -4,6 +4,6 @@ namespace metrics.Stats
 {
     internal class DateTimeSupplier : IDateTimeSupplier
     {
-        public DateTime Now { get { return DateTime.Now; } }
+        public DateTime UtcNow { get { return DateTime.UtcNow; } }
     }
 }

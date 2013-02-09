@@ -40,7 +40,7 @@ namespace metrics.Tests.Stats
         [Test]
         public void Update_WhenTimeBetweenRemovingOldItemsHasPassed_RemovesOldItems()
         {
-            var dateTime1 = _dateTimeSupplier.Now;
+            var dateTime1 = _dateTimeSupplier.UtcNow;
             _dateTimeSupplier.SetNow(dateTime1);
             _underTest.Update(10);
             _dateTimeSupplier.SetNow(dateTime1.AddMinutes(2));
@@ -66,15 +66,15 @@ namespace metrics.Tests.Stats
         {
             public MockDateTimeSupplier(DateTime dateTime)
             {
-                Now = dateTime;
+                UtcNow = dateTime;
             }
 
             internal void SetNow(DateTime dateTime)
             {
-                Now = dateTime;
+                UtcNow = dateTime;
             }
 
-            public DateTime Now { get; private set; }
+            public DateTime UtcNow { get; private set; }
         }
     }
 }

@@ -24,12 +24,12 @@ namespace metrics.Stats
             : this(timeToKeepItems, timeBetweenRemovingOldItems)
         {
             _dateTimeSupplier = dateTimeSupplier;
-            _timeToNextRebuildIndex = _dateTimeSupplier.Now.Add(timeBetweenRemovingOldItems);
+            _timeToNextRebuildIndex = _dateTimeSupplier.UtcNow.Add(timeBetweenRemovingOldItems);
         }
 
         public LimitedTimeSample(TimeSpan timeToKeepItems, TimeSpan timeBetweenRemovingOldItems)
         {
-            _timeToNextRebuildIndex = _dateTimeSupplier.Now.Add(timeBetweenRemovingOldItems);
+            _timeToNextRebuildIndex = _dateTimeSupplier.UtcNow.Add(timeBetweenRemovingOldItems);
             _timeToKeepItems = timeToKeepItems;
             _timeBetweenRemovingOldItems = timeBetweenRemovingOldItems;
         }
@@ -57,7 +57,7 @@ namespace metrics.Stats
 
         public void Update(long value)
         {
-            var now = _dateTimeSupplier.Now;
+            var now = _dateTimeSupplier.UtcNow;
             _items.Add(new Item { DateTimeArrived = now, Value = value });
             if (now < _timeToNextRebuildIndex) 
                 return;

@@ -4,6 +4,6 @@ namespace metrics.Stats
 {
     internal interface IDateTimeSupplier
     {
-        DateTime Now { get; }
+        DateTime UtcNow { get; }
     }
 }
