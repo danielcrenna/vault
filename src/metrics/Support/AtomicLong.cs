@@ -40,8 +40,7 @@ namespace metrics.Support
         /// </summary>
         public long AddAndGet(long amount)
         {
-            Interlocked.Add(ref _value, amount);
-            return Get();
+            return Interlocked.Add(ref _value, amount);
         }
 
         /// <summary>
@@ -50,8 +49,7 @@ namespace metrics.Support
         /// <returns></returns>
         public long IncrementAndGet()
         {
-            Interlocked.Increment(ref _value);
-            return Get();
+            return Interlocked.Increment(ref _value);
         }
 
         /// <summary>
@@ -62,12 +60,8 @@ namespace metrics.Support
         /// <returns></returns>
         public bool CompareAndSet(long expected, long updated)
         {
-            if(Get() == expected)
-            {
-                Set(updated);
-                return true;
-            }
-            return false;
+            var originalValue = Interlocked.CompareExchange(ref _value, updated, expected);
+            return originalValue == expected;
         }
 
         /// <summary>
@@ -75,9 +69,7 @@ namespace metrics.Support
         /// </summary>
         public long GetAndSet(long value)
         {
-            var previous = Get();
-            Set(value);
-            return previous;
+            return Interlocked.Exchange(ref _value, value);
         }
 
         /// <summary>
@@ -85,9 +77,8 @@ namespace metrics.Support
         /// </summary>
         public long GetAndAdd(long value)
         {
-            var previous = Get();
-            Interlocked.Add(ref _value, value);
-            return previous;
+            var newValue = Interlocked.Add(ref _value, value);
+            return newValue - value;
         }
 
         public static implicit operator AtomicLong(long value)
