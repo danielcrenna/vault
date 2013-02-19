@@ -48,9 +48,9 @@ namespace metrics.Reporting
                     {
                         WriteMetered(sb, (MeterMetric)metric);
                     }
-                    else if (metric is TimerMetric)
+                    else if (metric is TimerMetricBase)
                     {
-                        WriteTimer(sb, (TimerMetric)metric);
+                        WriteTimer(sb, (TimerMetricBase)metric);
                     }
                     sb.AppendLine();
                 }
@@ -98,7 +98,7 @@ namespace metrics.Reporting
             sb.AppendFormat("            99.9%% <= %{0:F2}\n", percentiles[5]);
         }
 
-        protected void WriteTimer(StringBuilder sb, TimerMetric timer)
+        protected void WriteTimer(StringBuilder sb, TimerMetricBase timer)
         {
             WriteMetered(sb, timer);
 
