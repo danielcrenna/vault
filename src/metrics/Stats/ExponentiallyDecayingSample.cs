@@ -21,7 +21,7 @@ namespace metrics.Stats
     /// </see>
     public class ExponentiallyDecayingSample : ISample<ExponentiallyDecayingSample>
     {
-        private static readonly long RescaleThreshold = TimeUnit.Hours.ToNanos(1);
+        private static readonly long RescaleThreshold = TimeUnit.Hours.ToTicks(1);
         /* Implemented originally as ConcurrentSkipListMap, so lookups will be much slower */
         private readonly ConcurrentDictionary<double, long> _values;
         private readonly ReaderWriterLockSlim _lock;
@@ -49,7 +49,9 @@ namespace metrics.Stats
         {
             _values.Clear();
             _count.Set(0);
-            _startTime = Tick();
+
+            _startTime = CurrentTimeInSeconds();
+            _nextScaleTime.Set(Tick() + RescaleThreshold);
         }
         
         /// <summary>
