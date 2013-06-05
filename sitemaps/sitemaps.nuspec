@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>Sitemaps</id>
+		<version>1.0.0</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+		<description>Smart sitemap generation for .NET web apps</description>
+		<summary>Smart sitemap generation for .NET web apps</summary>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/sitemaps</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/sitemaps/blob/master/LICENSE</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_sitemaps.png</iconUrl>
+		<tags>sitemaps xml mvc</tags>
+    <dependencies>
+      <dependency id="Paging" version="1.0.0" />
+    </dependencies>
+	</metadata>
+</package>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>Specifications</id>
+		<version>1.0.4</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+		<description>The specification pattern for composable business logic, in C#.</description>
+		<summary>The specification pattern for composable business logic, in C#..</summary>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/specifications</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/specifications/blob/master/LICENSE</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_specifications.png</iconUrl>
+		<tags>specifications specification patterns pattern</tags>   
+	</metadata>
+</package>

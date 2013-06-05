@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebnf", "ebnf.csproj", "{69DB7C65-68CC-47A8-9C39-4FE009666923}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ebnf.Tests", "..\ebnf.Tests\ebnf.Tests.csproj", "{06637C44-7571-40DB-A4BC-444576EBC646}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{69DB7C65-68CC-47A8-9C39-4FE009666923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69DB7C65-68CC-47A8-9C39-4FE009666923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69DB7C65-68CC-47A8-9C39-4FE009666923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69DB7C65-68CC-47A8-9C39-4FE009666923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06637C44-7571-40DB-A4BC-444576EBC646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06637C44-7571-40DB-A4BC-444576EBC646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06637C44-7571-40DB-A4BC-444576EBC646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06637C44-7571-40DB-A4BC-444576EBC646}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

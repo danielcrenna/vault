@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qualm", "src\Qualm\Qualm.csproj", "{F94829EF-7086-41B1-A227-5E3398A3C4BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qualm.Tests", "src\Qualm.Tests\Qualm.Tests.csproj", "{98EE53ED-DFD6-425F-8063-F2AEEAD3D830}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1628766B-74DF-496E-9D85-041BA183CCAA}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.markdown = README.markdown
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qualm.Vision", "Qualm.Vision\Qualm.Vision.csproj", "{D5F0ACCF-CA81-4DBC-986E-8E8385ACA6E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qualm.Vision.Tests", "Qualm.Vision.Tests\Qualm.Vision.Tests.csproj", "{A621815A-23C4-48FE-A7EB-B23D82E9F1BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F94829EF-7086-41B1-A227-5E3398A3C4BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F94829EF-7086-41B1-A227-5E3398A3C4BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F94829EF-7086-41B1-A227-5E3398A3C4BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F94829EF-7086-41B1-A227-5E3398A3C4BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98EE53ED-DFD6-425F-8063-F2AEEAD3D830}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98EE53ED-DFD6-425F-8063-F2AEEAD3D830}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98EE53ED-DFD6-425F-8063-F2AEEAD3D830}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98EE53ED-DFD6-425F-8063-F2AEEAD3D830}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5F0ACCF-CA81-4DBC-986E-8E8385ACA6E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5F0ACCF-CA81-4DBC-986E-8E8385ACA6E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5F0ACCF-CA81-4DBC-986E-8E8385ACA6E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5F0ACCF-CA81-4DBC-986E-8E8385ACA6E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A621815A-23C4-48FE-A7EB-B23D82E9F1BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A621815A-23C4-48FE-A7EB-B23D82E9F1BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A621815A-23C4-48FE-A7EB-B23D82E9F1BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A621815A-23C4-48FE-A7EB-B23D82E9F1BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

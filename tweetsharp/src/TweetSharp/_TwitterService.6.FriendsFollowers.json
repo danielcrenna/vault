@@ -1,0 +1,35 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/friendships/no_retweets/ids
+// TODO
+
+// https://dev.twitter.com/docs/api/1.1/get/friends/ids
+TwitterCursorList<long>, "friends/ids", ListFriendIdsOf, long? user_id, string screen_name, long? cursor, int? count
+
+// https://dev.twitter.com/docs/api/1.1/get/followers/ids
+TwitterCursorList<long>, "followers/ids", ListFollowerIdsOf, long? user_id, string screen_name, long? cursor, int? count
+
+// https://dev.twitter.com/docs/api/1.1/get/friendships/lookup
+IEnumerable<TwitterFriendshipLookup>, "friendships/lookup", ListFriendshipsFor, IEnumerable<string> screen_name, IEnumerable<long> user_id
+
+// https://dev.twitter.com/docs/api/1.1/get/friendships/incoming
+TwitterCursorList<long>, "friendships/incoming", GetIncomingFriendRequests, long? cursor
+
+// https://dev.twitter.com/docs/api/1.1/get/friendships/outgoing
+TwitterCursorList<long>, "friendships/outgoing", GetOutgoingFriendRequests, long? cursor
+
+// https://dev.twitter.com/docs/api/1.1/post/friendships/create
+TwitterUser, "friendships/create":POST, FollowUser, string screen_name, long? user_id, bool? follow
+
+// https://dev.twitter.com/docs/api/1.1/post/friendships/destroy
+TwitterUser, "friendships/destroy":POST, UnfollowUser, string screen_name, long? user_id
+
+// https://dev.twitter.com/docs/api/1.1/post/friendships/update
+TwitterFriendship, "friendships/update":POST, UpdateFriendship, string screen_name, long? user_id, bool? device, bool? retweets
+
+// https://dev.twitter.com/docs/api/1.1/get/friendships/show
+TwitterFriendship, "friendships/show", GetFriendshipInfo, string source_id, string source_screen_name, string target_id, string target_screen_name
+
+// https://dev.twitter.com/docs/api/1.1/get/friends/list
+TwitterCursorList<TwitterUser>, "friends/list", ListFriends, long? user_id, string screen_name, long? cursor, bool? skip_status, bool? include_user_entities
+
+// https://dev.twitter.com/docs/api/1.1/get/followers/list
+TwitterCursorList<TwitterUser>, "followers/list", ListFollowers, long? user_id, string screen_name, long? cursor, bool? skip_status, bool? include_user_entities

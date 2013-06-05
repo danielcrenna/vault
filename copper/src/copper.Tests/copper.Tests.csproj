@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6FAA835B-E004-4638-AEA1-9767BB789BDE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>copper.Tests</RootNamespace>
+    <AssemblyName>copper.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AsyncBridge, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AsyncBridge.0.1.1\lib\net40-Client\AsyncBridge.dll</HintPath>
+    </Reference>
+    <Reference Include="AWSSDK, Version=1.5.10.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AWSSDK.1.5.10.0\lib\AWSSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="clrzmq, Version=3.0.0.0, Culture=neutral, PublicKeyToken=ef95cdc29d237b0d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\clrzmq.3.0.0-beta3\lib\net40\clrzmq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net, Version=2.0.0.619, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\protobuf-net.2.0.0.619\lib\net40\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.0.21114\lib\Net40\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Interfaces.2.0.21114\lib\Net40\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.0.21114\lib\Net40\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-PlatformServices.2.0.21114\lib\Net40\System.Reactive.PlatformServices.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AmazonSQS\SimpleQueueConsumerTests.cs" />
+    <Compile Include="AmazonSQS\SimpleQueueProducerTests.cs" />
+    <Compile Include="BatchingConsumerTests.cs" />
+    <Compile Include="EventAggregatorTests.cs" />
+    <Compile Include="FileConsumerTests.cs" />
+    <Compile Include="ProtocolBuffers\ProtocolBuffersSerializerTests.cs" />
+    <Compile Include="ProtocolBuffers\ReflectionRuntimeTypeModelTests.cs" />
+    <Compile Include="StringEventHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ZeroMQ\ZmqConsumerTests.cs" />
+    <Compile Include="ZeroMQ\ZmqProducerTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\copper.AmazonSQS\copper.AmazonSQS.csproj">
+      <Project>{0608EF15-1906-4725-A064-0450AAF68884}</Project>
+      <Name>copper.AmazonSQS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\copper.ProtoBuf\copper.ProtocolBuffers.csproj">
+      <Project>{126114C4-320F-437D-BC64-FC12D8BCF9FF}</Project>
+      <Name>copper.ProtocolBuffers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\copper.Json\copper.Json.csproj">
+      <Project>{cc0b90d1-ea9e-49b2-9797-992cfc78b946}</Project>
+      <Name>copper.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\copper.MsgPack\copper.MsgPack.csproj">
+      <Project>{ae6b1c9a-9317-42ba-b1c1-67eb09eebcf8}</Project>
+      <Name>copper.MsgPack</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\copper.ZeroMQ\copper.ZeroMQ.csproj">
+      <Project>{E31F2665-8F1B-43D5-BAE5-A08D7A8C03AD}</Project>
+      <Name>copper.ZeroMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\copper\copper.csproj">
+      <Project>{55FE5FCB-05F2-4A2E-B17D-4EDA1BF5ADCD}</Project>
+      <Name>copper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

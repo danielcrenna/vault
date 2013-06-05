@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>Meaghan Ogilvie</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>Images/57x57.png</string>
+		<string>Images/114x114.png</string>
+		<string>Images/72x72.png</string>
+		<string>Images/29x29.png</string>
+		<string>Images/58x58.png</string>
+		<string>Images/50x50.png</string>
+		<string>Images/512x512.png</string>
+	</array>
+	<key>CFBundleIdentifier</key>
+	<string>artapp.meaghanogilvie</string>
+	<key>CFBundleVersion</key>
+	<string>1.0.0.0</string>
+	<key>MinimumOSVersion</key>
+	<string>5.0</string>
+	<key>NSMainNibFile</key>
+	<string>MainWindow</string>
+	<key>NSMainNibFile~ipad</key>
+	<string>MainWindow</string>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+</dict>
+</plist>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Interface Name="copper.Consumes&lt;T&gt;">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Consumes.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="copper.Pipe&lt;TP, TC&gt;" Collapsed="true">
+    <Position X="3.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Pipe.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="copper.Serializer">
+    <Position X="8.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Serializer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="copper.EventAggregator">
+    <Position X="3.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>EventAggregator.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="copper.Produces&lt;T&gt;">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Produces.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="copper.EventPublisher" Collapsed="true">
+    <Position X="3.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EventPublisher.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

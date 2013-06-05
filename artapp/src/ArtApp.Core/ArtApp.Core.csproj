@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{84EEEF80-D8E9-4CC1-9C8D-50F8EE14855B}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>ArtApp</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyName>ArtApp.Core</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyName>ArtApp.Core</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Distribution</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <AssemblyName>ArtAppCore</AssemblyName>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Distribution</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <AssemblyName>ArtAppCore</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <AssemblyName>ArtAppCore</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <AssemblyName>ArtAppCore</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="LoadingView.cs" />
+    <Compile Include="ConfirmButton.cs" />
+    <Compile Include="CustomNavigationBar.cs" />
+    <Compile Include="CustomTableView.cs" />
+    <Compile Include="CustomWindow.cs" />
+    <Compile Include="Util.cs" />
+    <Compile Include="Dialog\DialogViewController.cs" />
+    <Compile Include="Dialog\RefreshTableHeaderView.cs" />
+    <Compile Include="Dialog\StyledStringElement.cs" />
+    <Compile Include="GalleryImageView.cs" />
+    <Compile Include="BadgeTableViewCell.cs" />
+    <Compile Include="BadgeView.cs" />
+    <Compile Include="SemiModalViewController.cs" />
+    <Compile Include="TabBarController.cs" />
+    <Compile Include="TextLabel.cs" />
+    <Compile Include="DimensionSet.cs" />
+    <Compile Include="UIImageEx.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="PieceViewController.cs" />
+    <Compile Include="BioViewController.cs" />
+    <Compile Include="CollectionsViewController.cs" />
+    <Compile Include="CustomDialogViewController.cs" />
+    <Compile Include="PieceDetailViewController.cs" />
+    <Compile Include="PieceFullViewController.cs" />
+    <Compile Include="SeriesDetailViewController.cs" />
+    <Compile Include="SeriesGalleryViewController.cs" />
+    <Compile Include="SeriesListViewController.cs" />
+    <Compile Include="SeriesViewController.cs" />
+    <Compile Include="WebViewController.cs" />
+    <Compile Include="BioView.cs" />
+    <Compile Include="PieceDetailView.cs" />
+    <Compile Include="PieceFullView.cs" />
+    <Compile Include="SeriesDetailView.cs" />
+    <Compile Include="TriangleView.cs" />
+    <Compile Include="TweetView.cs" />
+    <Compile Include="Bio.cs" />
+    <Compile Include="CustomNavigationController.cs" />
+    <Compile Include="DetailViewController.cs" />
+    <Compile Include="PagedViewController.cs" />
+    <Compile Include="PagedViewEventArgs.cs" />
+    <Compile Include="TransparentToolbar.cs" />
+    <Compile Include="AppGlobal.cs" />
+    <Compile Include="Models\Artist.cs" />
+    <Compile Include="Models\Piece.cs" />
+    <Compile Include="Models\Series.cs" />
+    <Compile Include="SeriesDataSource.cs" />
+    <Compile Include="JsonParser.cs" />
+    <Compile Include="ImageFactory.cs" />
+    <Compile Include="ImageCache.cs" />
+    <Compile Include="ImageHelper.cs" />
+    <Compile Include="AppManifest.cs" />
+    <Compile Include="RootViewController.cs" />
+    <Compile Include="MainWindow.xib.designer.cs">
+      <DependentUpon>MainWindow.xib</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Gallery.cs" />
+    <Compile Include="BadgeViewAlignment.cs" />
+    <Compile Include="LightImageView.cs" />
+    <Compile Include="CustomMailer.cs" />
+    <Compile Include="UIViewControllerExtensions.cs" />
+    <Compile Include="Dialog\RefreshViewStatus.cs" />
+    <Compile Include="Dialog\SearchChangedEventArgs.cs" />
+    <Compile Include="Dialog\StyledMultilineElement.cs" />
+    <Compile Include="Dialog\StringElement.cs" />
+    <Compile Include="Dialog\Section.cs" />
+    <Compile Include="Dialog\UIViewElement.cs" />
+    <Compile Include="Dialog\RootElement.cs" />
+    <Compile Include="Dialog\Element.cs" />
+    <Compile Include="Dialog\IElementSizing.cs" />
+    <Compile Include="Dialog\IColorizeBackground.cs" />
+    <Compile Include="Dialog\Group.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dialog\" />
+    <Folder Include="Models\" />
+    <Folder Include="Images\" />
+    <Folder Include="Images\gallery\" />
+    <Folder Include="Images\backgrounds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\gallery\backButton.png" />
+    <Content Include="Images\gallery\backButton%402x.png" />
+    <Content Include="Images\gallery\backButtonHighlighted.png" />
+    <Content Include="Images\gallery\backButtonHighlighted%402x.png" />
+    <Content Include="Images\gallery\lighting.png" />
+    <Content Include="Images\gallery\lighting%402x.png" />
+    <Content Include="Images\gallery\lights_off.png" />
+    <Content Include="Images\gallery\lights_off%402x.png" />
+    <Content Include="Images\gallery\lights_on.png" />
+    <Content Include="Images\gallery\lights_on%402x.png" />
+    <Content Include="Images\gallery\listView.png" />
+    <Content Include="Images\gallery\listView%402x.png" />
+    <Content Include="Images\gallery\listViewHighlighted.png" />
+    <Content Include="Images\gallery\listViewHighlighted%402x.png" />
+    <Content Include="Images\gallery\loadedSuccess.png" />
+    <Content Include="Images\gallery\loadedSuccess%402x.png" />
+    <Content Include="Images\gallery\shadowMask.png" />
+    <Content Include="Images\backgrounds\card%402x.jpg" />
+    <Content Include="Images\backgrounds\leather.jpg" />
+    <Content Include="Images\backgrounds\leather%402x.jpg" />
+    <Content Include="Images\backgrounds\wall.jpg" />
+    <Content Include="Images\backgrounds\wall%402x.jpg" />
+    <Content Include="Images\111-user.png" />
+    <Content Include="Images\111-user%402x.png" />
+    <Content Include="Images\39-back.png" />
+    <Content Include="Images\39-back%402x.png" />
+    <Content Include="Images\40-forward.png" />
+    <Content Include="Images\40-forward%402x.png" />
+    <Content Include="Images\41-picture-frame.png" />
+    <Content Include="Images\41-picture-frame%402x.png" />
+    <Content Include="Images\buttonPlate.png" />
+    <Content Include="Images\buttonPlate%402x.png" />
+    <Content Include="Images\buttonPlateHighlighted.png" />
+    <Content Include="Images\buttonPlateHighlighted%402x.png" />
+    <Content Include="Images\listViewButton.png" />
+    <Content Include="Images\listViewButton%402x.png" />
+    <Content Include="Images\opaqueBar.png" />
+    <Content Include="Images\opaqueBar%402x.png" />
+    <Content Include="Images\SSVignetteiPad.png" />
+    <Content Include="Images\SSVignetteiPhone.png" />
+    <Content Include="Images\SSVignetteiPhone%402x.png" />
+    <Content Include="Images\tabArrow.png" />
+    <Content Include="Images\tabArrow%402x.png" />
+    <Content Include="Images\transparentBar.png" />
+    <Content Include="Images\transparentBar%402x.png" />
+    <Content Include="Images\gallery\left_shadow.png" />
+    <Content Include="Images\gallery\right_shadow.png" />
+    <Content Include="Images\gallery\top_shadow.png" />
+    <Content Include="Images\gallery\background_seamless_low.png" />
+    <Content Include="Images\gallery\background_seamless_high.png" />
+    <Content Include="Images\gallery\lighting-iphone-Landscape.png" />
+    <Content Include="Images\gallery\lighting-iphone-Landscape%402x.png" />
+    <Content Include="Images\backgrounds\card.jpg" />
+    <Content Include="Images\whiteback.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="MainWindow.xib" />
+  </ItemGroup>
+</Project>

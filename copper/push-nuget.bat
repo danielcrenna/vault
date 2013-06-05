@@ -1,0 +1,1 @@
+".nuget\NuGet.exe" push copper.0.9.5-alpha.nupkg

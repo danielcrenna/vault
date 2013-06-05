@@ -1,0 +1,171 @@
+﻿<#@ template language="C#" hostSpecific="true" #>
+<#@ output extension=".generated.cs" #>
+<#@ assembly name="System.Core.dll" #>
+<#@ assembly name="C:\Users\Daniel\Desktop\Src\ebnf\src\ebnf\bin\Debug\ebnf.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="ebnf" #>
+<#@ import namespace="ebnf.Nodes" #>
+<#
+	var _grammar = new Grammar("calc", @"C:\Users\Daniel\Desktop\Src\ebnf\src\ebnf.Tests\InputFiles\calc.ebnf");
+	var name = Utils.TransformGrammarName(_grammar.Name);
+	var exps = _grammar.Tree.Rules.Select(r => new Tuple<string, Expression> { First = r.Identifier, Second = r.Expression });
+	var terms = exps.Select(e => e.Second).SelectMany(e => e.Terms);
+	var factors = terms.SelectMany(t => t.Factors);
+	var specials = factors.Where(f => f is SpecialSequence).Cast<SpecialSequence>();
+	var terminals = factors.OfType<ebnf.Nodes.Terminal>().Distinct().ToList();
+#>
+using System;
+using System.Collections.Generic;
+
+namespace <#= name #>
+{
+	/// <summary>
+	/// An Earley parser for the <#= name #> language.
+	/// <see cref="http://en.wikipedia.org/wiki/Earley_parser" />
+	/// </summary>
+	public class <#= name #>Parser
+	{
+		public IEnumerable<<#= name #>SyntaxTree> Parse(string input)
+		{
+			throw new NotImplementedException();
+		}
+	}
+}
+
+// Syntax Tree
+namespace <#= name #>
+{
+	public partial class <#= name #>SyntaxTree
+	{
+
+	}
+}
+
+// Terminals
+namespace <#= name #>
+{
+	public partial class Terminal
+	{
+		private static List<string> _terminals;
+
+		static Terminal()
+		{
+			_terminals = new List<string>();
+<# foreach(var terminal in terminals) { #>
+			_terminals.Add("<#= Utils.Escape(terminal.Value) #>"); 
+<# } #>
+		}
+
+		public static bool IsTerminal(string input)
+		{
+			return _terminals.Contains(input);
+		}
+
+		public static bool IsTerminal(params char[] input)
+		{
+			return IsTerminal(new string(input));
+		}
+	}
+}
+
+// Expressions
+namespace <#= name #>
+{
+	public partial class Expression
+	{
+
+	}
+
+<# foreach(var exp in exps) { #>
+	public partial class <#= Utils.TransformGrammarName(Utils.SpacesToCamelCase(exp.First)) #>Expression : Expression
+	{
+
+	}
+<# } #>
+}
+
+<#+
+	public class Tuple<T, K>
+	{
+		public T First { get; set; }
+		public K Second { get; set; }
+	}
+
+	public class Utils
+	{
+		// http://stackoverflow.com/questions/323640/can-i-convert-a-c-sharp-string-value-to-an-escaped-string-literal
+		private static Dictionary<string, string> escapeMapping = new Dictionary<string, string>()
+		{
+			{"\"", "\\\""},
+			{"\\\\", @"\\"},
+			{"\a", @"\a"},
+			{"\b", @"\b"},
+			{"\f", @"\f"},
+			{"\n", @"\n"},
+			{"\r", @"\r"},
+			{"\t", @"\t"},
+			{"\v", @"\v"},
+			{"\0", @"\0"},
+		};
+		private static Regex escapeRegex = new Regex(string.Join("|", escapeMapping.Keys.ToArray()));
+
+		public static string Escape(string s)
+		{
+			return escapeRegex.Replace(s, EscapeMatchEval);
+		}
+
+		private static string EscapeMatchEval(Match m)
+		{
+			if (escapeMapping.ContainsKey(m.Value))
+			{
+				return escapeMapping[m.Value];
+			}
+			return escapeMapping[Regex.Escape(m.Value)];
+		}
+
+		private const string UnderscoresPattern = "(?:^|_)(.)";
+		private const string CamelCasePattern = "(((?<=[a-z])[A-Z])|([A-Z](?![A-Z]|$)))";
+
+		public static string Capitalize(string input)
+		{
+			var lower = input.ToLowerInvariant();
+			return char.ToUpperInvariant(lower[0]) + lower.Substring(1);
+		}
+
+		public static string SpacesToCamelCase(string input)
+		{
+			var words = input.Split(new []{' '}, StringSplitOptions.RemoveEmptyEntries);
+			var sb = new StringBuilder();
+			if(words.Length > 0)
+			{
+				sb.Append(words[0]);
+			}
+			for(var i = 1; i < words.Length; i++)
+			{
+				sb.Append(Capitalize(words[i]));
+			}
+			return sb.ToString();
+		}
+
+		public static string TransformGrammarName(string input)
+		{
+			input = input.Replace("#", "Sharp").Replace("+", "Plus");
+			input = Underscore(input);
+			var pascalized = Regex.Replace(input, UnderscoresPattern, match => match.Groups[1].Value.ToUpper(), RegexOptions.Compiled);
+			return pascalized;
+		}
+
+		public static string Underscore(string input)
+		{
+			if (string.IsNullOrWhiteSpace(input))
+			{
+				return input;
+			}
+			var underscored = Regex.Replace(input, CamelCasePattern, m => string.Concat("_", m.Value.ToLowerInvariant()), RegexOptions.Compiled);
+			return underscored.StartsWith("_") ? underscored.Substring(1) : underscored;
+		}
+	}
+#>

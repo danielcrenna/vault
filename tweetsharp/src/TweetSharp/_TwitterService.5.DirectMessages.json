@@ -1,0 +1,14 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/direct_messages
+IEnumerable<TwitterDirectMessage>, "direct_messages", ListDirectMessagesReceived, long? since_id, long? max_id, int? count, bool? include_entities, bool? skip_status
+
+// https://dev.twitter.com/docs/api/1.1/get/direct_messages/sent
+IEnumerable<TwitterDirectMessage>, "direct_messages/sent", ListDirectMessagesSent, long? since_id, long? max_id, int? count, int? page, bool? include_entities
+
+// https://dev.twitter.com/docs/api/1.1/get/direct_messages/show
+TwitterDirectMessage, "direct_messages/show", GetDirectMessage, long id
+
+// https://dev.twitter.com/docs/api/1.1/post/direct_messages/destroy
+TwitterDirectMessage, "direct_messages/destroy":POST, DeleteDirectMessage, long id, bool? include_entities
+
+// https://dev.twitter.com/docs/api/1.1/post/direct_messages/new
+TwitterDirectMessage, "direct_messages/new":POST, SendDirectMessage, string text, long user_id, string screen_name

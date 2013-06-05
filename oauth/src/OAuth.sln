@@ -1,0 +1,66 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuth", "OAuth\OAuth.csproj", "{9D026615-54CC-454F-A8A2-C78FEF74E956}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuth.Tests", "OAuth.Tests\OAuth.Tests.csproj", "{F1D59F2A-28B2-4423-B567-74CE4CA81AD4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B22B11C3-AD3D-491B-BCBC-0304EC524ACB}"
+	ProjectSection(SolutionItems) = preProject
+		..\LICENSE = ..\LICENSE
+		..\oauth.nuspec = ..\oauth.nuspec
+		..\pack-nuget.bat = ..\pack-nuget.bat
+		..\README.markdown = ..\README.markdown
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Targets", "Targets", "{A9F648E4-B584-4F16-9E8A-5DA801C77FE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuth.Net20", "OAuth.Net20\OAuth.Net20.csproj", "{98CDFBF6-D5A9-4F13-BE35-36B476C0A4BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuth.Net35", "OAuth.Net35\OAuth.Net35.csproj", "{0448D8F9-1AEB-49A8-96A9-40D134020125}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuth.WindowsPhone", "OAuth.WindowsPhone\OAuth.WindowsPhone.csproj", "{483D6215-CA0C-4608-9915-D730C148C82A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuth.WindowsPhone.Mango", "OAuth.WindowsPhone.Mango\OAuth.WindowsPhone.Mango.csproj", "{92EDFEBE-F585-43B2-AA2D-291C7196032F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D026615-54CC-454F-A8A2-C78FEF74E956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D026615-54CC-454F-A8A2-C78FEF74E956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D026615-54CC-454F-A8A2-C78FEF74E956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D026615-54CC-454F-A8A2-C78FEF74E956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1D59F2A-28B2-4423-B567-74CE4CA81AD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1D59F2A-28B2-4423-B567-74CE4CA81AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1D59F2A-28B2-4423-B567-74CE4CA81AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1D59F2A-28B2-4423-B567-74CE4CA81AD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98CDFBF6-D5A9-4F13-BE35-36B476C0A4BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98CDFBF6-D5A9-4F13-BE35-36B476C0A4BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98CDFBF6-D5A9-4F13-BE35-36B476C0A4BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98CDFBF6-D5A9-4F13-BE35-36B476C0A4BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0448D8F9-1AEB-49A8-96A9-40D134020125}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0448D8F9-1AEB-49A8-96A9-40D134020125}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0448D8F9-1AEB-49A8-96A9-40D134020125}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0448D8F9-1AEB-49A8-96A9-40D134020125}.Release|Any CPU.Build.0 = Release|Any CPU
+		{483D6215-CA0C-4608-9915-D730C148C82A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{483D6215-CA0C-4608-9915-D730C148C82A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{483D6215-CA0C-4608-9915-D730C148C82A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{483D6215-CA0C-4608-9915-D730C148C82A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92EDFEBE-F585-43B2-AA2D-291C7196032F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92EDFEBE-F585-43B2-AA2D-291C7196032F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92EDFEBE-F585-43B2-AA2D-291C7196032F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92EDFEBE-F585-43B2-AA2D-291C7196032F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{98CDFBF6-D5A9-4F13-BE35-36B476C0A4BB} = {A9F648E4-B584-4F16-9E8A-5DA801C77FE9}
+		{0448D8F9-1AEB-49A8-96A9-40D134020125} = {A9F648E4-B584-4F16-9E8A-5DA801C77FE9}
+		{483D6215-CA0C-4608-9915-D730C148C82A} = {A9F648E4-B584-4F16-9E8A-5DA801C77FE9}
+		{92EDFEBE-F585-43B2-AA2D-291C7196032F} = {A9F648E4-B584-4F16-9E8A-5DA801C77FE9}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,1453 @@
+<<<<<<< HEAD
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 10.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="10.0">
+ <Targets>
+  <Target Name="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\bin\lib\net40\Hammock.dll">
+   <Modules>
+    <Module Name="hammock.dll">
+     <Namespaces>
+      <Namespace Name="Hammock">
+       <Types>
+        <Type Name="RestBase" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestBase.cs" Line="91">'RestBase.RestBase()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestBase..ctor()&#xD;&#xA;RestBase.Initialize():Void&#xD;&#xA;RestBase.set_Cookies(WebParameterCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestBase.cs" Line="91">'RestBase.RestBase()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestBase..ctor()&#xD;&#xA;RestBase.Initialize():Void&#xD;&#xA;RestBase.set_Headers(NameValueCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestBase.cs" Line="91">'RestBase.RestBase()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestBase..ctor()&#xD;&#xA;RestBase.Initialize():Void&#xD;&#xA;RestBase.set_Parameters(WebParameterCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestBase.cs" Line="91">'RestBase.RestBase()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestBase..ctor()&#xD;&#xA;RestBase.Initialize():Void&#xD;&#xA;RestBase.set_PostParameters(ICollection&lt;HttpPostParameter&gt;):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="RestClient" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#_streamQuery" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkAllNonSerializableFields" Category="Microsoft.Usage" CheckId="CA2235" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error">Field 'RestClient._streamQuery' is a member of type 'RestClient', which is serializable, but is of type 'WebQuery', which is not serializable. Add the NonSerializedAttribute to 'RestClient._streamQuery'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BeginRequestWithTask(Hammock.RestRequest,Hammock.RestCallback,Hammock.Web.WebQuery,System.String,Hammock.Web.WebQueryAsyncResult&amp;,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2071">In method 'RestClient.BeginRequestWithTask(RestRequest, RestCallback, WebQuery, string, out WebQueryAsyncResult, object)', object '&lt;&gt;g__initLocal3b' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal3b' before all references to it are out of scope.</Issue>
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2039">In method 'RestClient.BeginRequestWithTask(RestRequest, RestCallback, WebQuery, string, out WebQueryAsyncResult, object)', call System.IDisposable.Dispose on object 'task' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BeginRequestWithTask`1(Hammock.RestRequest,Hammock.RestCallback`1&lt;!!0&gt;,Hammock.Web.WebQuery,System.String,Hammock.Web.WebQueryAsyncResult&amp;,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2133">In method 'RestClient.BeginRequestWithTask&lt;T&gt;(RestRequest, RestCallback&lt;T&gt;, WebQuery, string, out WebQueryAsyncResult, object)', object '&lt;&gt;g__initLocal43' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal43' before all references to it are out of scope.</Issue>
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2102">In method 'RestClient.BeginRequestWithTask&lt;T&gt;(RestRequest, RestCallback&lt;T&gt;, WebQuery, string, out WebQueryAsyncResult, object)', call System.IDisposable.Dispose on object 'task' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BuildBaseResponse(Hammock.Web.WebQueryResult)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2534">In method 'RestClient.BuildBaseResponse(WebQueryResult)', object 'response' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'response' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BuildBaseResponse`1(Hammock.Web.WebQueryResult)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2543">In method 'RestClient.BuildBaseResponse&lt;T&gt;(WebQueryResult)', object 'response' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'response' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BuildRateLimitingTask(Hammock.RestRequest,Hammock.Tasks.ITaskOptions,Hammock.RestCallback,Hammock.Web.WebQuery,System.String,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2254">In method 'RestClient.BuildRateLimitingTask(RestRequest, ITaskOptions, RestCallback, WebQuery, string, object)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal49' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CompleteWithMockWebResponse(System.IAsyncResult,System.IAsyncResult,Hammock.Web.Triplet`3&lt;Hammock.RestRequest,Hammock.RestCallback,System.Object&gt;)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="1025">In method 'RestClient.CompleteWithMockWebResponse(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback, object&gt;)', object '&lt;&gt;g__initLocale' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocale' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="1009">In method 'RestClient.CompleteWithMockWebResponse(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback, object&gt;)', object 'm' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'm' before all references to it are out of scope.</Issue>
+            </Message>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="1016">Object 'stream' can be disposed more than once in method 'RestClient.CompleteWithMockWebResponse(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback, object&gt;)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 1016</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CompleteWithMockWebResponse`1(System.IAsyncResult,System.IAsyncResult,Hammock.Web.Triplet`3&lt;Hammock.RestRequest,Hammock.RestCallback`1&lt;!!0&gt;,System.Object&gt;)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="961">In method 'RestClient.CompleteWithMockWebResponse&lt;T&gt;(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback&lt;T&gt;, object&gt;)', object '&lt;&gt;g__initLocald' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocald' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="945">In method 'RestClient.CompleteWithMockWebResponse&lt;T&gt;(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback&lt;T&gt;, object&gt;)', object 'm' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'm' before all references to it are out of scope.</Issue>
+            </Message>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="952">Object 'stream' can be disposed more than once in method 'RestClient.CompleteWithMockWebResponse&lt;T&gt;(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback&lt;T&gt;, object&gt;)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 952</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GetQueryFor(Hammock.RestRequest,System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2707">In method 'RestClient.GetQueryFor(RestRequest, string)', object 'new BasicAuthWebQuery(info, traceEnabled)' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'new BasicAuthWebQuery(info, traceEnabled)' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="RestRequest" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestRequest.cs" Line="27">'RestRequest.RestRequest()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestRequest..ctor()&#xD;&#xA;RestRequest.Initialize():Void&#xD;&#xA;RestRequest.set_ExpectHeaders(WebHeaderCollection):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="RestResponseBase" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+           <Issue Name="ProvideDisposeBool" Certainty="95" Level="Error">Provide an overridable implementation of Dispose(bool) on 'RestResponseBase' or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestResponse.cs" Line="294">Modify 'RestResponseBase.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ReplaceContentStreamWithMemoryStream()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestResponse.cs" Line="145">In method 'RestResponseBase.ReplaceContentStreamWithMemoryStream()', object 'stream' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'stream' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Attributes.Specialized">
+       <Types>
+        <Type Name="EntityAttribute" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Attributes\Specialized" File="EntityAttribute.cs" Line="12">'EntityAttribute.EntityAttribute()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;EntityAttribute..ctor()&#xD;&#xA;EntityAttribute.set_ContentEncoding(Encoding):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Authentication.OAuth">
+       <Types>
+        <Type Name="OAuthTools" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#GetSignature(Hammock.Authentication.OAuth.OAuthSignatureMethod,Hammock.Authentication.OAuth.OAuthSignatureTreatment,System.String,System.String,System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthTools.cs" Line="296">In method 'OAuthTools.GetSignature(OAuthSignatureMethod, OAuthSignatureTreatment, string, string, string)', call System.IDisposable.Dispose on object 'crypto' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="OAuthWebQuery" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(Hammock.Authentication.OAuth.OAuthWebQueryInfo,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWebQuery.cs" Line="26">'OAuthWebQuery.OAuthWebQuery(OAuthWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWebQuery..ctor(OAuthWebQueryInfo, Boolean)&#xD;&#xA;OAuthWebQuery.Initialize(OAuthWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Method(WebMethod):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="OAuthWorkflow" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(Hammock.Authentication.OAuth.OAuthCredentials)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_CallbackUrl(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ClientPassword(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ClientUsername(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ConsumerKey(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ConsumerSecret(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ParameterHandling(OAuthParameterHandling):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_SessionHandle(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_SignatureMethod(OAuthSignatureMethod):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_SignatureTreatment(OAuthSignatureTreatment):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_Token(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_TokenSecret(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_Verifier(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_Version(String):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Retries">
+       <Types>
+        <Type Name="RetryPolicy" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Retries" File="RetryPolicy.cs" Line="17">'RetryPolicy.RetryPolicy()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RetryPolicy..ctor()&#xD;&#xA;RetryPolicy.Initialize():Void&#xD;&#xA;RetryPolicy.set_RetryConditions(ICollection&lt;IRetryCondition&gt;):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Serialization">
+       <Types>
+        <Type Name="HammockDataContractSerializer" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Serialize(System.Object,System.Type)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Serialization" File="HammockDataContractSerializer.cs" Line="90">Object 'stream' can be disposed more than once in method 'HammockDataContractSerializer.Serialize(object, Type)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 90</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HammockXmlSerializer" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Serialize(System.Object,System.Type)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Serialization" File="HammockXmlSerializer.cs" Line="58">Object 'stream' can be disposed more than once in method 'HammockXmlSerializer.Serialize(object, Type)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 58</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="InvalidJsonException" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+           <Issue Certainty="95" Level="Error">Add [Serializable] to 'InvalidJsonException' as this type implements ISerializable.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Tasks">
+       <Types>
+        <Type Name="TimedTask" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+           <Issue Name="ProvideDisposeBool" Certainty="95" Level="Error">Provide an overridable implementation of Dispose(bool) on 'TimedTask' or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Tasks" File="TimedTask.cs" Line="140">Modify 'TimedTask.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+             <Issue Name="DisposeSignature" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Tasks" File="TimedTask.cs" Line="140">Ensure that 'TimedTask.Dispose()' is declared as public and sealed.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Stopped" Kind="Event" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="First" Certainty="95" Level="Error">Declare the first parameter of 'Action&lt;TimedTask, EventArgs&gt;' as an object named 'sender'.</Issue>
+             <Issue Name="Second" Certainty="95" Level="Error">Declare the second parameter of 'Action&lt;TimedTask, EventArgs&gt;' as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="TimedTask`1" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Tasks" File="TimedTask.cs" Line="239">Modify 'TimedTask&lt;T&gt;.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+             <Issue Name="DisposeSignature" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Tasks" File="TimedTask.cs" Line="239">Ensure that 'TimedTask&lt;T&gt;.Dispose()' is declared as public and sealed.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Web">
+       <Types>
+        <Type Name="WebQuery" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(Hammock.Web.IWebQueryInfo,System.Boolean)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.InitializeResult():Void&#xD;&#xA;WebQuery.add_QueryRequest(EventHandler&lt;WebQueryRequestEventArgs&gt;):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.InitializeResult():Void&#xD;&#xA;WebQuery.add_QueryResponse(EventHandler&lt;WebQueryResponseEventArgs&gt;):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.InitializeResult():Void&#xD;&#xA;WebQuery.set_Result(WebQueryResult):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseInfoHeaders(IEnumerable&lt;PropertyInfo&gt;, IDictionary&lt;String,String&gt;):WebHeaderCollection</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseInfoParameters(IEnumerable&lt;PropertyInfo&gt;, IDictionary&lt;String,String&gt;):WebParameterCollection</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseTransforms(IEnumerable&lt;PropertyInfo&gt;&amp;, IDictionary&lt;String,String&gt;&amp;):Void&#xD;&#xA;WebQuery.get_Info():IWebQueryInfo</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseUserAgent(IEnumerable&lt;PropertyInfo&gt;):Void&#xD;&#xA;WebQuery.get_UserAgent():String</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseWebEntity(IEnumerable&lt;PropertyInfo&gt;):Void&#xD;&#xA;WebQuery.get_Entity():WebEntity</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Cookies(WebParameterCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Headers(WebHeaderCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Info(IWebQueryInfo):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Parameters(WebParameterCollection):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1831">Modify 'WebQuery.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteGetOrDeleteAsync(Hammock.Caching.ICache,System.String,System.String,System.DateTime,System.Net.WebRequest,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="94">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, DateTime, WebRequest, object)', object '&lt;&gt;g__initLocal4a' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal4a' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="123">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, DateTime, WebRequest, object)', object '&lt;&gt;g__initLocal4e' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal4e' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteGetOrDeleteAsync(Hammock.Caching.ICache,System.String,System.String,System.Net.WebRequest,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="52">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, WebRequest, object)', object '&lt;&gt;g__initLocal46' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal46' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="76">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, WebRequest, object)', object '&lt;&gt;g__initLocal49' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal49' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteGetOrDeleteAsync(Hammock.Caching.ICache,System.String,System.String,System.TimeSpan,System.Net.WebRequest,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="141">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, TimeSpan, WebRequest, object)', object '&lt;&gt;g__initLocal4f' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal4f' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="169">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, TimeSpan, WebRequest, object)', object '&lt;&gt;g__initLocal53' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal53' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteGetOrDeleteAsync(Hammock.Web.GetDeleteHeadOptions,System.String,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="36">In method 'WebQuery.ExecuteGetOrDeleteAsync(GetDeleteHeadOptions, string, object)', object '&lt;&gt;g__initLocal45' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal45' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPut(Hammock.Web.PostOrPut,System.String,System.Net.WebException&amp;)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1134">Object 'stream' can be disposed more than once in method 'WebQuery.ExecutePostOrPut(PostOrPut, string, out WebException)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 1134</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.Collections.Generic.IEnumerable`1&lt;Hammock.Web.HttpPostParameter&gt;,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1117">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, IEnumerable&lt;HttpPostParameter&gt;, object)', object '&lt;&gt;g__initLocal67' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal67' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1087">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, object)', object '&lt;&gt;g__initLocal64' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal64' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.String,Hammock.Caching.ICache,System.DateTime,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1186">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, string, ICache, DateTime, object)', object '&lt;&gt;g__initLocal6e' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal6e' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.String,Hammock.Caching.ICache,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1149">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, string, ICache, object)', object '&lt;&gt;g__initLocal6a' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal6a' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.String,Hammock.Caching.ICache,System.TimeSpan,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1223">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, string, ICache, TimeSpan, object)', object '&lt;&gt;g__initLocal72' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal72' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteStreamGetAsync(System.String,System.TimeSpan,System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1246">In method 'WebQuery.ExecuteStreamGetAsync(string, TimeSpan, int)', object '&lt;&gt;g__initLocal73' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal73' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteStreamPostAsync(System.String,System.TimeSpan,System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1304">In method 'WebQuery.ExecuteStreamPostAsync(string, TimeSpan, int)', object '&lt;&gt;g__initLocal78' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal78' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#HandleWebException(System.Net.WebException)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="812">In method 'WebQuery.HandleWebException(WebException)', call System.IDisposable.Dispose on object 'new MemoryStream(new byte[0])' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PostAsyncRequestCallback(System.IAsyncResult)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="817">In method 'WebQuery.PostAsyncRequestCallback(IAsyncResult)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal5d' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PostAsyncRequestCallbackMultiPart(System.IAsyncResult)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="988">In method 'WebQuery.PostAsyncRequestCallbackMultiPart(IAsyncResult)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal62' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PostAsyncResponseCallback(System.IAsyncResult)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1016">In method 'WebQuery.PostAsyncResponseCallback(IAsyncResult)', call System.IDisposable.Dispose on object 'new MemoryStream()' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PostAsyncStreamRequestCallback(System.IAsyncResult)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="681">Object 'stream' can be disposed more than once in method 'WebQuery.PostAsyncStreamRequestCallback(IAsyncResult)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 681</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ProcessBuffer(System.String)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="640">In method 'WebQuery.ProcessBuffer(string)', call System.IDisposable.Dispose on object 'new MemoryStream(messageBytes)' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#TimedOutCallback(System.Object,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="273">In method 'WebQuery.TimedOutCallback(object, bool)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal55' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#WriteMultiPartImpl(System.Boolean,System.Collections.Generic.IEnumerable`1&lt;Hammock.Web.HttpPostParameter&gt;,System.String,System.Text.Encoding,System.IO.Stream)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1270">In method 'WebQuery.WriteMultiPartImpl(bool, IEnumerable&lt;HttpPostParameter&gt;, string, Encoding, Stream)', call System.IDisposable.Dispose on object 'new FileStream(parameter.FilePath, FileMode.Open, FileAccess.Read)' before all references to it are out of scope.</Issue>
+            </Message>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1345">Object 'new FileStream(parameter.FilePath, FileMode.Open, FileAccess.Read)' can be disposed more than once in method 'WebQuery.WriteMultiPartImpl(bool, IEnumerable&lt;HttpPostParameter&gt;, string, Encoding, Stream)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 1345</Issue>
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1345">Object 'parameter.FileStream' can be disposed more than once in method 'WebQuery.WriteMultiPartImpl(bool, IEnumerable&lt;HttpPostParameter&gt;, string, Encoding, Stream)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 1345</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#NewStreamMessageEvent" Kind="Event" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="First" Certainty="95" Level="Error">Declare the first parameter of 'WebQuery.NewStreamMessage' as an object named 'sender'.</Issue>
+             <Issue Name="Second" Certainty="95" Level="Error">Declare the second parameter of 'WebQuery.NewStreamMessage' as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="WebQueryAsyncResult" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+           <Issue Name="ProvideDisposeBool" Certainty="95" Level="Error">Provide an overridable implementation of Dispose(bool) on 'WebQueryAsyncResult' or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="_block" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQueryAsyncResult.cs" Line="43">'WebQueryAsyncResult' contains field 'WebQueryAsyncResult._block' that is of IDisposable type: 'AutoResetEvent'. Change the Dispose method on 'WebQueryAsyncResult' to call Dispose or Close on this field.</Issue>
+            </Message>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQueryAsyncResult.cs" Line="43">Modify 'WebQueryAsyncResult.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Web.Mocks">
+       <Types>
+        <Type Name="MockHttpWebRequest" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Uri)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebRequest.cs" Line="32">'MockHttpWebRequest.MockHttpWebRequest(Uri)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MockHttpWebRequest..ctor(Uri)&#xD;&#xA;MockHttpWebRequest.Initialize():Void&#xD;&#xA;WebRequest.set_Headers(WebHeaderCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebRequest.cs" Line="32">'MockHttpWebRequest.MockHttpWebRequest(Uri)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MockHttpWebRequest..ctor(Uri)&#xD;&#xA;MockHttpWebRequest.Initialize():Void&#xD;&#xA;WebRequest.set_Headers(WebHeaderCollection):Void&#xD;&#xA;MockHttpWebRequest.set_ExpectHeaders(WebHeaderCollection):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BeginGetResponse(System.AsyncCallback,System.Object)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebRequest.cs" Line="94">In method 'MockHttpWebRequest.BeginGetResponse(AsyncCallback, object)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal1' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CreateResponse()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebRequest.cs" Line="57">In method 'MockHttpWebRequest.CreateResponse()', object '&lt;&gt;g__initLocal0' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal0' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MockHttpWebResponse" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#GetResponseStream()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebResponse.cs" Line="45">In method 'MockHttpWebResponse.GetResponseStream()', object 'stream' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'stream' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Mono.Net">
+       <Types>
+        <Type Name="WebHeaderCollection" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+           <Issue Certainty="90" Level="Error">'WebHeaderCollection' is marked ComVisible(true) but has the following ComVisible(false) types in its object hierarchy: 'NameValueCollection', 'NameObjectCollectionBase'</Issue>
+          </Message>
+         </Messages>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="System.Compat.Web">
+       <Types>
+        <Type Name="HttpUtility" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#UrlDecode(System.Byte[],System.Int32,System.Int32,System.Text.Encoding)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="570">In method 'HttpUtility.UrlDecode(byte[], int, int, Encoding)', call System.IDisposable.Dispose on object 'acc' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlDecode(System.String,System.Text.Encoding)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="415">In method 'HttpUtility.UrlDecode(string, Encoding)', call System.IDisposable.Dispose on object 'bytes' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlDecodeToBytes(System.Byte[],System.Int32,System.Int32)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="672">In method 'HttpUtility.UrlDecodeToBytes(byte[], int, int)', call System.IDisposable.Dispose on object 'result' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlEncodeToBytes(System.Byte[],System.Int32,System.Int32)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="895">In method 'HttpUtility.UrlEncodeToBytes(byte[], int, int)', call System.IDisposable.Dispose on object 'result' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlEncodeUnicodeToBytes(System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="928">In method 'HttpUtility.UrlEncodeUnicodeToBytes(string)', call System.IDisposable.Dispose on object 'result' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlPathEncode(System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="1177">In method 'HttpUtility.UrlPathEncode(string)', call System.IDisposable.Dispose on object 'result' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405">
+   <Name>COM visible type base types should be COM visible</Name>
+   <Description>COM visible types should have an object hierarchy that is uniformly COM visible.</Description>
+   <Resolution Name="Default">{0} is marked ComVisible(true) but has the following ComVisible(false) types in its object hierarchy: {1}</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182202(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="interoperabilityrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009">
+   <Name>Declare event handlers correctly</Name>
+   <Description>By convention, .NET events have two parameters that specify the event sender and event data. Event handler signatures should follow this form: void MyEventHandler(object sender, EventArgs e). The 'sender' parameter is always of type System.Object, even if it is possible to employ a more specific type. The 'e' parameter is always of type System.EventArgs. Events that do not provide event data should use the System.EventHandler delegate type. Event handlers return void so that they can send each event to multiple target methods. Any value returned by a target would be lost after the first call.</Description>
+   <Resolution Name="First">Declare the first parameter of {0} as an object named 'sender'.</Resolution>
+   <Resolution Name="Second">Declare the second parameter of {0} as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182133(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
+   <Name>Disposable fields should be disposed</Name>
+   <Description>If a type that implements IDisposable owns fields that also implement IDisposable, the encapsulating type's Dispose() implementation should call Dispose() on each disposable field.</Description>
+   <Resolution Name="Default">{0} contains field {1} that is of IDisposable type: {2}. Change the Dispose method on {0} to call Dispose or Close on this field.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182328(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000">
+   <Name>Dispose objects before losing scope</Name>
+   <Description>If a disposable object is not explicitly disposed before all references to it are out of scope, the object will be disposed at some indeterminate time when the garbage collector runs the finalizer of the object. Because an exceptional event might occur that will prevent the finalizer of the object from running, the object should be explicitly disposed instead.</Description>
+   <Resolution Name="ExceptionEdge">In method {0}, object {1} is not disposed along all exception paths. Call System.IDisposable.Dispose on object {1} before all references to it are out of scope.</Resolution>
+   <Resolution Name="NonExceptionEdge">In method {0}, call System.IDisposable.Dispose on object {1} before all references to it are out of scope.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182289(VS.100).aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202">
+   <Name>Do not dispose objects multiple times</Name>
+   <Description>A correctly implemented Dispose method can be called multiple times without throwing an exception. However, this is not guaranteed and to avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.</Description>
+   <Resolution Name="Default">Object {0} can be disposed more than once in method {1}. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 58</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182334(VS.100).aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214">
+   <Name>Do not call overridable methods in constructors</Name>
+   <Description>Virtual methods defined on the class should not be called from constructors. If a derived class has overridden the method, the derived class version will be called (before the derived class constructor is called).</Description>
+   <Resolution Name="Default">{0} contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: {1}</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182331(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalWarning</MessageLevel>
+   <File Name="usagerules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+   <Name>Implement IDisposable correctly</Name>
+   <Description>All IDisposable types should implement the Dispose pattern correctly.</Description>
+   <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
+   <Resolution Name="DisposeSignature">Ensure that {0} is declared as public and sealed.</Resolution>
+   <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms244737(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkAllNonSerializableFields" Category="Microsoft.Usage" CheckId="CA2235">
+   <Name>Mark all non-serializable fields</Name>
+   <Description>All fields that cannot be serialized directly should have the NonSerializedAttribute. Types that have the SerializableAttribute should not have fields of types that do not have the SerializableAttribute unless the fields are marked with the NonSerializedAttribute.</Description>
+   <Resolution Name="Default">Field {0} is a member of type {1}, which is serializable, but is of type {2}, which is not serializable. Add the NonSerializedAttribute to {0}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182349(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="usagerules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+   <Name>Mark ISerializable types with SerializableAttribute</Name>
+   <Description>The System.Runtime.Serialization.ISerializable interface allows the type to customize its serialization, while the Serializable attribute enables the runtime to recognize the type as being serializable.</Description>
+   <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182350(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="10.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="c:\program files (x86)\microsoft visual studio 10.0\team tools\static analysis tools\fxcop\Xml\CodeAnalysisReport.xsl"?>
+<FxCopReport Version="10.0">
+ <Targets>
+  <Target Name="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\bin\lib\net40\Hammock.dll">
+   <Modules>
+    <Module Name="hammock.dll">
+     <Namespaces>
+      <Namespace Name="Hammock">
+       <Types>
+        <Type Name="RestBase" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestBase.cs" Line="91">'RestBase.RestBase()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestBase..ctor()&#xD;&#xA;RestBase.Initialize():Void&#xD;&#xA;RestBase.set_Cookies(WebParameterCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestBase.cs" Line="91">'RestBase.RestBase()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestBase..ctor()&#xD;&#xA;RestBase.Initialize():Void&#xD;&#xA;RestBase.set_Headers(NameValueCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestBase.cs" Line="91">'RestBase.RestBase()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestBase..ctor()&#xD;&#xA;RestBase.Initialize():Void&#xD;&#xA;RestBase.set_Parameters(WebParameterCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestBase.cs" Line="91">'RestBase.RestBase()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestBase..ctor()&#xD;&#xA;RestBase.Initialize():Void&#xD;&#xA;RestBase.set_PostParameters(ICollection&lt;HttpPostParameter&gt;):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="RestClient" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#_streamQuery" Kind="Field" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="MarkAllNonSerializableFields" Category="Microsoft.Usage" CheckId="CA2235" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="Error">Field 'RestClient._streamQuery' is a member of type 'RestClient', which is serializable, but is of type 'WebQuery', which is not serializable. Add the NonSerializedAttribute to 'RestClient._streamQuery'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BeginRequestWithTask(Hammock.RestRequest,Hammock.RestCallback,Hammock.Web.WebQuery,System.String,Hammock.Web.WebQueryAsyncResult&amp;,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2071">In method 'RestClient.BeginRequestWithTask(RestRequest, RestCallback, WebQuery, string, out WebQueryAsyncResult, object)', object '&lt;&gt;g__initLocal3b' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal3b' before all references to it are out of scope.</Issue>
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2039">In method 'RestClient.BeginRequestWithTask(RestRequest, RestCallback, WebQuery, string, out WebQueryAsyncResult, object)', call System.IDisposable.Dispose on object 'task' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BeginRequestWithTask`1(Hammock.RestRequest,Hammock.RestCallback`1&lt;!!0&gt;,Hammock.Web.WebQuery,System.String,Hammock.Web.WebQueryAsyncResult&amp;,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2133">In method 'RestClient.BeginRequestWithTask&lt;T&gt;(RestRequest, RestCallback&lt;T&gt;, WebQuery, string, out WebQueryAsyncResult, object)', object '&lt;&gt;g__initLocal43' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal43' before all references to it are out of scope.</Issue>
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2102">In method 'RestClient.BeginRequestWithTask&lt;T&gt;(RestRequest, RestCallback&lt;T&gt;, WebQuery, string, out WebQueryAsyncResult, object)', call System.IDisposable.Dispose on object 'task' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BuildBaseResponse(Hammock.Web.WebQueryResult)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2534">In method 'RestClient.BuildBaseResponse(WebQueryResult)', object 'response' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'response' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BuildBaseResponse`1(Hammock.Web.WebQueryResult)" Kind="Method" Static="True" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2543">In method 'RestClient.BuildBaseResponse&lt;T&gt;(WebQueryResult)', object 'response' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'response' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BuildRateLimitingTask(Hammock.RestRequest,Hammock.Tasks.ITaskOptions,Hammock.RestCallback,Hammock.Web.WebQuery,System.String,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2254">In method 'RestClient.BuildRateLimitingTask(RestRequest, ITaskOptions, RestCallback, WebQuery, string, object)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal49' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CompleteWithMockWebResponse(System.IAsyncResult,System.IAsyncResult,Hammock.Web.Triplet`3&lt;Hammock.RestRequest,Hammock.RestCallback,System.Object&gt;)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="1025">In method 'RestClient.CompleteWithMockWebResponse(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback, object&gt;)', object '&lt;&gt;g__initLocale' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocale' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="1009">In method 'RestClient.CompleteWithMockWebResponse(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback, object&gt;)', object 'm' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'm' before all references to it are out of scope.</Issue>
+            </Message>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="1016">Object 'stream' can be disposed more than once in method 'RestClient.CompleteWithMockWebResponse(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback, object&gt;)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 1016</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CompleteWithMockWebResponse`1(System.IAsyncResult,System.IAsyncResult,Hammock.Web.Triplet`3&lt;Hammock.RestRequest,Hammock.RestCallback`1&lt;!!0&gt;,System.Object&gt;)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="961">In method 'RestClient.CompleteWithMockWebResponse&lt;T&gt;(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback&lt;T&gt;, object&gt;)', object '&lt;&gt;g__initLocald' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocald' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="945">In method 'RestClient.CompleteWithMockWebResponse&lt;T&gt;(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback&lt;T&gt;, object&gt;)', object 'm' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'm' before all references to it are out of scope.</Issue>
+            </Message>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="952">Object 'stream' can be disposed more than once in method 'RestClient.CompleteWithMockWebResponse&lt;T&gt;(IAsyncResult, IAsyncResult, Triplet&lt;RestRequest, RestCallback&lt;T&gt;, object&gt;)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 952</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#GetQueryFor(Hammock.RestRequest,System.String)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestClient.cs" Line="2707">In method 'RestClient.GetQueryFor(RestRequest, string)', object 'new BasicAuthWebQuery(info, traceEnabled)' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'new BasicAuthWebQuery(info, traceEnabled)' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="RestRequest" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestRequest.cs" Line="27">'RestRequest.RestRequest()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RestRequest..ctor()&#xD;&#xA;RestRequest.Initialize():Void&#xD;&#xA;RestRequest.set_ExpectHeaders(WebHeaderCollection):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="RestResponseBase" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+           <Issue Name="ProvideDisposeBool" Certainty="95" Level="Error">Provide an overridable implementation of Dispose(bool) on 'RestResponseBase' or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestResponse.cs" Line="294">Modify 'RestResponseBase.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ReplaceContentStreamWithMemoryStream()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock" File="RestResponse.cs" Line="145">In method 'RestResponseBase.ReplaceContentStreamWithMemoryStream()', object 'stream' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'stream' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Attributes.Specialized">
+       <Types>
+        <Type Name="EntityAttribute" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Attributes\Specialized" File="EntityAttribute.cs" Line="12">'EntityAttribute.EntityAttribute()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;EntityAttribute..ctor()&#xD;&#xA;EntityAttribute.set_ContentEncoding(Encoding):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Authentication.OAuth">
+       <Types>
+        <Type Name="OAuthTools" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#GetSignature(Hammock.Authentication.OAuth.OAuthSignatureMethod,Hammock.Authentication.OAuth.OAuthSignatureTreatment,System.String,System.String,System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthTools.cs" Line="296">In method 'OAuthTools.GetSignature(OAuthSignatureMethod, OAuthSignatureTreatment, string, string, string)', call System.IDisposable.Dispose on object 'crypto' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="OAuthWebQuery" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(Hammock.Authentication.OAuth.OAuthWebQueryInfo,System.Boolean)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWebQuery.cs" Line="26">'OAuthWebQuery.OAuthWebQuery(OAuthWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWebQuery..ctor(OAuthWebQueryInfo, Boolean)&#xD;&#xA;OAuthWebQuery.Initialize(OAuthWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Method(WebMethod):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="OAuthWorkflow" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(Hammock.Authentication.OAuth.OAuthCredentials)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_CallbackUrl(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ClientPassword(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ClientUsername(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ConsumerKey(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ConsumerSecret(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_ParameterHandling(OAuthParameterHandling):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_SessionHandle(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_SignatureMethod(OAuthSignatureMethod):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_SignatureTreatment(OAuthSignatureTreatment):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_Token(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_TokenSecret(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_Verifier(String):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Authentication\OAuth" File="OAuthWorkflow.cs" Line="69">'OAuthWorkflow.OAuthWorkflow(OAuthCredentials)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;OAuthWorkflow..ctor(OAuthCredentials)&#xD;&#xA;OAuthWorkflow.InitializeFromCredentials(OAuthCredentials):Void&#xD;&#xA;OAuthWorkflow.set_Version(String):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Retries">
+       <Types>
+        <Type Name="RetryPolicy" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Retries" File="RetryPolicy.cs" Line="17">'RetryPolicy.RetryPolicy()' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;RetryPolicy..ctor()&#xD;&#xA;RetryPolicy.Initialize():Void&#xD;&#xA;RetryPolicy.set_RetryConditions(ICollection&lt;IRetryCondition&gt;):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Serialization">
+       <Types>
+        <Type Name="HammockDataContractSerializer" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Serialize(System.Object,System.Type)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Serialization" File="HammockDataContractSerializer.cs" Line="90">Object 'stream' can be disposed more than once in method 'HammockDataContractSerializer.Serialize(object, Type)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 90</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="HammockXmlSerializer" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Serialize(System.Object,System.Type)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Serialization" File="HammockXmlSerializer.cs" Line="58">Object 'stream' can be disposed more than once in method 'HammockXmlSerializer.Serialize(object, Type)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 58</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="InvalidJsonException" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+           <Issue Certainty="95" Level="Error">Add [Serializable] to 'InvalidJsonException' as this type implements ISerializable.</Issue>
+          </Message>
+         </Messages>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Tasks">
+       <Types>
+        <Type Name="TimedTask" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+           <Issue Name="ProvideDisposeBool" Certainty="95" Level="Error">Provide an overridable implementation of Dispose(bool) on 'TimedTask' or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Tasks" File="TimedTask.cs" Line="140">Modify 'TimedTask.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+             <Issue Name="DisposeSignature" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Tasks" File="TimedTask.cs" Line="140">Ensure that 'TimedTask.Dispose()' is declared as public and sealed.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Stopped" Kind="Event" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="First" Certainty="95" Level="Error">Declare the first parameter of 'Action&lt;TimedTask, EventArgs&gt;' as an object named 'sender'.</Issue>
+             <Issue Name="Second" Certainty="95" Level="Error">Declare the second parameter of 'Action&lt;TimedTask, EventArgs&gt;' as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="TimedTask`1" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Tasks" File="TimedTask.cs" Line="239">Modify 'TimedTask&lt;T&gt;.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+             <Issue Name="DisposeSignature" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Tasks" File="TimedTask.cs" Line="239">Ensure that 'TimedTask&lt;T&gt;.Dispose()' is declared as public and sealed.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Web">
+       <Types>
+        <Type Name="WebQuery" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(Hammock.Web.IWebQueryInfo,System.Boolean)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.InitializeResult():Void&#xD;&#xA;WebQuery.add_QueryRequest(EventHandler&lt;WebQueryRequestEventArgs&gt;):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.InitializeResult():Void&#xD;&#xA;WebQuery.add_QueryResponse(EventHandler&lt;WebQueryResponseEventArgs&gt;):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.InitializeResult():Void&#xD;&#xA;WebQuery.set_Result(WebQueryResult):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseInfoHeaders(IEnumerable&lt;PropertyInfo&gt;, IDictionary&lt;String,String&gt;):WebHeaderCollection</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseInfoParameters(IEnumerable&lt;PropertyInfo&gt;, IDictionary&lt;String,String&gt;):WebParameterCollection</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseTransforms(IEnumerable&lt;PropertyInfo&gt;&amp;, IDictionary&lt;String,String&gt;&amp;):Void&#xD;&#xA;WebQuery.get_Info():IWebQueryInfo</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseUserAgent(IEnumerable&lt;PropertyInfo&gt;):Void&#xD;&#xA;WebQuery.get_UserAgent():String</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.ParseWebEntity(IEnumerable&lt;PropertyInfo&gt;):Void&#xD;&#xA;WebQuery.get_Entity():WebEntity</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Cookies(WebParameterCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Headers(WebHeaderCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Info(IWebQueryInfo):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="31">'WebQuery.WebQuery(IWebQueryInfo, bool)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;WebQuery..ctor(IWebQueryInfo, Boolean)&#xD;&#xA;WebQuery.SetQueryMeta(IWebQueryInfo):Void&#xD;&#xA;WebQuery.set_Parameters(WebParameterCollection):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1831">Modify 'WebQuery.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteGetOrDeleteAsync(Hammock.Caching.ICache,System.String,System.String,System.DateTime,System.Net.WebRequest,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="94">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, DateTime, WebRequest, object)', object '&lt;&gt;g__initLocal4a' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal4a' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="123">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, DateTime, WebRequest, object)', object '&lt;&gt;g__initLocal4e' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal4e' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteGetOrDeleteAsync(Hammock.Caching.ICache,System.String,System.String,System.Net.WebRequest,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="52">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, WebRequest, object)', object '&lt;&gt;g__initLocal46' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal46' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="76">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, WebRequest, object)', object '&lt;&gt;g__initLocal49' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal49' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteGetOrDeleteAsync(Hammock.Caching.ICache,System.String,System.String,System.TimeSpan,System.Net.WebRequest,System.Object)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="141">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, TimeSpan, WebRequest, object)', object '&lt;&gt;g__initLocal4f' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal4f' before all references to it are out of scope.</Issue>
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="169">In method 'WebQuery.ExecuteGetOrDeleteAsync(ICache, string, string, TimeSpan, WebRequest, object)', object '&lt;&gt;g__initLocal53' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal53' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteGetOrDeleteAsync(Hammock.Web.GetDeleteHeadOptions,System.String,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="36">In method 'WebQuery.ExecuteGetOrDeleteAsync(GetDeleteHeadOptions, string, object)', object '&lt;&gt;g__initLocal45' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal45' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPut(Hammock.Web.PostOrPut,System.String,System.Net.WebException&amp;)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1134">Object 'stream' can be disposed more than once in method 'WebQuery.ExecutePostOrPut(PostOrPut, string, out WebException)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 1134</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.Collections.Generic.IEnumerable`1&lt;Hammock.Web.HttpPostParameter&gt;,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1117">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, IEnumerable&lt;HttpPostParameter&gt;, object)', object '&lt;&gt;g__initLocal67' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal67' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1087">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, object)', object '&lt;&gt;g__initLocal64' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal64' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.String,Hammock.Caching.ICache,System.DateTime,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1186">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, string, ICache, DateTime, object)', object '&lt;&gt;g__initLocal6e' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal6e' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.String,Hammock.Caching.ICache,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1149">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, string, ICache, object)', object '&lt;&gt;g__initLocal6a' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal6a' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecutePostOrPutAsync(Hammock.Web.PostOrPut,System.String,System.String,Hammock.Caching.ICache,System.TimeSpan,System.Object)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1223">In method 'WebQuery.ExecutePostOrPutAsync(PostOrPut, string, string, ICache, TimeSpan, object)', object '&lt;&gt;g__initLocal72' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal72' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteStreamGetAsync(System.String,System.TimeSpan,System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1246">In method 'WebQuery.ExecuteStreamGetAsync(string, TimeSpan, int)', object '&lt;&gt;g__initLocal73' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal73' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ExecuteStreamPostAsync(System.String,System.TimeSpan,System.Int32)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1304">In method 'WebQuery.ExecuteStreamPostAsync(string, TimeSpan, int)', object '&lt;&gt;g__initLocal78' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal78' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#HandleWebException(System.Net.WebException)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="812">In method 'WebQuery.HandleWebException(WebException)', call System.IDisposable.Dispose on object 'new MemoryStream(new byte[0])' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PostAsyncRequestCallback(System.IAsyncResult)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="817">In method 'WebQuery.PostAsyncRequestCallback(IAsyncResult)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal5d' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PostAsyncRequestCallbackMultiPart(System.IAsyncResult)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="988">In method 'WebQuery.PostAsyncRequestCallbackMultiPart(IAsyncResult)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal62' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PostAsyncResponseCallback(System.IAsyncResult)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="1016">In method 'WebQuery.PostAsyncResponseCallback(IAsyncResult)', call System.IDisposable.Dispose on object 'new MemoryStream()' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#PostAsyncStreamRequestCallback(System.IAsyncResult)" Kind="Method" Static="False" Accessibility="Family" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="681">Object 'stream' can be disposed more than once in method 'WebQuery.PostAsyncStreamRequestCallback(IAsyncResult)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 681</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#ProcessBuffer(System.String)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="640">In method 'WebQuery.ProcessBuffer(string)', call System.IDisposable.Dispose on object 'new MemoryStream(messageBytes)' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#TimedOutCallback(System.Object,System.Boolean)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.Async.cs" Line="273">In method 'WebQuery.TimedOutCallback(object, bool)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal55' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#WriteMultiPartImpl(System.Boolean,System.Collections.Generic.IEnumerable`1&lt;Hammock.Web.HttpPostParameter&gt;,System.String,System.Text.Encoding,System.IO.Stream)" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1270">In method 'WebQuery.WriteMultiPartImpl(bool, IEnumerable&lt;HttpPostParameter&gt;, string, Encoding, Stream)', call System.IDisposable.Dispose on object 'new FileStream(parameter.FilePath, FileMode.Open, FileAccess.Read)' before all references to it are out of scope.</Issue>
+            </Message>
+            <Message TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1345">Object 'new FileStream(parameter.FilePath, FileMode.Open, FileAccess.Read)' can be disposed more than once in method 'WebQuery.WriteMultiPartImpl(bool, IEnumerable&lt;HttpPostParameter&gt;, string, Encoding, Stream)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 1345</Issue>
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQuery.cs" Line="1345">Object 'parameter.FileStream' can be disposed more than once in method 'WebQuery.WriteMultiPartImpl(bool, IEnumerable&lt;HttpPostParameter&gt;, string, Encoding, Stream)'. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 1345</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#NewStreamMessageEvent" Kind="Event" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="First" Certainty="95" Level="Error">Declare the first parameter of 'WebQuery.NewStreamMessage' as an object named 'sender'.</Issue>
+             <Issue Name="Second" Certainty="95" Level="Error">Declare the second parameter of 'WebQuery.NewStreamMessage' as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="WebQueryAsyncResult" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+           <Issue Name="ProvideDisposeBool" Certainty="95" Level="Error">Provide an overridable implementation of Dispose(bool) on 'WebQueryAsyncResult' or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Issue>
+          </Message>
+         </Messages>
+         <Members>
+          <Member Name="#Dispose()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message Id="_block" TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQueryAsyncResult.cs" Line="43">'WebQueryAsyncResult' contains field 'WebQueryAsyncResult._block' that is of IDisposable type: 'AutoResetEvent'. Change the Dispose method on 'WebQueryAsyncResult' to call Dispose or Close on this field.</Issue>
+            </Message>
+            <Message TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="Breaking">
+             <Issue Name="DisposeImplementation" Certainty="95" Level="Error" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web" File="WebQueryAsyncResult.cs" Line="43">Modify 'WebQueryAsyncResult.Dispose()' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Hammock.Web.Mocks">
+       <Types>
+        <Type Name="MockHttpWebRequest" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#.ctor(System.Uri)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="NonBreaking">
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebRequest.cs" Line="32">'MockHttpWebRequest.MockHttpWebRequest(Uri)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MockHttpWebRequest..ctor(Uri)&#xD;&#xA;MockHttpWebRequest.Initialize():Void&#xD;&#xA;WebRequest.set_Headers(WebHeaderCollection):Void</Issue>
+             <Issue Certainty="95" Level="CriticalWarning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebRequest.cs" Line="32">'MockHttpWebRequest.MockHttpWebRequest(Uri)' contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: &#xD;&#xA;&#xD;&#xA;MockHttpWebRequest..ctor(Uri)&#xD;&#xA;MockHttpWebRequest.Initialize():Void&#xD;&#xA;WebRequest.set_Headers(WebHeaderCollection):Void&#xD;&#xA;MockHttpWebRequest.set_ExpectHeaders(WebHeaderCollection):Void</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#BeginGetResponse(System.AsyncCallback,System.Object)" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebRequest.cs" Line="94">In method 'MockHttpWebRequest.BeginGetResponse(AsyncCallback, object)', call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal1' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#CreateResponse()" Kind="Method" Static="False" Accessibility="Private" ExternallyVisible="False">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebRequest.cs" Line="57">In method 'MockHttpWebRequest.CreateResponse()', object '&lt;&gt;g__initLocal0' is not disposed along all exception paths. Call System.IDisposable.Dispose on object '&lt;&gt;g__initLocal0' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+        <Type Name="MockHttpWebResponse" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#GetResponseStream()" Kind="Method" Static="False" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="ExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net35\Hammock\Web\Mocks" File="MockHttpWebResponse.cs" Line="45">In method 'MockHttpWebResponse.GetResponseStream()', object 'stream' is not disposed along all exception paths. Call System.IDisposable.Dispose on object 'stream' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="Mono.Net">
+       <Types>
+        <Type Name="WebHeaderCollection" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Messages>
+          <Message TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+           <Issue Certainty="90" Level="Error">'WebHeaderCollection' is marked ComVisible(true) but has the following ComVisible(false) types in its object hierarchy: 'NameValueCollection', 'NameObjectCollectionBase'</Issue>
+          </Message>
+         </Messages>
+        </Type>
+       </Types>
+      </Namespace>
+      <Namespace Name="System.Compat.Web">
+       <Types>
+        <Type Name="HttpUtility" Kind="Class" Accessibility="Public" ExternallyVisible="True">
+         <Members>
+          <Member Name="#UrlDecode(System.Byte[],System.Int32,System.Int32,System.Text.Encoding)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="570">In method 'HttpUtility.UrlDecode(byte[], int, int, Encoding)', call System.IDisposable.Dispose on object 'acc' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlDecode(System.String,System.Text.Encoding)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="415">In method 'HttpUtility.UrlDecode(string, Encoding)', call System.IDisposable.Dispose on object 'bytes' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlDecodeToBytes(System.Byte[],System.Int32,System.Int32)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="672">In method 'HttpUtility.UrlDecodeToBytes(byte[], int, int)', call System.IDisposable.Dispose on object 'result' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlEncodeToBytes(System.Byte[],System.Int32,System.Int32)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="895">In method 'HttpUtility.UrlEncodeToBytes(byte[], int, int)', call System.IDisposable.Dispose on object 'result' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlEncodeUnicodeToBytes(System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="928">In method 'HttpUtility.UrlEncodeUnicodeToBytes(string)', call System.IDisposable.Dispose on object 'result' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+          <Member Name="#UrlPathEncode(System.String)" Kind="Method" Static="True" Accessibility="Public" ExternallyVisible="True">
+           <Messages>
+            <Message TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000" Status="Active" Created="2012-04-13 00:03:47Z" FixCategory="DependsOnFix">
+             <Issue Name="NonExceptionEdge" Certainty="75" Level="Warning" Path="G:\Dropbox\_7_Source_Code\_1_Projects\hammock\src\net40\Hammock\Mono" File="HttpUtility.cs" Line="1177">In method 'HttpUtility.UrlPathEncode(string)', call System.IDisposable.Dispose on object 'result' before all references to it are out of scope.</Issue>
+            </Message>
+           </Messages>
+          </Member>
+         </Members>
+        </Type>
+       </Types>
+      </Namespace>
+     </Namespaces>
+    </Module>
+   </Modules>
+  </Target>
+ </Targets>
+ <Rules>
+  <Rule TypeName="ComVisibleTypeBaseTypesShouldBeComVisible" Category="Microsoft.Interoperability" CheckId="CA1405">
+   <Name>COM visible type base types should be COM visible</Name>
+   <Description>COM visible types should have an object hierarchy that is uniformly COM visible.</Description>
+   <Resolution Name="Default">{0} is marked ComVisible(true) but has the following ComVisible(false) types in its object hierarchy: {1}</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182202(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="90">Error</MessageLevel>
+   <File Name="interoperabilityrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="DeclareEventHandlersCorrectly" Category="Microsoft.Design" CheckId="CA1009">
+   <Name>Declare event handlers correctly</Name>
+   <Description>By convention, .NET events have two parameters that specify the event sender and event data. Event handler signatures should follow this form: void MyEventHandler(object sender, EventArgs e). The 'sender' parameter is always of type System.Object, even if it is possible to employ a more specific type. The 'e' parameter is always of type System.EventArgs. Events that do not provide event data should use the System.EventHandler delegate type. Event handlers return void so that they can send each event to multiple target methods. Any value returned by a target would be lost after the first call.</Description>
+   <Resolution Name="First">Declare the first parameter of {0} as an object named 'sender'.</Resolution>
+   <Resolution Name="Second">Declare the second parameter of {0} as an EventArgs, or an instance of a type that extends EventArgs, named 'e'.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182133(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="DisposableFieldsShouldBeDisposed" Category="Microsoft.Usage" CheckId="CA2213">
+   <Name>Disposable fields should be disposed</Name>
+   <Description>If a type that implements IDisposable owns fields that also implement IDisposable, the encapsulating type's Dispose() implementation should call Dispose() on each disposable field.</Description>
+   <Resolution Name="Default">{0} contains field {1} that is of IDisposable type: {2}. Change the Dispose method on {0} to call Dispose or Close on this field.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182328(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="Dispose objects before losing scope" Category="Microsoft.Reliability" CheckId="CA2000">
+   <Name>Dispose objects before losing scope</Name>
+   <Description>If a disposable object is not explicitly disposed before all references to it are out of scope, the object will be disposed at some indeterminate time when the garbage collector runs the finalizer of the object. Because an exceptional event might occur that will prevent the finalizer of the object from running, the object should be explicitly disposed instead.</Description>
+   <Resolution Name="ExceptionEdge">In method {0}, object {1} is not disposed along all exception paths. Call System.IDisposable.Dispose on object {1} before all references to it are out of scope.</Resolution>
+   <Resolution Name="NonExceptionEdge">In method {0}, call System.IDisposable.Dispose on object {1} before all references to it are out of scope.</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182289(VS.100).aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="Do not dispose objects multiple times" Category="Microsoft.Usage" CheckId="CA2202">
+   <Name>Do not dispose objects multiple times</Name>
+   <Description>A correctly implemented Dispose method can be called multiple times without throwing an exception. However, this is not guaranteed and to avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.</Description>
+   <Resolution Name="Default">Object {0} can be disposed more than once in method {1}. To avoid generating a System.ObjectDisposedException you should not call Dispose more than one time on an object.: Lines: 58</Resolution>
+   <Owner>RuleOwner</Owner>
+   <Url>http://msdn.microsoft.com/library/ms182334(VS.100).aspx</Url>
+   <Email />
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="dataflowrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="DoNotCallOverridableMethodsInConstructors" Category="Microsoft.Usage" CheckId="CA2214">
+   <Name>Do not call overridable methods in constructors</Name>
+   <Description>Virtual methods defined on the class should not be called from constructors. If a derived class has overridden the method, the derived class version will be called (before the derived class constructor is called).</Description>
+   <Resolution Name="Default">{0} contains a call chain that results in a call to a virtual method defined by the class. Review the following call stack for unintended consequences: {1}</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182331(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">CriticalWarning</MessageLevel>
+   <File Name="usagerules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="ImplementIDisposableCorrectly" Category="Microsoft.Design" CheckId="CA1063">
+   <Name>Implement IDisposable correctly</Name>
+   <Description>All IDisposable types should implement the Dispose pattern correctly.</Description>
+   <Resolution Name="DisposeImplementation">Modify {0} so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.</Resolution>
+   <Resolution Name="DisposeSignature">Ensure that {0} is declared as public and sealed.</Resolution>
+   <Resolution Name="ProvideDisposeBool">Provide an overridable implementation of Dispose(bool) on {0} or mark the type as sealed. A call to Dispose(false) should only clean up native resources. A call to Dispose(true) should clean up both managed and native resources.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms244737(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="designrules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkAllNonSerializableFields" Category="Microsoft.Usage" CheckId="CA2235">
+   <Name>Mark all non-serializable fields</Name>
+   <Description>All fields that cannot be serialized directly should have the NonSerializedAttribute. Types that have the SerializableAttribute should not have fields of types that do not have the SerializableAttribute unless the fields are marked with the NonSerializedAttribute.</Description>
+   <Resolution Name="Default">Field {0} is a member of type {1}, which is serializable, but is of type {2}, which is not serializable. Add the NonSerializedAttribute to {0}.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182349(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="95">Error</MessageLevel>
+   <File Name="usagerules.dll" Version="10.0.0.0" />
+  </Rule>
+  <Rule TypeName="MarkISerializableTypesWithSerializable" Category="Microsoft.Usage" CheckId="CA2237">
+   <Name>Mark ISerializable types with SerializableAttribute</Name>
+   <Description>The System.Runtime.Serialization.ISerializable interface allows the type to customize its serialization, while the Serializable attribute enables the runtime to recognize the type as being serializable.</Description>
+   <Resolution Name="Default">Add [Serializable] to {0} as this type implements ISerializable.</Resolution>
+   <Owner />
+   <Url>http://msdn.microsoft.com/library/ms182350(VS.100).aspx</Url>
+   <Email>[none]</Email>
+   <MessageLevel Certainty="75">Warning</MessageLevel>
+   <File Name="usagerules.dll" Version="10.0.0.0" />
+  </Rule>
+ </Rules>
+ <Localized>
+  <String Key="Category">Category</String>
+  <String Key="Certainty">Certainty</String>
+  <String Key="CollapseAll">Collapse All</String>
+  <String Key="CheckId">Check Id</String>
+  <String Key="Error">Error</String>
+  <String Key="Errors">error(s)</String>
+  <String Key="ExpandAll">Expand All</String>
+  <String Key="Help">Help</String>
+  <String Key="Line">Line</String>
+  <String Key="Messages">message(s)</String>
+  <String Key="LocationNotStoredInPdb">[Location not stored in Pdb]</String>
+  <String Key="Project">Project</String>
+  <String Key="Resolution">Resolution</String>
+  <String Key="Rule">Rule</String>
+  <String Key="RuleFile">Rule File</String>
+  <String Key="RuleDescription">Rule Description</String>
+  <String Key="Source">Source</String>
+  <String Key="Status">Status</String>
+  <String Key="Target">Target</String>
+  <String Key="Warning">Warning</String>
+  <String Key="Warnings">warning(s)</String>
+  <String Key="ReportTitle">Code Analysis Report</String>
+ </Localized>
+</FxCopReport>
+>>>>>>> eb4bfeff626dca2173a1719d5b8f9e1bcc266a0c

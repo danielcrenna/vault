@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="copper.BackgroundProducer&lt;T&gt;">
+    <Position X="3.5" Y="2.5" Width="2.5" />
+    <Members>
+      <Field Name="_attempts" Hidden="true" />
+      <Field Name="_background" Hidden="true" />
+      <Field Name="_backlogConsumer" Hidden="true" />
+      <Field Name="_cancel" Hidden="true" />
+      <Field Name="_consumer" Hidden="true" />
+      <Field Name="_empty" Hidden="true" />
+      <Field Name="_sent" Hidden="true" />
+      <Field Name="_started" Hidden="true" />
+      <Field Name="_undeliverableConsumer" Hidden="true" />
+      <Field Name="_undelivered" Hidden="true" />
+      <Field Name="_uptime" Hidden="true" />
+      <Method Name="BackgroundProducer" Hidden="true" />
+      <Method Name="Backlog" Hidden="true" />
+      <Method Name="ConfigureStartSettings" Hidden="true" />
+      <Method Name="GetAttempts" Hidden="true" />
+      <Method Name="GetProductionSource" Hidden="true" />
+      <Method Name="HandleBacklog" Hidden="true" />
+      <Method Name="HandleUndeliverable" Hidden="true" />
+      <Method Name="HandleUnsuccessfulDelivery" Hidden="true" />
+      <Method Name="ProduceOn" Hidden="true" />
+      <Method Name="ProductionCycle" Hidden="true" />
+      <Method Name="RequisitionBackgroundTask" Hidden="true" />
+      <Method Name="ResetToInitialState" Hidden="true" />
+      <Method Name="TransferBufferToBacklog" Hidden="true" />
+      <Method Name="WaitForEmptyBuffer" Hidden="true" />
+      <Method Name="WithEmptyWait" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>VAgKYgQAACKgAAAEYAMAQAQCYJIBEAQAJAAiAUCBQBA=</HashCode>
+      <FileName>BackgroundProducer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="RetryPolicy" />
+      <Property Name="RateLimitPolicy" />
+      <Property Name="Buffer" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="copper.RateLimitPolicy">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>RateLimitPolicy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="copper.RetryPolicy">
+    <Position X="7.5" Y="3.75" Width="1.5" />
+    <Members>
+      <Field Name="_rules" Hidden="true" />
+      <Method Name="RetryPolicy" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAABAAAAQAA=</HashCode>
+      <FileName>RetryPolicy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System.Collections.Concurrent.BlockingCollection&lt;T&gt;" Collapsed="true">
+    <Position X="3.25" Y="1.25" Width="2.25" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="copper.FileProducer&lt;T&gt;" Collapsed="true">
+    <Position X="12.25" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAABAAAAAQAAAAAAEAAAAAACAAEAAAAAACAAAA=</HashCode>
+      <FileName>FileProducer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="copper.ObservingProducer&lt;T&gt;" Collapsed="true">
+    <Position X="12.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAACKAAAAAAAAIAAAAAAIAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>ObservingProducer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="copper.DelegatingObservingProducer&lt;T&gt;" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACBAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DelegatingObservingProducer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="copper.Produces&lt;T&gt;" Collapsed="true">
+    <Position X="8" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Produces.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="copper.RetryDecision">
+    <Position X="9.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAIAAAAAAAAAAAAAAABBAAACAAAAAAAAAAA=</HashCode>
+      <FileName>RetryDecision.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

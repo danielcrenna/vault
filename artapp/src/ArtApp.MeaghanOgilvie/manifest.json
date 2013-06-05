@@ -1,0 +1,627 @@
+﻿{
+	"artists" : [
+	{
+		"first_name" : "Meaghan",    
+	    "last_name" : "Ogilvie",    
+	    "url": "http://meaghanogilvie.com", 
+	    "email": "artist@email.com", 
+	    "biography" : "Meaghan is a graduate of the Applied Photography Program at Sheridan College where she received the Concept and Design Award for her unique vision.\u000D\u000A\u000D\u000AUpon graduating, her first series Nightmares and Dreams consisted of mystifying dreamstates. Some viewers likened the work to film stills and graphic novel art.\u000D\u000A\u000D\u000AFollowing this series came a dramatic, but positive shift in her work. The need to express a moment of weightlessness propelled her to shoot underwater from having seen the effects of her father\u2019s degenerative neurological disorder Multiple Systems Atrophy (MSA). She incorporates a bold and fluid feel that transcends the viewer into a suspended ethereal moment.\u000D\u000A\u000D\u000AHer underwater series has been well received having won the People\u2019s Choice Award out of 500 exhibitors at the 2008 Toronto Outdoor Art Exhibition and the Corporate Purchase Award at the 2009 Toronto Artist Project. Recently, her image Succumbed, Intovthe Depths was awarded inclusion in the May\/June 2011 issue of Applied Arts Magazine.\u000D\u000A\u000D\u000AHer work was also featured at the 2011 FAT! Fashion Alternative week in Toronto and as a charitable piece for the 2010 & 2011 RMG Exposed fundraiser and the 2011 & 2012 SNAP! Photographic Fundraiser for the AIDS Committee of Toronto.\u000D\u000A\u000D\u000AHaving much success with her ethereal underwater images, she is taking new steps to break beyond conventional photographic boundaries. She was accepted to the Still and Moving Imaging program in New York City this past July where she worked alongside established international artists. They produced, directed and shot a short film, which had its debut screening in Chelsea, New York. She is grateful to have been exposed to influential speakers including Amy Taubin \u2013 American Film Critic, Jennifer Blessing \u2013 Guggenheim\u2019s Curator of Photography, and Art Critic and Historian Max Kozloff, among others.\u000D\u000A\u000D\u000AMeaghan currently lives in Toronto and is working as a full-time artist. Her newest series focuses on humans and their relationship with nature to remind us of what is at stake and what we need to protect. Please visit her at the 2012 Artist Project in March where she will be featuring her new work.",    
+	    "image" : "Images/meaghan.ogilvie/bio.jpg",    
+	    "location" : "Toronto, Canada",
+	    "title" : "Visual Artist - Photography",
+	    "twitter" : "meaghan_ogilvie",
+	    "collections" : [
+		{
+			"title" : "Symbiosis",
+			"new" : true,
+	        "description" : "This new series focuses on the essential purpose of an ecological civilization. Rather than emphasizing economic construction as the core development, we must include the right relationship between man and nature. We need to consider nature as part of our life rather than something we can exploit. \u000D\u000A\u000D\u000ATo visually represent this concept, I have photographed within landscapes and created a harmonious relationship between my subject and the natural environment. The landscapes were chosen because they are protected and serve as a means to preserve the area\u2019s ecology. I had the opportunity to travel to and photograph in National Parks both in Costa Rica and Brazil. Through this work, I hope to bring awareness to the critical state of the environment and support the ongoing efforts of many who work to preserve it.",
+	        "pieces" : [	        
+	        	{
+	                "width" : 30,
+	                "height" : 60,
+	                "title" : "Untitled 1",
+	                "year" : 2012,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 0,                    
+	                "source" : "Images/meaghan.ogilvie/symbiosis/untitled_1.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 3
+	            },
+	            {
+	                "width" : 60,
+	                "height" : 40,
+	                "title" : "Untitled 2",
+	                "year" : 2012,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 1,                    
+	                "source" : "Images/meaghan.ogilvie/symbiosis/untitled_2.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 3
+	            },
+	            {
+	                "width" : 40,
+	                "height" : 60,
+	                "title" : "Untitled 3",
+	                "year" : 2012,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 2,                    
+	                "source" : "Images/meaghan.ogilvie/symbiosis/untitled_3.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 3
+	            },
+	            {
+	                "width" : 40,
+	                "height" : 60,
+	                "title" : "Capsized",
+	                "year" : 2012,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 3,                    
+	                "source" : "Images/meaghan.ogilvie/symbiosis/capsized.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 3
+	            },
+	            {
+	            
+	                "width" : 40,
+	                "height" : 60,
+	                "title" : "Untitled 4",
+	                "year" : 2012,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 4,                    
+	                "source" : "Images/meaghan.ogilvie/symbiosis/untitled_4.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 3
+	            },
+	            {
+	            
+	                "width" : 60,
+	                "height" : 40,
+	                "title" : "Untitled 5",
+	                "year" : 2012,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 5,                    
+	                "source" : "Images/meaghan.ogilvie/symbiosis/untitled_5.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 3
+	            },
+	            {
+	            
+	                "width" : 60,
+	                "height" : 40,
+	                "title" : "Untitled 6",
+	                "year" : 2012,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 6,                    
+	                "source" : "Images/meaghan.ogilvie/symbiosis/untitled_6.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 3
+	            }       
+	        ]
+	    },
+	    {
+			"title" : "Into the Depths",
+	        "description" : "\u201cInto the Depths\u201d, is a continuation of the underwater series while giving the viewer a glimpse of the beauty underneath the surface by allowing them to experience the \u201cdepth\u201d of underwater photography through illuminated three-dimensional pieces.",
+	        "pieces" : [	        
+	        	{
+	                "width" : 30,
+	                "height" : 20,
+	                "title" : "Ascension",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 0,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/ascension.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            },
+	            {
+	                "width" : 40,
+	                "height" : 26,
+	                "title" : "Succumbed",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 1,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/succumbed.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            },
+	            {
+	                "width" : 16,
+	                "height" : 40,
+	                "title" : "Released",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 2,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/released.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            },
+	            {
+	            
+	                "width" : 24,
+	                "height" : 16,
+	                "title" : "Settled",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 3,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/settled.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            },
+	            {
+	            
+	                "width" : 20,
+	                "height" : 13.5,
+	                "title" : "Glimpse",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 4,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/glimpse.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            },
+	            {
+	            
+	                "width" : 24,
+	                "height" : 16,
+	                "title" : "Impact",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 5,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/impact.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            },
+	            {
+	            
+	                "width" : 16,
+	                "height" : 11,
+	                "title" : "Serenity",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 6,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/serenity.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            },
+	            {
+	                "width" : 13,
+	                "height" : 20,
+	                "title" : "Trepidation",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 7,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/trepidation.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            },
+	            {
+	                "width" : 16,
+	                "height" : 24,
+	                "title" : "Free Fall",
+	                "year" : 2011,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 8,                    
+	                "source" : "Images/meaghan.ogilvie/into_the_depths/free_fall.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 15
+	            }	        
+	        ]
+	    },
+		{
+			"title" : "Submerged Elegance",
+	        "description" : "An eco-conscious shoot where the images were created through sustainable choices. No aerosol products were used, all lighting is natural, recycled and re-used fabric only, hair and makeup products are paraben free and production of shoot was executed with a reduced carbon footprint.",
+	        "pieces" : [	        
+	        	{
+	                "width" : 30,
+	                "height" : 30,
+	                "title" : "#1",
+	                "year" : 2010,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 0,                    
+	                "source" : "Images/meaghan.ogilvie/submerged_elegance/01.jpg",                    
+	                "sold" : null
+	            },
+	            {
+	                "width" : 30,
+	                "height" : 30,
+	                "title" : "#2",
+	                "year" : 2010,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 1,                    
+	                "source" : "Images/meaghan.ogilvie/submerged_elegance/02.jpg",                    
+	                "sold" : null
+	            },
+	            {
+	                "width" : 30,
+	                "height" : 30,
+	                "title" : "#3",
+	                "year" : 2010,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 2,                    
+	                "source" : "Images/meaghan.ogilvie/submerged_elegance/03.jpg",                    
+	                "sold" : null
+	            },
+	            {
+	                "width" : 30,
+	                "height" : 30,
+	                "title" : "#4",
+	                "year" : 2010,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 3,                    
+	                "source" : "Images/meaghan.ogilvie/submerged_elegance/04.jpg",                    
+	                "sold" : null
+	            }
+	        ]
+	    },
+		{
+			"title" : "Underwater Series II",
+	        "description" : "This series is a continuation of the first, \u201cUnderwater Series I\u201d and was shown at the 2009 Toronto Outdoor Art Exhibition.",
+	        "pieces" : [
+	            {
+	                "width" : 30,
+	                "height" : 20,
+	                "title" : "Untitled 1",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 0,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_1.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+	            {
+	                "width" : 20,
+	                "height" : 30,
+	                "title" : "Untitled 2",
+	                "year" : 2009,                  
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 1,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_2.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+	            {
+	                "width" : 30,
+	                "height" : 20,
+	                "title" : "Untitled 3",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 2,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_3.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 14,
+	                "height" : 11,
+	                "title" : "Untitled 4",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 3,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_4.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+	            {
+	                "width" : 27,
+	                "height" : 16,
+	                "title" : "Umbrella",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 4,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/umbrella.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+	            {
+	                "width" : 11,
+	                "height" : 17,
+	                "title" : "Hope",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 5,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/hope.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 24,
+	                "height" : 16,
+	                "title" : "Untitled 5",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 6,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_5.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 16,
+	                "height" : 24,
+	                "title" : "Untitled 6",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 7,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_6.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 28,
+	                "height" : 16,
+	                "title" : "Untitled 7",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 8,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_7.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 17,
+	                "height" : 11,
+	                "title" : "Fusion",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 9,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/fusion.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 17,
+	                "height" : 11,
+	                "title" : "Untitled 8",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 10,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_8.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 17,
+	                "height" : 11,
+	                "title" : "Untitled 9",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 11,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_9.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 17,
+	                "height" : 11,
+	                "title" : "Untitled 10",
+	                "year" : 2009,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 12,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_2/untitled_10.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            }
+	    	]
+		},
+		{
+			"title" : "Underwater Series I",
+	        "description" : "The need to express a moment of weightlessness propelled me to shoot underwater from having seen the effects of my father\u2019s degenerative neurological disorder Multiple Systems Atrophy (MSA).\u000D\u000A\u000D\u000AA bold and fluid feel transcends the viewer into a suspended ethereal moment free of restrictions, inviting the viewer to move into a space of tranquility. I rely on our desires for beauty, poetics and seduction.",
+	        "pieces" : [
+	            {
+	                "width" : 20,
+	                "height" : 30,
+	                "title" : "Suspended",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 0,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/suspended.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+	            {
+	                "width" : 30,
+	                "height" : 20,
+	                "title" : "L'Orelei",
+	                "year" : 2008,                  
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 1,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/lorelei.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+	            {
+	                "width" : 20,
+	                "height" : 30,
+	                "title" : "Legs",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 2,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/legs.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 24,
+	                "height" : 16,
+	                "title" : "Bliss",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 3,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/bliss.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+	            {
+	                "width" : 24,
+	                "height" : 16,
+	                "title" : "Elegant Breath",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 4,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/elegant_breath.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+	            {
+	                "width" : 24,
+	                "height" : 16,
+	                "title" : "Mermaid Wife",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 5,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/mermaid_wife.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },	            
+	            {
+	                "width" : 24,
+	                "height" : 16,
+	                "title" : "Sunset Dance",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 6,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/sunset_dance.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 24,
+	                "height" : 16,
+	                "title" : "Free Motion",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 7,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/free_motion.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 16,
+	                "height" : 24,
+	                "title" : "Water Nymph",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 8,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/water_nymph.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 17,
+	                "height" : 11,
+	                "title" : "Levitate",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 9,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/levitate.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            },
+				{
+	                "width" : 17,
+	                "height" : 11,
+	                "title" : "Untitled",
+	                "year" : 2008,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 10,                    
+	                "source" : "Images/meaghan.ogilvie/underwater_1/untitled.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 8
+	            }
+	    	]
+		},
+		{
+			"title" : "Nightmares & Dreams",
+	        "description" : "A series of mystifying dream-states that reflect personal memories of fear and hope from childhood to adulthood.",
+	        "pieces" : [
+	            {
+	                "width" : 16,
+	                "height" : 20,
+	                "title" : "Angelic Allurement",
+	                "year" : 2004,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 0,                    
+	                "source" : "Images/meaghan.ogilvie/nightmares_dreams/angelic_allurement.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 10
+	            },
+	            {
+	                "width" : 20,
+	                "height" : 16,
+	                "title" : "No Exit",
+	                "year" : 2004,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 1,                    
+	                "source" : "Images/meaghan.ogilvie/nightmares_dreams/no_exit.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 10
+	            },
+	            {
+	                "width" : 15,
+	                "height" : 20,
+	                "title" : "Contained Reactions",
+	                "year" : 2004,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 2,                    
+	                "source" : "Images/meaghan.ogilvie/nightmares_dreams/contained_reactions.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 10
+	            },
+				{
+	                "width" : 16,
+	                "height" : 20,
+	                "title" : "Outcast",
+	                "year" : 2004,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 3,                    
+	                "source" : "Images/meaghan.ogilvie/nightmares_dreams/outcast.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 10
+	            },
+	            {
+	                "width" : 20,
+	                "height" : 16,
+	                "title" : "Released",
+	                "year" : 2004,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 4,                    
+	                "source" : "Images/meaghan.ogilvie/nightmares_dreams/released.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 10
+	            },
+	            {
+	                "width" : 16,
+	                "height" : 24,
+	                "title" : "Repentance",
+	                "year" : 2004,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 5,                    
+	                "source" : "Images/meaghan.ogilvie/nightmares_dreams/repentance.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 10
+	            },	            
+	            {
+	                "width" : 16,
+	                "height" : 20,
+	                "title" : "Subconscious Bliss",
+	                "year" : 2004,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 6,                    
+	                "source" : "Images/meaghan.ogilvie/nightmares_dreams/subconscious_bliss.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 10
+	            },
+	            {
+	                "width" : 20,
+	                "height" : 16,
+	                "title" : "Schizophrenic",
+	                "year" : 2004,                    
+	                "media" : "Chromogenic colour print",                    
+	                "index" : 7,                    
+	                "source" : "Images/meaghan.ogilvie/nightmares_dreams/schizophrenic.jpg",                    
+	                "sold" : false,
+	                "limited_prints" : 10
+	            },
+	    	]
+		}
+	]}
+]}

@@ -1,0 +1,53 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/lists/list
+IEnumerable<TwitterList>, "lists/list", ListListsFor, long? user_id, string screen_name
+
+// https://dev.twitter.com/docs/api/1.1/get/lists/statuses
+IEnumerable<TwitterStatus>, "lists/statuses", ListTweetsOnList, long? list_id, string slug, string owner_screen_name, long? owner_id, long? since_id, long? max_id, int? count, bool? include_entities, bool? include_rts
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/members/destroy
+TwitterUser, "lists/members/destroy":POST, RemoveListMember, long? list_id, string slug, long? user_id, string screen_name, string owner_screen_name, long? owner_id
+
+// https://dev.twitter.com/docs/api/1.1/get/lists/memberships
+TwitterCursorList<TwitterList>, "lists/memberships", ListListMembershipsFor, long? user_id, string screen_name, long? cursor, bool? filter_to_owned_lists
+
+// https://dev.twitter.com/docs/api/1.1/get/lists/subscribers
+TwitterCursorList<TwitterUser>, "lists/subscribers", ListListSubscribers, long? list_id, string slug, string owner_screen_name, long? owner_id, long? cursor, bool? include_entities, bool? skip_status
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/subscribers/create
+TwitterUser, "lists/subscribers/create":POST, FollowList, string owner_screen_name, long? owner_id, long? list_id, string slug
+
+// https://dev.twitter.com/docs/api/1.1/get/lists/subscribers/show
+TwitterUser, "lists/subscribers/show", VerifyListSubscription, string owner_screen_name, long? owner_id, long? list_id, string slug, long? user_id, string screen_name, bool? include_entities, bool? skip_status
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/subscribers/destroy
+TwitterUser, "lists/subscribers/destroy":POST, UnfollowList, long? list_id, string slug, string owner_screen_name, long? owner_id
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/members/create_all
+// TODO
+
+// https://dev.twitter.com/docs/api/1.1/get/lists/members/show
+TwitterUser, "lists/members/show", VerifyListMembership, long? list_id, string slug, long? user_id, string screen_name, string owner_screen_name, long? owner_id, bool? include_entities, bool? skip_status
+
+// https://dev.twitter.com/docs/api/1.1/get/lists/members
+TwitterCursorList<TwitterUser>, "lists/members", ListListMembers, long? list_id, string slug, string owner_screen_name, long? owner_id, long? cursor, bool? include_entities, bool? skip_status
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/members/create
+TwitterUser, "lists/members/create":POST, AddListMember, long? list_id, string slug, long? user_id, string screen_name, string owner_screen_name, long? owner_id
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/destroy
+TwitterList, "lists/destroy":POST, DeleteList, string owner_screen_name, long? owner_id, long? list_id, string slug
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/update
+// TODO
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/create
+TwitterList, "lists/create":POST, CreateList, string list_owner, string name, TwitterListMode mode, string description
+
+// https://dev.twitter.com/docs/api/1.1/get/lists/show
+TwitterList, "lists/show", GetList, long? list_id, string slug, string owner_screen_name, long? owner_id
+
+// https://dev.twitter.com/docs/api/1.1/get/lists/subscriptions
+TwitterCursorList<TwitterList>, "lists/subscriptions", ListSubscriptions, long? user_id, string screen_name, int? count, long? cursor
+
+// https://dev.twitter.com/docs/api/1.1/post/lists/members/destroy_all
+// TODO

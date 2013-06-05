@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+        <id>HttpContextShim</id>
+        <version>0.0.5</version>
+        <authors>Daniel Crenna</authors>
+        <owners>Daniel Crenna</owners>
+        <summary>Provides support for the general availability of an HttpContext in either WebHost or SelfHost scenarios.</summary>
+        <description>Provides support for the general availability of an HttpContext in either WebHost or SelfHost scenarios. Use this in place of HttpContext when developing middleware, and add the HttpContextHandler first in line in your Web API message handler stack, to support HttpContext wherever your API is hosted.</description>
+        <language>en-US</language>
+        <projectUrl>http://github.com/danielcrenna/httpcontext-shim</projectUrl>
+        <licenseUrl>https://github.com/danielcrenna/httpcontext-shim/blob/master/LICENSE.md</licenseUrl>
+        <iconUrl>http://apitize.com.s3.amazonaws.com/logo_generic.png</iconUrl>
+        <tags>httpcontext web api self web host</tags>
+        <dependencies>
+            <dependency id="Microsoft.AspNet.WebApi.Core" version="4.0.20710.0" />
+        </dependencies>
+    </metadata>
+</package>

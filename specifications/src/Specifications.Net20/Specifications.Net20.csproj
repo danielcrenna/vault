@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CFC5A5C4-EE98-4A41-AFE5-CEA2CE0627F8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Specifications</RootNamespace>
+    <AssemblyName>Specifications.Net20</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\lib\net20\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\lib\net20\</OutputPath>
+    <DefineConstants>TRACE;NET20</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\lib\net20\Specifications.Net20.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>specs.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LinqBridge">
+      <HintPath>..\..\lib\LinqBridge.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Specifications\AndSpecification.cs">
+      <Link>AndSpecification.cs</Link>
+    </Compile>
+    <Compile Include="..\Specifications\CompositeSpecificationBase.cs">
+      <Link>CompositeSpecificationBase.cs</Link>
+    </Compile>
+    <Compile Include="..\specifications\extensions\ObjectExtensions.cs">
+      <Link>Extensions\ObjectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\specifications\extensions\SpecificationExtensions.cs">
+      <Link>Extensions\SpecificationExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Specifications\ISpecification.cs">
+      <Link>ISpecification.cs</Link>
+    </Compile>
+    <Compile Include="..\Specifications\NotSpecification.cs">
+      <Link>NotSpecification.cs</Link>
+    </Compile>
+    <Compile Include="..\Specifications\OrSpecification.cs">
+      <Link>OrSpecification.cs</Link>
+    </Compile>
+    <Compile Include="..\Specifications\SpecificationBase.cs">
+      <Link>SpecificationBase.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="specs.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

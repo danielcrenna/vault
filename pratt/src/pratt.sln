@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56017E4F-8BAB-46B1-86D7-EE07ED094CCE}"
+	ProjectSection(SolutionItems) = preProject
+		..\LICENSE = ..\LICENSE
+		..\pack-nuget.bat = ..\pack-nuget.bat
+		..\pratt.nuspec = ..\pratt.nuspec
+		..\README.markdown = ..\README.markdown
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pratt", "pratt\pratt.csproj", "{375EE8B7-2887-4B24-8EFB-1542F12E4EDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pratt.Tests", "pratt.Tests\pratt.Tests.csproj", "{11ACD5AE-0070-48FA-9E92-5E0DCFE6953A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{375EE8B7-2887-4B24-8EFB-1542F12E4EDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{375EE8B7-2887-4B24-8EFB-1542F12E4EDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{375EE8B7-2887-4B24-8EFB-1542F12E4EDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{375EE8B7-2887-4B24-8EFB-1542F12E4EDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11ACD5AE-0070-48FA-9E92-5E0DCFE6953A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11ACD5AE-0070-48FA-9E92-5E0DCFE6953A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11ACD5AE-0070-48FA-9E92-5E0DCFE6953A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11ACD5AE-0070-48FA-9E92-5E0DCFE6953A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

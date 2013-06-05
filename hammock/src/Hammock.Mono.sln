@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hammock.Mono", "mono\Hammock.Mono\Hammock.Mono.csproj", "{C8371692-DA90-4437-BCB7-A5A2EF37B095}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Release|iPhone.Build.0 = Release|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{C8371692-DA90-4437-BCB7-A5A2EF37B095}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = mono\Hammock.Mono\Hammock.Mono.csproj
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+		$1.DirectoryNamespaceAssociation = None
+		$1.ResourceNamePolicy = FileFormatDefault
+		$0.StandardHeader = $2
+		$2.Text = 
+		$2.inheritsSet = Apache2License
+		$0.VersionControlPolicy = $3
+		$3.inheritsSet = Mono
+		$0.ChangeLogPolicy = $4
+		$4.UpdateMode = None
+		$4.MessageStyle = $5
+		$5.LineAlign = 0
+		$4.inheritsSet = Mono
+		$0.TextStylePolicy = $6
+		$6.inheritsSet = null
+		$6.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $7
+		$7.inheritsSet = Mono
+		$7.inheritsScope = text/x-csharp
+		$7.scope = text/x-csharp
+		outputpath = ..\bin\mono
+	EndGlobalSection
+EndGlobal

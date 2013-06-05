@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>OAuth</id>
+    <version>1.0.3</version>
+    <authors>Daniel Crenna</authors>
+    <owners>Daniel Crenna</owners>
+    <summary>An implementation of OAuth 1.0a for .NET</summary>
+    <description>An implementation of OAuth 1.0a for .NET</description>    
+    <language>en-US</language>
+    <projectUrl>http://github.com/danielcrenna/oauth</projectUrl>
+    <licenseUrl>https://github.com/danielcrenna/oauth/blob/master/LICENSE</licenseUrl>
+    <iconUrl>http://apitize.com.s3.amazonaws.com/logo_oauth.png</iconUrl>
+    <tags>oauth</tags>
+  </metadata>
+</package>

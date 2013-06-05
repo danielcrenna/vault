@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{69DB7C65-68CC-47A8-9C39-4FE009666923}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ebnf</RootNamespace>
+    <AssemblyName>ebnf</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CodeDomCompiler.cs" />
+    <Compile Include="Compiler.cs" />
+    <Compile Include="Earley.Base.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="Generator.cs" />
+    <Compile Include="Generator.Util.cs" />
+    <Compile Include="Grammar.cs" />
+    <Compile Include="Lexer.cs" />
+    <Compile Include="Nodes\Alternation.cs" />
+    <Compile Include="Nodes\Concatenation.cs" />
+    <Compile Include="Nodes\Expression.cs" />
+    <Compile Include="Nodes\Factor.cs" />
+    <Compile Include="Nodes\Grouping.cs" />
+    <Compile Include="Nodes\Identifier.cs" />
+    <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\Operator.cs" />
+    <Compile Include="Nodes\Option.cs" />
+    <Compile Include="Nodes\Repeat.cs" />
+    <Compile Include="Nodes\Repetition.cs" />
+    <Compile Include="Nodes\Rule.cs" />
+    <Compile Include="Nodes\SpecialSequence.cs" />
+    <Compile Include="Nodes\Term.cs" />
+    <Compile Include="Nodes\Terminal.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="PreProcessor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ErrorStrings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ErrorStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Tokens\Identifier.cs" />
+    <Compile Include="Tokens\Literal.cs" />
+    <Compile Include="Tokens\Operator.cs" />
+    <Compile Include="Tokens\Token.cs" />
+    <Compile Include="Tree.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ErrorStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

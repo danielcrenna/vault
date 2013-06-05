@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{24D9AF5C-E657-4ECB-870B-C2592E63AC1C}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>ArtApp</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+    <ConsolePause>false</ConsolePause>
+    <MtouchI18n />
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <AssemblyName>strokesApp</AssemblyName>
+    <MtouchArch>ARMv7</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyName>strokesApp</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <ConsolePause>false</ConsolePause>
+    <MtouchI18n />
+    <IpaPackageName />
+    <MtouchSdkVersion>5.0</MtouchSdkVersion>
+    <AssemblyName>artseenmeaghanogilvie</AssemblyName>
+    <DebugSymbols>true</DebugSymbols>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <MtouchProfiling>true</MtouchProfiling>
+    <MtouchArch>ARMv7</MtouchArch>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer: Daniel Crenna (EPEUP95E5P)</CodesignKey>
+    <IpaPackageName />
+    <BuildIpa>true</BuildIpa>
+    <MtouchI18n />
+    <CodesignProvision>0AA38F90-759C-46A5-B3DE-70153B5213D7</CodesignProvision>
+    <AssemblyName>artseenmeaghanogilvie</AssemblyName>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchUseSGen>true</MtouchUseSGen>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Distribution</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <AssemblyName>ArtSeenMeaghanOgilvie</AssemblyName>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>B989C4FE-C38A-4E1C-A29E-56336D988407</CodesignProvision>
+    <MtouchSdkVersion>5.0</MtouchSdkVersion>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchArch>ARMv7</MtouchArch>
+    <MtouchUseSGen>true</MtouchUseSGen>
+    <IpaPackageName />
+    <MtouchI18n />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Distribution|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Distribution</OutputPath>
+    <WarningLevel>4</WarningLevel>
+    <AssemblyName>ArtSeenMeaghanOgilvie</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Images\" />
+    <Folder Include="Images\meaghan.ogilvie\" />
+    <Folder Include="Images\meaghan.ogilvie\nightmares_dreams\" />
+    <Folder Include="Images\meaghan.ogilvie\submerged_elegance\" />
+    <Folder Include="Images\meaghan.ogilvie\into_the_depths\" />
+    <Folder Include="Images\meaghan.ogilvie\underwater_1\" />
+    <Folder Include="Images\meaghan.ogilvie\underwater_2\" />
+    <Folder Include="Images\meaghan.ogilvie\symbiosis\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Default%402x.png" />
+    <Content Include="Default.png" />
+    <Content Include="Images\114x114.png" />
+    <Content Include="Images\29x29.png" />
+    <Content Include="Images\50x50.png" />
+    <Content Include="Images\57x57.png" />
+    <Content Include="Images\58x58.png" />
+    <Content Include="Images\72x72.png" />
+    <Content Include="manifest.json" />
+    <Content Include="Images\meaghan.ogilvie\nightmares_dreams\angelic_allurement.jpg" />
+    <Content Include="Images\meaghan.ogilvie\nightmares_dreams\no_exit.jpg" />
+    <Content Include="Images\meaghan.ogilvie\nightmares_dreams\outcast.jpg" />
+    <Content Include="Images\meaghan.ogilvie\nightmares_dreams\repentance.jpg" />
+    <Content Include="Images\meaghan.ogilvie\nightmares_dreams\released.jpg" />
+    <Content Include="Images\meaghan.ogilvie\nightmares_dreams\subconscious_bliss.jpg" />
+    <Content Include="Images\meaghan.ogilvie\nightmares_dreams\contained_reactions.jpg" />
+    <Content Include="Images\meaghan.ogilvie\bio.jpg" />
+    <Content Include="Images\meaghan.ogilvie\submerged_elegance\02.jpg" />
+    <Content Include="Images\meaghan.ogilvie\submerged_elegance\01.jpg" />
+    <Content Include="Images\meaghan.ogilvie\submerged_elegance\03.jpg" />
+    <Content Include="Images\meaghan.ogilvie\submerged_elegance\04.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\ascension.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\free_fall.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\glimpse.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\impact.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\released.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\serenity.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\settled.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\succumbed.jpg" />
+    <Content Include="Images\meaghan.ogilvie\into_the_depths\trepidation.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\suspended.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\lorelei.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\legs.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\bliss.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\elegant_breath.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\mermaid_wife.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\sunset_dance.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\free_motion.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\water_nymph.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\levitate.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_1\untitled.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\fusion.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\hope.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\umbrella.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_1.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_10.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_2.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_3.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_4.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_5.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_6.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_7.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_8.jpg" />
+    <Content Include="Images\meaghan.ogilvie\underwater_2\untitled_9.jpg" />
+    <Content Include="Images\meaghan.ogilvie\symbiosis\capsized.jpg" />
+    <Content Include="Images\meaghan.ogilvie\symbiosis\untitled_3.jpg" />
+    <Content Include="Images\meaghan.ogilvie\symbiosis\untitled_5.jpg" />
+    <Content Include="Images\meaghan.ogilvie\symbiosis\untitled_2.jpg" />
+    <Content Include="Images\meaghan.ogilvie\nightmares_dreams\schizophrenic.jpg" />
+    <Content Include="Images\meaghan.ogilvie\symbiosis\untitled_1.jpg" />
+    <Content Include="Images\meaghan.ogilvie\symbiosis\untitled_6.jpg" />
+    <Content Include="Images\meaghan.ogilvie\symbiosis\untitled_4.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ArtApp.Core\ArtApp.Core.csproj">
+      <Project>{84EEEF80-D8E9-4CC1-9C8D-50F8EE14855B}</Project>
+      <Name>ArtApp.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="Images\512x512.png" />
+  </ItemGroup>
+</Project>

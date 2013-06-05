@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+        <id>copper</id>
+        <version>0.9.5-alpha</version>
+        <authors>Daniel Crenna</authors>
+        <owners>Daniel Crenna</owners>
+        <description>Middleware for building distributed, message-oriented software.</description>
+        <summary>Middleware for building distributed, message-oriented software.</summary>
+        <language>en-US</language>
+        <projectUrl>http://github.com/danielcrenna/copper</projectUrl>
+        <licenseUrl>https://github.com/danielcrenna/copper/blob/master/LICENSE</licenseUrl>
+        <iconUrl>http://apitize.com.s3.amazonaws.com/logo_copper.png</iconUrl>
+        <tags>async distributed queue producer consumer messaging pvc</tags>
+    </metadata>
+</package>

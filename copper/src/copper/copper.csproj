@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{55FE5FCB-05F2-4A2E-B17D-4EDA1BF5ADCD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>copper</RootNamespace>
+    <AssemblyName>copper</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\net40\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AsyncBridge">
+      <HintPath>..\packages\AsyncBridge.0.1.1\lib\net40-Client\AsyncBridge.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Reactive.Core, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.0.21114\lib\Net40\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Interfaces.2.0.21114\lib\Net40\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.0.21114\lib\Net40\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BatchingConsumer.cs" />
+    <Compile Include="CollectionProducer.cs" />
+    <Compile Include="CompositeConsumer.cs" />
+    <Compile Include="DelegatingBatchingConsumer.cs" />
+    <Compile Include="DelegatingConsumer.cs" />
+    <Compile Include="DelegatingObservingProducer.cs" />
+    <Compile Include="Extensions\ObservableExtensions.cs" />
+    <Compile Include="FluentExtensions.cs" />
+    <Compile Include="MessageQueueConsumer.cs" />
+    <Compile Include="MessageQueueProducer.cs" />
+    <Compile Include="ObservingProducer.cs" />
+    <Compile Include="EventPublisher.cs" />
+    <Compile Include="Extensions\BlockingCollectionExtensions.cs" />
+    <Compile Include="CollectionConsumer.cs" />
+    <Compile Include="DelegatingObserver.cs" />
+    <Compile Include="FileConsumer.cs" />
+    <Compile Include="FileProducer.cs" />
+    <Compile Include="Hub.cs" />
+    <Compile Include="EventAggregator.cs" />
+    <Compile Include="RateLimitPolicy.cs" />
+    <Compile Include="RetryPolicy.cs" />
+    <Compile Include="Pipe.cs" />
+    <Compile Include="AsyncConsumer.cs" />
+    <Compile Include="BinarySerializer.cs" />
+    <Compile Include="Consumes.cs" />
+    <Compile Include="BackgroundProducer.cs" />
+    <Compile Include="RetryDecision.cs" />
+    <Compile Include="Serializer.cs" />
+    <Compile Include="Produces.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
+    <Compile Include="StringEvent.cs" />
+    <Compile Include="ProtocolConsumer.cs" />
+    <Compile Include="ProtocolProducer.cs" />
+    <Compile Include="UsesBackgroundProducer.cs" />
+    <Compile Include="XmlSerializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="_Eventing.cd" />
+    <None Include="_Serialization.cd" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_Consumers.cd" />
+    <None Include="_Foundation.cd" />
+    <None Include="_Producers.cd" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

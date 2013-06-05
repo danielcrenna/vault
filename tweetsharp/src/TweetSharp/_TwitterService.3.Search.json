@@ -1,0 +1,2 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/search/tweets
+TwitterSearchResult, "search/tweets", Search, string q, TwitterGeoLocationSearch geocode, string lang, string locale, TwitterSearchResultType? resultType, int? count, long? since_id, long? max_id, bool? include_entities, string callback

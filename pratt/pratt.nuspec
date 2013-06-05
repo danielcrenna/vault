@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>Pratt</id>
+		<version>1.0.0</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+		<description>A Pratt parser implementation for C#</description>
+		<summary>A Pratt parser implementation for C#</summary>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/pratt/</projectUrl>
+		<licenseUrl>http://github.com/danielcrenna/pratt/blob/master/LICENSE</licenseUrl>
+    <iconUrl>http://apitize.com.s3.amazonaws.com/logo_pratt.png</iconUrl>
+		<tags>Pratt parser</tags>   
+	</metadata>
+</package>

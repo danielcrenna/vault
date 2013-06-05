@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Qualm.Supervised.Classification.KNearestNeighbor">
+    <Position X="4.25" Y="2.75" Width="1.75" />
+    <Members>
+      <Method Name="CalculateDistances" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Supervised\Classification\KNearestNeighbor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Qualm.Supervised.Classification.DecisionTrees">
+    <Position X="6.25" Y="2.75" Width="1.75" />
+    <Members>
+      <Method Name="CreateTree" Hidden="true" />
+      <Method Name="ReverseNodeOrder" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAgAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Supervised\Classification\DecisionTrees.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Qualm.Supervised.Classification.IClassifier" Collapsed="true">
+    <Position X="4.25" Y="1.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Supervised\Classification\IClassifier.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Qualm.Supervised.Classification.ITreeNode" Collapsed="true">
+    <Position X="10.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Supervised\Classification\ITreeNode.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

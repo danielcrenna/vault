@@ -1,0 +1,8 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/users/suggestions/%3Aslug
+TwitterUserSuggestions, "/users/suggestions/{slug}", ListSuggestedUsers, string slug, string lang
+
+// https://dev.twitter.com/docs/api/1.1/get/users/suggestions
+IEnumerable<TwitterUserSuggestions>, "users/suggestions", ListSuggestedUserCategories, string lang
+
+// https://dev.twitter.com/docs/api/1.1/get/users/suggestions/%3Aslug/members
+IEnumerable<TwitterUser>, "/users/suggestions/{slug}/members", GetSuggestedUserMembers, string slug

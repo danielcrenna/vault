@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="copper.BatchingConsumer&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAACAAAEAAAAQAAAAAAAACAAIAAAEAAAAAAAA=</HashCode>
+      <FileName>BatchingConsumer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="copper.AsyncConsumer&lt;T&gt;">
+    <Position X="4.75" Y="0.5" Width="2" />
+    <Members>
+      <Field Name="_handler" Hidden="true" />
+      <Method Name="DefaultCallback" Hidden="true" />
+      <Method Name="Perform" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAACAAAgBAAAEAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>AsyncConsumer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="copper.DelegatingConsumer&lt;T&gt;" Collapsed="true">
+    <Position X="3.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>DelegatingConsumer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="copper.FileConsumer&lt;T&gt;" Collapsed="true">
+    <Position X="6" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAQAAIAAAAAAAAAAAAAAAAAAAAAACAIAAIAAAACAAAA=</HashCode>
+      <FileName>FileConsumer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="copper.CollectionConsumer&lt;T&gt;" Collapsed="true">
+    <Position X="8.75" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAFAAAAAAAAQAAAAAAAIEAAAAAAAAAAA=</HashCode>
+      <FileName>CollectionConsumer.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="copper.DelegatingBatchingConsumer&lt;T&gt;" Collapsed="true">
+    <Position X="0.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAACAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>DelegatingBatchingConsumer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="copper.Consumes&lt;T&gt;">
+    <Position X="4.25" Y="5.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Consumes.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
