@@ -71,15 +71,10 @@ namespace metrics.Net
                     RespondWithFile(response, "jquery.flot.min.js");
                     break;
                 case "/":
-                    switch(mimeType)
-                    {
-                        case "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8":
+                    if(mimeType.StartsWith("text/html"))
                             RespondWithFile(response, "index.html");
-                            break;
-                        default: // "application/json"
+                    else // "application/json"
                             RespondWithNotFound(response);
-                            break;
-                    }
                     break;
                 case "/ping":
                     response.StatusCode = 200;
