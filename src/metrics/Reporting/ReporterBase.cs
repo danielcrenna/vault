@@ -37,13 +37,14 @@ namespace metrics.Reporting
             var interval = TimeSpan.FromSeconds(seconds);
 
             Token = new CancellationTokenSource();
-            Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(async () =>
             {
                 OnStarted();
                 while (!Token.IsCancellationRequested)
                 {
-                    Thread.Sleep(interval);
-                    Run();
+                    await Task.Delay(interval, Token.Token);
+	                if (!Token.IsCancellationRequested)
+		                Run();
                 }
             }, Token.Token);
         }

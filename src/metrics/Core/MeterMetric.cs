@@ -27,11 +27,11 @@ namespace metrics.Core
         {
             var meter = new MeterMetric(eventType, rateUnit);
 
-            Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(async () =>
             {
                 while (!meter._token.IsCancellationRequested)
                 {
-                    Thread.Sleep(Interval);
+	                await Task.Delay(Interval, meter._token.Token);
                     meter.Tick();
                 }
             }, meter._token.Token);
