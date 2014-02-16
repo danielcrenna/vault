@@ -114,13 +114,15 @@ namespace metrics.Tests.Reporting
 
         private static void RegisterMetrics()
         {
-            Metrics.Clear();
+            var metrics = new Metrics();
 
-            var counter = Metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
+            metrics.Clear();
+
+            var counter = metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
             counter.Increment(100);
 
             var queue = new Queue<int>();
-            Metrics.Gauge(typeof(GaugeTests), "Can_run_with_known_counters_gauge", () => queue.Count);
+            metrics.Gauge(typeof(GaugeTests), "Can_run_with_known_counters_gauge", () => queue.Count);
             queue.Enqueue(1);
             queue.Enqueue(2);
         }

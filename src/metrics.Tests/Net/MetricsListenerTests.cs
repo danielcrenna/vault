@@ -11,6 +11,8 @@ namespace metrics.Tests.Net
     {
         private MetricsListener _listener;
         private const int Port = 9898;
+        Metrics _metrics=new Metrics();
+
 
         [TestFixtureSetUp]
         public void SetUp()
@@ -52,9 +54,9 @@ namespace metrics.Tests.Net
         [Test]
         public void Can_respond_to_metrics_request_when_metrics_are_registered()
         {
-            Metrics.Clear();
+            _metrics.Clear();
 
-            var counter = Metrics.Counter(typeof(MetricsListenerTests), "counter");
+            var counter = _metrics.Counter(typeof(MetricsListenerTests), "counter");
             counter.Increment();
 
             var content = GetResponseForRequest("http://localhost:" + Port + "/metrics");
@@ -74,7 +76,7 @@ namespace metrics.Tests.Net
         [Test]
         public void Can_respond_to_metrics_request_when_no_metrics_are_registered()
         {
-            Metrics.Clear();
+            _metrics.Clear();
 
             var content = GetResponseForRequest("http://localhost:" + Port + "/metrics");
 

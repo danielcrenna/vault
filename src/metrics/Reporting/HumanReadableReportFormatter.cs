@@ -9,6 +9,8 @@ namespace metrics.Reporting
     {
         public string GetSample()
         {
+            var metrics = new Metrics();
+ 
             var sb = new StringBuilder();
             var now = DateTime.Now;
             var dateTime = string.Format("{0} {1}", now.ToShortDateString(), now.ToShortTimeString());
@@ -20,7 +22,7 @@ namespace metrics.Reporting
             }
             sb.AppendLine();
 
-            foreach (var entry in Utils.SortMetrics(Metrics.All))
+            foreach (var entry in Utils.SortMetrics(metrics.All))
             {
                 sb.Append(entry.Key);
                 sb.AppendLine(":");

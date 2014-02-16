@@ -56,7 +56,8 @@ namespace metrics.Net
         {
             var request = context.Request; 
             var response = context.Response;
-
+            var metrics = new Metrics();
+ 
             // TODO: parse 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
             // http://www.singular.co.nz/blog/archive/2008/07/06/finding-preferred-accept-encoding-header-in-csharp.aspx
 
@@ -88,10 +89,10 @@ namespace metrics.Net
                     switch(mimeType)
                     {
                         case "text/html":
-                            WriteFinal(Serializer.Serialize(Metrics.AllSorted), response);
+                            WriteFinal(Serializer.Serialize(metrics.AllSorted), response);
                             break;
                         default: // "application/json"
-                            WriteFinal(Serializer.Serialize(Metrics.AllSorted), response);
+                            WriteFinal(Serializer.Serialize(metrics.AllSorted), response);
                             break;
                     }
                     

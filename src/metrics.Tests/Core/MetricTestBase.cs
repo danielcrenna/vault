@@ -7,7 +7,9 @@ namespace metrics.Tests.Core
         [TearDown]
         public void TearDown()
         {
-            Metrics.Clear();
+            var metrics = new Metrics();
+ 
+            metrics.Clear();
         }
     }
 }

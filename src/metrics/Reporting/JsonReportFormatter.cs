@@ -6,7 +6,9 @@ namespace metrics.Reporting
     {
         public string GetSample()
         {
-            return Serializer.Serialize(Metrics.AllSorted);
+            var metrics = new Metrics();
+ 
+            return Serializer.Serialize(metrics.AllSorted);
         }
     }
 }

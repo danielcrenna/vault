@@ -24,7 +24,7 @@ namespace metrics
         /// <param name="counter">The performance counter name</param>
         /// <param name="instance">The performance counter instance, if applicable</param>
         /// <param name="label">A label to distinguish the metric in polling reports</param>
-        public static void InstallPerformanceCounterGauge(string category, string counter, string instance, string label)
+        public  void InstallPerformanceCounterGauge(string category, string counter, string instance, string label)
         {
             var performanceCounter = new PerformanceCounter(category, counter, instance, true);
             GetOrAdd(new MetricName(typeof(Metrics), Environment.MachineName + label), new GaugeMetric<double>(() => performanceCounter.NextValue()));
@@ -36,7 +36,7 @@ namespace metrics
         /// <param name="category">The performance counter category</param>
         /// <param name="counter">The performance counter name</param>
         /// <param name="label">A label to distinguish the metric in polling reports</param>
-        public static void InstallPerformanceCounterGauge(string category, string counter, string label)
+        public  void InstallPerformanceCounterGauge(string category, string counter, string label)
         {
             var performanceCounter = new PerformanceCounter(category, counter, true);
             GetOrAdd(new MetricName(typeof(Metrics), Environment.MachineName + label), new GaugeMetric<double>(() => performanceCounter.NextValue()));
@@ -50,7 +50,7 @@ namespace metrics
         /// <param name="name">The metric name</param>
         /// <param name="evaluator">The gauge evaluation function</param>
         /// <returns></returns>
-        public static GaugeMetric<T> Gauge<T>(Type owner, string name, Func<T> evaluator)
+        public  GaugeMetric<T> Gauge<T>(Type owner, string name, Func<T> evaluator)
         {
             return GetOrAdd(new MetricName(owner, name), new GaugeMetric<T>(evaluator));
         }
@@ -61,7 +61,7 @@ namespace metrics
         /// <param name="owner">The type that owns the metric</param>
         /// <param name="name">The metric name</param>
         /// <returns></returns>
-        public static CounterMetric Counter(Type owner, string name)
+        public  CounterMetric Counter(Type owner, string name)
         {
             return GetOrAdd(new MetricName(owner, name), new CounterMetric());
         }
@@ -73,7 +73,7 @@ namespace metrics
         /// <param name="name">The metric name</param>
         /// <param name="biased">Whether the sample type is biased or uniform</param>
         /// <returns></returns>
-        public static HistogramMetric Histogram(Type owner, string name, bool biased)
+        public  HistogramMetric Histogram(Type owner, string name, bool biased)
         {
             return GetOrAdd(new MetricName(owner, name),
                             new HistogramMetric(biased
@@ -87,7 +87,7 @@ namespace metrics
         /// <param name="owner">The type that owns the metric</param>
         /// <param name="name">The metric name</param>
         /// <returns></returns>
-        public static HistogramMetric Histogram(Type owner, string name)
+        public  HistogramMetric Histogram(Type owner, string name)
         {
             return GetOrAdd(new MetricName(owner, name), new HistogramMetric(HistogramMetric.SampleType.Uniform));
         }
@@ -100,7 +100,7 @@ namespace metrics
         /// <param name="eventType">The plural name of the type of events the meter is measuring (e.g., <code>"requests"</code>)</param>
         /// <param name="unit">The rate unit of the new meter</param>
         /// <returns></returns>
-        public static MeterMetric Meter(Type owner, string name, string eventType, TimeUnit unit)
+        public  MeterMetric Meter(Type owner, string name, string eventType, TimeUnit unit)
         {
             var metricName = new MetricName(owner, name);
             IMetric existingMetric;
@@ -122,7 +122,7 @@ namespace metrics
         /// <param name="durationUnit">The duration scale unit of the new timer</param>
         /// <param name="rateUnit">The rate unit of the new timer</param>
         /// <returns></returns>
-        public static TimerMetric Timer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+        public  TimerMetric Timer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
         {
            var metricName = new MetricName(owner, name);
            IMetric existingMetric;
@@ -145,7 +145,7 @@ namespace metrics
         /// <param name="durationUnit">The duration scale unit of the new timer</param>
         /// <param name="rateUnit">The rate unit of the new timer</param>
         /// <returns></returns>
-        public static CallbackTimerMetric CallbackTimer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+        public  CallbackTimerMetric CallbackTimer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
         {
            var metricName = new MetricName(owner, name);
            IMetric existingMetric;
@@ -169,7 +169,7 @@ namespace metrics
        /// <param name="durationUnit">The duration scale unit of the new timer</param>
        /// <param name="rateUnit">The rate unit of the new timer</param>
        /// <returns></returns>
-       public static ManualTimerMetric ManualTimer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+       public  ManualTimerMetric ManualTimer(Type owner, String name, TimeUnit durationUnit, TimeUnit rateUnit)
        {
           var metricName = new MetricName(owner, name);
           IMetric existingMetric;
@@ -188,7 +188,7 @@ namespace metrics
         /// </summary>
         /// <param name="period">The period between successive outputs</param>
         /// <param name="unit">The time unit of the period</param>
-        public static void EnableConsoleReporting(long period, TimeUnit unit)
+        public  void EnableConsoleReporting(long period, TimeUnit unit)
         {
             var reporter = new ConsoleReporter();
             reporter.Start(period, unit);
@@ -197,7 +197,7 @@ namespace metrics
         /// <summary>
         /// Returns a copy of all currently registered metrics in an immutable collection
         /// </summary>
-        public static IDictionary<MetricName, IMetric> All
+        public  IDictionary<MetricName, IMetric> All
         {
             get { return new ReadOnlyDictionary<MetricName, IMetric>(_metrics); }
         }
@@ -205,7 +205,7 @@ namespace metrics
         /// <summary>
         /// Returns a copy of all currently registered metrics in an immutable collection, sorted by owner and name
         /// </summary>
-        public static IDictionary<MetricName, IMetric> AllSorted
+        public  IDictionary<MetricName, IMetric> AllSorted
         {
             get { return new ReadOnlyDictionary<MetricName, IMetric>(new SortedDictionary<MetricName, IMetric>(_metrics)); }
         }
@@ -213,13 +213,13 @@ namespace metrics
         /// <summary>
         /// Clears all previously registered metrics
         /// </summary>
-        public static void Clear()
+        public  void Clear()
         {
             _metrics.Clear();
             PerformanceCounter.CloseSharedResources();
         }
 
-        private static T GetOrAdd<T>(MetricName name, T metric) where T : IMetric
+        private  T GetOrAdd<T>(MetricName name, T metric) where T : IMetric
         {
             if (_metrics.ContainsKey(name))
             {
