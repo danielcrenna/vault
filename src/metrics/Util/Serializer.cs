@@ -16,7 +16,7 @@ namespace metrics.Util
             foreach (var metric in metrics)
             {
                 sb.Append("{\"name\":\"");
-                sb.Append(metric.Key).Append("\",\"metric\":");
+                sb.Append(metric.Key.Name).Append("\",\"metric\":");
                 metric.Value.LogJson(sb);
                 sb.Append("}");
             }

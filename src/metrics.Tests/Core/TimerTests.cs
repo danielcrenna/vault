@@ -6,12 +6,13 @@ namespace metrics.Tests.Core
    [TestFixture]
    public class TimerTests : MetricTestBase
    {
-       Metrics _metrics = new Metrics();
  
       [Test]
       public void CallbackTimerTestBasic()
       {
-         var timer = _metrics.CallbackTimer(typeof(TimerTests), "test", TimeUnit.Milliseconds, TimeUnit.Milliseconds);
+
+          var metrics = new Metrics();
+         var timer = metrics.CallbackTimer(typeof(TimerTests), "CallbackTimertest", TimeUnit.Milliseconds, TimeUnit.Milliseconds);
 
          for (int i = 0; i < 10; i++)
          {
@@ -27,7 +28,9 @@ namespace metrics.Tests.Core
       [Test]
       public void ManualTimerTestBasic()
       {
-         var timer = _metrics.ManualTimer(typeof(TimerTests), "test", TimeUnit.Milliseconds, TimeUnit.Milliseconds);
+          var metrics = new Metrics();
+ 
+         var timer = metrics.ManualTimer(typeof(TimerTests), "|ManualTimertest", TimeUnit.Milliseconds, TimeUnit.Milliseconds);
 
          for (int i = 0; i < 10; i++)
          {
