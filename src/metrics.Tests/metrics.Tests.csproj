@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6DAD9669-E49A-41A2-98F8-D0F4E50CC925}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>metrics.Tests</RootNamespace>
     <AssemblyName>metrics.Tests</AssemblyName>
@@ -87,6 +87,7 @@
     <Compile Include="Support\VolatileDoubleTests.cs" />
     <Compile Include="TimeUnitTests.cs" />
     <Compile Include="Net\MetricsListenerTests.cs" />
+    <Compile Include="Tryout.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -11,16 +11,16 @@ namespace metrics.Util
 
             foreach(var entry in metrics)
             {
-                var className = entry.Key.Class.Name;
+                var fullName = entry.Key.Context;
                 IDictionary<string, IMetric> submetrics;
-                if(!sortedMetrics.ContainsKey(className))
+                if(!sortedMetrics.ContainsKey(fullName))
                 {
                     submetrics = new SortedDictionary<string, IMetric>();
-                    sortedMetrics.Add(className, submetrics);
+                    sortedMetrics.Add(fullName, submetrics);
                 }
                 else
                 {
-                    submetrics = sortedMetrics[className];
+                    submetrics = sortedMetrics[fullName];
                 }
                 submetrics.Add(entry.Key.Name, entry.Value);
             }

@@ -115,6 +115,27 @@ namespace metrics
         }
 
         /// <summary>
+        /// Creates a new meter metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this metric</param>
+        /// <param name="name">The metric name</param>
+        /// <param name="eventType">The plural name of the type of events the meter is measuring (e.g., <code>"requests"</code>)</param>
+        /// <param name="unit">The rate unit of the new meter</param>
+        /// <returns></returns>
+        public MeterMetric Meter(string context, string name, string eventType, TimeUnit unit)
+        {
+            var metricName = new MetricName(context, name);
+            IMetric existingMetric;
+            if (_metrics.TryGetValue(metricName, out existingMetric))
+            {
+                return (MeterMetric)existingMetric;
+            }
+
+            var metric = MeterMetric.New(eventType, unit);
+            var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+            return justAddedMetric == null ? metric : (MeterMetric)justAddedMetric;
+        }
+        /// <summary>
         /// Creates a new timer metric and registers it under the given type and name
         /// </summary>
         /// <param name="owner">The type that owns the metric</param>

@@ -147,8 +147,6 @@ namespace metrics.Net
                     return sr.ReadToEnd();
                 }
             }
-
-            return "";
         }
     }
 }
