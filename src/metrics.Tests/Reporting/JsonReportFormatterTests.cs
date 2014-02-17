@@ -20,7 +20,7 @@ namespace metrics.Tests.Reporting
 
             meter.Mark(3);
 
-            var reporter = new JsonReportFormatter();
+            var reporter = new JsonReportFormatter(metrics);
             var json = reporter.GetSample();
             Console.WriteLine(json);
         }

@@ -11,12 +11,14 @@ namespace metrics.Tests.Reporting
     [TestFixture]
     public class SampleFileReporterTests
     {
+        private Metrics _metrics;
+
         [Test]
         public void Can_run_with_known_counters_and_human_readable_format()
         {
             RegisterMetrics();
 
-            var reporter = new SampledFileReporter(Path.GetTempPath());
+            var reporter = new SampledFileReporter(Path.GetTempPath(), _metrics);
             reporter.Run();
         }
 
@@ -25,7 +27,7 @@ namespace metrics.Tests.Reporting
         {
             RegisterMetrics();
 
-            var reporter = new SampledFileReporter(Path.GetTempPath(), new JsonReportFormatter());
+            var reporter = new SampledFileReporter(Path.GetTempPath(), new JsonReportFormatter(_metrics));
             reporter.Run();
         }
 
@@ -42,7 +44,7 @@ namespace metrics.Tests.Reporting
             }
 
             string filename;
-            using (var reporter = new SampledFileReporter(directory, new JsonReportFormatter()))
+            using (var reporter = new SampledFileReporter(directory, new JsonReportFormatter(_metrics)))
             {
                 reporter.Run();
                 samples = Directory.GetFiles(directory, "*.sample");
@@ -72,7 +74,7 @@ namespace metrics.Tests.Reporting
             ThreadPool.QueueUserWorkItem(
                 s =>
                 {
-                    var reporter = new SampledFileReporter(directory, new JsonReportFormatter());
+                    var reporter = new SampledFileReporter(directory, new JsonReportFormatter(_metrics));
                     reporter.Start(1, TimeUnit.Seconds);
                     while (true)
                     {
@@ -102,7 +104,7 @@ namespace metrics.Tests.Reporting
             ThreadPool.QueueUserWorkItem(
                 s =>
                 {
-                    var reporter = new SampledFileReporter(Path.GetTempPath());
+                    var reporter = new SampledFileReporter(Path.GetTempPath(),_metrics);
                     reporter.Start(1, TimeUnit.Seconds);
                     reporter.Stopped += delegate { block.Set(); };
                     Thread.Sleep(2000);
@@ -112,17 +114,17 @@ namespace metrics.Tests.Reporting
             block.WaitOne();
         }
 
-        private static void RegisterMetrics()
+        private void RegisterMetrics()
         {
-            var metrics = new Metrics();
+            _metrics = new Metrics();
 
-            metrics.Clear();
+            _metrics.Clear();
 
-            var counter = metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
+            var counter = _metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
             counter.Increment(100);
 
             var queue = new Queue<int>();
-            metrics.Gauge(typeof(GaugeTests), "Can_run_with_known_counters_gauge", () => queue.Count);
+            _metrics.Gauge(typeof(GaugeTests), "Can_run_with_known_counters_gauge", () => queue.Count);
             queue.Enqueue(1);
             queue.Enqueue(2);
         }

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text;
 using metrics.Support;
 
 namespace metrics.Core
@@ -54,6 +55,11 @@ namespace metrics.Core
         public IMetric Copy
         {
             get { return new CounterMetric(_count.Get()); }
+        }
+
+        public void LogJson(StringBuilder sb)
+        {
+            sb.Append("{\"count\":").Append(Count).Append("}");
         }
     }
 }

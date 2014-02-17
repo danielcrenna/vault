@@ -1,14 +1,19 @@
-using metrics.Serialization;
+using metrics.Util;
 
 namespace metrics.Reporting
 {
     public class JsonReportFormatter : IReportFormatter
     {
+        private readonly Metrics _metrics;
+
+        public JsonReportFormatter(Metrics metrics)
+        {
+            _metrics = metrics;
+        }
+
         public string GetSample()
         {
-            var metrics = new Metrics();
- 
-            return Serializer.Serialize(metrics.AllSorted);
+            return Serializer.Serialize(_metrics.AllSorted);
         }
     }
 }

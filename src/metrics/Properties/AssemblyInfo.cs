@@ -14,8 +14,6 @@ using System.Security;
 [assembly: AssemblyCopyright("Copyright © Daniel Crenna 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("metrics.Tests")]
-[assembly: InternalsVisibleTo("metrics.AspNetMvc")]
 [assembly: AllowPartiallyTrustedCallers]
 [assembly: SecurityRules(SecurityRuleSet.Level1)]
 

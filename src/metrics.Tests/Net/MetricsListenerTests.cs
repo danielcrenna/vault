@@ -17,7 +17,7 @@ namespace metrics.Tests.Net
         [TestFixtureSetUp]
         public void SetUp()
         {
-            _listener = new MetricsListener();
+            _listener = new MetricsListener(_metrics);
             _listener.Start(Port);
         }
 

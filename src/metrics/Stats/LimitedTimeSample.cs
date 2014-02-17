@@ -20,7 +20,7 @@ namespace metrics.Stats
         /// <summary>
         /// for testing
         /// </summary>
-        internal LimitedTimeSample(IDateTimeSupplier dateTimeSupplier, TimeSpan timeToKeepItems, TimeSpan timeBetweenRemovingOldItems)
+        public LimitedTimeSample(IDateTimeSupplier dateTimeSupplier, TimeSpan timeToKeepItems, TimeSpan timeBetweenRemovingOldItems)
             : this(timeToKeepItems, timeBetweenRemovingOldItems)
         {
             _dateTimeSupplier = dateTimeSupplier;

@@ -12,6 +12,7 @@ namespace metrics.Tests.Reporting
     public class FileReporterTests
     {
         private string _filename;
+        private static Metrics _metrics;
 
         [SetUp]
         public void Setup()
@@ -33,7 +34,7 @@ namespace metrics.Tests.Reporting
         {
             RegisterMetrics();
 
-            using (var reporter = new FileReporter(_filename))
+            using (var reporter = new FileReporter(_filename, _metrics))
             {
                 reporter.Run();
                 Assert.IsTrue(File.Exists(_filename));
@@ -48,7 +49,7 @@ namespace metrics.Tests.Reporting
         {
             RegisterMetrics();
 
-            using (var reporter = new FileReporter(_filename, new JsonReportFormatter()))
+            using (var reporter = new FileReporter(_filename, new JsonReportFormatter(_metrics)))
             {
                 reporter.Run();
                 Assert.IsTrue(File.Exists(_filename));
@@ -63,7 +64,7 @@ namespace metrics.Tests.Reporting
         {
             RegisterMetrics();
 
-            using (var reporter = new FileReporter(_filename))
+            using (var reporter = new FileReporter(_filename,_metrics))
             {
                 reporter.Run();
             }
@@ -79,7 +80,7 @@ namespace metrics.Tests.Reporting
             ThreadPool.QueueUserWorkItem(
                 s =>
                 {
-                    var reporter = new FileReporter(Path.GetTempFileName());
+                    var reporter = new FileReporter(Path.GetTempFileName(), _metrics);
                     reporter.Start(1, TimeUnit.Seconds);
                     reporter.Stopped += delegate { block.Set(); };
                     Thread.Sleep(2000);
@@ -100,7 +101,7 @@ namespace metrics.Tests.Reporting
             ThreadPool.QueueUserWorkItem(
                 s =>
                 {
-                    using (var reporter = new FileReporter(_filename))
+                    using (var reporter = new FileReporter(_filename, _metrics))
                     {
                         reporter.Start(3, TimeUnit.Seconds);
                         while (true)
@@ -120,13 +121,13 @@ namespace metrics.Tests.Reporting
 
         private static void RegisterMetrics()
         {
-            var metrics = new Metrics();
+            _metrics = new Metrics();
  
-            var counter = metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
+            var counter = _metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
             counter.Increment(100);
 
             var queue = new Queue<int>();
-            metrics.Gauge(typeof(GaugeTests), "Can_run_with_known_counters_gauge", () => queue.Count);
+            _metrics.Gauge(typeof(GaugeTests), "Can_run_with_known_counters_gauge", () => queue.Count);
             queue.Enqueue(1);
             queue.Enqueue(2);
         }

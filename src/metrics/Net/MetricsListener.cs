@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using metrics.Serialization;
+using metrics.Util;
 
 namespace metrics.Net
 {
@@ -14,6 +14,12 @@ namespace metrics.Net
         private HttpListener _listener;
         private CancellationTokenSource _task;
 
+        private readonly Metrics _metrics;
+
+        public MetricsListener(Metrics metrics)
+        {
+            _metrics = metrics;
+        }
         private static HttpListener InitializeListenerOnPort(int port)
         {
             var listener = new HttpListener();
@@ -52,11 +58,12 @@ namespace metrics.Net
             }, _task.Token);
         }
 
-        private static void HandleContext(HttpListenerContext context)
+        private  void HandleContext(HttpListenerContext context)
         {
             var request = context.Request; 
             var response = context.Response;
-            var metrics = new Metrics();
+           // var metrics = new Metrics();
+           
  
             // TODO: parse 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
             // http://www.singular.co.nz/blog/archive/2008/07/06/finding-preferred-accept-encoding-header-in-csharp.aspx
@@ -89,10 +96,10 @@ namespace metrics.Net
                     switch(mimeType)
                     {
                         case "text/html":
-                            WriteFinal(Serializer.Serialize(metrics.AllSorted), response);
+                            WriteFinal(Serializer.Serialize(_metrics.AllSorted), response);
                             break;
                         default: // "application/json"
-                            WriteFinal(Serializer.Serialize(metrics.AllSorted), response);
+                            WriteFinal(Serializer.Serialize(_metrics.AllSorted), response);
                             break;
                     }
                     

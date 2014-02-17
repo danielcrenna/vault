@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using metrics.Stats;
 using metrics.Support;
+using System.Text;
 
 namespace metrics.Core
 {
@@ -64,6 +65,16 @@ namespace metrics.Core
             _m15Rate.Tick();
         }
 
+        public void LogJson(StringBuilder sb)
+        {
+            sb.Append("{\"count\":").Append(Count)
+              .Append(",\"rate unit\":").Append(RateUnit)
+              .Append(",\"fifteen minute rate\":").Append(FifteenMinuteRate)
+              .Append(",\"five minute rate\":").Append(FiveMinuteRate)
+              .Append(",\"one minute rate\":").Append(OneMinuteRate)
+              .Append(",\"mean rate\":").Append(MeanRate).Append("}"); 
+
+        }
         /// <summary>
         /// Mark the occurrence of an event
         /// </summary>

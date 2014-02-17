@@ -7,7 +7,7 @@ namespace metrics.Support
     /// <summary>
     /// Provides statistically relevant random number generation
     /// </summary>
-    internal class Random
+    public class Random
     {
 		private static readonly ThreadLocal<RandomNumberGenerator> _random = new ThreadLocal<RandomNumberGenerator>(RandomNumberGenerator.Create);
         
