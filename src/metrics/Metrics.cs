@@ -204,6 +204,28 @@ namespace metrics
           return justAddedMetric == null ? metric : (ManualTimerMetric)justAddedMetric;
        }
 
+       /// <summary>
+       /// Creates a new meter metric and registers it under the given type and name
+       /// </summary>
+       /// <param name="context">The context for this metric</param>
+       /// <param name="name">The metric name</param>
+       /// <param name="eventType">The plural name of the type of events the meter is measuring (e.g., <code>"requests"</code>)</param>
+       /// <param name="unit">The rate unit of the new meter</param>
+       /// <param name="rate">The rate  of the new meter</param>
+       /// <returns></returns>
+       public PerSecondCounterMetric TimedCounter(string context, string name, string eventType)
+       {
+           var metricName = new MetricName(context, name);
+           IMetric existingMetric;
+           if (_metrics.TryGetValue(metricName, out existingMetric))
+           {
+               return (PerSecondCounterMetric)existingMetric;
+           }
+
+           var metric = PerSecondCounterMetric.New(eventType);
+           var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+           return justAddedMetric == null ? metric : (PerSecondCounterMetric)justAddedMetric;
+       }
         /// <summary>
         /// Enables the console reporter and causes it to print to STDOUT with the specified period
         /// </summary>

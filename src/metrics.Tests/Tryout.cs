@@ -10,20 +10,16 @@ namespace metrics.Tests
         {
             var db1Metrics = new Metrics();
 
-            var docsIndexedPerSec = db1Metrics.Meter("db1", "docs indexed/sec", "Indexed Documents", TimeUnit.Seconds);
+            var docsTimedCounterPerSec = db1Metrics.TimedCounter("db1", "docs new indexed/sec", "new Indexed Documents");
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 1000; i++)
             {
-                docsIndexedPerSec.Mark();
-                Thread.Sleep(500);
+                docsTimedCounterPerSec.Mark();
+                Thread.Sleep(3);
             }
+            Console.WriteLine(docsTimedCounterPerSec.LastValue);
 
-            Console.WriteLine(docsIndexedPerSec.RateUnit);
-            Console.WriteLine(docsIndexedPerSec.MeanRate);
-            Console.WriteLine(docsIndexedPerSec.OneMinuteRate);
-            Console.WriteLine(docsIndexedPerSec.FiveMinuteRate);
-            Console.WriteLine(docsIndexedPerSec.FifteenMinuteRate);
-            Console.WriteLine(docsIndexedPerSec.Count);
+
         } 
     }
 }
