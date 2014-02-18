@@ -12,12 +12,12 @@ namespace metrics.Tests
 
             var docsTimedCounterPerSec = db1Metrics.TimedCounter("db1", "docs new indexed/sec", "new Indexed Documents");
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 docsTimedCounterPerSec.Mark();
-                Thread.Sleep(3);
+                Thread.Sleep(10);
             }
-            Console.WriteLine(docsTimedCounterPerSec.LastValue);
+            Console.WriteLine(docsTimedCounterPerSec.CurrentValue);
 
 
         } 

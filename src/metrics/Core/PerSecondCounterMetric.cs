@@ -15,28 +15,19 @@ namespace metrics.Core
     {
         private readonly string _eventType;
         private readonly TimeUnit _rateUnit;
-        readonly AtomicLong _value = new AtomicLong();
-        private AtomicLong _prev = new AtomicLong();
         private readonly CancellationTokenSource _token = new CancellationTokenSource();
 
-        private readonly ConcurrentQueue<long> _history = new ConcurrentQueue<long>();
 
-        private const int HistorySize = 60 * 5;
+        private readonly EWMA _ewma = EWMA.OneSecondEWMA();
+
 
         private void TimeElapsed()
         {
-            _prev.Set(_value.Get());
-            _history.Enqueue(_prev.Get());
-            if (_history.Count > HistorySize)
-            {
-                long _;
-                _history.TryDequeue(out _);
-            }
-            _value.Set(0);
+            _ewma.Tick();
         }
         public void LogJson(StringBuilder sb)
         {
-            sb.Append("{\"count\":").Append(LastValue)
+            sb.Append("{\"count\":").Append(CurrentValue)
               .Append(",\"rate unit\":").Append(RateUnit).Append("}");
 
         }
@@ -53,23 +44,12 @@ namespace metrics.Core
 
         public void Mark()
         {
-            _value.IncrementAndGet();
-        }
-
-        public IEnumerable<double> Values()
-        {
-            var currentValue = CurrentValue;
-            foreach (var l in _history)
-            {
-                yield return l;
-            }
-            yield return currentValue;
-
+            _ewma.Update(1);
         }
 
         public double CurrentValue
         {
-            get { return _prev.Get(); }
+            get { return _ewma.Rate(_rateUnit); }
         }
 
         public string EventType
