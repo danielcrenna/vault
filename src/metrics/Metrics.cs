@@ -61,9 +61,20 @@ namespace metrics
         /// <param name="owner">The type that owns the metric</param>
         /// <param name="name">The metric name</param>
         /// <returns></returns>
-        public  CounterMetric Counter(Type owner, string name)
+        public CounterMetric Counter(Type owner, string name)
         {
             return GetOrAdd(new MetricName(owner, name), new CounterMetric());
+        }
+
+        /// <summary>
+        /// Creates a new counter metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this metric</param>
+        /// <param name="name">The metric name</param>
+        /// <returns></returns>
+        public CounterMetric Counter(string context, string name)
+        {
+            return GetOrAdd(new MetricName(context, name), new CounterMetric());
         }
 
         /// <summary>
@@ -80,6 +91,20 @@ namespace metrics
                                                     ? HistogramMetric.SampleType.Biased
                                                     : HistogramMetric.SampleType.Uniform));
         }
+        /// <summary>
+        /// Creates a new histogram metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this metric</param>
+        /// <param name="name">The metric name</param>
+        /// <param name="biased">Whether the sample type is biased or uniform</param>
+        /// <returns></returns>
+        public HistogramMetric Histogram(string context, string name, bool biased)
+        {
+            return GetOrAdd(new MetricName(context, name),
+                            new HistogramMetric(biased
+                                                    ? HistogramMetric.SampleType.Biased
+                                                    : HistogramMetric.SampleType.Uniform));
+        }
 
         /// <summary>
         /// Creates a new non-biased histogram metric and registers it under the given type and name
@@ -90,6 +115,16 @@ namespace metrics
         public  HistogramMetric Histogram(Type owner, string name)
         {
             return GetOrAdd(new MetricName(owner, name), new HistogramMetric(HistogramMetric.SampleType.Uniform));
+        }
+        /// <summary>
+        /// Creates a new non-biased histogram metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this the metric</param>
+        /// <param name="name">The metric name</param>
+        /// <returns></returns>
+        public HistogramMetric Histogram(string context, string name)
+        {
+            return GetOrAdd(new MetricName(context, name), new HistogramMetric(HistogramMetric.SampleType.Uniform));
         }
 
         /// <summary>
