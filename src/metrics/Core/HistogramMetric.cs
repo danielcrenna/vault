@@ -257,23 +257,36 @@ namespace metrics.Core
 			}
 		}
 
-	    public void LogJson(StringBuilder sb)
-	    {
-	        var percSb= new StringBuilder();
-	        foreach (var percentile in Percentiles())
-	        {
-	            percSb.Append(" ").Append(percentile);
-	        }
-	       
+        public void LogJson(StringBuilder sb)
+        {
+            
+
             sb.Append("{\"count\":").Append(Count)
                 .Append(",\"max\":").Append(Max)
                 .Append(",\"min\":").Append(Min)
                 .Append(",\"mean\":").Append(Mean)
                 .Append(",\"stdev\":").Append(StdDev)
-                .Append(",\"variance\":").Append(Variance)
-                .Append(",\"percentiles\":").Append(percSb).Append("}"); 
-     
-	    }
+                .Append(",\"variance\":").Append(Variance).Append("}");
+              
+
+        }
+        public void LogJson(StringBuilder sb, double[] perc)
+        {
+            var percSb = new StringBuilder();
+            foreach (var percentile in Percentiles(perc))
+            {
+                percSb.Append(" ").Append(percentile);
+            }
+
+            sb.Append("{\"count\":").Append(Count)
+                .Append(",\"max\":").Append(Max)
+                .Append(",\"min\":").Append(Min)
+                .Append(",\"mean\":").Append(Mean)
+                .Append(",\"stdev\":").Append(StdDev)
+                //  .Append(",\"variance\":").Append(Variance).Append("}");
+                .Append(",\"percentiles\":").Append(percSb).Append("}");
+
+        }
 
 	    public double SampleMean
 	    {
