@@ -13,9 +13,9 @@ namespace metrics
     /// </summary>
     /// <see href="https://github.com/codahale/metrics"/>
     /// <seealso href="http://codahale.com/codeconf-2011-04-09-metrics-metrics-everywhere.pdf" />
-    public class Metrics
+    public class Metrics : IDisposable
     {
-        private static readonly ConcurrentDictionary<MetricName, IMetric> _metrics = new ConcurrentDictionary<MetricName, IMetric>();
+        private readonly ConcurrentDictionary<MetricName, IMetric> _metrics = new ConcurrentDictionary<MetricName, IMetric>();
 
         /// <summary>
         /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />
@@ -307,6 +307,17 @@ namespace metrics
             var added = _metrics.AddOrUpdate(name, metric, (n, m) => m);
 
             return added == null ? metric : (T) added;
+        }
+
+        public void Dispose()
+        {
+            foreach (var metric in _metrics)
+            {
+                using (metric.Value as IDisposable)
+                {
+                    
+                }
+            }
         }
     }
 }

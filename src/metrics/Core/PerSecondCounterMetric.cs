@@ -42,6 +42,11 @@ namespace metrics.Core
             }
         }
 
+        public void Mark(long n)
+        {
+            _ewma.Update(n);
+        }
+
         public void Mark()
         {
             _ewma.Update(1);
