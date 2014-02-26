@@ -259,8 +259,21 @@ namespace metrics.Core
 
 	    public void LogJson(StringBuilder sb)
 	    {
+            
+
+            sb.Append("{\"count\":").Append(Count)
+                .Append(",\"max\":").Append(Max)
+                .Append(",\"min\":").Append(Min)
+                .Append(",\"mean\":").Append(Mean)
+                .Append(",\"stdev\":").Append(StdDev)
+                .Append(",\"variance\":").Append(Variance).Append("}");
+              
+
+        }
+        public void LogJson(StringBuilder sb, double[] perc)
+        {
 	        var percSb= new StringBuilder();
-	        foreach (var percentile in Percentiles(0.5, 0.75, 0.95, 0.98, 0.99, 0.999))
+            foreach (var percentile in Percentiles(perc))
 	        {
 	            percSb.Append(" ").Append(percentile);
 	        }
@@ -270,7 +283,7 @@ namespace metrics.Core
                 .Append(",\"min\":").Append(Min)
                 .Append(",\"mean\":").Append(Mean)
                 .Append(",\"stdev\":").Append(StdDev)
-                .Append(",\"variance\":").Append(Variance)
+                //  .Append(",\"variance\":").Append(Variance).Append("}");
                 .Append(",\"percentiles\":").Append(percSb).Append("}"); 
      
 	    }

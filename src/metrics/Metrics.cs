@@ -13,9 +13,9 @@ namespace metrics
     /// </summary>
     /// <see href="https://github.com/codahale/metrics"/>
     /// <seealso href="http://codahale.com/codeconf-2011-04-09-metrics-metrics-everywhere.pdf" />
-    public class Metrics
+    public class Metrics : IDisposable
     {
-        private static readonly ConcurrentDictionary<MetricName, IMetric> _metrics = new ConcurrentDictionary<MetricName, IMetric>();
+        private readonly ConcurrentDictionary<MetricName, IMetric> _metrics = new ConcurrentDictionary<MetricName, IMetric>();
 
         /// <summary>
         /// A convenience method for installing a gauge that is bound to a <see cref="PerformanceCounter" />
@@ -61,9 +61,20 @@ namespace metrics
         /// <param name="owner">The type that owns the metric</param>
         /// <param name="name">The metric name</param>
         /// <returns></returns>
-        public  CounterMetric Counter(Type owner, string name)
+        public CounterMetric Counter(Type owner, string name)
         {
             return GetOrAdd(new MetricName(owner, name), new CounterMetric());
+        }
+
+        /// <summary>
+        /// Creates a new counter metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this metric</param>
+        /// <param name="name">The metric name</param>
+        /// <returns></returns>
+        public CounterMetric Counter(string context, string name)
+        {
+            return GetOrAdd(new MetricName(context, name), new CounterMetric());
         }
 
         /// <summary>
@@ -80,6 +91,20 @@ namespace metrics
                                                     ? HistogramMetric.SampleType.Biased
                                                     : HistogramMetric.SampleType.Uniform));
         }
+        /// <summary>
+        /// Creates a new histogram metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this metric</param>
+        /// <param name="name">The metric name</param>
+        /// <param name="biased">Whether the sample type is biased or uniform</param>
+        /// <returns></returns>
+        public HistogramMetric Histogram(string context, string name, bool biased)
+        {
+            return GetOrAdd(new MetricName(context, name),
+                            new HistogramMetric(biased
+                                                    ? HistogramMetric.SampleType.Biased
+                                                    : HistogramMetric.SampleType.Uniform));
+        }
 
         /// <summary>
         /// Creates a new non-biased histogram metric and registers it under the given type and name
@@ -90,6 +115,16 @@ namespace metrics
         public  HistogramMetric Histogram(Type owner, string name)
         {
             return GetOrAdd(new MetricName(owner, name), new HistogramMetric(HistogramMetric.SampleType.Uniform));
+        }
+        /// <summary>
+        /// Creates a new non-biased histogram metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this the metric</param>
+        /// <param name="name">The metric name</param>
+        /// <returns></returns>
+        public HistogramMetric Histogram(string context, string name)
+        {
+            return GetOrAdd(new MetricName(context, name), new HistogramMetric(HistogramMetric.SampleType.Uniform));
         }
 
         /// <summary>
@@ -204,6 +239,28 @@ namespace metrics
           return justAddedMetric == null ? metric : (ManualTimerMetric)justAddedMetric;
        }
 
+       /// <summary>
+       /// Creates a new meter metric and registers it under the given type and name
+       /// </summary>
+       /// <param name="context">The context for this metric</param>
+       /// <param name="name">The metric name</param>
+       /// <param name="eventType">The plural name of the type of events the meter is measuring (e.g., <code>"requests"</code>)</param>
+       /// <param name="unit">The rate unit of the new meter</param>
+       /// <param name="rate">The rate  of the new meter</param>
+       /// <returns></returns>
+       public PerSecondCounterMetric TimedCounter(string context, string name, string eventType)
+       {
+           var metricName = new MetricName(context, name);
+           IMetric existingMetric;
+           if (_metrics.TryGetValue(metricName, out existingMetric))
+           {
+               return (PerSecondCounterMetric)existingMetric;
+           }
+
+           var metric = PerSecondCounterMetric.New(eventType);
+           var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+           return justAddedMetric == null ? metric : (PerSecondCounterMetric)justAddedMetric;
+       }
         /// <summary>
         /// Enables the console reporter and causes it to print to STDOUT with the specified period
         /// </summary>
@@ -250,6 +307,17 @@ namespace metrics
             var added = _metrics.AddOrUpdate(name, metric, (n, m) => m);
 
             return added == null ? metric : (T) added;
+        }
+
+        public void Dispose()
+        {
+            foreach (var metric in _metrics)
+            {
+                using (metric.Value as IDisposable)
+                {
+                    
+                }
+            }
         }
     }
 }

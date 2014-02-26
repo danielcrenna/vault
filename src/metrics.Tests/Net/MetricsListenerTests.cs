@@ -57,10 +57,10 @@ namespace metrics.Tests.Net
             _metrics.Clear();
 
             var counter = _metrics.Counter(typeof(MetricsListenerTests), "counter");
+            
             counter.Increment();
 
             var content = GetResponseForRequest("http://localhost:" + Port + "/metrics");
-
             const string expected = @"[{""name"":""counter"",""metric"":{""count"":1}}]";
             Assert.AreEqual(expected, content);
         }
@@ -93,7 +93,8 @@ namespace metrics.Tests.Net
                 var response = request.GetResponse();
                 using (var sr = new StreamReader(response.GetResponseStream()))
                 {
-                    return sr.ReadToEnd();
+                    var result = sr.ReadToEnd();
+                    return result;
                 }
             }
             catch (WebException ex)
