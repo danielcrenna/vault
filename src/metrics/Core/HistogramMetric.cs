@@ -260,7 +260,7 @@ namespace metrics.Core
 	    public void LogJson(StringBuilder sb)
 	    {
 	        var percSb= new StringBuilder();
-	        foreach (var percentile in Percentiles())
+	        foreach (var percentile in Percentiles(0.5, 0.75, 0.95, 0.98, 0.99, 0.999))
 	        {
 	            percSb.Append(" ").Append(percentile);
 	        }
