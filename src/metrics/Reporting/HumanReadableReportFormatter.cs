@@ -86,16 +86,16 @@ namespace metrics.Reporting
         {
             var percentiles = histogram.Percentiles(0.5, 0.75, 0.95, 0.98, 0.99, 0.999);
 
-            sb.AppendFormat("               min = %{0:F2}\n", histogram.Min);
-            sb.AppendFormat("               max = %{0:F2}\n", histogram.Max);
-            sb.AppendFormat("              mean = %{0:F2}\n", histogram.Mean);
-            sb.AppendFormat("            stddev = %{0:F2}\n", histogram.StdDev);
-            sb.AppendFormat("            median = %{0:F2}\n", percentiles[0]);
-            sb.AppendFormat("              75%% <= %{0:F2}\n", percentiles[1]);
-            sb.AppendFormat("              95%% <= %{0:F2}\n", percentiles[2]);
-            sb.AppendFormat("              98%% <= %{0:F2}\n", percentiles[3]);
-            sb.AppendFormat("              99%% <= %{0:F2}\n", percentiles[4]);
-            sb.AppendFormat("            99.9%% <= %{0:F2}\n", percentiles[5]);
+            sb.AppendFormat("               min = {0:F2}\n", histogram.Min);
+            sb.AppendFormat("               max = {0:F2}\n", histogram.Max);
+            sb.AppendFormat("              mean = {0:F2}\n", histogram.Mean);
+            sb.AppendFormat("            stddev = {0:F2}\n", histogram.StdDev);
+            sb.AppendFormat("            median = {0:F2}\n", percentiles[0]);
+            sb.AppendFormat("              75%% <= {0:F2}\n", percentiles[1]);
+            sb.AppendFormat("              95%% <= {0:F2}\n", percentiles[2]);
+            sb.AppendFormat("              98%% <= {0:F2}\n", percentiles[3]);
+            sb.AppendFormat("              99%% <= {0:F2}\n", percentiles[4]);
+            sb.AppendFormat("            99.9%% <= {0:F2}\n", percentiles[5]);
         }
 
         protected void WriteTimer(StringBuilder sb, TimerMetricBase timer)
@@ -106,16 +106,16 @@ namespace metrics.Reporting
 
             var percentiles = timer.Percentiles(0.5, 0.75, 0.95, 0.98, 0.99, 0.999);
 
-            sb.AppendFormat("               min = %{0:F2}{1}\n", timer.Min, durationUnit);
-            sb.AppendFormat("               max = %{0:F2}{1}\n", timer.Max, durationUnit);
-            sb.AppendFormat("              mean = %{0:F2}{1}\n", timer.Mean, durationUnit);
-            sb.AppendFormat("            stddev = %{0:F2}{1}\n", timer.StdDev, durationUnit);
-            sb.AppendFormat("            median = %{0:F2}{1}\n", percentiles[0], durationUnit);
-            sb.AppendFormat("              75%% <= %{0:F2}{1}\n", percentiles[1], durationUnit);
-            sb.AppendFormat("              95%% <= %{0:F2}{1}\n", percentiles[2], durationUnit);
-            sb.AppendFormat("              98%% <= %{0:F2}{1}\n", percentiles[3], durationUnit);
-            sb.AppendFormat("              99%% <= %{0:F2}{1}\n", percentiles[4], durationUnit);
-            sb.AppendFormat("            99.9%% <= %{0:F2}{1}\n", percentiles[5], durationUnit);
+            sb.AppendFormat("               min = {0:F2}{1}\n", timer.Min, durationUnit);
+            sb.AppendFormat("               max = {0:F2}{1}\n", timer.Max, durationUnit);
+            sb.AppendFormat("              mean = {0:F2}{1}\n", timer.Mean, durationUnit);
+            sb.AppendFormat("            stddev = {0:F2}{1}\n", timer.StdDev, durationUnit);
+            sb.AppendFormat("            median = {0:F2}{1}\n", percentiles[0], durationUnit);
+            sb.AppendFormat("              75%% <= {0:F2}{1}\n", percentiles[1], durationUnit);
+            sb.AppendFormat("              95%% <= {0:F2}{1}\n", percentiles[2], durationUnit);
+            sb.AppendFormat("              98%% <= {0:F2}{1}\n", percentiles[3], durationUnit);
+            sb.AppendFormat("              99%% <= {0:F2}{1}\n", percentiles[4], durationUnit);
+            sb.AppendFormat("            99.9%% <= {0:F2}{1}\n", percentiles[5], durationUnit);
         }
 
         protected static string Abbreviate(TimeUnit unit)
