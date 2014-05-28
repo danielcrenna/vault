@@ -7,6 +7,13 @@ namespace metrics.Reporting
 {
     public class HumanReadableReportFormatter : IReportFormatter
     {
+        private readonly Metrics _metrics;
+
+        public HumanReadableReportFormatter(Metrics metrics)
+        {
+            _metrics = metrics;
+        }
+
         public string GetSample()
         {
             var sb = new StringBuilder();
@@ -20,7 +27,7 @@ namespace metrics.Reporting
             }
             sb.AppendLine();
 
-            foreach (var entry in Utils.SortMetrics(Metrics.All))
+            foreach (var entry in Utils.SortMetrics(_metrics.All))
             {
                 sb.Append(entry.Key);
                 sb.AppendLine(":");

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Text;
 using metrics.Stats;
 using metrics.Support;
 
@@ -256,6 +257,37 @@ namespace metrics.Core
 			}
 		}
 
+	    public void LogJson(StringBuilder sb)
+	    {
+            
+
+            sb.Append("{\"count\":").Append(Count)
+                .Append(",\"max\":").Append(Max)
+                .Append(",\"min\":").Append(Min)
+                .Append(",\"mean\":").Append(Mean)
+                .Append(",\"stdev\":").Append(StdDev)
+                .Append(",\"variance\":").Append(Variance).Append("}");
+              
+
+        }
+        public void LogJson(StringBuilder sb, double[] perc)
+        {
+	        var percSb= new StringBuilder();
+            foreach (var percentile in Percentiles(perc))
+	        {
+	            percSb.Append(" ").Append(percentile);
+	        }
+	       
+            sb.Append("{\"count\":").Append(Count)
+                .Append(",\"max\":").Append(Max)
+                .Append(",\"min\":").Append(Min)
+                .Append(",\"mean\":").Append(Mean)
+                .Append(",\"stdev\":").Append(StdDev)
+                //  .Append(",\"variance\":").Append(Variance).Append("}");
+                .Append(",\"percentiles\":").Append(percSb).Append("}"); 
+     
+	    }
+
 	    public double SampleMean
 	    {
 	        get { return _sample.Count == 0 ? 0 : _sample.Values.Average(); }
@@ -277,7 +309,7 @@ namespace metrics.Core
 	    }
 	}
 
-	internal static class SampleExtensions
+    public static class SampleExtensions
 	{
 		public static ISample NewSample(this HistogramMetric.SampleType type)
 		{

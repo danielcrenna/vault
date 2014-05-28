@@ -10,6 +10,7 @@ namespace metrics.Stats
     /// <see href="http://www.teamquest.com/pdfs/whitepaper/ldavg2.pdf" />
     public class EWMA
     {
+        private static readonly double M1Second = 1 - Math.Exp(-1);
         private static readonly double M1Alpha = 1 - Math.Exp(-5 / 60.0);
         private static readonly double M5Alpha = 1 - Math.Exp(-5 / 60.0 / 5);
         private static readonly double M15Alpha = 1 - Math.Exp(-5 / 60.0 / 15);
@@ -19,6 +20,14 @@ namespace metrics.Stats
         private readonly double _interval;
         private volatile bool _initialized;
         private VolatileDouble _rate;
+
+        /// <summary>
+        /// Creates a new EWMA which is equivalent to one second load average and which expects to be ticked every 1 seconds.
+        /// </summary>
+        public static EWMA OneSecondEWMA()
+        {
+            return new EWMA(M1Second, 1, TimeUnit.Seconds);
+        }
 
         /// <summary>
         /// Creates a new EWMA which is equivalent to the UNIX one minute load average and which expects to be ticked every 5 seconds.

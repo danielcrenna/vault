@@ -8,11 +8,14 @@ namespace metrics.Tests
         [Test]
         public void Can_load_all_metrics()
         {
-            Metrics.Clear();
+            var metrics = new Metrics();
+ 
+            metrics.Clear();
+            var machineMetrics = new MachineMetrics();
 
-            MachineMetrics.InstallAll();
+            machineMetrics.InstallAll();
 
-            Assert.IsTrue(Metrics.All.Count > 0);
+            Assert.IsTrue(metrics.All.Count > 0);
         }
     }
 }

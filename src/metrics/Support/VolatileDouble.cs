@@ -5,7 +5,7 @@ namespace metrics.Support
     /// <summary>
     /// Provides support for volatile operations around a <see cref="double" /> value
     /// </summary>
-    internal struct VolatileDouble
+    public struct VolatileDouble
     {
         private double _value;
 

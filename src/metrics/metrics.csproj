@@ -37,16 +37,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>metrics.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\packages\ServiceStack.Text.3.9.34\lib\net35\ServiceStack.Text.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
@@ -62,6 +58,7 @@
     <Compile Include="Core\CallbackTimerMetric.cs" />
     <Compile Include="Core\HistogramMetric.cs" />
     <Compile Include="Core\ManualTimerMetric.cs" />
+    <Compile Include="Core\PerSecondCounterMetric.cs" />
     <Compile Include="Core\TimerMetricBase.cs" />
     <Compile Include="Reporting\HumanReadableReportFormatter.cs" />
     <Compile Include="Reporting\IReportFormatter.cs" />
@@ -92,8 +89,6 @@
     <Compile Include="Core\MetricName.cs" />
     <Compile Include="Metrics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serialization\MetricsConverter.cs" />
-    <Compile Include="Serialization\Serializer.cs" />
     <Compile Include="Stats\EWMA.cs" />
     <Compile Include="Stats\ExponentiallyDecayingSample.cs" />
     <Compile Include="Stats\ISample.cs" />
@@ -104,9 +99,11 @@
     <Compile Include="Support\VolatileLong.cs" />
     <Compile Include="Util\NamedThreadFactory.cs" />
     <Compile Include="Support\ThreadGroup.cs" />
+    <Compile Include="Util\Serializer.cs" />
     <Compile Include="Util\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="metrics.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace metrics.Core
 {
@@ -26,6 +27,28 @@ namespace metrics.Core
          }
       }
 
+      public void LogJson(StringBuilder sb)
+      {
+          var percSb = new StringBuilder();
+          foreach (var percentile in Percentiles(0.5, 0.75, 0.95, 0.98, 0.99, 0.999))
+          {
+              percSb.Append(" ").Append(percentile);
+          }
+
+          sb.Append("{\"count\":").Append(Count)
+            .Append(",\"duration unit\":").Append(DurationUnit)
+            .Append(",\"rate unit\":").Append(RateUnit)
+            .Append(",\"fifteen minute rate\":").Append(FifteenMinuteRate)
+            .Append(",\"five minute rate\":").Append(FiveMinuteRate)
+            .Append(",\"one minute rate\":").Append(OneMinuteRate)
+            .Append(",\"mean rate\":").Append(MeanRate)
+            .Append(",\"max\":").Append(Max)
+            .Append(",\"min\":").Append(Min)
+            .Append(",\"mean\":").Append(Mean)
+            .Append(",\"stdev\":").Append(StdDev)
+            .Append(",\"percentiles\":").Append(percSb).Append("}");
+
+      }
       /// <summary>
       ///  Returns the timer's duration scale unit
       /// </summary>
