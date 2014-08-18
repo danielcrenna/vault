@@ -15,7 +15,7 @@ namespace metrics.Core
     public class MeterMetric : IMetric, IMetered, IDisposable
     {
         private AtomicLong _count = new AtomicLong();
-        private readonly long _startTime = DateTime.Now.Ticks;
+        private readonly long _startTime = DateTime.UtcNow.Ticks;
         private static readonly TimeSpan Interval = TimeSpan.FromSeconds(5);
 
         private EWMA _m1Rate = EWMA.OneMinuteEWMA();
@@ -144,7 +144,7 @@ namespace metrics.Core
             {
                 if (Count != 0)
                 {
-                    var elapsed = (DateTime.Now.Ticks - _startTime) * 100; // 1 DateTime Tick == 100ns
+                    var elapsed = (DateTime.UtcNow.Ticks - _startTime) * 100; // 1 DateTime Tick == 100ns
                     return ConvertNanosRate(Count / (double)elapsed);
                 }
                 return 0.0;

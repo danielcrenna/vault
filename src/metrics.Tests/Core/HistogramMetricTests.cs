@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Linq;
+using NUnit.Framework;
 using metrics.Core;
 using metrics.Stats;
 
@@ -141,6 +142,22 @@ namespace metrics.Tests.Core
         {
             var underTest = new HistogramMetric(HistogramMetric.SampleType.Uniform);
             Assert.AreEqual(0, underTest.SampleMean);
+        }
+
+        [Test]
+        public void BiasedHistogram_UsesSample()
+        {
+            var underTest = new HistogramMetric(HistogramMetric.SampleType.Biased);
+            var sampleSize = 1028;
+            var sample = Enumerable.Range(1, sampleSize).ToList();
+
+            foreach (var s in sample)
+            {
+                underTest.Update(s);
+            }
+
+            Assert.AreEqual(sampleSize, underTest.SampleCount);
+            CollectionAssert.AreEquivalent(sample, underTest.Values);
         }
 
         private class RejectEverythingAboveTenSample : UniformSample

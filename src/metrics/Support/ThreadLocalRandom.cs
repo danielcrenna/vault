@@ -18,14 +18,14 @@ namespace metrics.Support
             }
         }
 
-        public double NextNonzeroDouble()
+        public static double NextNonzeroDouble()
         {
             EnsureInitialized();
             var r = _random.Value.NextDouble();
             return Math.Max(r, Double.Epsilon);
         }
 
-        private void EnsureInitialized()
+        private static void EnsureInitialized()
         {
             if (_random == null)
             {

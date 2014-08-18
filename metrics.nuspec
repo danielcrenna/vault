@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>Metrics</id>
-		<version>1.0.9</version>
+		<version>1.0.10</version>
 		<authors>Daniel Crenna</authors>
 		<owners>Daniel Crenna</owners>
 		<description>Capturing CLR and application-level metrics. So you know what's going on. An idiomatic port of Coda Hale's Metrics for Scala and the JVM.</description>

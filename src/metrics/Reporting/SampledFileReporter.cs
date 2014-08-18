@@ -63,7 +63,7 @@ namespace metrics.Reporting
 
         private string GenerateFilePath()
         {
-            return Path.Combine(_directory, string.Format("{0}.sample", DateTime.Now.Ticks));
+            return Path.Combine(_directory, string.Format("{0}.sample", DateTime.UtcNow.Ticks));
         }
     }
 }

@@ -17,7 +17,7 @@ namespace metrics.Reporting
         public string GetSample()
         {
             var sb = new StringBuilder();
-            var now = DateTime.Now;
+            var now = DateTime.UtcNow;
             var dateTime = string.Format("{0} {1}", now.ToShortDateString(), now.ToShortTimeString());
             sb.Append(dateTime);
             sb.Append(' ');
