@@ -122,10 +122,10 @@ public class MvcApplication : HttpApplication
     
 The default routes will respond to the following URIs:
 
-* `/metrics`: A JSON object of all registered metrics and a host of CLR metrics.
-* `/ping`: A simple `text/plain` "pong" for load-balancers.
-* `/healthcheck`: Runs through all registered `HealthCheck` instances and reports the results. Returns a `200 OK` if all succeeded, or a `500 Internal Server Error` if any failed.
-* `/threads`: A `text/plain` dump of all threads and their stack traces.
+* `/metrics/metrics`: A JSON object of all registered metrics and a host of CLR metrics.
+* `/metrics/ping`: A simple `text/plain` "pong" for load-balancers.
+* `/metrics/healthcheck`: Runs through all registered `HealthCheck` instances and reports the results. Returns a `200 OK` if all succeeded, or a `500 Internal Server Error` if any failed.
+* `/metrics/threads`: A `text/plain` dump of all threads and their stack traces.
 
 The URIs of these resources can be configured by setting properties prior to registering routes.
 You may also choose to protect these URIs with HTTP Basic authentication:
