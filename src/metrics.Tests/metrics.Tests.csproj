@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Core\CLRProfilerTests.cs" />
     <Compile Include="Core\GaugeTests.cs" />
+    <Compile Include="Core\HealthChecksTests.cs" />
     <Compile Include="Core\HistogramMetricTests.cs" />
     <Compile Include="Core\MeterTests.cs" />
     <Compile Include="Core\MetricTestBase.cs" />
