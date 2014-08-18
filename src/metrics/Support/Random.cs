@@ -18,5 +18,15 @@ namespace metrics.Support
             var value = BitConverter.ToInt64(buffer, 0);
             return value;
         }
+
+        public static double NextDouble()
+        {
+            var l = NextLong();
+            if(l == Int64.MinValue)
+            {
+                l = 0;
+            }
+            return (l + .0) / Int64.MaxValue;
+        }
     }
 }

@@ -21,22 +21,34 @@ namespace metrics.Stats
     /// </see>
     public class ExponentiallyDecayingSample : ISample<ExponentiallyDecayingSample>
     {
+        private class ReverseOrderDoubleComparer : IComparer<double>
+        {
+            public int Compare(double x, double y)
+            {
+                return y.CompareTo(x);
+            }
+        }
+
+        // We use the reverse order as a SortedList is always aligned to the "lower" part.
+        // As we always remove the smallest value, it would mean always copy all the data.
+        private static readonly IComparer<double> PriorityComparer = new ReverseOrderDoubleComparer();
+
         private static readonly long RescaleThreshold = TimeUnit.Hours.ToTicks(1);
         /* Implemented originally as ConcurrentSkipListMap, so lookups will be much slower */
-        private readonly ConcurrentDictionary<double, long> _values;
-        private readonly ReaderWriterLockSlim _lock;
+        private readonly SortedList<double, long> _values;
         private readonly int _reservoirSize;
         private readonly double _alpha;
         private readonly AtomicLong _count = new AtomicLong(0);
         private VolatileLong _startTime;
         private readonly AtomicLong _nextScaleTime = new AtomicLong(0);
 
+        private SpinLock _lock = new SpinLock();
+
         /// <param name="reservoirSize">The number of samples to keep in the sampling reservoir</param>
         /// <param name="alpha">The exponential decay factor; the higher this is, the more biased the sample will be towards newer values</param>
         public ExponentiallyDecayingSample(int reservoirSize, double alpha)
         {
-            _lock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
-            _values = new ConcurrentDictionary<double, long>();
+            _values = new SortedList<double, long>(reservoirSize, PriorityComparer);
             _alpha = alpha;
             _reservoirSize = reservoirSize;
             Clear();
@@ -50,8 +62,8 @@ namespace metrics.Stats
             _values.Clear();
             _count.Set(0);
 
-            _startTime = (DateTime.UtcNow - new DateTime(1970, 1, 1)).Ticks;
-            _nextScaleTime.Set(Tick() + RescaleThreshold);
+            _startTime = Tick();
+            _nextScaleTime.Set(_startTime + RescaleThreshold);
         }
 
         /// <summary>
@@ -59,7 +71,7 @@ namespace metrics.Stats
         /// </summary>
         public int Count
         {
-            get { return (int) Math.Min(_reservoirSize, _count); }
+            get { return (int)Math.Min(_reservoirSize, _count); }
         }
 
         /// <summary>
@@ -72,38 +84,41 @@ namespace metrics.Stats
 
         private void Update(long value, long timestamp)
         {
-            _lock.EnterReadLock();
+            var lockTaken = false;
+            _lock.TryEnter(ref lockTaken);
+            if (!lockTaken) return;
             try
             {
-                var priority = Weight(timestamp - _startTime) / Support.Random.NextLong();
-                var newCount = _count.IncrementAndGet();
-                if(newCount <= _reservoirSize)
+                double sample = .0;
+                // Prevent division by 0
+                while (sample.Equals(.0))
                 {
-                    _values.AddOrUpdate(priority, value, (p, v) => v);
+                    sample = Support.Random.NextDouble();
+                }
+                var priority = Weight(timestamp - _startTime) / sample;
+                var newCount = _count.IncrementAndGet();
+                if (newCount <= _reservoirSize)
+                {
+                    _values[priority] = value;
                 }
                 else
                 {
-                    var first = _values.Keys.First();
-                    if(first < priority)
+                    var first = _values.Keys[_values.Count - 1];
+                    if (first < priority)
                     {
-                        _values.AddOrUpdate(priority, value, (p, v) => v);
-
-                        long removed;
-                        while(!_values.TryRemove(first, out removed))
-                        {
-                            first = _values.Keys.First();
-                        }
+                        _values.Remove(first);
+                        _values[priority] = value;
                     }
                 }
             }
             finally
             {
-                _lock.ExitReadLock();
+                _lock.Exit();
             }
 
-            var now = DateTime.Now.Ticks;
+            var now = Tick();
             var next = _nextScaleTime.Get();
-            if(now >= next)
+            if (now >= next)
             {
                 Rescale(now, next);
             }
@@ -116,28 +131,29 @@ namespace metrics.Stats
         {
             get
             {
-                _lock.EnterReadLock();
+                var lockTaken = false;
                 try
                 {
+                    _lock.Enter(ref lockTaken);
                     return new List<long>(_values.Values);
                 }
                 finally
                 {
-                    _lock.ExitReadLock();
+                    if(lockTaken) _lock.Exit();
                 }
             }
         }
 
         private static long Tick()
         {
-            return DateTime.Now.Ticks;
+            return DateTime.UtcNow.Ticks;
         }
 
         private double Weight(long t)
         {
             return Math.Exp(_alpha * t);
         }
-        
+
         /// <summary>
         /// "A common feature of the above techniques—indeed, the key technique that
         /// allows us to track the decayed weights efficiently—is that they maintain
@@ -166,22 +182,23 @@ namespace metrics.Stats
                 return;
             }
 
-            _lock.EnterWriteLock();
+            var lockTaken = false;
             try
             {
+                _lock.Enter(ref lockTaken);
                 var oldStartTime = _startTime;
                 _startTime = Tick();
                 var keys = new List<double>(_values.Keys);
                 foreach (var key in keys)
                 {
-                    long value;
-                    _values.TryRemove(key, out value);
-                    _values.AddOrUpdate(key*Math.Exp(-_alpha*(_startTime - oldStartTime)), value, (k, v) => v);
+                    long value = _values[key];
+                    _values.Remove(key);
+                    _values[key * Math.Exp(-_alpha * (_startTime - oldStartTime))] = value;
                 }
             }
             finally
             {
-                _lock.ExitWriteLock();
+                if (lockTaken) _lock.Exit();
             }
         }
 
@@ -194,9 +211,18 @@ namespace metrics.Stats
                 copy._startTime.Set(_startTime);
                 copy._count.Set(_count);
                 copy._nextScaleTime.Set(_nextScaleTime);
-                foreach(var value in _values)
+                var lockTaken = false;
+                try
                 {
-                    copy._values.AddOrUpdate(value.Key, value.Value, (k, v) => v);
+                    _lock.Enter(ref lockTaken);
+                    foreach (var value in _values)
+                    {
+                        copy._values[value.Key] = value.Value;
+                    }
+                }
+                finally
+                {
+                    if(lockTaken) _lock.Exit();
                 }
                 return copy;
             }
