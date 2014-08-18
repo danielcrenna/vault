@@ -41,9 +41,13 @@ namespace metrics.Net
             }
         }
 
-        public void Start(int port)
+        public void Start(int port, params string[] uriPrefixes)
         {
             _listener = _listener ?? InitializeListenerOnPort(port);
+            foreach (var prefix in uriPrefixes)
+            {
+                _listener.Prefixes.Add(prefix);
+            }
             _listener.Start();
 
             _task = new CancellationTokenSource();
