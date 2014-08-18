@@ -10,6 +10,8 @@ namespace metrics.AspNetMvc
     /// </summary>
     public static class Metrics
     {
+        public static bool IsRegistered;
+
         /// <summary>
         /// The URI path to use when registering the 'metrics' API method route
         /// </summary>
@@ -48,7 +50,12 @@ namespace metrics.AspNetMvc
         /// </summary>
         public static void RegisterRoutes()
         {
-            MapRoutes(RouteTable.Routes, null, null);
+            if (IsRegistered) return;
+            using (RouteTable.Routes.GetWriteLock())
+            {
+                MapRoutes(RouteTable.Routes, null, null);
+                IsRegistered = true;
+            }
         }
 
         /// <summary>
