@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>Metrics.Mvc</id>
-		<version>1.0.8</version>
+		<version>1.0.9</version>
 		<authors>Daniel Crenna</authors>
 		<owners>Daniel Crenna</owners>
 		<description>MVC support for the metrics library.</description>
