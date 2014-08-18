@@ -8,13 +8,14 @@ namespace metrics
     /// </summary>
     public enum TimeUnit
     {
-        Nanoseconds = 0,
-        Microseconds = 1,
-        Milliseconds = 2,
-        Seconds = 3,
-        Minutes = 4,
-        Hours = 5,
-        Days = 6
+        Ticks = 0,
+        Nanoseconds = 1,
+        Microseconds = 2,
+        Milliseconds = 3,
+        Seconds = 4,
+        Minutes = 5,
+        Hours = 6,
+        Days = 7
     }
 
     /// <summary>
@@ -29,6 +30,7 @@ namespace metrics
 			var unitsCount = Enum.GetValues(typeof(TimeUnit)).Length;
 			var timingFactors = new[] 
 			{
+                100L,   // Ticks to nanos
 				1000L,  // Nanos to micros
 				1000L,  // Micros to millis
 				1000L,  // Millis to seconds
@@ -67,6 +69,11 @@ namespace metrics
 
 		    return result;
 		}
+
+        public static long ToTicks(this TimeUnit source, long interval)
+        {
+            return Convert(source, interval, TimeUnit.Ticks);
+        }
 
 		public static long ToNanos(this TimeUnit source, long interval)
         {
