@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
 namespace metrics.AspNetMvc.Extensions
@@ -18,13 +17,6 @@ namespace metrics.AspNetMvc.Extensions
                 }
                 return sb.ToString();
             }
-        }
-
-        public static string HashWith(this string input, HashAlgorithm algorithm)
-        {
-            var data = Encoding.ASCII.GetBytes(input);
-            var hash = algorithm.ComputeHash(data);
-            return Convert.ToBase64String(hash);
         }
     }
 }

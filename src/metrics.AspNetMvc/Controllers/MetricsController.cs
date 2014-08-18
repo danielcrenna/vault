@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using metrics.AspNetMvc.Extensions;
 using metrics.Core;
-using metrics.Serialization;
+using metrics.Util;
 
 namespace metrics.AspNetMvc.Controllers
 {
@@ -13,6 +14,11 @@ namespace metrics.AspNetMvc.Controllers
     /// </summary>
     public class MetricsController : Controller
     {
+        // A kluge to account for how metrics is now non-static (a good thing)
+        // Most likely the MVC project is derelict and not used by anyone, since
+        // it no longer builds :)
+        private static readonly metrics.Metrics Instance = new metrics.Metrics();
+        
         /// <summary>
         /// A JSON object of all registered metrics and a host of CLR metrics
         /// </summary>
@@ -25,7 +31,7 @@ namespace metrics.AspNetMvc.Controllers
 
             var result = new ContentResult
                              {
-                                 Content = Serializer.Serialize(metrics.Metrics.All),
+                                 Content = Serializer.Serialize(Instance.All),
                                  ContentType = "application/json",
                                  ContentEncoding = Encoding.UTF8
                              };
@@ -67,9 +73,14 @@ namespace metrics.AspNetMvc.Controllers
             var health = HealthChecks.RunHealthChecks();
             ControllerContext.HttpContext.Response.StatusCode = health.Values.Count(v => v.IsHealthy) != health.Values.Count ? 500 : 200;
 
+            Dictionary<MetricName, IMetric> healthAsMetrics = health.ToDictionary(
+                kv => new MetricName("HealthCheck", kv.Key),
+                kv => kv.Value as IMetric
+            );
+
             var result = new ContentResult
             {
-                Content = Serializer.Serialize(health),
+                Content = Serializer.Serialize(healthAsMetrics),
                 ContentType = "application/json",
                 ContentEncoding = Encoding.UTF8
             };
