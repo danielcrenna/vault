@@ -50,10 +50,10 @@ namespace metrics.Stats
             _values.Clear();
             _count.Set(0);
 
-            _startTime = CurrentTimeInSeconds();
+            _startTime = (DateTime.UtcNow - new DateTime(1970, 1, 1)).Ticks;
             _nextScaleTime.Set(Tick() + RescaleThreshold);
         }
-        
+
         /// <summary>
         /// Returns the number of values recorded
         /// </summary>
