@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using metrics.Stats;
-using metrics.Support;
 using System.Text;
 using System.Runtime.Serialization;
 
@@ -18,7 +14,7 @@ namespace metrics.Core
         private readonly CancellationTokenSource _token = new CancellationTokenSource();
 
 
-        private readonly EWMA _ewma = EWMA.OneSecondEWMA();
+        private EWMA _ewma = EWMA.OneSecondEWMA();
 
 
         private void TimeElapsed()
@@ -36,7 +32,10 @@ namespace metrics.Core
         {
             get
             {
-                var metric = new PerSecondCounterMetric(EventType, RateUnit);
+                var metric = new PerSecondCounterMetric(EventType, RateUnit)
+                {
+                    _ewma = _ewma
+                };
 
                 return metric;
             }
