@@ -24,7 +24,7 @@ namespace metrics.Core
         public void LogJson(StringBuilder sb)
         {
             sb.Append("{\"count\":").Append(CurrentValue)
-              .Append(",\"rate unit\":").Append(RateUnit).Append("}");
+              .Append(",\"rate unit\":\"").Append(RateUnit).Append("\"}");
 
         }
         [IgnoreDataMember]

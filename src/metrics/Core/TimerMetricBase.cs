@@ -30,14 +30,18 @@ namespace metrics.Core
       public void LogJson(StringBuilder sb)
       {
           var percSb = new StringBuilder();
-          foreach (var percentile in Percentiles(0.5, 0.75, 0.95, 0.98, 0.99, 0.999))
-          {
-              percSb.Append(" ").Append(percentile);
-          }
+          var percentiles = Percentiles(0.5, 0.75, 0.95, 0.98, 0.99, 0.999);
+          percSb.Append("{\"0.5\":").Append(percentiles[0]);
+          percSb.Append(",\"0.75\":").Append(percentiles[1]);
+          percSb.Append(",\"0.95\":").Append(percentiles[2]);
+          percSb.Append(",\"0.98\":").Append(percentiles[3]);
+          percSb.Append(",\"0.99\":").Append(percentiles[4]);
+          percSb.Append(",\"0.999\":").Append(percentiles[5]);
+          percSb.Append("}");
 
           sb.Append("{\"count\":").Append(Count)
-            .Append(",\"duration unit\":").Append(DurationUnit)
-            .Append(",\"rate unit\":").Append(RateUnit)
+            .Append(",\"duration unit\":\"").Append(DurationUnit).Append("\"")
+            .Append(",\"rate unit\":\"").Append(RateUnit).Append("\"")
             .Append(",\"fifteen minute rate\":").Append(FifteenMinuteRate)
             .Append(",\"five minute rate\":").Append(FiveMinuteRate)
             .Append(",\"one minute rate\":").Append(OneMinuteRate)

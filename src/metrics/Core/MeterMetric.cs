@@ -68,7 +68,7 @@ namespace metrics.Core
         public void LogJson(StringBuilder sb)
         {
             sb.Append("{\"count\":").Append(Count)
-              .Append(",\"rate unit\":").Append(RateUnit)
+              .Append(",\"rate unit\":\"").Append(RateUnit).Append("\"")
               .Append(",\"fifteen minute rate\":").Append(FifteenMinuteRate)
               .Append(",\"five minute rate\":").Append(FiveMinuteRate)
               .Append(",\"one minute rate\":").Append(OneMinuteRate)
