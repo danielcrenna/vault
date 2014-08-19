@@ -18,8 +18,11 @@ namespace metrics.Util
                 sb.Append("{\"name\":\"");
                 sb.Append(metric.Key.Name).Append("\",\"metric\":");
                 metric.Value.LogJson(sb);
-                sb.Append("}");
+                sb.Append("},");
             }
+
+            if (metrics.Count > 0)
+                sb.Remove(sb.Length - 1, 1);
 
             sb.Append("]");
 

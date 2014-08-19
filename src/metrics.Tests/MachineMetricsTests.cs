@@ -11,7 +11,7 @@ namespace metrics.Tests
             var metrics = new Metrics();
  
             metrics.Clear();
-            var machineMetrics = new MachineMetrics();
+            var machineMetrics = new MachineMetrics(metrics);
 
             machineMetrics.InstallAll();
 
