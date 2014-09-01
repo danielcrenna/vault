@@ -56,6 +56,19 @@ namespace metrics
         }
 
         /// <summary>
+        /// Creates a new gauge metric and registers it under the given type and name
+        /// </summary>
+        /// <typeparam name="T">The type the gauge measures</typeparam>
+        /// <param name="context">The context for this metric</param>
+        /// <param name="name">The metric name</param>
+        /// <param name="evaluator">The gauge evaluation function</param>
+        /// <returns></returns>
+        public GaugeMetric<T> Gauge<T>(string context, string name, Func<T> evaluator)
+        {
+            return GetOrAdd(new MetricName(context, name), new GaugeMetric<T>(evaluator));
+        }
+
+        /// <summary>
         /// Creates a new counter metric and registers it under the given type and name
         /// </summary>
         /// <param name="owner">The type that owns the metric</param>
@@ -192,6 +205,28 @@ namespace metrics
            return justAddedMetric == null ? metric : (TimerMetric)justAddedMetric;
         }
 
+        /// <summary>
+        /// Creates a new timer metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this metric</param>
+        /// <param name="name">The metric name</param>
+        /// <param name="durationUnit">The duration scale unit of the new timer</param>
+        /// <param name="rateUnit">The rate unit of the new timer</param>
+        /// <returns></returns>
+        public TimerMetric Timer(string context, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+        {
+            var metricName = new MetricName(context, name);
+            IMetric existingMetric;
+            if (_metrics.TryGetValue(metricName, out existingMetric))
+            {
+                return (TimerMetric)existingMetric;
+            }
+
+            var metric = new TimerMetric(durationUnit, rateUnit);
+            var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+            return justAddedMetric == null ? metric : (TimerMetric)justAddedMetric;
+        }
+
 
         /// <summary>
         /// Creates a new timer metric and registers it under the given type and name
@@ -213,6 +248,28 @@ namespace metrics
            var metric = new CallbackTimerMetric(durationUnit, rateUnit);
            var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
            return justAddedMetric == null ? metric : (CallbackTimerMetric)justAddedMetric;
+        }
+
+        /// <summary>
+        /// Creates a new timer metric and registers it under the given type and name
+        /// </summary>
+        /// <param name="context">The context for this metric</param>
+        /// <param name="name">The metric name</param>
+        /// <param name="durationUnit">The duration scale unit of the new timer</param>
+        /// <param name="rateUnit">The rate unit of the new timer</param>
+        /// <returns></returns>
+        public CallbackTimerMetric CallbackTimer(string context, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+        {
+            var metricName = new MetricName(context, name);
+            IMetric existingMetric;
+            if (_metrics.TryGetValue(metricName, out existingMetric))
+            {
+                return (CallbackTimerMetric)existingMetric;
+            }
+
+            var metric = new CallbackTimerMetric(durationUnit, rateUnit);
+            var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+            return justAddedMetric == null ? metric : (CallbackTimerMetric)justAddedMetric;
         }
 
        /// <summary>
@@ -237,6 +294,30 @@ namespace metrics
           var metric = new ManualTimerMetric(durationUnit, rateUnit);
           var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
           return justAddedMetric == null ? metric : (ManualTimerMetric)justAddedMetric;
+       }
+
+       /// <summary>
+       /// Creates a new metric that can be used to add manual timings into the system. A manual timing
+       /// is a timing that is measured not by the metrics system but by the client site and must be added
+       /// into metrics as an additional measurement.
+       /// </summary>
+       /// <param name="context">The context for this metric</param>
+       /// <param name="name">The metric name</param>
+       /// <param name="durationUnit">The duration scale unit of the new timer</param>
+       /// <param name="rateUnit">The rate unit of the new timer</param>
+       /// <returns></returns>
+       public ManualTimerMetric ManualTimer(string context, String name, TimeUnit durationUnit, TimeUnit rateUnit)
+       {
+           var metricName = new MetricName(context, name);
+           IMetric existingMetric;
+           if (_metrics.TryGetValue(metricName, out existingMetric))
+           {
+               return (ManualTimerMetric)existingMetric;
+           }
+
+           var metric = new ManualTimerMetric(durationUnit, rateUnit);
+           var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
+           return justAddedMetric == null ? metric : (ManualTimerMetric)justAddedMetric;
        }
 
        /// <summary>
