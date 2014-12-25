@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>Metrics</id>
-		<version>1.0.12</version>
+		<version>1.1.0</version>
 		<authors>Daniel Crenna</authors>
 		<owners>Daniel Crenna</owners>
 		<description>Capturing CLR and application-level metrics. So you know what's going on. An idiomatic port of Coda Hale's Metrics for Scala and the JVM.</description>
@@ -11,6 +11,10 @@
 		<projectUrl>http://github.com/danielcrenna/metrics-net</projectUrl>
 		<licenseUrl>https://github.com/danielcrenna/metrics-net/blob/master/LICENSE</licenseUrl>
 		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_metrics.png</iconUrl>
-		<tags>CLR metrics</tags>    
+		<tags>CLR metrics</tags>
+    <releaseNotes>
+      - Upgraded to .NET 4.5.1
+      - Added OWIN middleware with Katana/TopShelf example 
+    </releaseNotes>
 	</metadata>
 </package>
