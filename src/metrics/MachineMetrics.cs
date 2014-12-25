@@ -1,5 +1,3 @@
-using System;
-
 namespace metrics
 {
     /// <summary>
@@ -7,9 +5,10 @@ namespace metrics
     /// <seealso href="http://technet.microsoft.com/en-us/library/cc768048.aspx#XSLTsection132121120120" />
     /// <seealso href="http://msdn.microsoft.com/en-us/library/w8f5kw2e%28v=VS.71%29.aspx" />
     /// </summary>
-    public  class MachineMetrics
+    public class MachineMetrics
     {
         private readonly Metrics _metrics;
+
         private const string TotalInstance = "_Total";
         private const string GlobalInstance = "_Global_";
 
@@ -18,10 +17,19 @@ namespace metrics
             _metrics = metrics;
         }
 
-        public  void InstallAll()
+        public  void Install(MachineMetricsCategory category = MachineMetricsCategory.All)
         {
-            InstallPhysicalDisk();
-            InstallLogicalDisk();
+            if(category.HasFlag(MachineMetricsCategory.PhysicalDisk))
+                InstallPhysicalDisk();
+
+            if (category.HasFlag(MachineMetricsCategory.LogicalDisk))
+                InstallLogicalDisk();
+
+            if (category.HasFlag(MachineMetricsCategory.LocksAndThreads))
+                InstallClrLocksAndThreads();
+
+            if (category.HasFlag(MachineMetricsCategory.Memory))
+                InstallClrMemory();
         }
 
         public  void InstallPhysicalDisk()
@@ -74,7 +82,7 @@ namespace metrics
             _metrics.InstallPerformanceCounterGauge("LogicalDisk", "Split IO/Sec", TotalInstance, ".logical_disk.split_io_per_second");
         }
         
-        public  void InstallCLRLocksAndThreads()
+        public  void InstallClrLocksAndThreads()
         {
             _metrics.InstallPerformanceCounterGauge(".NET CLR LocksAndThreads", "Total # of Contentions", GlobalInstance, ".clr_locks_and_threads.total_number_of_contentions");
             _metrics.InstallPerformanceCounterGauge(".NET CLR LocksAndThreads", "Contention Rate / sec", GlobalInstance, ".clr_locks_and_threads.contention_rate_per_second");
@@ -88,33 +96,39 @@ namespace metrics
             _metrics.InstallPerformanceCounterGauge(".NET CLR LocksAndThreads", "rate of recognized threads / sec", GlobalInstance, ".clr_locks_and_threads.rate_or_recognized_threads_per_second");
         }
 
-        //_Global_:.NET CLR Memory:# Gen 0 Collections
-        //_Global_:.NET CLR Memory:# Gen 1 Collections
-        //_Global_:.NET CLR Memory:# Gen 2 Collections
-        //_Global_:.NET CLR Memory:Promoted Memory from Gen 0
-        //_Global_:.NET CLR Memory:Promoted Memory from Gen 1
-        //_Global_:.NET CLR Memory:Gen 0 Promoted Bytes/Sec
-        //_Global_:.NET CLR Memory:Gen 1 Promoted Bytes/Sec
-        //_Global_:.NET CLR Memory:Promoted Finalization-Memory from Gen 0
-        //_Global_:.NET CLR Memory:Process ID
-        //_Global_:.NET CLR Memory:Gen 0 heap size
-        //_Global_:.NET CLR Memory:Gen 1 heap size
-        //_Global_:.NET CLR Memory:Gen 2 heap size
-        //_Global_:.NET CLR Memory:Large Object Heap size
-        //_Global_:.NET CLR Memory:Finalization Survivors
-        //_Global_:.NET CLR Memory:# GC Handles
-        //_Global_:.NET CLR Memory:Allocated Bytes/sec
-        //_Global_:.NET CLR Memory:# Induced GC
-        //_Global_:.NET CLR Memory:% Time in GC
-        //_Global_:.NET CLR Memory:Not Displayed
-        //_Global_:.NET CLR Memory:# Bytes in all Heaps
-        //_Global_:.NET CLR Memory:# Total committed Bytes
-        //_Global_:.NET CLR Memory:# Total reserved Bytes
-        //_Global_:.NET CLR Memory:# of Pinned Objects
-        //_Global_:.NET CLR Memory:# of Sink Blocks in use
-        public  void InstallCLRMemory()
+        public  void InstallClrMemory()
         {
-            throw new NotImplementedException();
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "# Gen 0 Collections", GlobalInstance, ".clr_memory.number_of_gen_0_collections");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "# Gen 1 Collections", GlobalInstance, ".clr_memory.number_of_gen_1_collections");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "# Gen 2 Collections", GlobalInstance, ".clr_memory.number_of_gen_2_collections");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "Promoted Memory from Gen 0", GlobalInstance, ".clr_memory.promoted_memory_from_gen_0");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "Promoted Memory from Gen 1", GlobalInstance, ".clr_memory.promoted_memory_from_gen_1");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "Gen 0 Promoted Bytes/Sec", GlobalInstance, ".clr_memory.gen_0_promoted_bytes_per_second");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "Gen 1 Promoted Bytes/Sec", GlobalInstance, ".clr_memory.gen_1_promoted_bytes_per_second");
+
+            //_Global_:.NET CLR Memory:Promoted Finalization-Memory from Gen 0
+            //_Global_:.NET CLR Memory:Process ID
+
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "Gen 0 heap size", GlobalInstance, ".clr_memory.gen_0_heap_size");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "Gen 1 heap size", GlobalInstance, ".clr_memory.gen_1_heap_size");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "Gen 2 heap size", GlobalInstance, ".clr_memory.gen_2_heap_size");
+
+            //_Global_:.NET CLR Memory:Large Object Heap size
+            //_Global_:.NET CLR Memory:Finalization Survivors
+
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "# GC Handles", GlobalInstance, ".clr_memory.number_of_gc_handles");
+
+            //_Global_:.NET CLR Memory:Allocated Bytes/sec
+            //_Global_:.NET CLR Memory:# Induced GC
+            //_Global_:.NET CLR Memory:% Time in GC
+            //_Global_:.NET CLR Memory:Not Displayed
+
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "# Bytes in all Heaps", GlobalInstance, ".clr_memory.number_of_bytes_in_all_heaps");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "# Total committed Bytes", GlobalInstance, ".clr_memory.total_number_of_committed_bytes");
+            _metrics.InstallPerformanceCounterGauge(".NET CLR Memory", "# Total reserved Bytes", GlobalInstance, ".clr_memory.total_number_of_reserved_bytes");
+
+            //_Global_:.NET CLR Memory:# of Pinned Objects
+            //_Global_:.NET CLR Memory:# of Sink Blocks in use
         }
     }
 }

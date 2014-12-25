@@ -13,7 +13,7 @@ namespace metrics.Tests
             metrics.Clear();
             var machineMetrics = new MachineMetrics(metrics);
 
-            machineMetrics.InstallAll();
+            machineMetrics.Install();
 
             Assert.IsTrue(metrics.All.Count > 0);
         }
