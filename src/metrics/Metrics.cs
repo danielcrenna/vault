@@ -350,6 +350,17 @@ namespace metrics
         public  void EnableConsoleReporting(long period, TimeUnit unit)
         {
             var reporter = new ConsoleReporter(this);
+            EnableReporting(reporter, period, unit);
+        }
+
+        /// <summary>
+        ///  Enables a reporter to run with the specified interval between outputs
+        /// </summary>
+        /// <param name="reporter"></param>
+        /// <param name="period">The period between successive outputs</param>
+        /// <param name="unit">The time unit of the period</param>
+        public void EnableReporting(ReporterBase reporter, long period, TimeUnit unit)
+        {
             reporter.Start(period, unit);
         }
 
