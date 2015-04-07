@@ -33,11 +33,13 @@ using Metrics;
 
 public class ThingFinder
 {
+    var metrics = new Metrics();
+    
     // Measure the # of records per second returned
-    private IMetric _resultsMeter = Metrics.Meter(typeof(ThingFinder), "results", TimeUnit.Seconds)
+    private IMetric _resultsMeter = metrics.Meter(typeof(ThingFinder), "results", TimeUnit.Seconds)
   
     // Measure the # of milliseconds each query takes and the number of queries per second being performed
-    private IMetric _dbTimer = Metrics.Timer(typeof(ThingFinder), "database", TimeUnit.Milliseconds, TimeUnit.Seconds)
+    private IMetric _dbTimer = metrics.Timer(typeof(ThingFinder), "database", TimeUnit.Milliseconds, TimeUnit.Seconds)
   
     public void FindThings()
     {
