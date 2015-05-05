@@ -72,10 +72,20 @@ namespace metrics
             public void LogJson(StringBuilder sb)
             {
                 sb.Append("{")
-                    .Append("\"is_healthy\": \"").Append(IsHealthy).Append("\",")
-                    .Append("\"message\":\"").Append(Message).Append("\",")
-                    .Append("\"error\":\"").Append(Error.Message).Append("\"")
-                    .Append("}");
+                    .Append("\"is_healthy\": \"").Append(IsHealthy).Append("\"");
+
+                if (!String.IsNullOrEmpty(Message))
+                {
+                    sb.Append(",");
+                    sb.Append("\"message\":\"").Append(Message).Append("\"");
+                }
+
+                if (Error != null && !String.IsNullOrEmpty(Error.Message))
+                {
+                    sb.Append(",");
+                    sb.Append("\"error\":\"").Append(Error.Message).Append("\"");
+                }
+                sb.Append("}");
             }
         }
     }
