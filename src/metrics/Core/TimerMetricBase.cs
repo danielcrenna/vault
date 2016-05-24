@@ -10,7 +10,7 @@ namespace metrics.Core
       protected HistogramMetric _histogram;
 
       public TimerMetricBase(TimeUnit durationUnit, TimeUnit rateUnit)
-         : this(durationUnit, rateUnit, MeterMetric.New("calls", rateUnit), new HistogramMetric(HistogramMetric.SampleType.Biased), true /* clear */)
+         : this(durationUnit, rateUnit, new MeterMetric("calls", rateUnit), new HistogramMetric(HistogramMetric.SampleType.Biased), true /* clear */)
       {
 
       }

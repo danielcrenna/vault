@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -157,7 +157,7 @@ namespace metrics
                 return (MeterMetric) existingMetric;
             }
 
-            var metric = MeterMetric.New(eventType, unit);
+            var metric = new MeterMetric(eventType, unit);
             var justAddedMetric = _metrics.GetOrAdd(metricName, metric);
             return justAddedMetric == null ? metric : (MeterMetric) justAddedMetric;
         }

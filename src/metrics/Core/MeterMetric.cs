@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace metrics.Core
     public class MeterMetric : IMetric, IMetered, IDisposable
     {
         private AtomicLong _count = new AtomicLong();
-        private long _startTime = DateTime.Now.Ticks;
+        private long _startTime = DateTime.UtcNow.Ticks;
         private static readonly TimeSpan Interval = TimeSpan.FromSeconds(5);
 
         private EWMA _m1Rate = EWMA.OneMinuteEWMA();
@@ -36,14 +36,29 @@ namespace metrics.Core
                     meter.Tick();
                 }
             }, meter._token.Token);
-
             return meter;
         }
 
-        private MeterMetric(string eventType, TimeUnit rateUnit)
+        private readonly Timer _timer;
+
+        public MeterMetric(string eventType, TimeUnit rateUnit)
         {
             EventType = eventType;
             RateUnit = rateUnit;
+            _timer = new Timer(_ => Tick(), null, Interval, Interval);
+        }
+
+        /// <summary>
+        /// Clears all recorded values
+        /// </summary>
+        public void Clear()
+        {
+            _count.Set(0);
+            _m1Rate.Clear();
+            _m5Rate.Clear();
+            _m15Rate.Clear();
+            _startTime = DateTime.UtcNow.Ticks;
+            _timer.Change(Interval, Interval);
         }
 
         /// <summary>
@@ -144,7 +159,7 @@ namespace metrics.Core
             {
                 if (Count != 0)
                 {
-                    var elapsed = (DateTime.Now.Ticks - _startTime) * 100; // 1 DateTime Tick == 100ns
+                    var elapsed = (DateTime.UtcNow.Ticks - _startTime) * 100; // 1 DateTime Tick == 100ns
                     return ConvertNanosRate(Count / (double)elapsed);
                 }
                 return 0.0;
@@ -192,7 +207,7 @@ namespace metrics.Core
 
         public void Dispose()
         {
-            _token.Cancel();
+            _timer.Dispose();
         }
     }
 }

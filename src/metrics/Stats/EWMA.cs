@@ -77,6 +77,16 @@ namespace metrics.Stats
         }
 
         /// <summary>
+        /// Clears all recorded values
+        /// </summary>
+        public void Clear()
+        {
+            _uncounted.Set(0);
+            _rate.Set(0);
+            _initialized = false;
+        }
+
+        /// <summary>
         /// Mark the passage of time and decay the current rate accordingly.
         /// </summary>
         public void Tick()
