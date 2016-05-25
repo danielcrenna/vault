@@ -1,12 +1,11 @@
-Metrics.NET
-===========
+# Metrics.NET
 
 *Capturing CLR and application-level metrics. So you know what's going on.*
 
-####(This work began as a port of @codahale's [metrics](http://github.com/codahale/metrics) for Scala and the JVM.)
+**(This work began as a port of @codahale's [metrics](http://github.com/codahale/metrics) for Scala and the JVM.)**
 
-Introduction
-------------
+## Introduction
+
 In a post-agile world, we are asked to look beyond the technologies that enable our practice, and find ways to ensure 
 the choices we make are informed by customers and stand up to reality. Experiment-driven (or evidence-based) development
 is a way of combining run-time metrics with automated experiments, resulting in software that is “natural”, based on 
@@ -14,19 +13,19 @@ actual use and runtime performance rather than the strongest opinion.
 
 This library fulfills the run-time aspect for practicing EDD in a .NET development environment.
 
-Requirements
-------------
+## Requirements
+
 * .NET 4.0 (reporting via HTTP available via `MetricsListener` class)
 * ASP.NET MVC 3 (reporting via HTTP available via route registrations)
 
-How To Use
-----------
-**First**, specify Metrics as a dependency:
+## How To Use
+
+### **First**, specify Metrics as a dependency:
 
     PM> Install-Package Metrics
     PM> Install-Package Metrics.Mvc
 
-**Second**, instrument your classes:
+### **Second**, instrument your classes:
 
 ```csharp
 using Metrics;
@@ -56,7 +55,7 @@ public class ThingFinder
 }
 ```
 
-Metrics comes with five types of metrics:
+#### Metrics comes with five types of metrics:
 
 * **Gauges** are instantaneous readings of values (e.g., a queue depth).
 * **Counters** are 64-bit integers which can be incremented or decremented.
@@ -76,7 +75,7 @@ Metrics comes with five types of metrics:
   since you probably care more about how your application is doing *now* as
   opposed to how it's done historically.)
 
-Metrics also has support for health checks:
+#### Metrics also has support for health checks:
 ```csharp
 HealthChecks.Register("database", () =>
 {
@@ -91,7 +90,7 @@ HealthChecks.Register("database", () =>
 });
 ```
 
-**Third**, start collecting your metrics.
+### **Third**, start collecting your metrics.
 
 If you're simply running a benchmark, you can print registered metrics to 
 standard output, every 10 seconds like this:
@@ -155,14 +154,14 @@ public class MvcApplication : HttpApplication
 }
 ```
 
-Known Deviations
-----------------
+## Known Deviations
+
 * This implementation uses `ConcurrentDictionary` vs. Java's `ConcurrentSkipListMap`, so expect lookups to suffer
 * This implementation uses `SortedDictionary` vs. Java's `TreeMap`
 * The CLR is not as flexible when it comes to introspection; CLR metrics and thread dumps are a work in progress, but are largely based on PerformanceCounters
 		
-License
--------
+## License
+
 The original Metrics project is Copyright (c) 2010-2011 Coda Hale, Yammer.com
 
 This idiomatic port of Metrics to C# and .NET is Copyright (c) 2011 Daniel Crenna
