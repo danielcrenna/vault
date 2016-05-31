@@ -21,6 +21,19 @@ namespace metrics.Tests.Core
         }
 
         [Test]
+        public void Can_Clear()
+        {
+            var meter = _metrics.Meter(typeof(MeterTests), "Can_count", "test", TimeUnit.Seconds);
+            meter.Mark(3);
+            Assert.AreEqual(3, meter.Count);
+            meter.Clear();
+            Assert.AreEqual(0, meter.Count);
+            Assert.AreEqual(0, meter.OneMinuteRate);
+            Assert.AreEqual(0, meter.FiveMinuteRate);
+            Assert.AreEqual(0, meter.FifteenMinuteRate);
+        }
+
+        [Test]
         public void Can_meter()
         {
             const int count = 100000;
