@@ -1,0 +1,56 @@
+﻿select {
+    width: inherit;
+    height: inherit;
+    overflow: hidden;
+}
+
+.cc {
+    width: 48px;
+    height: 48px;
+    background-repeat: no-repeat;
+    float: left;
+    margin-right: 2px;
+}
+
+.visa {
+    background-image: url('/Content/images/cc/visa_48.png');
+}
+
+.mastercard {
+    background-image: url('/Content/images/cc/mastercard_48.png');
+}
+
+.amex {
+    background-image: url('/Content/images/cc/amex_48.png');
+}
+
+.discover {
+    background-image: url('/Content/images/cc/discover_48.png');
+}
+
+.default {
+    opacity: 1.0;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    transition: all .3s linear;
+}
+
+.selected {
+    opacity: 1.0;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    transition: all .3s linear;
+}
+
+.deselected {
+    opacity: 0.25;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    transition: all .3s linear;
+}

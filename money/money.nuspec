@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>Money</id>
+		<version>1.0.1</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+    <summary>Painless currency management in .NET.</summary>
+    <description>Painless currency management in .NET.</description>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/money</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/money/LICENSE.md</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_money.png</iconUrl>
+		<tags>money currency localization</tags>    
+	</metadata>
+</package>

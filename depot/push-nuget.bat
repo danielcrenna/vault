@@ -1,0 +1,1 @@
+".nuget\NuGet.exe" push depot.1.2.7.nupkg

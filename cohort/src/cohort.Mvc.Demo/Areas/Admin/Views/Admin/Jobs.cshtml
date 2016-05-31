@@ -1,0 +1,95 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithoutNav.cshtml";
+}
+@using cohort
+@model IEnumerable<cohort.Models.User>
+<div class="btn-toolbar">
+    <button class="btn btn-primary">New User</button>
+    <button class="btn">Import</button>
+    <button class="btn">Export</button>
+</div>
+
+<div class="well">
+    
+    <div class="row-fluid">
+        <div class="span6">
+            <div id="DataTables_Table_0_length" class="dataTables_length">
+                <label>
+                    <select name="DataTables_Table_0_length" size="1" aria-controls="DataTables_Table_0">
+                        <option value="10" selected="selected">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        
+        <div class="span6">
+            <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                <label>
+                    Search:
+                    <input type="text" aria-controls="DataTables_Table_0">
+                </label>
+            </div>
+        </div>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Roles</th>
+                <th>Culture</th>
+                <th>Activated</th>
+                <th>Online</th>
+                <th style="width: 36px;"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Email</td>
+                    <td>@user.Username</td>
+                    <td>@string.Join(", ", user.Roles)</td>
+                    <td>@user.Culture</td>
+                    <td>@user.IsActivated</td>
+                    <td>@user.IsOnline</td>
+                    <td>
+                        <a href="user.html"><i class="icon-pencil"></i></a>
+                        <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="pagination">
+    <ul>
+        <li><a href="#">Prev</a></li>
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">Next</a></li>
+    </ul>
+</div>
+
+<div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Delete Confirmation</h3>
+    </div>
+    <div class="modal-body">
+        <p class="error-text">Are you sure you want to delete the user?</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+        <button class="btn btn-danger" data-dismiss="modal">Delete</button>
+    </div>
+</div>

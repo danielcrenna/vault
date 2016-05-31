@@ -1,0 +1,36 @@
+﻿@using cohort.Security.CSRF
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    @Html.Partial("_Styles")
+    @Html.CsrfToken()
+    @RenderSection("Head", required: false)
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                @Html.Partial("_TopBar")
+            </div>
+        </div>
+    </div>
+    
+    <div class="container narrow">
+      <div class="row-fluid">
+        @RenderBody()
+      </div><!--/row-->
+
+      <hr>
+
+      @Html.Partial("_Footer")
+
+    </div><!--/.fluid-container-->
+    
+    @Html.Partial("_ContactModal")
+    @Html.Partial("_Scripts")
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

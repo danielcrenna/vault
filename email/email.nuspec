@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>email</id>
+		<version>1.1.1</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+		<description>Easily render and send emails in your applications. Supports templating, parallel delivery, observable folders, retry policy, backlog, and more.</description>
+		<summary>Easily render and send emails in your applications.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/danielcrenna/webstack/tree/master/email</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/webstack/blob/master/email/LICENSE.md</licenseUrl>
+		<tags>email delivery</tags>   
+	</metadata>
+</package>

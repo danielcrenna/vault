@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3FFBCA50-9BB1-44EC-886C-954DE144164B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>cohort.Models</RootNamespace>
+    <AssemblyName>cohort.Models</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="container">
+      <HintPath>..\packages\container.1.1.0\lib\net40\container.dll</HintPath>
+    </Reference>
+    <Reference Include="depot">
+      <HintPath>..\packages\Depot.1.2.7\lib\net40\depot.dll</HintPath>
+    </Reference>
+    <Reference Include="Paging">
+      <HintPath>..\packages\Paging.1.0.1\lib\net40\Paging.dll</HintPath>
+    </Reference>
+    <Reference Include="Stripe.net">
+      <HintPath>..\packages\Stripe.net.1.2.1\lib\net40\Stripe.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TableDescriptor">
+      <HintPath>..\packages\TableDescriptor.1.0.0\lib\net40\TableDescriptor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activation.cs" />
+    <Compile Include="BrokenLink.cs" />
+    <Compile Include="Contact.cs" />
+    <Compile Include="Email.cs" />
+    <Compile Include="Error.cs" />
+    <Compile Include="IActivationRepository.cs" />
+    <Compile Include="IAuthenticationService.cs" />
+    <Compile Include="IBrokenLinkRepository.cs" />
+    <Compile Include="IContactListRepository.cs" />
+    <Compile Include="IEmailRepository.cs" />
+    <Compile Include="IErrorRepository.cs" />
+    <Compile Include="ILogRepository.cs" />
+    <Compile Include="IProfileRepository.cs" />
+    <Compile Include="IRoleRepository.cs" />
+    <Compile Include="ISecurityService.cs" />
+    <Compile Include="ITokenRepository.cs" />
+    <Compile Include="IUserRepository.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Plan.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Role.cs" />
+    <Compile Include="SecurityService.cs" />
+    <Compile Include="Token.cs" />
+    <Compile Include="User.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\cohort.Configuration\cohort.Configuration.csproj">
+      <Project>{327c254c-f313-457a-a720-bcb5b422eda1}</Project>
+      <Name>cohort.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\cohort.Email\cohort.Email.csproj">
+      <Project>{a2f82c5e-5424-4bc1-b894-7a7bd7e0f61e}</Project>
+      <Name>cohort.Email</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

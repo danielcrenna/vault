@@ -1,0 +1,12 @@
+﻿@model ModelStateDictionary
+@if(!Model.IsValid)
+{
+    <div class="alert alert-error">
+        Hey! Let's fix these things and get a move on! 
+        <ul style="list-style:disc">
+            @foreach (var modelError in Model.SelectMany(keyValuePair => keyValuePair.Value.Errors)) {
+                <li>@modelError.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}

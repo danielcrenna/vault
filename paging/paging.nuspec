@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>Paging</id>
+		<version>1.1.0</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+        <summary>A smart paging library for .NET queryables and enumerables.</summary>
+        <description>A smart paging library for .NET queryables and enumerables.</description>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/dapper-flint</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/dapper-flint/blob/master/LICENSE.md</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_depot.png</iconUrl>
+		<tags>paging data queryable enumerable</tags>
+    <dependencies>
+      <dependency id="Dapper" version="1.12.1" />
+    </dependencies>
+	</metadata>
+</package>

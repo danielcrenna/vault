@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+        <id>TableDescriptor</id>
+        <version>1.0.1</version>
+        <authors>Daniel Crenna</authors>
+        <owners>Daniel Crenna</owners>
+        <summary>The part of a micro-ORM that maps POCOs to database tables.</summary>
+        <description>The part of a micro-ORM that maps POCOs to database tables.</description>
+        <language>en-US</language>
+        <projectUrl>http://github.com/danielcrenna/TableDescriptor</projectUrl>
+        <licenseUrl>https://github.com/danielcrenna/TableDescriptor/blob/master/LICENSE.md</licenseUrl>
+        <iconUrl>http://apitize.com.s3.amazonaws.com/logo_generic.png</iconUrl>
+        <tags>dapper orm poco table mapping</tags>            
+    </metadata>
+</package>

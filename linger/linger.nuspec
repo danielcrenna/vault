@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+      <id>linger</id>
+      <version>1.0.0-alpha5</version>
+      <authors>Daniel Crenna</authors>
+      <owners>Daniel Crenna</owners>
+      <description>A priority job queuing subsystem, inspired by delayed_job</description>
+      <summary>A priority job queuing subsystem, inspired by delayed_job</summary>
+      <language>en-US</language>
+      <projectUrl>http://github.com/danielcrenna/linger</projectUrl>
+      <licenseUrl>https://github.com/danielcrenna/linger/blob/master/LICENSE</licenseUrl>
+      <iconUrl>http://apitize.com.s3.amazonaws.com/logo_generic.png</iconUrl>
+      <tags>job queue async</tags>
+      <dependencies>
+        <dependency id="Dapper" version="1.12.1"/>
+        <dependency id="Dates" version="1.0.1"/>
+        <dependency id="DotLiquid" version="1.7.0"/>
+        <dependency id="Microsoft.AspNet.SignalR.Core" version="1.0.0"/>
+        <dependency id="ServiceStack.Text" version="3.9.37"/>
+        <dependency id="ImpromptuInterface" version="6.0.6"/>
+      </dependencies>
+    </metadata>
+</package>

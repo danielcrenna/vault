@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ADD9FD60-4B46-45EF-866E-D9753CF796E9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>email</RootNamespace>
+    <AssemblyName>email</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\lib\net40\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\lib\net40\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DotLiquid">
+      <HintPath>..\packages\DotLiquid.1.6.1.0\lib\NET40\DotLiquid.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\packages\ServiceStack.Text.3.6.8\lib\net35\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Reactive">
+      <HintPath>..\packages\Rx-Main.1.0.11226\lib\Net4\System.Reactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Delivery\DeliveryCancellationHandling.cs" />
+    <Compile Include="Delivery\DeliveryConfiguration.cs" />
+    <Compile Include="Delivery\DeliveryFolderObservable.cs" />
+    <Compile Include="Delivery\DeliveryObserver.cs" />
+    <Compile Include="Delivery\DeliveryRetryDecision.cs" />
+    <Compile Include="Delivery\DeliveryRetryPolicy.cs" />
+    <Compile Include="Delivery\DeliveryService.cs" />
+    <Compile Include="Delivery\IDeliveryConfiguration.cs" />
+    <Compile Include="Delivery\IDeliveryService.cs" />
+    <Compile Include="Delivery\TaskExtensions.cs" />
+    <Compile Include="EmailMessage.cs" />
+    <Compile Include="Extensions\HashExtensions.cs" />
+    <Compile Include="IEmailService.cs" />
+    <Compile Include="NameValuePair.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\DirectoryEmailProvider.cs" />
+    <Compile Include="Providers\IEmailProvider.cs" />
+    <Compile Include="Providers\InMemoryEmailService.cs" />
+    <Compile Include="Providers\SmtpEmailProvider.cs" />
+    <Compile Include="SafeHash.cs" />
+    <Compile Include="Templates\DotLiquidEmailTemplateEngine.cs" />
+    <Compile Include="Templates\HashExtensions.cs" />
+    <Compile Include="Templates\IEmailTemplateEngine.cs" />
+    <Compile Include="Templates\TemplateExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

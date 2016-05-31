@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Broken Links</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Path</th>
+            <th>Method</th>
+            <th>Count</th>
+            <th>Last Occurrence</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: links">
+        <tr>
+            <td data-bind="text: path"></td>
+            <td data-bind="text: method"></td>
+            <td data-bind="text: count"></td>
+            <td data-bind="text: last_occurrence"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            
+            // http://jsfiddle.net/madcapnmckay/NCn8c/
+            function update() {
+                $.getJSON('/api/brokenlink', function (data) {
+                    var viewModel = ko.mapping.fromJS(data);
+                    ko.applyBindings(viewModel);
+                });
+            }
+            update();
+        });
+    </script>
+}

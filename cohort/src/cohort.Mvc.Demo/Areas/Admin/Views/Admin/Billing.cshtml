@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Billing</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: plans">
+        <tr>
+            <td data-bind="text: name"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            
+            function update() {
+                $.getJSON('/api/stripe/plans', function (data) {
+                    var viewModel = ko.mapping.fromJS(data);
+                    ko.applyBindings(viewModel);
+                });
+            }
+            
+            update();
+        });
+    </script>
+}

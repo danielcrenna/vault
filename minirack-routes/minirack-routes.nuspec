@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>MiniRack-Routes</id>
+		<version>0.0.3</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+        <summary>Provides zero-configuration canonical route support.</summary>
+        <description>Provides zero-configuration canonical route support.</description>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/minirack-routes</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/minirack-routes/blob/master/LICENSE.md</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_sitemaps.png</iconUrl>
+		<tags>httpmodule canonical routes seo</tags>
+    <dependencies>
+      <dependency id="Microsoft.AspNet.Mvc" version="4.0.20710.0" />
+      <dependency id="MiniRack" version="0.0.2" />      
+    </dependencies>
+	</metadata>
+</package>

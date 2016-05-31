@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+        <id>container</id>
+        <version>1.1.1</version>
+        <authors>Daniel Crenna</authors>
+        <owners>Daniel Crenna</owners>
+        <summary>A simple interface for function-descriptor style IoC containers.</summary>
+        <description>A simple interface for function-descriptor style IoC containers. Includes an embedded Munq container by default.</description>
+        <language>en-US</language>
+        <projectUrl>https://github.com/danielcrenna/webstack/tree/master/container</projectUrl>
+        <licenseUrl>https://github.com/danielcrenna/webstack/blob/master/container/LICENSE.md</licenseUrl>
+        <iconUrl>http://apitize.com.s3.amazonaws.com/logo_generic.png</iconUrl>
+        <tags>ioc container</tags>    
+    </metadata>
+</package>

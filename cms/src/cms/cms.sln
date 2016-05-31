@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cms", "cms.csproj", "{F326FE42-036E-4D35-B270-42F2C290FACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cms.example", "..\cms.example\cms.example.csproj", "{011F26EB-6131-4BCA-B203-E4AA9DFDC71C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F326FE42-036E-4D35-B270-42F2C290FACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F326FE42-036E-4D35-B270-42F2C290FACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F326FE42-036E-4D35-B270-42F2C290FACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F326FE42-036E-4D35-B270-42F2C290FACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{011F26EB-6131-4BCA-B203-E4AA9DFDC71C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{011F26EB-6131-4BCA-B203-E4AA9DFDC71C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{011F26EB-6131-4BCA-B203-E4AA9DFDC71C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{011F26EB-6131-4BCA-B203-E4AA9DFDC71C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

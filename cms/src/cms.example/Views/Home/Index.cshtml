@@ -1,0 +1,13 @@
+﻿@using cms.example.ViewModels;
+@model PostListViewModel
+<h2>Posts</h2>
+@foreach (var item in Model.Posts)
+{
+    <p>
+        <a href="@item.Slug">
+            @item.Title (@item.CreatedAt.ToString("MM/dd/yyyy"))
+        </a>
+        <br />
+        @Html.Raw(item.Synopsis)
+    </p>
+}

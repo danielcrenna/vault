@@ -1,0 +1,1 @@
+http://www.codethinked.com/aspnet-mvc-ajax-csrf-protection-with-jquery-15

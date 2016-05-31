@@ -1,0 +1,304 @@
+﻿@using cohort
+@{
+    Layout = "~/Views/Shared/_WithoutNavNarrow.cshtml";
+}
+
+@section Head
+{
+    @if (Cohort.Site.Stripe.Enabled && Cohort.Site.Stripe.CaptureCardOnSignUp)
+    {
+        <link href="/Content/cc.css" rel="stylesheet" media="screen">    
+    }
+}
+
+<form class="form-horizontal" action='@Url.Action("SignUp", "Cohort")' method="post">
+    <fieldset>
+        
+        <legend>Your Info</legend>
+        
+        @Html.Partial("_ValidationSummary", ViewData.ModelState)
+
+        <div class="control-group">
+            <label class="control-label" for="email">Email</label>
+            <div class="controls">
+                <input id="email" name="email" placeholder="" class="input-xlarge required" type="email">
+                <p class="help-block">We will send login instructions to this address.</p>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="password">Password</label>
+            <div class="controls">
+                <input type="password" id="password" name="password" placeholder="" class="input-xlarge required">
+                <p class="help-block">Password should be at least 4 characters</p>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label"  for="confirm_password">Password (again)</label>
+            <div class="controls">
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="" class="input-xlarge required">
+                <p class="help-block">Please confirm password</p>
+            </div>
+        </div>
+        
+        @if (!Cohort.Site.Stripe.Enabled || !Cohort.Site.Stripe.CaptureCardOnSignUp)
+        {
+        <div class="control-group">
+            <div class="controls">
+                <button class="btn btn-success">Go!</button>
+            </div>
+        </div>    
+        }
+    </fieldset>
+    
+    @if (Cohort.Site.Stripe.Enabled && Cohort.Site.Stripe.CaptureCardOnSignUp)
+    {
+        <fieldset>
+            <legend>Payment Details <a href="//stripe.com" style="margin-left:7px"><img src="/Content/images/outline@2x.png" alt="Powered by Stripe" width="100" height="27"/></a>
+            </legend>
+        
+            <div class="alert alert-info">
+                We won't charge your credit card unless you use your account in any given month.
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="card-name">Your Name</label>
+                <div class="controls">
+                    <input id="card-name" placeholder="" class="input-xlarge" type="text">
+                    <p class="help-block">As it appears on your credit card.</p>
+                </div>
+            </div>
+        
+            <div id="payment-errors">
+            </div>
+        
+            <div class="control-group">
+                <div class="controls">
+                    <div class="cc default visa"></div>
+                    <div class="cc default mastercard"></div>
+                    <div class="cc default amex"></div>
+                    <div class="cc default discover"></div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="card-number">Card Number</label>
+                <div class="controls">
+                    <input id="card-number" placeholder="" class="input-xlarge" type="text">
+                    <p class="help-block">Up to 16 digits on the front of your credit card.</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">Expiration</label>
+                <div class="controls">
+                    <select id="card-expiry-month" class="stripe-sensitive required" required="required">
+                        <option></option>
+                    </select>
+                    <span style="font-weight:bold;"> / </span>
+                    <select id="card-expiry-year" class="stripe-sensitive required" required="required">
+                        <option></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="card-cvc">Verification Code</label>
+                <div class="controls">
+                    <input id="card-cvc" placeholder="" class="input-mini" type="text" size="2">
+                    <p class="help-block">3 or 4 digits on the back of most cards.</p>
+                    <p class="help-block">On the front of AMEX cards.</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"></label>
+                <div class="controls">
+                    <button id="submit-button" class="btn btn-success">Go!</button>
+                </div>
+            </div>
+
+        </fieldset>
+    }
+    <input id="referer_url" name="referer_url" type="hidden" value="" />
+    <input id="landing_page" name="landing_page" type="hidden" value="" />
+</form>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function(){
+            var referer = $.cookie("cohort_referer_url");
+            $("input[id=referer_url]").val(referer);
+
+            var landing = $.cookie("cohort_landing_page");
+            $("input[id=landing_page]").val(landing);
+        });
+    </script>
+        
+    @if (Cohort.Site.Stripe.Enabled && Cohort.Site.Stripe.CaptureCardOnSignUp)
+    {
+    <script type="text/javascript" src="//ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="//js.stripe.com/v1/"></script>
+    <script>
+        if (Stripe === undefined) {
+            alert("Couldn't load Stripe.com payment processing script. Perhaps your firewall is blocking it, or it might be unavailable right now.");
+        }
+        Stripe.setPublishableKey('@Cohort.Site.Stripe.PublishableKey');
+    </script>
+        <script>
+            jQuery.extend(jQuery.validator.messages, {
+                required: 'This field is required.',
+                email: 'Please enter a valid email address.',
+                minlength: jQuery.validator.format('Please enter at least {0} characters.'),
+            });
+
+            @*http://javascript.gakaa.com/credit-card-type-by-number.aspx*@
+            $("#card-number").keyup(function () {
+                var cc = $(this).val();
+                if (cc.length >= 1) {
+                    var which;
+
+                    if ((/^(34|37)/).test(cc)) {
+                        which = '.amex';
+                    } else if ((/^(51|52|53|54|55)/).test(cc)) {
+                        which = '.mastercard';
+                    } else if ((/^(4)/).test(cc)) {
+                        which = '.visa';
+                    } else if ((/^(6011)/).test(cc)) {
+                        which = '.discover';
+                    } else if ((/^(300|301|302|303|304|305|36|38)/).test(cc)) {
+                        which = '.diners';  // NOT USED
+                    } else if ((/^(3)/).test(cc) && cc.length >= 2) {
+                        which = '.jcb';    // NOT USED
+                    } else if ((/^(2131|1800)/).test(cc)) {
+                        which = '.jcb';    // NOT USED
+                    }
+
+                    $('.cc').removeClass('default');
+                    $('.cc').removeClass('selected');
+                    $('.cc').addClass('deselected');
+                    if (which) {
+                        $(which).removeClass('deselected');
+                        $(which).addClass('selected');
+                                            @*
+                    if (which == '.cc_amex') {
+                        $('#cc_explain_amex').addClass('hilite_amex');
+                        $('#cvc_card').addClass('cvc_amex');
+                    } else {
+                        $('#cc_explain_amex').removeClass('hilite_amex');
+                        $('#cvc_card').removeClass('cvc_amex');
+                    }*@
+                    }
+                } else {
+                    $('.cc').removeClass('deselected');
+                    $('.cc').removeClass('selected');
+                    $('.cc').addClass('default');
+                                    @*
+                $('#cc_explain_amex').removeClass('hilite_amex');
+                $('#cvc_card').removeClass('cvc_amex');*@
+                }
+            });
+
+            function initExpiryFields() {
+                $('#card-expiry-month, #card-expiry-year').css("width", "");
+                var select = $("#card-expiry-month");
+                var now = new Date();
+                var month = now.getMonth() + 1;
+                for (var i = 1; i <= 12; i++) {
+                    var pad = (i <= 9) ? "0" + i : i;
+                    select.append($("<option value='" + pad + "' " + (month === i ? "selected" : "") + ">" + pad + "</option>"));
+                }
+                var year = now.getFullYear();
+                select = $("#card-expiry-year");
+                select.empty();
+                for (i = 0; i < 8; i++) {
+                    select.append($("<option value='" + (i + year) + "' " + (i === 0 ? "selected" : "") + ">" + (i + year) + "</option>"));
+                }
+            }
+
+            function stripeResponseHandler(status, response) {
+                if (response.error) {
+                    // show the errors on the form
+                    $(".payment-errors").text(response.error.message);
+                    $(".submit-button").removeAttr("disabled");
+                } else {
+                    var form$ = $("#payment-form");
+                    // token contains id, last4, and card type
+                    var token = response['id'];
+                    // insert the token into the form so it gets submitted to the server
+                    form$.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
+                    // and submit
+                    form$.get(0).submit();
+                }
+            }
+
+            $(function () {
+
+                initExpiryFields();
+
+                $('#submit-button').click(function () {
+                    $('#payment-form').triggerHandler('submit');
+                });
+
+                $("#payment-form").submit(function (event) {
+                    // disable the submit button to prevent repeated clicks
+
+                    //$('#submit-button').attr("disabled", "disabled");
+                    $('#submit-button').removeAttr("disabled");
+
+                    Stripe.createToken({
+                        name: $('#card-name').val(),
+                        number: $('#card-number').val(),
+                        cvc: $('#card-cvc').val(),
+                        exp_month: $('#card-expiry-month').val(),
+                        exp_year: $('#card-expiry-year').val()
+                    }, stripeResponseHandler);
+
+                    // prevent the form from submitting with the default action
+                    return false;
+                });
+
+                $.validator.addMethod("cardNumber", Stripe.validateCardNumber, 'This does not appear to be a valid card number. Please try again and remember that this must match the digits on the front of your card exactly.');
+                $.validator.addMethod("cardCVC", Stripe.validateCVC, 'This does not appear to be a valid security code. We need this code to ensure that you have a valid credit card. If the diagram here does not help, please contact your credit card company for help finding the code.');
+                $.validator.addMethod("cardExpiry",
+                    function () {
+                        return Stripe.validateExpiry($("#card-expiry-month").val(), $("#card-expiry-year").val());
+                    },
+                    'This does not appear to be a valid expiration date. The expiration must be a month/year in the future.');
+
+                $("#payment-form").validate({
+                    //submitHandler: stripeOrGenerateSubmit,
+                    rules: {
+                        "email": {
+                            minlength: 5,
+                            required: true
+                        },
+                        "card-cvc": {
+                            cardCVC: true,
+                            required: true
+                        },
+                        "card-number": {
+                            cardNumber: true,
+                            required: true
+                        },
+                        "card-expiry-year": "cardExpiry"
+                        // we don't validate month separately
+                    },
+                    errorPlacement: function (error, element) {
+                        //var sibling1 = element.parent().next();
+                        //sibling1.addClass('backArrow');
+                        //var sibling2 = sibling1.next();
+                        //error.appendTo(sibling2);
+                        error.appendTo("#payment-errors");
+                    },
+                    success: function (element) {
+                        //var prev = element.parent().prev();
+                        //prev.removeClass('backArrow');
+                    }
+                });
+            });
+        </script>
+    }
+}

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Logs";
+}
+<h2>Logs</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Level</th>
+            <th>Message</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: logs">
+        <tr>
+            <td data-bind="text: level"></td>
+            <td data-bind="text: message"></td>
+        </tr>
+    </tbody>
+</table>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            
+            // http://jsfiddle.net/madcapnmckay/NCn8c/
+            function update() {
+                $.getJSON('/api/logs', function (data) {
+                    var viewModel = ko.mapping.fromJS(data);
+                    ko.applyBindings(viewModel);
+                });
+            }
+            update();
+        });
+    </script>
+}

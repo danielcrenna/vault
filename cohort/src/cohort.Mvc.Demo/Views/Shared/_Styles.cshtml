@@ -1,0 +1,10 @@
+﻿@using cohort
+<link href="/Content/bootstrap.min.css" rel="stylesheet">
+<link href="/Content/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="/Content/gritter/jquery.gritter.css" rel="stylesheet">
+<link href="/Content/style.css" rel="stylesheet">
+@if(!string.IsNullOrWhiteSpace(Cohort.Profile.Theme) && Cohort.Profile.Theme != "Default")
+{
+    var url = "/content/themes/" + Cohort.Profile.Theme.ToLower() + ".bootstrap.min.css";
+<link href="@url" rel="stylesheet">
+}

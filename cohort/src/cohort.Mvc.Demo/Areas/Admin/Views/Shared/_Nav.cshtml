@@ -1,0 +1,32 @@
+﻿@using cohort
+<div class="span3">
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            <li class="nav-header">Membership</li>
+            <li class="active"><a href="@Url.Action("Index", "Admin")">Dashboard</a></li>
+            <li><a href="@Url.Action("Users", "Admin")">Users</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li class="nav-header">Webmaster</li>
+            <li><a href="@Url.Action("Errors", "Admin")">Errors</a></li>
+            <li><a href="@Url.Action("BrokenLinks", "Admin")">Broken links</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+            <li class="nav-header">Billing</li>
+            <li><a href="@Url.Action("Billing", "Admin")">Dashboard</a></li>
+            <li><a href="#">Plans</a></li>
+            <li><a href="#">Subscriptions</a></li>
+            <li><a href="#">Dunning</a></li>
+            <li><a href="#">Settings</a></li>
+            <li class="nav-header">Lean Startup</li>
+            <li><a href="#">Dashboard</a></li>
+            @if(Cohort.User.IsSuperUser())
+            {
+            <li class="nav-header">Super User</li>
+            <li><a href="@Url.Action("Logs", "SuperUser")">View Logs</a></li>                
+            <li><a href="@Url.Action("Configuration", "SuperUser")">Manage Configuration</a></li>                
+            }
+        </ul>
+    </div><!--/.well -->
+</div><!--/span-->

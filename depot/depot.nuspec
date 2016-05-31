@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>Depot</id>
+		<version>1.2.7</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+    <description>A common caching interface with support for graphing dependencies.</description>
+		<summary>A common caching interface with support for graphing dependencies.</summary>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/depot</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/depot/blob/master/LICENSE</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_depot.png</iconUrl>
+		<tags>cache web dependency graph</tags>
+    <dependencies>
+      <dependency id="container" version="1.0.1" />
+    </dependencies>
+	</metadata>
+</package>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ECF06383-F12E-4E9B-BFA0-9DBC314E3AE2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>container</RootNamespace>
+    <AssemblyName>container</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\lib\net40\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\lib\net40\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Container.cs" />
+    <Compile Include="IContainer.cs" />
+    <Compile Include="IDependencyRegistrar.cs" />
+    <Compile Include="IDependencyResolver.cs" />
+    <Compile Include="ILifetime.cs" />
+    <Compile Include="DefaultContainer.cs" />
+    <Compile Include="DefaultLifetime.cs" />
+    <Compile Include="Munq\ConfigurationLoader.cs" />
+    <Compile Include="Munq\Container.cs" />
+    <Compile Include="Munq\Container.Registrar.cs" />
+    <Compile Include="Munq\Container.Resolver.cs" />
+    <Compile Include="Munq\CreateInstanceDelegateFactory.cs" />
+    <Compile Include="Munq\IContainerFluent.cs" />
+    <Compile Include="Munq\IDependecyRegistrar.cs" />
+    <Compile Include="Munq\IDependencyResolver.cs" />
+    <Compile Include="Munq\ILifetimeManager.cs" />
+    <Compile Include="Munq\IMunqConfig.cs" />
+    <Compile Include="Munq\IRegistration.cs" />
+    <Compile Include="Munq\IRegistrationKey.cs" />
+    <Compile Include="Munq\LifetimeExtensions.cs" />
+    <Compile Include="Munq\LifetimeManagers\AlwaysNewLifetime.cs" />
+    <Compile Include="Munq\LifetimeManagers\CachedLifetime.cs" />
+    <Compile Include="Munq\LifetimeManagers\ContainerLifetime.cs" />
+    <Compile Include="Munq\LifetimeManagers\RequestLifetime.cs" />
+    <Compile Include="Munq\LifetimeManagers\RequestLifetimeModule.cs" />
+    <Compile Include="Munq\LifetimeManagers\SessionLifetime.cs" />
+    <Compile Include="Munq\LifetimeManagers\ThreadLocalStorageLifetime.cs" />
+    <Compile Include="Munq\NamedRegistrationKey.cs" />
+    <Compile Include="Munq\Registration.cs" />
+    <Compile Include="Munq\TypeRegistry.cs" />
+    <Compile Include="Munq\UnNamedRegistrationKey.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

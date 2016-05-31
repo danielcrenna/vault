@@ -1,0 +1,58 @@
+﻿@{
+    Layout = "~/Views/Shared/_WithoutNavNarrow.cshtml";
+}
+
+<div class="tab-content">
+    
+    <div id="login" class="tab-pane active">
+        <form class="form-horizontal span3" action="@Url.Action("SignIn", "Cohort")" method="post">
+            <fieldset>
+                <legend >Sign in</legend>
+
+                @Html.Partial("_ValidationSummary", ViewData.ModelState)
+
+                <div class="control-group">
+                    <label class="control-label" for="email">E-mail</label>
+                    <div class="controls">
+                        <input type="email" id="email" name="email" class="input-xlarge">
+                        <p class="help-block">This is the address you signed up with.</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                        <input type="password" id="password" name="password" class="input-xlarge">
+                        <p class="help-block"></p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn btn-success">Go!</button>
+                        <a data-toggle="tab" class="pull-right" href="#forgotpassword">I forgot my password</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div id="forgotpassword" class="tab-pane">
+        <form class="form-horizontal span3" action="@Url.Action("ResetPassword", "Cohort")" method="post">
+            <fieldset>
+                <legend>Sign in</legend>
+                <div class="control-group">
+                    <label class="control-label" for="email">E-mail</label>
+                    <div class="controls">
+                        <input type="email" id="email" name="email" class="input-xlarge">
+                        <p class="help-block">We'll send password reset instructions to this address.</p>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button class="btn btn-success">Reset</button>
+                        <a data-toggle="tab" href="#login" class="pull-right">Wait, I remember it now!</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

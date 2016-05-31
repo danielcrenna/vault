@@ -1,0 +1,27 @@
+﻿body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+.sidebar-nav {
+    padding: 9px 0;
+}
+.help-block {
+    color: #999999;
+    display: block;
+    margin-bottom: 0;
+    margin-top: 5px;
+    font-size: 80%;
+}
+.avatar {
+    float: left;
+    border-radius: 35px;
+    border: 2px solid #ffffff;
+    margin-right: 5px;
+    -webkit-border-radius: 35px;
+    -moz-border-radius: 35px;
+    -o-border-radius: 35px;
+    -ms-border-radius: 35px;
+    -khtml-border-radius: 35px;
+    -webkit-box-shadow: 0px 0px 5px 0px;
+    box-shadow: 0px 0px 5px 0px;
+}

@@ -1,0 +1,5 @@
+﻿@using cms
+@using cms.example.ViewModels;
+@model PostViewModel
+<h2>@Model.Post.Title</h2>
+@Html.Markdown(Model.Post.Body)

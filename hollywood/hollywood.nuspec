@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+    <metadata>
+        <id>hollywood</id>
+        <version>0.0.2</version>
+        <authors>Daniel Crenna</authors>
+        <owners>Daniel Crenna</owners>
+        <summary>A little tool for launches.</summary>
+        <description>A little tool for launches, for ASP.NET MVC 4.</description>
+        <language>en-US</language>
+        <projectUrl>http://github.com/danielcrenna/hollywood</projectUrl>
+        <licenseUrl>https://github.com/danielcrenna/hollywood/LICENSE.md</licenseUrl>
+        <iconUrl>http://apitize.com.s3.amazonaws.com/logo_hollywood.png</iconUrl>
+        <tags>launch prelaunch hollywood</tags>    
+        <dependencies>
+            <dependency id="Microsoft.AspNet.Mvc" version="4.0.20710.0" />
+        </dependencies>
+    </metadata>    
+</package>

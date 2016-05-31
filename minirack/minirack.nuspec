@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>MiniRack</id>
+    <version>1.0.0</version>
+    <authors>Daniel Crenna</authors>
+    <owners>Daniel Crenna</owners>
+    <summary>A tiny aggregator for self-registering HttpModules.</summary>
+    <description>A tiny aggregator for self-registering HttpModules.</description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/danielcrenna/webstack/tree/master/minirack</projectUrl>
+    <licenseUrl>https://github.com/danielcrenna/webstack/blob/master/LICENSE.md</licenseUrl>
+    <iconUrl>http://apitize.com.s3.amazonaws.com/logo_minirack.png</iconUrl>
+    <tags>httpmodule registration dynamic preapplicationstartmethod webactivator</tags>
+    <dependencies>
+      <dependency id="WebActivator" version="1.5.1" />
+    </dependencies>
+  </metadata>
+</package>

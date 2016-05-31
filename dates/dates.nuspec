@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>Dates</id>
+		<version>1.0.1</version>
+		<authors>Daniel Crenna</authors>
+		<owners>Daniel Crenna</owners>
+		<description>The missing .NET date types; DatePeriod and DateSpan.</description>
+		<summary>The missing .NET date types; DatePeriod and DateSpan</summary>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/dates</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/dates/blob/master/LICENSE</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_dates.png</iconUrl>
+		<tags>dates datetime</tags>   
+	</metadata>
+</package>
