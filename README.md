@@ -1,7 +1,7 @@
 Open Source Vault
 =================
 
-This repository contains a large collection of shelved open source software that I've written since 2009.
+This repository contains a large collection of shelved open source software projects (34!) that I've written, going as far back as 2009.
 
 Many were popular libraries downloaded over a hundred thousand times. Many were and still are little libraries I use often when I don't want to write the same code over and over again.
 
