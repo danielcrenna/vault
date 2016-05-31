@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security;
 using System.Text;
 using System.Threading;
-using metrics.Serialization;
 using metrics.Util;
 
 namespace metrics.Core
@@ -57,17 +56,17 @@ namespace metrics.Core
                                                            StackFrames = StackFrameInfo.GetStackFrameInfo(GetStackFramesForThread(thread))
                                                        });
 
-            return Serializer.Serialize(results);
+            return Serializer.SerializeThreads(results);
         }
 
-        internal class ThreadInfo
+        public class ThreadInfo
         {
             public string Name { internal get; set; }
             public ThreadPriority Priority { internal get; set; }
             public IEnumerable<StackFrameInfo> StackFrames { internal get; set; }
         }
 
-        internal class StackFrameInfo
+        public class StackFrameInfo
         {
             public string Namespace { get; set; }
             public string MethodName { get; set; }

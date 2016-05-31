@@ -25,10 +25,11 @@ namespace metrics.Tests.Core
         }
 
         [Test]
-        public void Can_use_gauge_metric()
+        public static void Can_use_gauge_metric()
         {
             var queue = new Queue<int>();
-            var gauge = Metrics.Gauge(typeof(GaugeTests), "Can_use_gauge_metric", () => queue.Count);
+            var metrics = new Metrics();
+            var gauge = metrics.Gauge(typeof(GaugeTests), "Can_use_gauge_metric", () => queue.Count);
             queue.Enqueue(5);
             Assert.AreEqual(1, gauge.Value);
         }

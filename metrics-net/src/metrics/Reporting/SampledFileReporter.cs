@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Text;
-using metrics.Serialization;
 
 namespace metrics.Reporting
 {
@@ -13,12 +12,14 @@ namespace metrics.Reporting
         private readonly Encoding _encoding;
         private readonly string _directory;
 
-        public SampledFileReporter() : this("", Encoding.UTF8, new HumanReadableReportFormatter())
+        public SampledFileReporter(Metrics metrics)
+            : this("", Encoding.UTF8, new HumanReadableReportFormatter(metrics))
         {
 
         }
 
-        public SampledFileReporter(Encoding encoding) : this("", encoding, new HumanReadableReportFormatter())
+        public SampledFileReporter(Encoding encoding, Metrics metrics)
+            : this("", encoding, new HumanReadableReportFormatter(metrics))
         {
 
         }
@@ -28,12 +29,14 @@ namespace metrics.Reporting
 
         }
 
-        public SampledFileReporter(string directory) : this(directory, Encoding.UTF8, new HumanReadableReportFormatter())
+        public SampledFileReporter(string directory, Metrics metrics)
+            : this(directory, Encoding.UTF8, new HumanReadableReportFormatter(metrics))
         {
             
         }
 
-        public SampledFileReporter(string directory, Encoding encoding) : this(directory, encoding, new HumanReadableReportFormatter())
+        public SampledFileReporter(string directory, Encoding encoding, Metrics metrics)
+            : this(directory, encoding, new HumanReadableReportFormatter(metrics))
         {
             
         }
@@ -53,14 +56,14 @@ namespace metrics.Reporting
         {
             using (Out = new StreamWriter(GenerateFilePath(), false, _encoding))
             {
-                Out.Write(Serializer.Serialize(Metrics.AllSorted));
+                Out.Write(_formatter.GetSample());
                 Out.Flush();
             }
         }
 
         private string GenerateFilePath()
         {
-            return Path.Combine(_directory, string.Format("{0}.sample", DateTime.Now.Ticks));
+            return Path.Combine(_directory, string.Format("{0}.sample", DateTime.UtcNow.Ticks));
         }
     }
 }

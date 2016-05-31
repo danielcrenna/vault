@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace metrics.Core
 {
@@ -9,7 +10,7 @@ namespace metrics.Core
       protected HistogramMetric _histogram;
 
       public TimerMetricBase(TimeUnit durationUnit, TimeUnit rateUnit)
-         : this(durationUnit, rateUnit, MeterMetric.New("calls", rateUnit), new HistogramMetric(HistogramMetric.SampleType.Biased), true /* clear */)
+         : this(durationUnit, rateUnit, new MeterMetric("calls", rateUnit), new HistogramMetric(HistogramMetric.SampleType.Biased), true /* clear */)
       {
 
       }
@@ -26,6 +27,32 @@ namespace metrics.Core
          }
       }
 
+      public void LogJson(StringBuilder sb)
+      {
+          var percSb = new StringBuilder();
+          var percentiles = Percentiles(0.5, 0.75, 0.95, 0.98, 0.99, 0.999);
+          percSb.Append("{\"0.5\":").Append(percentiles[0]);
+          percSb.Append(",\"0.75\":").Append(percentiles[1]);
+          percSb.Append(",\"0.95\":").Append(percentiles[2]);
+          percSb.Append(",\"0.98\":").Append(percentiles[3]);
+          percSb.Append(",\"0.99\":").Append(percentiles[4]);
+          percSb.Append(",\"0.999\":").Append(percentiles[5]);
+          percSb.Append("}");
+
+          sb.Append("{\"count\":").Append(Count)
+            .Append(",\"duration unit\":\"").Append(DurationUnit).Append("\"")
+            .Append(",\"rate unit\":\"").Append(RateUnit).Append("\"")
+            .Append(",\"fifteen minute rate\":").Append(FifteenMinuteRate)
+            .Append(",\"five minute rate\":").Append(FiveMinuteRate)
+            .Append(",\"one minute rate\":").Append(OneMinuteRate)
+            .Append(",\"mean rate\":").Append(MeanRate)
+            .Append(",\"max\":").Append(Max)
+            .Append(",\"min\":").Append(Min)
+            .Append(",\"mean\":").Append(Mean)
+            .Append(",\"stdev\":").Append(StdDev)
+            .Append(",\"percentiles\":").Append(percSb).Append("}");
+
+      }
       /// <summary>
       ///  Returns the timer's duration scale unit
       /// </summary>

@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using metrics.Serialization;
+using metrics.Util;
 
 namespace metrics.Net
 {
@@ -14,6 +14,12 @@ namespace metrics.Net
         private HttpListener _listener;
         private CancellationTokenSource _task;
 
+        private readonly Metrics _metrics;
+
+        public MetricsListener(Metrics metrics)
+        {
+            _metrics = metrics;
+        }
         private static HttpListener InitializeListenerOnPort(int port)
         {
             var listener = new HttpListener();
@@ -35,9 +41,13 @@ namespace metrics.Net
             }
         }
 
-        public void Start(int port)
+        public void Start(int port, params string[] uriPrefixes)
         {
             _listener = _listener ?? InitializeListenerOnPort(port);
+            foreach (var prefix in uriPrefixes)
+            {
+                _listener.Prefixes.Add(prefix);
+            }
             _listener.Start();
 
             _task = new CancellationTokenSource();
@@ -52,11 +62,13 @@ namespace metrics.Net
             }, _task.Token);
         }
 
-        private static void HandleContext(HttpListenerContext context)
+        private  void HandleContext(HttpListenerContext context)
         {
             var request = context.Request; 
             var response = context.Response;
-
+           // var metrics = new Metrics();
+           
+ 
             // TODO: parse 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
             // http://www.singular.co.nz/blog/archive/2008/07/06/finding-preferred-accept-encoding-header-in-csharp.aspx
 
@@ -71,15 +83,10 @@ namespace metrics.Net
                     RespondWithFile(response, "jquery.flot.min.js");
                     break;
                 case "/":
-                    switch(mimeType)
-                    {
-                        case "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8":
+                    if(mimeType.StartsWith("text/html"))
                             RespondWithFile(response, "index.html");
-                            break;
-                        default: // "application/json"
+                    else // "application/json"
                             RespondWithNotFound(response);
-                            break;
-                    }
                     break;
                 case "/ping":
                     response.StatusCode = 200;
@@ -93,10 +100,10 @@ namespace metrics.Net
                     switch(mimeType)
                     {
                         case "text/html":
-                            WriteFinal(Serializer.Serialize(Metrics.AllSorted), response);
+                            WriteFinal(Serializer.Serialize(_metrics.AllSorted), response);
                             break;
                         default: // "application/json"
-                            WriteFinal(Serializer.Serialize(Metrics.AllSorted), response);
+                            WriteFinal(Serializer.Serialize(_metrics.AllSorted), response);
                             break;
                     }
                     
@@ -151,8 +158,6 @@ namespace metrics.Net
                     return sr.ReadToEnd();
                 }
             }
-
-            return "";
         }
     }
 }

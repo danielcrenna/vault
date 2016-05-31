@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text;
+using metrics.Core;
 
 namespace metrics
 {
@@ -33,7 +35,7 @@ namespace metrics
             }
         }
 
-        public sealed class Result
+        public sealed class Result : IMetric 
         {
             private static readonly Result _healthy = new Result(true, null, null);
 
@@ -60,6 +62,30 @@ namespace metrics
                 IsHealthy = isHealthy;
                 Message = message;
                 Error = error;
+            }
+
+            public IMetric Copy
+            {
+                get { return new Result(IsHealthy, Message, Error); }
+            }
+
+            public void LogJson(StringBuilder sb)
+            {
+                sb.Append("{")
+                    .Append("\"is_healthy\": \"").Append(IsHealthy).Append("\"");
+
+                if (!String.IsNullOrEmpty(Message))
+                {
+                    sb.Append(",");
+                    sb.Append("\"message\":\"").Append(Message).Append("\"");
+                }
+
+                if (Error != null && !String.IsNullOrEmpty(Error.Message))
+                {
+                    sb.Append(",");
+                    sb.Append("\"error\":\"").Append(Error.Message).Append("\"");
+                }
+                sb.Append("}");
             }
         }
     }

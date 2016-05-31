@@ -1,26 +1,32 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace metrics.Support
 {
     /// <summary>
     /// Provides statistically relevant random number generation
     /// </summary>
-    internal class Random
+    public class Random
     {
-        private static readonly RandomNumberGenerator _random;
-
-        static Random()
-        {
-            _random = RandomNumberGenerator.Create();   
-        }
+		private static readonly ThreadLocal<RandomNumberGenerator> _random = new ThreadLocal<RandomNumberGenerator>(RandomNumberGenerator.Create);
         
         public static long NextLong()
         {
             var buffer = new byte[sizeof(long)];
-            _random.GetBytes(buffer);
+            _random.Value.GetBytes(buffer);
             var value = BitConverter.ToInt64(buffer, 0);
             return value;
+        }
+
+        public static double NextDouble()
+        {
+            var l = NextLong();
+            if(l == Int64.MinValue)
+            {
+                l = 0;
+            }
+            return (l + .0) / Int64.MaxValue;
         }
     }
 }

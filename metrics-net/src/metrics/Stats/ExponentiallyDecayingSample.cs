@@ -30,7 +30,7 @@ namespace metrics.Stats
         private readonly AtomicLong _count = new AtomicLong(0);
         private VolatileLong _startTime;
         private readonly AtomicLong _nextScaleTime = new AtomicLong(0);
-
+        
         /// <param name="reservoirSize">The number of samples to keep in the sampling reservoir</param>
         /// <param name="alpha">The exponential decay factor; the higher this is, the more biased the sample will be towards newer values</param>
         public ExponentiallyDecayingSample(int reservoirSize, double alpha)
@@ -49,15 +49,15 @@ namespace metrics.Stats
         {
             _values.Clear();
             _count.Set(0);
-            _startTime = Tick();
+            _startTime = CurrentTimeInSeconds();
         }
-        
+
         /// <summary>
         /// Returns the number of values recorded
         /// </summary>
         public int Count
         {
-            get { return (int) Math.Min(_reservoirSize, _count); }
+            get { return (int)Math.Min(_reservoirSize, _count); }
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace metrics.Stats
         /// </summary>
         public void Update(long value)
         {
-            Update(value, Tick());
+            Update(value, CurrentTimeInSeconds());
         }
 
         private void Update(long value, long timestamp)
@@ -73,21 +73,24 @@ namespace metrics.Stats
             _lock.EnterReadLock();
             try
             {
-                var priority = Weight(timestamp - _startTime) / Support.Random.NextLong();
+                var random = ThreadLocalRandom.NextNonzeroDouble();
+                var weight = Weight(timestamp - _startTime);
+                var priority = weight / random;
                 var newCount = _count.IncrementAndGet();
-                if(newCount <= _reservoirSize)
+
+                if (newCount <= _reservoirSize)
                 {
                     _values.AddOrUpdate(priority, value, (p, v) => v);
                 }
                 else
                 {
-                    var first = _values.Keys.First();
-                    if(first < priority)
+                    var first = _values.Keys.Min();
+                    if (first < priority)
                     {
                         _values.AddOrUpdate(priority, value, (p, v) => v);
 
                         long removed;
-                        while(!_values.TryRemove(first, out removed))
+                        while (!_values.TryRemove(first, out removed))
                         {
                             first = _values.Keys.First();
                         }
@@ -98,10 +101,10 @@ namespace metrics.Stats
             {
                 _lock.ExitReadLock();
             }
-
-            var now = DateTime.Now.Ticks;
+            
+            var now = DateTime.UtcNow.Ticks;
             var next = _nextScaleTime.Get();
-            if(now >= next)
+            if (now >= next)
             {
                 Rescale(now, next);
             }
@@ -114,28 +117,31 @@ namespace metrics.Stats
         {
             get
             {
+                Dictionary<double, long> values;
                 _lock.EnterReadLock();
                 try
                 {
-                    return new List<long>(_values.Values);
+                    values = new Dictionary<double, long>(_values);
                 }
                 finally
                 {
                     _lock.ExitReadLock();
                 }
+
+                return values.OrderBy(kv => kv.Key).Select(kv => kv.Value).ToList();
             }
         }
 
-        private static long Tick()
+        private static long CurrentTimeInSeconds()
         {
-            return DateTime.Now.Ticks;
+            return DateTime.UtcNow.Ticks / TimeSpan.TicksPerSecond;
         }
 
         private double Weight(long t)
         {
             return Math.Exp(_alpha * t);
         }
-        
+
         /// <summary>
         /// "A common feature of the above techniques—indeed, the key technique that
         /// allows us to track the decayed weights efficiently—is that they maintain
@@ -168,13 +174,13 @@ namespace metrics.Stats
             try
             {
                 var oldStartTime = _startTime;
-                _startTime = Tick();
+                _startTime = CurrentTimeInSeconds();
                 var keys = new List<double>(_values.Keys);
                 foreach (var key in keys)
                 {
                     long value;
                     _values.TryRemove(key, out value);
-                    _values.AddOrUpdate(key*Math.Exp(-_alpha*(_startTime - oldStartTime)), value, (k, v) => v);
+                    _values.AddOrUpdate(key * Math.Exp(-_alpha * (_startTime - oldStartTime)), value, (k, v) => v);
                 }
             }
             finally
@@ -192,7 +198,7 @@ namespace metrics.Stats
                 copy._startTime.Set(_startTime);
                 copy._count.Set(_count);
                 copy._nextScaleTime.Set(_nextScaleTime);
-                foreach(var value in _values)
+                foreach (var value in _values)
                 {
                     copy._values.AddOrUpdate(value.Key, value.Value, (k, v) => v);
                 }

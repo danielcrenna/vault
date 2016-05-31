@@ -30,7 +30,7 @@ namespace metrics
         /// <summary>
         /// Returns <code>true</code>  <see cref="HealthCheck"/>s have been registered, <code>false</code> otherwise
         /// </summary>
-        public static bool HasHealthChecks { get { return _checks.IsEmpty; }}
+        public static bool HasHealthChecks { get { return !_checks.IsEmpty; }}
         
         /// <summary>
         /// Runs the registered health checks and returns a map of the results.

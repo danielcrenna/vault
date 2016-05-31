@@ -11,11 +11,12 @@ namespace metrics.Reporting
     public abstract class ReporterBase : IReporter
     {
         protected TextWriter Out;
-        private readonly IReportFormatter _formatter;
+        protected readonly IReportFormatter _formatter;
         protected CancellationTokenSource Token;
-        internal int Runs { get; set; } 
+        public int Runs { get; set; }
 
-        protected ReporterBase(TextWriter writer) : this(writer, new HumanReadableReportFormatter())
+        protected ReporterBase(TextWriter writer, Metrics metrics)
+            : this(writer, new HumanReadableReportFormatter(metrics))
         {
             Out = writer;
         }
@@ -37,13 +38,14 @@ namespace metrics.Reporting
             var interval = TimeSpan.FromSeconds(seconds);
 
             Token = new CancellationTokenSource();
-            Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(async () =>
             {
                 OnStarted();
                 while (!Token.IsCancellationRequested)
                 {
-                    Thread.Sleep(interval);
-                    Run();
+                    await Task.Delay(interval, Token.Token);
+	                if (!Token.IsCancellationRequested)
+		                Run();
                 }
             }, Token.Token);
         }

@@ -6,7 +6,7 @@ namespace metrics.Reporting
     
     public class ConsoleReporter : ReporterBase
     {
-        public ConsoleReporter() : base(Console.Out)
+        public ConsoleReporter(Metrics metrics) : base(Console.Out, metrics)
         {
             
         }

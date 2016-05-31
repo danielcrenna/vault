@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>Metrics</id>
-		<version>1.0.8</version>
+		<version>1.0.13</version>
 		<authors>Daniel Crenna</authors>
 		<owners>Daniel Crenna</owners>
 		<description>Capturing CLR and application-level metrics. So you know what's going on. An idiomatic port of Coda Hale's Metrics for Scala and the JVM.</description>
@@ -12,8 +12,9 @@
 		<licenseUrl>https://github.com/danielcrenna/metrics-net/blob/master/LICENSE</licenseUrl>
 		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_metrics.png</iconUrl>
 		<tags>CLR metrics</tags>
-    <dependencies>
-      <dependency id="ServiceStack.Text" version="3.9.34" />
-    </dependencies>
+    <releaseNotes>
+      - Upgraded to .NET 4.5.1
+      - Sunset MVC project
+    </releaseNotes>
 	</metadata>
 </package>

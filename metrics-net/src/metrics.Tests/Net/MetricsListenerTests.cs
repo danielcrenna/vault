@@ -11,11 +11,13 @@ namespace metrics.Tests.Net
     {
         private MetricsListener _listener;
         private const int Port = 9898;
+        Metrics _metrics=new Metrics();
+
 
         [TestFixtureSetUp]
         public void SetUp()
         {
-            _listener = new MetricsListener();
+            _listener = new MetricsListener(_metrics);
             _listener.Start(Port);
         }
 
@@ -52,13 +54,13 @@ namespace metrics.Tests.Net
         [Test]
         public void Can_respond_to_metrics_request_when_metrics_are_registered()
         {
-            Metrics.Clear();
+            _metrics.Clear();
 
-            var counter = Metrics.Counter(typeof(MetricsListenerTests), "counter");
+            var counter = _metrics.Counter(typeof(MetricsListenerTests), "counter");
+            
             counter.Increment();
 
             var content = GetResponseForRequest("http://localhost:" + Port + "/metrics");
-
             const string expected = @"[{""name"":""counter"",""metric"":{""count"":1}}]";
             Assert.AreEqual(expected, content);
         }
@@ -74,7 +76,7 @@ namespace metrics.Tests.Net
         [Test]
         public void Can_respond_to_metrics_request_when_no_metrics_are_registered()
         {
-            Metrics.Clear();
+            _metrics.Clear();
 
             var content = GetResponseForRequest("http://localhost:" + Port + "/metrics");
 
@@ -91,7 +93,8 @@ namespace metrics.Tests.Net
                 var response = request.GetResponse();
                 using (var sr = new StreamReader(response.GetResponseStream()))
                 {
-                    return sr.ReadToEnd();
+                    var result = sr.ReadToEnd();
+                    return result;
                 }
             }
             catch (WebException ex)

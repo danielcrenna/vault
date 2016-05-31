@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using metrics.Stats;
 using metrics.Support;
+using System.Text;
 
 namespace metrics.Core
 {
@@ -14,35 +15,50 @@ namespace metrics.Core
     public class MeterMetric : IMetric, IMetered, IDisposable
     {
         private AtomicLong _count = new AtomicLong();
-        private readonly long _startTime = DateTime.Now.Ticks;
+        private long _startTime = DateTime.UtcNow.Ticks;
         private static readonly TimeSpan Interval = TimeSpan.FromSeconds(5);
 
         private EWMA _m1Rate = EWMA.OneMinuteEWMA();
         private EWMA _m5Rate = EWMA.FiveMinuteEWMA();
         private EWMA _m15Rate = EWMA.FifteenMinuteEWMA();
-        
+
         private readonly CancellationTokenSource _token = new CancellationTokenSource();
 
         public static MeterMetric New(string eventType, TimeUnit rateUnit)
         {
             var meter = new MeterMetric(eventType, rateUnit);
 
-            Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(async () =>
             {
                 while (!meter._token.IsCancellationRequested)
                 {
-                    Thread.Sleep(Interval);
+                    await Task.Delay(Interval, meter._token.Token);
                     meter.Tick();
                 }
             }, meter._token.Token);
-
             return meter;
         }
 
-        private MeterMetric(string eventType, TimeUnit rateUnit)
+        private readonly Timer _timer;
+
+        public MeterMetric(string eventType, TimeUnit rateUnit)
         {
             EventType = eventType;
             RateUnit = rateUnit;
+            _timer = new Timer(_ => Tick(), null, Interval, Interval);
+        }
+
+        /// <summary>
+        /// Clears all recorded values
+        /// </summary>
+        public void Clear()
+        {
+            _count.Set(0);
+            _m1Rate.Clear();
+            _m5Rate.Clear();
+            _m15Rate.Clear();
+            _startTime = DateTime.UtcNow.Ticks;
+            _timer.Change(Interval, Interval);
         }
 
         /// <summary>
@@ -64,6 +80,16 @@ namespace metrics.Core
             _m15Rate.Tick();
         }
 
+        public void LogJson(StringBuilder sb)
+        {
+            sb.Append("{\"count\":").Append(Count)
+              .Append(",\"rate unit\":\"").Append(RateUnit).Append("\"")
+              .Append(",\"fifteen minute rate\":").Append(FifteenMinuteRate)
+              .Append(",\"five minute rate\":").Append(FiveMinuteRate)
+              .Append(",\"one minute rate\":").Append(OneMinuteRate)
+              .Append(",\"mean rate\":").Append(MeanRate).Append("}");
+
+        }
         /// <summary>
         /// Mark the occurrence of an event
         /// </summary>
@@ -133,7 +159,7 @@ namespace metrics.Core
             {
                 if (Count != 0)
                 {
-                    var elapsed = (DateTime.Now.Ticks - _startTime) * 100; // 1 DateTime Tick == 100ns
+                    var elapsed = (DateTime.UtcNow.Ticks - _startTime) * 100; // 1 DateTime Tick == 100ns
                     return ConvertNanosRate(Count / (double)elapsed);
                 }
                 return 0.0;
@@ -153,10 +179,10 @@ namespace metrics.Core
         {
             get
             {
-                return _m1Rate.Rate(RateUnit);    
+                return _m1Rate.Rate(RateUnit);
             }
         }
-        
+
         private double ConvertNanosRate(double ratePerNs)
         {
             return ratePerNs * RateUnit.ToNanos(1);
@@ -168,19 +194,20 @@ namespace metrics.Core
             get
             {
                 var metric = new MeterMetric(EventType, RateUnit)
-                                 {
-                                     _count = Count,
-                                     _m1Rate = _m1Rate,
-                                     _m5Rate = _m5Rate,
-                                     _m15Rate = _m15Rate
-                                 };
+                {
+                    _startTime = _startTime,
+                    _count = Count,
+                    _m1Rate = _m1Rate,
+                    _m5Rate = _m5Rate,
+                    _m15Rate = _m15Rate
+                };
                 return metric;
             }
         }
 
         public void Dispose()
         {
-            _token.Cancel();
+            _timer.Dispose();
         }
     }
 }

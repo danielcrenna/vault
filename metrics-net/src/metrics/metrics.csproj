@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,19 +10,21 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>metrics</RootNamespace>
     <AssemblyName>metrics</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\lib\net40\</OutputPath>
+    <OutputPath>..\..\bin\lib\net451\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,18 +34,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\..\bin\lib\net40\metrics.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>metrics.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\packages\ServiceStack.Text.3.9.34\lib\net35\ServiceStack.Text.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
@@ -59,7 +58,9 @@
     <Compile Include="Core\CallbackTimerMetric.cs" />
     <Compile Include="Core\HistogramMetric.cs" />
     <Compile Include="Core\ManualTimerMetric.cs" />
+    <Compile Include="Core\PerSecondCounterMetric.cs" />
     <Compile Include="Core\TimerMetricBase.cs" />
+    <Compile Include="MachineMetricsCategory.cs" />
     <Compile Include="Reporting\HumanReadableReportFormatter.cs" />
     <Compile Include="Reporting\IReportFormatter.cs" />
     <Compile Include="Reporting\JsonReportFormatter.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Stats\DateTimeSupplier.cs" />
     <Compile Include="Stats\IDateTimeSupplier.cs" />
     <Compile Include="Stats\LimitedTimeSample.cs" />
+    <Compile Include="Support\ThreadLocalRandom.cs" />
     <Compile Include="Support\Volatile.cs" />
     <Compile Include="Support\VolatileDouble.cs" />
     <Compile Include="Support\AtomicLong.cs" />
@@ -89,8 +91,6 @@
     <Compile Include="Core\MetricName.cs" />
     <Compile Include="Metrics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serialization\MetricsConverter.cs" />
-    <Compile Include="Serialization\Serializer.cs" />
     <Compile Include="Stats\EWMA.cs" />
     <Compile Include="Stats\ExponentiallyDecayingSample.cs" />
     <Compile Include="Stats\ISample.cs" />
@@ -101,10 +101,11 @@
     <Compile Include="Support\VolatileLong.cs" />
     <Compile Include="Util\NamedThreadFactory.cs" />
     <Compile Include="Support\ThreadGroup.cs" />
+    <Compile Include="Util\Serializer.cs" />
     <Compile Include="Util\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="metrics.snk" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Net\Static\index.html" />

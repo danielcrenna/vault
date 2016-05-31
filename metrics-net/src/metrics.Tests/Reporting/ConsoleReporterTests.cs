@@ -10,12 +10,14 @@ namespace metrics.Tests.Reporting
     [TestFixture]
     public class ConsoleReporterTests
     {
+        private Metrics _metrics;
+
         [Test]
         public void Can_run_with_known_counters_and_human_readable_format()
         {
             RegisterMetrics();
 
-            var reporter = new ConsoleReporter();
+            var reporter = new ConsoleReporter(_metrics);
             reporter.Run();
         }
 
@@ -24,7 +26,7 @@ namespace metrics.Tests.Reporting
         {
             RegisterMetrics();
 
-            var reporter = new ConsoleReporter(new JsonReportFormatter());
+            var reporter = new ConsoleReporter(new JsonReportFormatter(_metrics));
             reporter.Run();
         }
 
@@ -39,7 +41,7 @@ namespace metrics.Tests.Reporting
             ThreadPool.QueueUserWorkItem(
                 s =>
                     {
-                        var reporter = new ConsoleReporter();
+                        var reporter = new ConsoleReporter(_metrics);
                         reporter.Start(3, TimeUnit.Seconds);
                         while(true)
                         {
@@ -66,7 +68,7 @@ namespace metrics.Tests.Reporting
             ThreadPool.QueueUserWorkItem(
                 s =>
                 {
-                    var reporter = new ConsoleReporter();
+                    var reporter = new ConsoleReporter(_metrics);
                     reporter.Start(1, TimeUnit.Seconds);
                     reporter.Stopped += delegate { block.Set(); };
                     Thread.Sleep(2000);
@@ -76,13 +78,15 @@ namespace metrics.Tests.Reporting
             block.WaitOne();
         }
 
-        private static void RegisterMetrics()
+        private void RegisterMetrics()
         {
-            var counter = Metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
+            _metrics = new Metrics();
+
+            var counter = _metrics.Counter(typeof(CounterTests), "Can_run_with_known_counters_counter");
             counter.Increment(100);
 
             var queue = new Queue<int>();
-            Metrics.Gauge(typeof(GaugeTests), "Can_run_with_known_counters_gauge", () => queue.Count);
+             _metrics.Gauge(typeof(GaugeTests), "Can_run_with_known_counters_gauge", () => queue.Count);
             queue.Enqueue(1);
             queue.Enqueue(2);
         }

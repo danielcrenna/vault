@@ -58,6 +58,7 @@ namespace metrics.Tests.Core
         }
         
         [Test]
+        [Ignore("This is a long-running test")]
         public void Can_enumerate_all_counters()
         {
             EnumerateCounters();

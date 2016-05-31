@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using System.Text;
 
 namespace metrics.Core
 {
@@ -44,6 +45,12 @@ namespace metrics.Core
         public IMetric Copy
         {
             get { return new GaugeMetric<T>(_evaluator); }
+        }
+
+        public void LogJson(StringBuilder sb)
+        {
+            sb.Append("{\"value\":").Append(Value).Append("}");
+     
         }
     }
 }
