@@ -1,7 +1,7 @@
 Open Source Vault
 =================
 
-This repository contains a large collection of open source software that I've written since 2009.
+This repository contains a large collection of shelved open source software that I've written since 2009.
 
 Many were popular libraries downloaded over a hundred thousand times. Many were and still are little libraries I use often when I don't want to write the same code over and over again.
 
@@ -17,7 +17,7 @@ If you want to use from this repository, fork it, steal the code, and provide a 
 
 *All licenses and copyrights for respective sub-projects in this repo remain intact.*
 
-```
+
 A quick note about NuGet:
 -------------------
 Unfortunately, around a year ago, I accidentally lost one of my domains, a domain that was being used as the email account for
@@ -28,4 +28,4 @@ I made several attempts to recover the account but NuGet management will not pro
 Unfortunately, this means that I am not able to issue an update to any of the packages listed on that account, most of which are in this vault.
 
 This means it is better for you, in the long run, to avoid those packages and use source code, as those packages are now also "final state" and will never receive another update. 
-```
+`
