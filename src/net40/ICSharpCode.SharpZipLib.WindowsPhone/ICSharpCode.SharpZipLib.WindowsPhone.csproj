@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BF04A546-D681-4F5A-AC41-CFC67CAEC66E}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ICSharpCode.SharpZipLib.WindowsPhone</RootNamespace>
+    <AssemblyName>ICSharpCode.SharpZipLib.WindowsPhone</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\bzip2\BZip2.cs">
+      <Link>BZip2\BZip2.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\bzip2\BZip2Constants.cs">
+      <Link>BZip2\BZip2Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\bzip2\BZip2Exception.cs">
+      <Link>BZip2\BZip2Exception.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\bzip2\BZip2InputStream.cs">
+      <Link>BZip2\BZip2InputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\bzip2\BZip2OutputStream.cs">
+      <Link>BZip2\BZip2OutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\checksums\Adler32.cs">
+      <Link>Checksums\Adler32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\checksums\CRC32.cs">
+      <Link>Checksums\CRC32.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\checksums\IChecksum.cs">
+      <Link>Checksums\IChecksum.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\checksums\StrangeCRC.cs">
+      <Link>Checksums\StrangeCRC.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\compat\Extensions.cs">
+      <Link>Compat\Extensions.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\core\FileSystemScanner.cs">
+      <Link>Core\FileSystemScanner.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\core\INameTransform.cs">
+      <Link>Core\INameTransform.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\core\IScanFilter.cs">
+      <Link>Core\IScanFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\core\NameFilter.cs">
+      <Link>Core\NameFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\core\PathFilter.cs">
+      <Link>Core\PathFilter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\core\StreamUtils.cs">
+      <Link>Core\StreamUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\encryption\PkzipClassic.cs">
+      <Link>Encryption\PkzipClassic.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\gzip\GZIPConstants.cs">
+      <Link>GZip\GZIPConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\gzip\GZipException.cs">
+      <Link>GZip\GZipException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\gzip\GzipInputStream.cs">
+      <Link>GZip\GzipInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\gzip\GzipOutputStream.cs">
+      <Link>GZip\GzipOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\ISerializable.cs">
+      <Link>Serialization\ISerializable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\NonSerializedAttribute.cs">
+      <Link>Serialization\NonSerializedAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\SerializableAttribute.cs">
+      <Link>Serialization\SerializableAttribute.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\SerializableBase.cs">
+      <Link>Serialization\SerializableBase.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\SerializableDateTime.cs">
+      <Link>Serialization\SerializableDateTime.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\SerializableString.cs">
+      <Link>Serialization\SerializableString.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\SerializationInfo.cs">
+      <Link>Serialization\SerializationInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\XmlFormatter.Deserialize.cs">
+      <Link>Serialization\XmlFormatter.Deserialize.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\serialization\XmlFormatter.Serialize.cs">
+      <Link>Serialization\XmlFormatter.Serialize.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\ICSharpCode.SharpZipLib.Silverlight\SharpZipBaseException.cs">
+      <Link>SharpZipBaseException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\tar\InvalidHeaderException.cs">
+      <Link>Tar\InvalidHeaderException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\tar\TarArchive.cs">
+      <Link>Tar\TarArchive.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\tar\TarBuffer.cs">
+      <Link>Tar\TarBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\tar\TarEntry.cs">
+      <Link>Tar\TarEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\tar\TarException.cs">
+      <Link>Tar\TarException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\tar\TarHeader.cs">
+      <Link>Tar\TarHeader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\tar\TarInputStream.cs">
+      <Link>Tar\TarInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\tar\TarOutputStream.cs">
+      <Link>Tar\TarOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\Deflater.cs">
+      <Link>Zip\Compression\Deflater.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\DeflaterConstants.cs">
+      <Link>Zip\Compression\DeflaterConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\DeflaterEngine.cs">
+      <Link>Zip\Compression\DeflaterEngine.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\DeflaterHuffman.cs">
+      <Link>Zip\Compression\DeflaterHuffman.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\DeflaterPending.cs">
+      <Link>Zip\Compression\DeflaterPending.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\Inflater.cs">
+      <Link>Zip\Compression\Inflater.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\InflaterDynHeader.cs">
+      <Link>Zip\Compression\InflaterDynHeader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\InflaterHuffmanTree.cs">
+      <Link>Zip\Compression\InflaterHuffmanTree.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\PendingBuffer.cs">
+      <Link>Zip\Compression\PendingBuffer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\streams\DeflaterOutputStream.cs">
+      <Link>Zip\Compression\Streams\DeflaterOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\streams\InflaterInputStream.cs">
+      <Link>Zip\Compression\Streams\InflaterInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\streams\OutputWindow.cs">
+      <Link>Zip\Compression\Streams\OutputWindow.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\compression\streams\StreamManipulator.cs">
+      <Link>Zip\Compression\Streams\StreamManipulator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\FastZip.cs">
+      <Link>Zip\FastZip.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\IEntryFactory.cs">
+      <Link>Zip\IEntryFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipConstants.cs">
+      <Link>Zip\ZipConstants.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipEntry.cs">
+      <Link>Zip\ZipEntry.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipEntryFactory.cs">
+      <Link>Zip\ZipEntryFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipException.cs">
+      <Link>Zip\ZipException.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipExtraData.cs">
+      <Link>Zip\ZipExtraData.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipFile.cs">
+      <Link>Zip\ZipFile.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipHelperStream.cs">
+      <Link>Zip\ZipHelperStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipInputStream.cs">
+      <Link>Zip\ZipInputStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipNameTransform.cs">
+      <Link>Zip\ZipNameTransform.cs</Link>
+    </Compile>
+    <Compile Include="..\..\net35\icsharpcode.sharpziplib.silverlight\zip\ZipOutputStream.cs">
+      <Link>Zip\ZipOutputStream.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
