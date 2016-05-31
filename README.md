@@ -5,14 +5,14 @@ This repository contains a large collection of open source software that I've wr
 
 Many were popular libraries downloaded over a hundred thousand times. Many were and still are little libraries I use often when I don't want to write the same code over and over again.
 
-`
+```
 A quick note about NuGet:
 -------------------
 Unfortunately, around a year ago, I accidentally lost one of my domains, a domain that was being used as the email account for
 my NuGet account: https://www.nuget.org/profiles/apitize --- I made several attempts to recover the account but NuGet management will not provide access.
 
 Unfortunately, this means that I am not able to issue an update to any of the packages listed on that account, most of which are in this vault. This means it is better for you, in the long run, to avoid those packages and use source code, as those packages are now also "final state" and will never receive another update. 
-`
+```
 
 For various reasons, like technology churn, but mainly the amount of time and attention it takes to curate open source projects, projects come and go. 
 
