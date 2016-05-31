@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+
+<div class="vanity">
+    <h2>Experiments</h2>
+            
+    <ul class="experiments" data-bind="foreach: experiments">
+        <li class="experiment ab_test">
+            <h3><span data-bind="text: name"></span> <span class="type" data-bind="text: type"></span></h3>
+            <p class="description" data-bind="text: description"></p>
+                    
+            <table>
+                <caption data-bind="text: claims"></caption>
+                <tbody data-bind="foreach: alternatives">
+                    <tr data-bind="css: { choice: choice }">
+                        <td class="option" data-bind="text: name"></td>
+                        <td class="value" data-bind="text: value"></td>
+                        <td class="value"><span data-bind="text: participants"></span> participants</td>
+                        <td class="value"><span data-bind="text: converted"></span> converted</td>
+                        <td>
+                            <span data-bind="text: conversion_rate"></span> %
+                        </td>
+                        <td class="action">
+                            <!-- ko if: $parent.active -->
+                                <!-- ko if: showing -->
+                                showing
+                                <!-- /ko -->
+                                <!-- ko ifnot: showing -->
+                                <a class="button chooses" title="Show me this alternative from now on" href="#" data-url="#" data-bind="attr: { 'data-id': $parent.name }">show</a>                              
+                                <!-- /ko -->
+                            <!-- /ko -->
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="meta">
+                Started <abbr class="timeago" data-bind="attr: { title: created_at }" title="2013-01-28T13:06:32Z"></abbr>
+                <!-- ko ifnot: active -->
+                | Completed <abbr class="timeago" data-bind="attr: { title: concluded_at }" title="2013-01-28T13:06:32Z"></abbr>
+                <!-- /ko -->
+            </p>
+        </li>
+    </ul>
+
+    <h2>Metrics</h2>
+
+    <ul class="metrics" data-bind="foreach: metrics">
+                
+    </ul>
+</div>
+        
+<div class="d3-widget">
+    <div id="surface"></div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            function update() {
+                $.getJSON('/ab/experiments', function (model) {
+                    var viewModel = ko.mapping.fromJS(model);
+                    ko.applyBindings(viewModel);
+                    $("abbr.timeago").timeago();
+                });
+            }
+            update();
+            
+            var data = [4, 8, 15, 16, 23, 42];
+            d3.select("#surface")
+                .append("div")
+                .selectAll("div")
+                .data(data)
+                .enter().append("div")
+                .style("width", function (d) { return d * 10 + "px"; })
+                .style("background-color", "red")
+                .style("border", "1px solid white")
+                .style("color", "white")
+                .style("padding", "2px")
+                .text(function (d) { return d; });
+        });
+    </script>
+}

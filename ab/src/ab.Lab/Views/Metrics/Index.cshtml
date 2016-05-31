@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+} 
+
+<div class="vanity">
+    <h2>Metrics</h2>
+    <ul class="metrics" data-bind="foreach: metrics">
+        
+    </ul>
+</div>
+        
+<div class="d3-widget">
+    <div id="surface"></div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            function update() {
+                $.getJSON('/metrics/metrics', function (model) {
+                    var viewModel = ko.mapping.fromJS(model);
+                    ko.applyBindings(viewModel);
+                    $("abbr.timeago").timeago();
+                });
+            }
+            update();
+
+            var data = [4, 8, 15, 16, 23, 42];
+            d3.select("#surface")
+                .append("div")
+                .selectAll("div")
+                .data(data)
+                .enter().append("div")
+                .style("width", function (d) { return d * 10 + "px"; })
+                .style("background-color", "red")
+                .style("border", "1px solid white")
+                .style("color", "white")
+                .style("padding", "2px")
+                .text(function (d) { return d; });
+        });
+    </script>
+}

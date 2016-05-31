@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ab.Experiment">
+    <Position X="2.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAABIAAgAIAAAiABQEQAAAIAAACBQCCAAAFAAAA=</HashCode>
+      <FileName>Experiment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ab.Participant">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAQAAAAAAAAAEAAAAAAAAAAAAAAEQAAAAAAAA=</HashCode>
+      <FileName>Participant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ab.Audience">
+    <Position X="11" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAIAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Audience.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ab.Identify">
+    <Position X="8.5" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Identify.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

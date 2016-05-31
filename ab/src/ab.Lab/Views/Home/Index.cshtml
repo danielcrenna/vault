@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@using ab
+<h2>Index</h2>
+
+<p>Here, dear user, is a button you should totally click:</p>
+
+@if(AB.Group("Jokes on link") == 1)
+{
+    <a href="@Url.Action("ClicketyClick", "Home")">I am boring, don't click me.</a>    
+}
+else
+{
+    <a href="@Url.Action("ClicketyClick", "Home")">Why did the chicken cross the road? To get to the other side!</a>
+}
+
+<p>
+    <a href="@Url.Action("Index", "AB")">Go to the dashboard</a>
+</p>

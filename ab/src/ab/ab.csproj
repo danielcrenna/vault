@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{94CED41C-F6B0-4D70-B9C1-74270848DAC8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ab</RootNamespace>
+    <AssemblyName>ab</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper">
+      <HintPath>..\packages\tuxedo.1.0.0\lib\net40\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="metrics, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c13a758410ea1a16, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Metrics.1.0.7\lib\net40\metrics.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=3.9.34.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Metrics.1.0.7\lib\net40\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TableDescriptor">
+      <HintPath>..\packages\tuxedo.1.0.0\lib\net40\TableDescriptor.dll</HintPath>
+    </Reference>
+    <Reference Include="tuxedo">
+      <HintPath>..\packages\tuxedo.1.0.0\lib\net40\tuxedo.dll</HintPath>
+    </Reference>
+    <Reference Include="tuxedo.Dapper">
+      <HintPath>..\packages\tuxedo.1.0.0\lib\net40\tuxedo.Dapper.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AB.cs" />
+    <Compile Include="ABTest.cs" />
+    <Compile Include="Alternative.cs" />
+    <Compile Include="Audience.cs" />
+    <Compile Include="Conclusion.cs" />
+    <Compile Include="Experiment.cs" />
+    <Compile Include="ExperimentExtensions.cs" />
+    <Compile Include="ExperimentRepository.cs" />
+    <Compile Include="Experiments.cs" />
+    <Compile Include="IExperimentRepository.cs" />
+    <Compile Include="IExperimentType.cs" />
+    <Compile Include="ICopyable.cs" />
+    <Compile Include="Identify.cs" />
+    <Compile Include="IMetric.cs" />
+    <Compile Include="M.cs" />
+    <Compile Include="MathExtensions.cs" />
+    <Compile Include="InMemoryMetric.cs" />
+    <Compile Include="MetricBase.cs" />
+    <Compile Include="MetricEventArgs.cs" />
+    <Compile Include="MetricRepository.cs" />
+    <Compile Include="Participant.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Score.cs" />
+    <Compile Include="Scoring.cs" />
+    <Compile Include="Serializer.cs" />
+    <Compile Include="SqlExperimentRepository.cs" />
+    <Compile Include="TimeExtensions.cs" />
+    <Compile Include="UI\UILoader.cs" />
+    <Compile Include="ViewModelMapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\ab.Lab\Views\AB\Index.cshtml">
+      <Link>UI\Index.cshtml</Link>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="_Model.cd" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
