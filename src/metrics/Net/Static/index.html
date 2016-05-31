@@ -1,0 +1,143 @@
+﻿<!doctype html>
+<html>
+    <head>
+		<title>Metrics.NET</title>
+        <script type="text/javascript" src="/static/jquery.js"></script>
+        <script type="text/javascript" src="/static/jquery.flot.min.js"></script>      
+	</head>
+	<body>               
+        <select id="pollInterval">
+            <option value="10">realtime</option>        
+            <option value="1000" selected="selected">1 second</option>        
+            <option value="2000">2 seconds</option>        
+            <option value="3000">3 seconds</option>        
+            <option value="4000">4 seconds</option>        
+            <option value="5000">5 seconds</option>        
+            <option value="6000">6 seconds</option>        
+            <option value="7000">7 seconds</option>        
+            <option value="8000">8 seconds</option>        
+            <option value="9000">9 seconds</option>        
+            <option value="10000">10 seconds</option>        
+        </select>
+
+        <input id="start" type="button" value="Start">
+        <input id="stop" type="button" value="Stop">
+        
+        <h1 id="machine"></h1>
+            <div id="metrics">       
+        </div>
+	</body>
+    <script type="text/javascript">
+
+        var samples = {};        // Sample dictionary
+        var r = 10;              // Sample reservoir size
+
+        function callback() {
+            getSample();
+            setInterval();
+        }
+
+        function setInterval() {
+            var interval = $("#pollInterval option:selected").val();
+            window.t = setTimeout("callback()", interval);
+        }
+
+        function getSample() {
+
+            var url = "/metrics";
+
+            $.getJSON(url, function (data) {
+
+                // Parse the machine name
+                var f = data[0]['name'];
+                var m = f.substring(0, f.indexOf('.'));
+                $('#machine').text(m);
+
+                // Parse categories and initialize category hash
+                var cats = [];
+                $.each(data, function (key, val) {
+                    var n = val['name'].replace(m + '.', '');
+                    var c = n.substring(0, n.indexOf('.'));
+                    if (cats.indexOf(c) == -1) {
+                        cats.push(c);
+                    }
+                    if (samples[c] == null) {
+                        samples[c] = {};
+                    }
+                });
+
+                $.each(data, function (key, val) {
+                    var n = val['name'].replace(m + '.', '');
+                    var c = n.substring(0, n.indexOf('.'));
+                    var v = val['metric']['value'];
+
+                    // Ensure plot container exists for this category
+                    var plot = "plot-" + m + "-" + c;
+                    if ($('#' + plot).length == 0) {
+                        $('#metrics').append("<h2>" + c + "</h2>");
+                        $('#metrics').append('<div id="' + plot + '" style="width:1200px;height:800px"></div>');
+                        $('#metrics').append('<input id="' + plot + '-back" type="button" value="<"></div>');
+                        $('#metrics').append('<input id="' + plot + '-forward" type="button" value=">"></div>');
+
+                        $('#' + plot + '-forward').click(function () {
+
+                            alert('forward!');
+
+                        });
+                    }
+
+                    if (samples[c][n] == null) {
+                        samples[c][n] = [];
+                    }
+                    var bag = samples[c][n];
+
+                    var ticks = new Date().getTime();
+                    bag.push([ticks, v]);
+                    samples[c][n] = bag;
+                });
+
+                $.each(cats, function (i, c) {
+                    var g = $("#plot-" + m + "-" + c);
+                    var s = [];
+
+                    $.each(data, function (k, v) {
+                        var n = v['name'].replace(m + '.', '');
+
+                        var bag = samples[c][n];
+                        if (bag && bag.length > r) {
+                            bag = bag.slice(-r);
+                        }
+
+                        s.push({ label: n.replace(c + ".", ""), data: bag });
+                    });
+
+                    $.plot(g, s, {
+                        series: { lines: { show: true, fill: true} },
+                        grid: { hoverable: true }
+                    });
+                });
+            });
+
+        }
+
+        $(function () {
+
+            $('#pollInterval').change(function () {
+                clearInterval(window.t);
+                setInterval();
+            });
+
+            $('#start').click(function () {
+                clearInterval(window.t);
+                callback();
+            });
+
+            $('#stop').click(function () {
+                clearInterval(window.t);
+            });
+
+            getSample();
+        });
+    </script>
+</html>
+
