@@ -86,6 +86,49 @@ namespace Json
             return YieldMember(name, out result);
         }
 
+        public override bool TryConvert(ConvertBinder binder, out object result)
+        {
+            var success = base.TryConvert(binder, out result);
+            
+            if (!success && binder.Explicit)
+            {
+                try
+                {
+                    result = Convert(binder.Type);
+                    success = true;
+                }
+                catch (InvalidCastException)
+                {
+                }
+            }
+
+            return success;
+        }
+
+        public object Convert(Type type)
+        {
+            try
+            {
+                return JsonParser.Deserialize(_hash, type);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidCastException(string.Format("This JSON object cannot be converted to '{0}'.", type.FullName), ex);
+            }
+        }
+
+        public T Convert<T>()
+        {
+            try
+            {
+                return JsonParser.Deserialize<T>(_hash);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidCastException(string.Format("This JSON object cannot be converted to '{0}'.", typeof(T).FullName), ex);
+            }
+        }
+
         private bool YieldMember(string name, out object result)
         {
             if (_hash.ContainsKey(name))
@@ -126,7 +169,7 @@ namespace Json
     /// A parser for JSON.
     /// <seealso cref="http://json.org" />
     /// </summary>
-    public class JsonParser
+    public static class JsonParser
     {
 #if !NETCF
         private const NumberStyles JsonNumbers = NumberStyles.Float;
@@ -135,9 +178,9 @@ namespace Json
 
         private static readonly char[] _base16 = new[]
                              {
-                                 '0', '1', '2', '3', 
-                                 '4', '5', '6', '7', 
-                                 '8', '9', 'A', 'B', 
+                                 '0', '1', '2', '3',
+                                 '4', '5', '6', '7',
+                                 '8', '9', 'A', 'B',
                                  'C', 'D', 'E', 'F'
                              };
 
@@ -153,24 +196,23 @@ namespace Json
             return ToJson(bag);
         }
 
+        public static string Serialize(object instance)
+        {
+            var bag = GetBagForObject(instance);
+
+            return ToJson(bag);
+        }
+
         public static object Deserialize(string json, Type type)
         {
-            object instance;
-            var map = PrepareInstance(out instance, type);
             var bag = FromJson(json);
-
-            DeserializeImpl(map, bag, instance);
-            return instance;
+            return Deserialize(bag, type);
         }
 
         public static T Deserialize<T>(string json)
         {
-            T instance;
-            var map = PrepareInstance(out instance);
             var bag = FromJson(json);
-
-            DeserializeImpl(map, bag, instance);
-            return instance;
+            return Deserialize<T>(bag);
         }
 
 #if NET40
@@ -195,6 +237,24 @@ namespace Json
             return instance;
         }
 #endif
+
+        internal static object Deserialize(IDictionary<string, object> bag, Type type)
+        {
+            object instance;
+            var map = PrepareInstance(out instance, type);
+
+            DeserializeImpl(map, bag, instance);
+            return instance;
+        }
+
+        internal static T Deserialize<T>(IDictionary<string, object> bag)
+        {
+            T instance;
+            var map = PrepareInstance(out instance);
+
+            DeserializeImpl(map, bag, instance);
+            return instance;
+        }
 
         private static void DeserializeImpl(IEnumerable<PropertyInfo> map,
                                             IDictionary<string, object> bag,
@@ -242,7 +302,7 @@ namespace Json
                 if (info.PropertyType == typeof(byte[]))
                 {
                     var bytes = (List<object>)value;
-                    value = bytes.Select(Convert.ToByte).ToArray();
+                    value = bytes.Select(symbol => Convert.ToByte(symbol)).ToArray();
                 }
 
                 if (info.PropertyType == typeof(double))
@@ -375,9 +435,13 @@ namespace Json
                 return;
             }
 
+#if PCL
+            var properties = item.GetRuntimeProperties().ToArray();
+#else
             var properties = item.GetProperties(
                 BindingFlags.Public | BindingFlags.Instance
                 );
+#endif
 
             _cache.Add(item, properties);
         }
@@ -493,8 +557,9 @@ namespace Json
         {
             sb.Append("\"");
             var symbols = item.ToString().ToCharArray();
-            
-            var unicodes = symbols.Select(symbol => (int)symbol).Select(GetUnicode);
+
+            var unicodes = symbols.Select(symbol => GetUnicode(symbol));
+
             foreach (var unicode in unicodes)
             {
                 sb.Append(unicode);
@@ -503,14 +568,26 @@ namespace Json
             sb.Append("\"");
         }
 
-        internal static string GetUnicode(int code)
+        internal static string GetUnicode(char character)
         {
             // http://unicode.org/roadmaps/bmp/
+            switch (character)
+            {
+                case '"': return @"\""";
+                case '/': return @"\/";
+                case '\\': return @"\\";
+                case '\b': return @"\b";
+                case '\f': return @"\f";
+                case '\n': return @"\n";
+                case '\r': return @"\r";
+                case '\t': return @"\t";
+            }
+
+            var code = (int)character;
             var basicLatin = code >= 32 && code <= 126;
             if (basicLatin)
             {
-                var value = (char)code;
-                return value == '"' ? @"\""" : new string(value, 1);
+                return new string(character, 1);
             }
 
             var unicode = BaseConvert(code, _base16, 4);
@@ -573,14 +650,24 @@ namespace Json
                         switch (symbol)
                         {
                             case '/':
+                            case '\\':
+                            case '"':
                                 sb.Append(symbol);
                                 break;
-                            case '\\':
                             case 'b':
+                                sb.Append('\b');
+                                break;
                             case 'f':
+                                sb.Append('\f');
+                                break;
                             case 'n':
+                                sb.Append('\n');
+                                break;
                             case 'r':
+                                sb.Append('\r');
+                                break;
                             case 't':
+                                sb.Append('\t');
                                 break;
                             case 'u': // Unicode literals
                                 if (index < data.Count - 5)
@@ -943,4 +1030,3 @@ namespace Json
     }
 #endif
 }
-
