@@ -1,0 +1,11 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/saved_searches/list
+IEnumerable<TwitterSavedSearch>, "saved_searches/list", ListSavedSearches
+
+// https://dev.twitter.com/docs/api/1.1/get/saved_searches/show/%3Aid
+TwitterSavedSearch, "saved_searches/show/{id}", GetSavedSearch, long id
+
+// https://dev.twitter.com/docs/api/1.1/post/saved_searches/create
+TwitterSavedSearch, "saved_searches/create":POST, CreateSavedSearch, string query
+
+// https://dev.twitter.com/docs/api/1.1/post/saved_searches/destroy/%3Aid
+TwitterSavedSearch, "saved_searches/destroy/{id}":POST, DeleteSavedSearch, long id

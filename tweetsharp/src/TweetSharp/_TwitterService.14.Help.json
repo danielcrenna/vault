@@ -1,0 +1,5 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/application/rate_limit_status
+TwitterRateLimitStatusSummary, "application/rate_limit_status", GetRateLimitStatus, IEnumerable<string> resources
+
+// https://dev.twitter.com/docs/api/1.1/post/users/report_spam
+TwitterUser, "users/report_spam":POST, ReportSpam, string screen_name, long? user_id

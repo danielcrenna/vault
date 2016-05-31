@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{10BFAA13-B836-4B37-B2D3-D4FEB3F3C484}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TweetSharp</RootNamespace>
+    <AssemblyName>TweetSharp</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\lib\4.0\</OutputPath>
+    <DefineConstants>TRACE;NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>assembly.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfoVersion.cs" />
+    <Compile Include="ITwitterService.cs" />
+    <Compile Include="ObjectExtensions.cs" />
+    <Compile Include="TimeExtensions.cs" />
+    <Compile Include="TwitterAsyncResult.cs" />
+    <Compile Include="TwitterConfiguration.cs" />
+    <Compile Include="TwitterErrors.cs" />
+    <Compile Include="TwitterGeoLocationSearch.cs" />
+    <Compile Include="TwitterService.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TwitterService.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Globals.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="StringExtensions.cs" />
+    <Compile Include="TwitterEnums.cs" />
+    <Compile Include="ICursored.cs" />
+    <Compile Include="ITweetable.cs" />
+    <Compile Include="TwitterAccount.cs" />
+    <Compile Include="TwitterClientInfo.cs" />
+    <Compile Include="TwitterEntities.cs" />
+    <Compile Include="TwitterLocalTrends.cs" />
+    <Compile Include="TwitterPlace.cs" />
+    <Compile Include="TwitterSavedSearch.cs" />
+    <Compile Include="TwitterSearchResult.cs" />
+    <Compile Include="TwitterSleepTime.cs" />
+    <Compile Include="TwitterTimeZone.cs" />
+    <Compile Include="TwitterTrend.cs" />
+    <Compile Include="TwitterTrends.cs" />
+    <Compile Include="TwitterUploadedMedia.cs" />
+    <Compile Include="TwitterUserStreams.cs" />
+    <Compile Include="TwitterUserSuggestions.cs" />
+    <Compile Include="WhereOnEarthLocation.cs" />
+    <Compile Include="WhereOnEarthPlaceType.cs" />
+    <Compile Include="TwitterConverterBase.cs" />
+    <Compile Include="TwitterDateTimeConverter.cs" />
+    <Compile Include="TwitterGeoConverter.cs" />
+    <Compile Include="TwitterWonkyBooleanConverter.cs" />
+    <Compile Include="TwitterService.Streaming.cs" />
+    <Compile Include="ITwitterModel.cs" />
+    <Compile Include="TwitterDateFormat.cs" />
+    <Compile Include="TwitterDateTime.cs" />
+    <Compile Include="TwitterDeliveryDevice.cs" />
+    <Compile Include="TwitterDirectMessage.cs" />
+    <Compile Include="TwitterError.cs" />
+    <Compile Include="TwitterFriend.cs" />
+    <Compile Include="TwitterFriendship.cs" />
+    <Compile Include="TwitterGeoLocation.cs" />
+    <Compile Include="TwitterList.cs" />
+    <Compile Include="TwitterRateLimitStatus.cs" />
+    <Compile Include="TwitterRelationship.cs" />
+    <Compile Include="OAuthAccessToken.cs" />
+    <Compile Include="OAuthRequestToken.cs" />
+    <Compile Include="TwitterResponse.cs" />
+    <Compile Include="TwitterStatus.cs" />
+    <Compile Include="TwitterUser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TwitterCursorList.cs" />
+    <Compile Include="JsonConventionResolver.cs" />
+    <Compile Include="JsonSerializer.cs" />
+    <Compile Include="SerializerBase.cs" />
+    <Compile Include="TwitterService.cs" />
+    <Compile Include="TwitterService.OAuth.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="_TwitterService.5.DirectMessages.json" />
+    <Content Include="_TwitterService.7.Users.json" />
+    <Content Include="_TwitterService.11.SavedSearches.json" />
+    <Content Include="_TwitterService.3.Search.json" />
+    <Content Include="_TwitterService.10.Lists.json" />
+    <Content Include="_TwitterService.6.FriendsFollowers.json" />
+    <Content Include="_TwitterService.13.Trends.json" />
+    <Content Include="_TwitterService.12.Places.json" />
+    <Content Include="_TwitterService.2.Tweets.json" />
+    <Content Include="_TwitterService.14.Help.json" />
+    <Content Include="_TwitterService.9.Favorites.json" />
+    <Content Include="_TwitterService.8.SuggestedUsers.json" />
+    <None Include="packages.config" />
+    <None Include="TwitterService.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TwitterService.generated.cs</LastGenOutput>
+    </None>
+    <None Include="key.snk" />
+    <Content Include="_TwitterService.1.Help.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assembly.ico" />
+    <Content Include="_TwitterService.1.Timelines.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\hammock\src\net40\Hammock.ClientProfile\Hammock.ClientProfile.csproj">
+      <Project>{487b7e3c-9689-47bc-8785-73ccd92a3749}</Project>
+      <Name>Hammock.ClientProfile</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

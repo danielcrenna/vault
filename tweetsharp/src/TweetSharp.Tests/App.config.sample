@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<appSettings>
+		<clear/>
+		<!-- Don't use your real account/a live account - make a private test account and set those details here -->
+		<!-- You will need to link your test account to a mobile phone # to gain write permissions, or tests that require them will fail -->
+		<add key="Hero" value="" />
+		<add key="ConsumerKey" value=""/>
+		<add key="ConsumerSecret" value="" />
+		<add key="AccessToken" value=""/>
+		<add key="AccessTokenSecret" value=""/>
+		<add key="TwitPicKey" value=""/>
+		<add key="TwitPicUserName" value=""/>
+	</appSettings>
+</configuration>

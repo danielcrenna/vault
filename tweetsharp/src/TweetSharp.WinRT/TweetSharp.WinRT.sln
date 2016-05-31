@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetSharp.WinRT", "TweetSharp.WinRT.csproj", "{6957E510-E0DE-4B11-8F0F-9B09F40B69CF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{75C81A0F-A96C-4C50-8E37-6A59D902F759}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hammock", "Hammock", "{D6FAC268-4DB6-478A-B5F4-772AF70426D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hammock.WinRT", "..\..\hammock\src\WinRT\Hammock.WinRT.csproj", "{40A91CEF-EFEA-4C9C-86F2-E3856BB82D04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6957E510-E0DE-4B11-8F0F-9B09F40B69CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6957E510-E0DE-4B11-8F0F-9B09F40B69CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6957E510-E0DE-4B11-8F0F-9B09F40B69CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6957E510-E0DE-4B11-8F0F-9B09F40B69CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40A91CEF-EFEA-4C9C-86F2-E3856BB82D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40A91CEF-EFEA-4C9C-86F2-E3856BB82D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40A91CEF-EFEA-4C9C-86F2-E3856BB82D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40A91CEF-EFEA-4C9C-86F2-E3856BB82D04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{40A91CEF-EFEA-4C9C-86F2-E3856BB82D04} = {D6FAC268-4DB6-478A-B5F4-772AF70426D9}
+	EndGlobalSection
+EndGlobal

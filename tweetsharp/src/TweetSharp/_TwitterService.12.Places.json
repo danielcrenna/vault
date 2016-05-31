@@ -1,0 +1,14 @@
+﻿// https://dev.twitter.com/docs/api/1/get/geo/id/%3Aplace_id
+TwitterPlace, "geo/id/{place_id}":GET, GetPlace, string place_id
+
+// https://dev.twitter.com/docs/api/1.1/get/geo/reverse_geocode
+IEnumerable<TwitterPlace>, "geo/reverse_geocode", ReverseGeocode, double lat, double @long, string accuracy, string granularity, int? max_results, string callback
+
+// https://dev.twitter.com/docs/api/1.1/get/geo/search
+IEnumerable<TwitterPlace>, "geo/search", GeoSearch, double? lat, double? @long, string query, string ip, string granularity, string accuracy, int? max_results, string contained_within, string callback
+
+// https://dev.twitter.com/docs/api/1.1/get/geo/similar_places
+// TODO
+
+// https://dev.twitter.com/docs/api/1.1/post/geo/place
+// TODO

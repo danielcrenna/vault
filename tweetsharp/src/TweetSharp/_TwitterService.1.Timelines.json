@@ -1,0 +1,11 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/statuses/mentions_timeline
+IEnumerable<TwitterStatus>, "statuses/mentions_timeline", ListTweetsMentioningMe, int? count, long? since_id, long? max_id, bool? trim_user, bool? contributor_details, bool? include_entities
+
+// https://dev.twitter.com/docs/api/1.1/get/statuses/user_timeline
+IEnumerable<TwitterStatus>, "statuses/user_timeline", ListTweetsOnUserTimeline, long? user_id, string screen_name, long? since_id, int? count, long? max_id, bool? trim_user, bool? exclude_replies, bool? contributor_details, bool? include_rts
+
+// https://dev.twitter.com/docs/api/1.1/get/statuses/home_timeline
+IEnumerable<TwitterStatus>, "statuses/home_timeline", ListTweetsOnHomeTimeline, int? count, long? since_id, long? max_id, bool? trim_user, bool? exclude_replies, bool? contributor_details, bool? include_entities
+
+// https://dev.twitter.com/docs/api/1.1/get/statuses/retweets_of_me
+IEnumerable<TwitterStatus>, "statuses/retweets_of_me", ListRetweetsOfMyTweets, int? count, long? since_id, long? max_id, bool? trim_user, bool? include_entities, bool? include_user_entities 

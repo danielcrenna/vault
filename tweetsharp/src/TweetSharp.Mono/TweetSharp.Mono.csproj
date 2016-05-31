@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{46B07B5B-DEDD-4609-AD5E-CCAF8D8B607E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>TweetSharp</RootNamespace>
+    <AssemblyName>TweetSharp.Mono</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\TweetSharp\key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.</OutputPath>
+    <DefineConstants>DEBUG,Mono,NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>none</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
+    <DefineConstants>Mono;NET40</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Compile Include="..\TweetSharp\Globals.cs">
+      <Link>Globals.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\Helpers.cs">
+      <Link>Helpers.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\Properties\AssemblyInfoVersion.cs">
+      <Link>AssemblyInfoVersion.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterConfiguration.cs">
+      <Link>TwitterConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterErrors.cs">
+      <Link>TwitterErrors.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterGeoLocationSearch.cs">
+      <Link>TwitterGeoLocationSearch.cs</Link>
+    </Compile>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="..\TweetSharp\TwitterService.cs">
+      <Link>TwitterService.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterService.generated.cs">
+      <Link>TwitterService.generated.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterService.OAuth.cs">
+      <Link>TwitterService.OAuth.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterService.Streaming.cs">
+      <Link>TwitterService.Streaming.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\ICursored.cs">
+      <Link>ICursored.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\ITweetable.cs">
+      <Link>ITweetable.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\ITwitterModel.cs">
+      <Link>ITwitterModel.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\JsonConventionResolver.cs">
+      <Link>JsonConventionResolver.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\JsonSerializer.cs">
+      <Link>JsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\OAuthAccessToken.cs">
+      <Link>OAuthAccessToken.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\OAuthRequestToken.cs">
+      <Link>OAuthRequestToken.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\ObjectExtensions.cs">
+      <Link>ObjectExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\SerializerBase.cs">
+      <Link>SerializerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\StringExtensions.cs">
+      <Link>StringExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TimeExtensions.cs">
+      <Link>TimeExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterAccount.cs">
+      <Link>TwitterAccount.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterClientInfo.cs">
+      <Link>TwitterClientInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterConverterBase.cs">
+      <Link>TwitterConverterBase.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterCursorList.cs">
+      <Link>TwitterCursorList.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterDateFormat.cs">
+      <Link>TwitterDateFormat.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterDateTime.cs">
+      <Link>TwitterDateTime.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterDateTimeConverter.cs">
+      <Link>TwitterDateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterDeliveryDevice.cs">
+      <Link>TwitterDeliveryDevice.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterDirectMessage.cs">
+      <Link>TwitterDirectMessage.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterEntities.cs">
+      <Link>TwitterEntities.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterEnums.cs">
+      <Link>TwitterEnums.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterError.cs">
+      <Link>TwitterError.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterFriend.cs">
+      <Link>TwitterFriend.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterFriendship.cs">
+      <Link>TwitterFriendship.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterGeoConverter.cs">
+      <Link>TwitterGeoConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterGeoLocation.cs">
+      <Link>TwitterGeoLocation.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterList.cs">
+      <Link>TwitterList.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterLocalTrends.cs">
+      <Link>TwitterLocalTrends.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterPlace.cs">
+      <Link>TwitterPlace.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterRateLimitStatus.cs">
+      <Link>TwitterRateLimitStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterRelationship.cs">
+      <Link>TwitterRelationship.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterResponse.cs">
+      <Link>TwitterResponse.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterSavedSearch.cs">
+      <Link>TwitterSavedSearch.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterSearchResult.cs">
+      <Link>TwitterSearchResult.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterSleepTime.cs">
+      <Link>TwitterSleepTime.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterStatus.cs">
+      <Link>TwitterStatus.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterTimeZone.cs">
+      <Link>TwitterTimeZone.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterTrend.cs">
+      <Link>TwitterTrend.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterTrends.cs">
+      <Link>TwitterTrends.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterUser.cs">
+      <Link>TwitterUser.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterUserStreams.cs">
+      <Link>TwitterUserStreams.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterUserSuggestions.cs">
+      <Link>TwitterUserSuggestions.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\TwitterWonkyBooleanConverter.cs">
+      <Link>TwitterWonkyBooleanConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\WhereOnEarthLocation.cs">
+      <Link>WhereOnEarthLocation.cs</Link>
+    </Compile>
+    <Compile Include="..\TweetSharp\WhereOnEarthPlaceType.cs">
+      <Link>WhereOnEarthPlaceType.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Core" />
+    <Reference Include="System" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\TweetSharp\key.snk">
+      <Link>key.snk</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\hammock\src\mono\Hammock.Mono\Hammock.Mono.csproj">
+      <Project>{c8371692-da90-4437-bcb7-a5a2ef37b095}</Project>
+      <Name>Hammock.Mono</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

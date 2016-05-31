@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>TweetSharp</id>
+		<version>2.3.3.6</version>
+		<dependencies>
+			<group>
+				<dependency id="Newtonsoft.Json" version="6.0.4" />
+			</group>
+
+			<group targetFramework="sl4-wp">
+				<dependency id="Newtonsoft.Json" version="5.0.8" />
+			</group>
+			<group targetFramework="sl4-wp71">
+				<dependency id="Newtonsoft.Json" version="5.0.8" />
+			</group>
+		</dependencies>
+		<authors>Daniel Crenna and Jason Diller</authors>
+		<owners>Daniel Crenna</owners>
+		<description>TweetSharp v2 is a fast, clean wrapper around the Twitter API. It uses T4 templates to make adding new endpoints easy.</description>
+		<summary>TweetSharp v2 is a fast, clean wrapper around the Twitter API. It uses T4 templates to make adding new endpoints easy.</summary>
+		<language>en-US</language>
+		<projectUrl>http://github.com/danielcrenna/tweetsharp</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/tweetsharp/blob/master/LICENSE</licenseUrl>
+		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_tweetsharp.png</iconUrl>
+		<tags>twitter tweetsharp web api http rest wrapper json wp7 mango</tags>
+		<releaseNotes>
+			New in 2.3.3.0
+			----------
+			- Re-instated some oauth methods on the TwitterService class.
+			- Rebuilt with bug fixes from other contributers, including fix for 64 bit id's.
+			- Updated to Newtonsoft.Json package version 5.0.8.
+			- Added WinRT Universal App Support, with async/await support.
+			- Added .Net 45 support with async/await support.
+		</releaseNotes>
+	</metadata>
+</package>

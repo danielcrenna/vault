@@ -1,0 +1,10 @@
+﻿// https://dev.twitter.com/docs/api/1.1/get/favorites/list
+IEnumerable<TwitterStatus>, "favorites/list", ListFavoriteTweets, long? user_id, string screen_name, int? count, long? since_id, long? max_id, bool? include_entities
+
+// https://dev.twitter.com/docs/api/1.1/post/favorites/destroy
+TwitterStatus, "favorites/destroy":POST, UnfavoriteTweet, long id
+
+// https://dev.twitter.com/docs/api/1.1/post/favorites/create
+TwitterStatus, "favorites/create":POST, FavoriteTweet, long id, bool? include_entities
+
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+	<metadata>
+		<id>TweetMoaSharp</id>
+		<version>3.0.0.4</version>
+		<dependencies>
+			<group>
+				<dependency id="Newtonsoft.Json" version="6.0.1" />
+			</group>
+			<group targetFramework="portable-win81+wpa81">
+				<dependency id="Newtonsoft.Json" version="6.0.8" />
+			</group>
+			<group targetFramework="sl4-wp">
+				<dependency id="Newtonsoft.Json" version="5.0.8" />
+			</group>
+			<group targetFramework="sl4-wp71">
+				<dependency id="Newtonsoft.Json" version="5.0.8" />
+			</group>
+		</dependencies>
+		<authors>Daniel Crenna, Jason Diller and Troy Willmot</authors>
+		<owners>Troy Willmot</owners>
+		<description>TweetMoaSharp is a fast, clean wrapper around the Twitter API. Based on the original TweetSharp.</description>
+		<summary>Based on the original TweetSharp by Daniel Crenna and Jason Diller. TweetMoaSharp is a fast, clean wrapper around the Twitter API.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/Yortw/tweetmoasharp</projectUrl>
+		<licenseUrl>https://github.com/Yortw/tweetmoasharp/blob/master/LICENSE.md</licenseUrl>
+		<iconUrl>https://raw.githubusercontent.com/Yortw/tweetmoasharp/master/logo_tweetmoasharp.png</iconUrl>
+		<tags>twitter tweetmoasharp tweetsharp web api http rest wrapper json wp7 mango silverlight</tags>
+		<releaseNotes>
+			New in 3.0.0.4
+			----------
+			- Added support for help/configuration API end point. Allows retrieving shortened url lengths, photo sizes and other global Twitter metadata.
+		</releaseNotes>
+	</metadata>
+</package>
