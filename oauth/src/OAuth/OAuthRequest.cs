@@ -34,12 +34,14 @@ namespace OAuth
 
         #region Authorization Header
 
+#if !WINRT
         public string GetAuthorizationHeader(NameValueCollection parameters)
         {
             var collection = new WebParameterCollection(parameters);
 
             return GetAuthorizationHeader(collection);
         }
+#endif
 
         public string GetAuthorizationHeader(IDictionary<string, string> parameters)
         {
@@ -105,17 +107,15 @@ namespace OAuth
 
             parameters.Sort((l, r) => l.Name.CompareTo(r.Name));
 
-            var count = 0;
-
             foreach (var parameter in parameters.Where(parameter =>
                                                        !IsNullOrBlank(parameter.Name) &&
                                                        !IsNullOrBlank(parameter.Value) &&
-                                                       (parameter.Name.StartsWith("oauth_") || parameter.Name.StartsWith("x_auth_" ))))
+                                                       (parameter.Name.StartsWith("oauth_") || parameter.Name.StartsWith("x_auth_"))))
             {
-                count++;
-                var format = count < parameters.Count ? "{0}=\"{1}\"," : "{0}=\"{1}\"";
-                sb.AppendFormat(format, parameter.Name, parameter.Value);
+                sb.AppendFormat("{0}=\"{1}\",", parameter.Name, parameter.Value);
             }
+
+            sb.Remove(sb.Length - 1, 1);
 
             var authorization = sb.ToString();
             return authorization;
@@ -125,21 +125,23 @@ namespace OAuth
 
         #region Authorization Query
 
-		public string GetAuthorizationQuery(NameValueCollection parameters)
+#if !WINRT
+        public string GetAuthorizationQuery(NameValueCollection parameters)
         {
             var collection = new WebParameterCollection(parameters);
 
-			return GetAuthorizationQuery(collection);
+            return GetAuthorizationQuery(collection);
         }
+#endif
 
-		public string GetAuthorizationQuery(IDictionary<string, string> parameters)
+        public string GetAuthorizationQuery(IDictionary<string, string> parameters)
         {
             var collection = new WebParameterCollection(parameters);
 
-			return GetAuthorizationQuery(collection);
+            return GetAuthorizationQuery(collection);
         }
 
-		public string GetAuthorizationQuery()
+        public string GetAuthorizationQuery()
         {
             var collection = new WebParameterCollection(0);
 
@@ -196,7 +198,7 @@ namespace OAuth
             foreach (var parameter in parameters.Where(parameter =>
                                                        !IsNullOrBlank(parameter.Name) &&
                                                        !IsNullOrBlank(parameter.Value) &&
-                                                       (parameter.Name.StartsWith("oauth_") || parameter.Name.StartsWith("x_auth_" ))))
+                                                       (parameter.Name.StartsWith("oauth_") || parameter.Name.StartsWith("x_auth_"))))
             {
                 count++;
                 var format = count < parameters.Count ? "{0}={1}&" : "{0}={1}";
@@ -331,7 +333,7 @@ namespace OAuth
                 TokenSecret = accessTokenSecret
             };
             return credentials;
-        } 
+        }
 
         #endregion
 

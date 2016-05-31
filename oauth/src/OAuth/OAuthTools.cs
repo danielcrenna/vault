@@ -1,8 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
+
+#if !WINRT
+using System.Security.Cryptography;
+#else
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
+using Windows.Storage.Streams;
+using System.Globalization;
+#endif
 
 namespace OAuth
 {
@@ -21,13 +29,13 @@ namespace OAuth
         private static readonly Random _random;
         private static readonly object _randomLock = new object();
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !WINRT
         private static readonly RandomNumberGenerator _rng = RandomNumberGenerator.Create();
 #endif
 
         static OAuthTools()
         {
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !WINRT
             var bytes = new byte[4];
             _rng.GetNonZeroBytes(bytes);
             _random = new Random(BitConverter.ToInt32(bytes, 0));
@@ -39,8 +47,12 @@ namespace OAuth
         /// <summary>
         /// All text parameters are UTF-8 encoded (per section 5.1).
         /// </summary>
-        /// <seealso href="http://www.hueniverse.com/hueniverse/2008/10/beginners-gui-1.html"/> 
+        /// <seealso href="http://www.hueniverse.com/hueniverse/2008/10/beginners-gui-1.html"/>
+#if !WINRT
         private static readonly Encoding _encoding = Encoding.UTF8;
+#else
+        private static readonly BinaryStringEncoding _encoding = BinaryStringEncoding.Utf8;
+#endif
 
         /// <summary>
         /// Generates a random 16-byte lowercase alphanumeric string. 
@@ -140,8 +152,8 @@ namespace OAuth
         {
             // [JD]: We need to escape the apostrophe as well or the signature will fail
             var original = value;
-            var ret = original.Where(
-                c => !Unreserved.Contains(c) && c != '%').Aggregate(
+            var ret = original.OfType<char>().Where(
+                c => !Unreserved.OfType<char>().Contains(c) && c != '%').Aggregate(
                     value, (current, c) => current.Replace(
                           c.ToString(), PercentEncode(c.ToString())
                           ));
@@ -210,7 +222,11 @@ namespace OAuth
 
         private static bool EqualsIgnoreCase(string left, string right)
         {
+#if WINRT
+            return CultureInfo.InvariantCulture.CompareInfo.Compare(left, right, CompareOptions.IgnoreCase) == 0;
+#else
             return String.Compare(left, right, StringComparison.InvariantCultureIgnoreCase) == 0;
+#endif
         }
 
         /// <summary>
@@ -348,11 +364,20 @@ namespace OAuth
             {
                 case OAuthSignatureMethod.HmacSha1:
                     {
-                        var crypto = new HMACSHA1();
                         var key = string.Concat(consumerSecret, "&", tokenSecret);
+#if WINRT
+                        IBuffer keyMaterial = CryptographicBuffer.ConvertStringToBinary(key, _encoding);
+                        MacAlgorithmProvider hmacSha1Provider = MacAlgorithmProvider.OpenAlgorithm(MacAlgorithmNames.HmacSha1);
+                        CryptographicKey macKey = hmacSha1Provider.CreateKey(keyMaterial);
+                        IBuffer dataToBeSigned = CryptographicBuffer.ConvertStringToBinary(signatureBase, _encoding);
+                        IBuffer signatureBuffer = CryptographicEngine.Sign(macKey, dataToBeSigned);
+                        signature = CryptographicBuffer.EncodeToBase64String(signatureBuffer);
+#else
+                        var crypto = new HMACSHA1();
 
                         crypto.Key = _encoding.GetBytes(key);
                         signature = HashWith(signatureBase, crypto);
+#endif
 
                         break;
                     }
@@ -367,12 +392,14 @@ namespace OAuth
             return result;
         }
 
+#if !WINRT
         private static string HashWith(string input, HashAlgorithm algorithm)
         {
             var data = Encoding.UTF8.GetBytes(input);
             var hash = algorithm.ComputeHash(data);
             return Convert.ToBase64String(hash);
         }
+#endif
 
         private static bool IsNullOrBlank(string value)
         {
