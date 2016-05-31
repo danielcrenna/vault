@@ -27,5 +27,4 @@ I made several attempts to recover the account but NuGet management will not pro
 
 Unfortunately, this means that I am not able to issue an update to any of the packages listed on that account, most of which are in this vault.
 
-This means it is better for you, in the long run, to avoid those packages and use source code, as those packages are now also "final state" and will never receive another update. 
-`
+This means it is better for you, in the long run, to avoid those packages and use source code, as those packages are now also "final state" and will never receive another update.
