@@ -69,10 +69,11 @@ namespace bulky.Tests
             {
                 Connection = connectionString,
                 Database = databaseType,
-                Target = assembly.FullName,
+                Targets = new[] { assembly.FullName },
                 Version = version,
                 Profile = profile
             };
+            
             var executor = new TaskExecutor(context);
             executor.Execute();
         }

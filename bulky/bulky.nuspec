@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package>
-    <metadata>
-        <id>bulky</id>
-        <version>1.0.6</version>
-        <authors>Daniel Crenna</authors>
-        <owners>Daniel Crenna</owners>
-        <summary>An idiomatic bulk insert interface for databases</summary>
-		 <description>An idiomatic bulk insert interface for databases. Allows you to bulk insert arbitrary types to an underlying database using a fast insert mechanism specific for that database. Currently supports SQL Server, MySQL, and SQLite. Works on the IDbConnection with extension methods, like Dapper.</description>        
-        <language>en-US</language>
-        <projectUrl>https://github.com/danielcrenna/webstack/tree/master/bulky</projectUrl>
-        <licenseUrl>https://github.com/danielcrenna/webstack/blob/master/bulky/LICENSE.md</licenseUrl>
-        <iconUrl>http://apitize.com.s3.amazonaws.com/logo_generic.png</iconUrl>
-        <tags>bulk insert sqlserver sqlite mysql dapper</tags>
-        <dependencies>
-          <dependency id="tuxedo" version="1.0.1" />
-        </dependencies>
-    </metadata>
+  <metadata>
+    <id>bulky</id>
+    <version>1.0.7</version>
+    <authors>Daniel Crenna</authors>
+    <owners>Daniel Crenna</owners>
+    <summary>An idiomatic bulk insert interface for databases</summary>
+    <description>An idiomatic bulk insert interface for databases. Allows you to bulk insert arbitrary types to an underlying database using a fast insert mechanism specific for that database. Currently supports SQL Server, MySQL, and SQLite. Works on the IDbConnection with extension methods, like Dapper.</description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/danielcrenna/webstack/tree/master/bulky</projectUrl>
+    <licenseUrl>https://github.com/danielcrenna/webstack/blob/master/bulky/LICENSE.md</licenseUrl>
+    <iconUrl>http://apitize.com.s3.amazonaws.com/logo_generic.png</iconUrl>
+    <tags>bulk insert sqlserver sqlite mysql dapper</tags>
+
+    <dependencies>
+      <dependency id="container" version="1.1.1"/>
+      <dependency id="Dapper" version="1.42" />
+      <dependency id="logging" version="0.9.1" />
+      <dependency id="NLog" version="4.3.4" />
+      <dependency id="TableDescriptor" version="1.0.1" />
+      <dependency id="tophat" version="1.3.0" />
+      <dependency id="tuxedo" version="1.0.9" />
+    </dependencies>
+
+    <releaseNotes>
+      - Maintenance only: packages upgraded
+    </releaseNotes>
+
+  </metadata>
 </package>

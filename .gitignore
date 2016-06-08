@@ -3,3 +3,10 @@ json/src/packages
 oauth/src/packages
 packages
 packages
+bulky/bin
+bulky/src/Bulky.Tests/bin/Debug
+bulky/src/Bulky.Tests/bin
+bulky/src/Bulky.Tests/obj/
+bulky/src/Bulky/bin
+bulky/src/Bulky/obj/
+.suo
