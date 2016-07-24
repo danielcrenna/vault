@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 
 namespace Dates
 {
@@ -104,14 +105,48 @@ namespace Dates
             }
         }
 
-        public IEnumerable<DateTime> GetOccurrences(DateTimeOffset start, DateTimeOffset end, bool skipWeekends = true)
+        /// <summary>
+        /// Gets the date occurrences in this period, between a start and end date.
+        /// If an occurrence falls on a weekend, it is deferred to the start
+        /// of the next week.
+        /// </summary>
+        /// <param name="start">The starting date.</param>
+        /// <param name="end">The ending date.</param>
+        /// <param name="skipWeekends">If true, occurrences scheduled for a weekend are deferred to the following weekday</param>
+        /// <returns>A list of dates representing period occurrences.</returns>
+        public IEnumerable<DateTimeOffset> GetOccurrences(DateTimeOffset start, DateTimeOffset end, bool skipWeekends = true)
         {
-           return GetOccurrences(start.DateTime, end.DateTime, skipWeekends);
+            var calendar = CultureInfo.CurrentCulture.Calendar;
+
+            switch (Frequency)
+            {
+                case DatePeriodFrequency.Seconds:
+                    return GetOccurrences(DateInterval.Seconds, this, calendar, start, end, skipWeekends);
+                case DatePeriodFrequency.Minutes:
+                    return GetOccurrences(DateInterval.Minutes, this, calendar, start, end, skipWeekends);
+                case DatePeriodFrequency.Hours:
+                    return GetOccurrences(DateInterval.Hours, this, calendar, start, end, skipWeekends);
+                case DatePeriodFrequency.Days:
+                    return GetOccurrences(DateInterval.Days, this, calendar, start, end, skipWeekends);
+                case DatePeriodFrequency.Weeks:
+                    return GetOccurrences(DateInterval.Weeks, this, calendar, start, end, skipWeekends);
+                case DatePeriodFrequency.Months:
+                    return GetOccurrences(DateInterval.Months, this, calendar, start, end, skipWeekends);
+                case DatePeriodFrequency.Years:
+                    return GetOccurrences(DateInterval.Years, this, calendar, start, end, skipWeekends);
+                default:
+                    throw new ArgumentException("Frequency");
+            }
+        }
+
+        private static IEnumerable<DateTimeOffset> GetOccurrences(DateInterval interval, DatePeriod period, Calendar calendar, DateTimeOffset start, DateTimeOffset end, bool skipWeekends = true)
+        {
+            return GetOccurrences(interval, period, calendar, start.DateTime, end.DateTime, skipWeekends).Select(occurrence => (DateTimeOffset) occurrence);
         }
 
         private static IEnumerable<DateTime> GetOccurrences(DateInterval interval, DatePeriod period, Calendar calendar, DateTime start, DateTime end, bool skipWeekends = true)
         {
-            var difference = DateSpan.GetDifference(interval, start, end)/period.Quantifier;
+            var difference = DateSpan.GetDifference(interval, start, end) / period.Quantifier;
 
             if (start.Kind == DateTimeKind.Utc)
             {
@@ -135,19 +170,19 @@ namespace Dates
                         yield return DeferOccurrenceFallingOnWeekend(calendar, hours, skipWeekends);
                         break;
                     case DatePeriodFrequency.Days:
-                        var days = calendar.AddDays(start, period.Quantifier*i);
+                        var days = calendar.AddDays(start, period.Quantifier * i);
                         yield return DeferOccurrenceFallingOnWeekend(calendar, days, skipWeekends);
                         break;
                     case DatePeriodFrequency.Weeks:
-                        var weeks = calendar.AddWeeks(start, period.Quantifier*i);
+                        var weeks = calendar.AddWeeks(start, period.Quantifier * i);
                         yield return DeferOccurrenceFallingOnWeekend(calendar, weeks, skipWeekends);
                         break;
                     case DatePeriodFrequency.Months:
-                        var months = calendar.AddMonths(start, period.Quantifier*i);
+                        var months = calendar.AddMonths(start, period.Quantifier * i);
                         yield return DeferOccurrenceFallingOnWeekend(calendar, months, skipWeekends);
                         break;
                     case DatePeriodFrequency.Years:
-                        var years = calendar.AddYears(start, period.Quantifier*i);
+                        var years = calendar.AddYears(start, period.Quantifier * i);
                         yield return DeferOccurrenceFallingOnWeekend(calendar, years, skipWeekends);
                         break;
                     default:
