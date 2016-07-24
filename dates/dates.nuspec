@@ -2,15 +2,16 @@
 <package>
 	<metadata>
 		<id>Dates</id>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 		<authors>Daniel Crenna</authors>
 		<owners>Daniel Crenna</owners>
 		<description>The missing .NET date types; DatePeriod and DateSpan.</description>
 		<summary>The missing .NET date types; DatePeriod and DateSpan</summary>
 		<language>en-US</language>
-		<projectUrl>http://github.com/danielcrenna/dates</projectUrl>
-		<licenseUrl>https://github.com/danielcrenna/dates/blob/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/danielcrenna/vault/tree/master/dates</projectUrl>
+		<licenseUrl>https://github.com/danielcrenna/vault/blob/master/dates/LICENSE</licenseUrl>
 		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_dates.png</iconUrl>
-		<tags>dates datetime</tags>   
+		<tags>dates datetime datetimeoffset</tags>
+    <releaseNotes>v1.0.2 - added datetimeoffset overloads</releaseNotes>
 	</metadata>
 </package>

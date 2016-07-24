@@ -14,6 +14,19 @@ namespace Dates
         /// <param name="excludeEndDate">If true, the span is exclusive of the end date</param>
         public DateSpan(DateTime start, DateTime end, bool excludeEndDate = true) : this()
         {
+            Initialize(start, end, excludeEndDate);
+        }
+
+        /// <param name="start">The start date</param>
+        /// <param name="end">The end date</param>
+        /// <param name="excludeEndDate">If true, the span is exclusive of the end date</param>
+        public DateSpan(DateTimeOffset start, DateTimeOffset end, bool excludeEndDate = true) : this()
+        {
+            Initialize(start.DateTime, end.DateTime, excludeEndDate);
+        }
+
+        private void Initialize(DateTime start, DateTime end, bool excludeEndDate)
+        {
             start = start.ToUniversalTime();
             end = end.ToUniversalTime();
 
@@ -77,6 +90,16 @@ namespace Dates
         /// <returns></returns>
         public static int GetDifference(DateInterval interval, DateTime start, DateTime end, bool excludeEndDate = false)
         {
+            return CalculateDifference(interval, start, end, excludeEndDate);
+        }
+
+        public static int GetDifference(DateInterval interval, DateTimeOffset start, DateTimeOffset end, bool excludeEndDate = false)
+        {
+            return CalculateDifference(interval, start.DateTime, end.DateTime, excludeEndDate);
+        }
+
+        private static int CalculateDifference(DateInterval interval, DateTime start, DateTime end, bool excludeEndDate)
+        {
             var sum = 0;
             var span = new DateSpan(start, end);
 
@@ -87,35 +110,33 @@ namespace Dates
                     break;
                 case DateInterval.Months:
                     if (span.Years > 0)
-                    {
-                        sum += span.Years * 12;
-                    }
+                        sum += span.Years*12;
                     sum += span.Months;
-                    sum += span.Weeks / 4; // Helps resolve lower resolution
+                    sum += span.Weeks/4; // Helps resolve lower resolution
                     break;
                 case DateInterval.Weeks:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate) / 7;
+                    sum = GetDifferenceInDays(start, span, excludeEndDate)/7;
                     break;
                 case DateInterval.Days:
                     sum = GetDifferenceInDays(start, span, excludeEndDate);
                     break;
                 case DateInterval.Hours:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate) * 24;
+                    sum = GetDifferenceInDays(start, span, excludeEndDate)*24;
                     sum += span.Hours;
                     break;
                 case DateInterval.Minutes:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate) * 24 * 60;
-                    sum += span.Hours * 60;
+                    sum = GetDifferenceInDays(start, span, excludeEndDate)*24*60;
+                    sum += span.Hours*60;
                     sum += span.Minutes;
                     break;
                 case DateInterval.Seconds:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate) * 24 * 60 * 60;
-                    sum += span.Hours * 60 * 60;
-                    sum += span.Minutes * 60;
+                    sum = GetDifferenceInDays(start, span, excludeEndDate)*24*60*60;
+                    sum += span.Hours*60*60;
+                    sum += span.Minutes*60;
                     sum += span.Seconds;
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("interval");
+                    throw new ArgumentOutOfRangeException(nameof(interval));
             }
 
             return sum;

@@ -23,76 +23,52 @@ namespace Dates
         /// <summary>
         /// The period frequency, paired with <see cref="Quantifier" />
         /// </summary>
-        public DatePeriodFrequency Frequency { get; private set; }
+        public DatePeriodFrequency Frequency { get; }
 
         /// <summary>
         /// The period quantifier, paired with <see cref="Frequency" />
         /// </summary>
-        public int Quantifier { get; private set; }
+        public int Quantifier { get; }
 
         /// <summary>
         /// A period of time occurring hourly
         /// </summary>
-        public static DatePeriod Hourly
-        {
-            get { return new DatePeriod(DatePeriodFrequency.Hours, 1); }
-        }
-        
+        public static DatePeriod Hourly => new DatePeriod(DatePeriodFrequency.Hours, 1);
+
         /// <summary>
         /// A period of time occurring every day
         /// </summary>
-        public static DatePeriod Daily
-        {
-            get { return new DatePeriod(DatePeriodFrequency.Days, 1); }
-        }
+        public static DatePeriod Daily => new DatePeriod(DatePeriodFrequency.Days, 1);
 
         /// <summary>
         /// A period of time occurring every month
         /// </summary>
-        public static DatePeriod Monthly
-        {
-            get { return new DatePeriod(DatePeriodFrequency.Months, 1); }
-        }
+        public static DatePeriod Monthly => new DatePeriod(DatePeriodFrequency.Months, 1);
 
         /// <summary>
         /// A period of time occurring every other month
         /// </summary>
-        public static DatePeriod BiMonthly
-        {
-            get { return new DatePeriod(DatePeriodFrequency.Months, 2); }
-        }
+        public static DatePeriod BiMonthly => new DatePeriod(DatePeriodFrequency.Months, 2);
 
         /// <summary>
         /// A period of time occurring every week
         /// </summary>
-        public static DatePeriod Weekly
-        {
-            get { return new DatePeriod(DatePeriodFrequency.Weeks, 1); }
-        }
+        public static DatePeriod Weekly => new DatePeriod(DatePeriodFrequency.Weeks, 1);
 
         /// <summary>
         /// A period of time occurring every other week
         /// </summary>
-        public static DatePeriod BiWeekly
-        {
-            get { return new DatePeriod(DatePeriodFrequency.Weeks, 2); }
-        }
+        public static DatePeriod BiWeekly => new DatePeriod(DatePeriodFrequency.Weeks, 2);
 
         /// <summary>
         /// A period of time occurring every year
         /// </summary>
-        public static DatePeriod Annually
-        {
-            get { return new DatePeriod(DatePeriodFrequency.Years, 1); }
-        }
+        public static DatePeriod Annually => new DatePeriod(DatePeriodFrequency.Years, 1);
 
         /// <summary>
         /// A period of time occurring every other year
         /// </summary>
-        public static DatePeriod BiAnnually
-        {
-            get { return new DatePeriod(DatePeriodFrequency.Years, 2); }
-        }
+        public static DatePeriod BiAnnually => new DatePeriod(DatePeriodFrequency.Years, 2);
 
         /// <summary>
         /// Gets the date occurrences in this period, between a start and end date.
@@ -126,6 +102,11 @@ namespace Dates
                 default:
                     throw new ArgumentException("Frequency");
             }
+        }
+
+        public IEnumerable<DateTime> GetOccurrences(DateTimeOffset start, DateTimeOffset end, bool skipWeekends = true)
+        {
+           return GetOccurrences(start.DateTime, end.DateTime, skipWeekends);
         }
 
         private static IEnumerable<DateTime> GetOccurrences(DateInterval interval, DatePeriod period, Calendar calendar, DateTime start, DateTime end, bool skipWeekends = true)
