@@ -88,20 +88,22 @@ namespace Dates
         /// <param name="end">The end date</param>
         /// <param name="excludeEndDate">If true, the difference is exclusive of the end date</param>
         /// <returns></returns>
-        public static int GetDifference(DateInterval interval, DateTime start, DateTime end, bool excludeEndDate = false)
+        public static long GetDifference(DateInterval interval, DateTime start, DateTime end, bool excludeEndDate = false)
         {
             return CalculateDifference(interval, start, end, excludeEndDate);
         }
 
-        public static int GetDifference(DateInterval interval, DateTimeOffset start, DateTimeOffset end, bool excludeEndDate = false)
+        public static long GetDifference(DateInterval interval, DateTimeOffset start, DateTimeOffset end, bool excludeEndDate = false)
         {
             return CalculateDifference(interval, start.DateTime, end.DateTime, excludeEndDate);
         }
 
-        private static int CalculateDifference(DateInterval interval, DateTime start, DateTime end, bool excludeEndDate)
+        private static long CalculateDifference(DateInterval interval, DateTime start, DateTime end, bool excludeEndDate)
         {
-            var sum = 0;
+            long sum = 0;
             var span = new DateSpan(start, end);
+
+            long differenceInDays = GetDifferenceInDays(start, span, excludeEndDate);
 
             switch (interval)
             {
@@ -115,22 +117,22 @@ namespace Dates
                     sum += span.Weeks/4; // Helps resolve lower resolution
                     break;
                 case DateInterval.Weeks:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate)/7;
+                    sum = differenceInDays/7;
                     break;
                 case DateInterval.Days:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate);
+                    sum = differenceInDays;
                     break;
                 case DateInterval.Hours:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate)*24;
+                    sum = differenceInDays*24;
                     sum += span.Hours;
                     break;
                 case DateInterval.Minutes:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate)*24*60;
+                    sum = differenceInDays*24*60;
                     sum += span.Hours*60;
                     sum += span.Minutes;
                     break;
                 case DateInterval.Seconds:
-                    sum = GetDifferenceInDays(start, span, excludeEndDate)*24*60*60;
+                    sum = differenceInDays*24*60*60;
                     sum += span.Hours*60*60;
                     sum += span.Minutes*60;
                     sum += span.Seconds;
@@ -142,7 +144,7 @@ namespace Dates
             return sum;
         }
 
-        private static int GetDifferenceInDays(DateTime start, DateSpan span, bool excludeEndDate = true)
+        private static long GetDifferenceInDays(DateTime start, DateSpan span, bool excludeEndDate = true)
         {
             var sum = 0;
 

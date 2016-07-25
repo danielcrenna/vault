@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>Dates</id>
-		<version>1.0.3</version>
+		<version>1.0.4</version>
 		<authors>Daniel Crenna</authors>
 		<owners>Daniel Crenna</owners>
 		<description>The missing .NET date types; DatePeriod and DateSpan.</description>
@@ -12,6 +12,6 @@
 		<licenseUrl>https://github.com/danielcrenna/vault/blob/master/dates/LICENSE</licenseUrl>
 		<iconUrl>http://apitize.com.s3.amazonaws.com/logo_dates.png</iconUrl>
 		<tags>dates datetime datetimeoffset</tags>
-    <releaseNotes>v1.0.2 - added datetimeoffset overloads</releaseNotes>
+    <releaseNotes>v1.0.4 - fix buffer overrun for large ranges</releaseNotes>
 	</metadata>
 </package>

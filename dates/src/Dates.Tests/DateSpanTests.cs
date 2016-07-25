@@ -65,5 +65,15 @@ namespace Dates.Tests
             var difference = DateSpan.GetDifference(DateInterval.Days, start, end);
             Console.WriteLine(difference);
         }
+
+        [Test]
+        public void Can_get_date_difference_in_seconds()
+        {
+            var start = DateTime.Now;
+            var end = DateTime.Now.AddDays(5);
+            var diff = DateSpan.GetDifference(DateInterval.Seconds, start, end);
+
+            Assert.AreEqual(432000, diff);
+        }
     }
 }
