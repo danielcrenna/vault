@@ -35,13 +35,14 @@ namespace NaiveCoin
                 });
                 services.AddSingleton<ITransactionDataSerializer>(r => new JsonTransactionDataSerializer(r.GetRequiredService<JsonSerializerSettings>()));
                 services.AddSingleton<IObjectHashProvider>(r => new StableObjectHashProvider(SHA512.Create()));
+                services.AddSingleton<IWalletProvider>(r => new BrainWalletProvider());
             }
 
             // Repositories:
             {
                 services.AddScoped<IBlockRepository>(r => new SqliteBlockRepository(Namespace, r.GetService<ILogger<SqliteBlockRepository>>()));
                 services.AddScoped<ITransactionRepository>(r => new SqliteTransactionRepository(Namespace, r.GetRequiredService<ITransactionDataSerializer>(), r.GetService<ILogger<SqliteTransactionRepository>>()));
-                services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace, r.GetService<ILogger<SqliteWalletRepository>>()));
+                services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace, r.GetRequiredService<IWalletProvider>(), r.GetService<ILogger<SqliteWalletRepository>>()));
             }
 
             // Services:
@@ -63,6 +64,7 @@ namespace NaiveCoin
 
                 services.AddScoped(r => new Operator(
                     r.GetRequiredService<Blockchain>(),
+                    r.GetRequiredService<IWalletProvider>(),
                     r.GetRequiredService<IWalletRepository>(),
                     r.GetRequiredService<IOptions<CoinSettings>>(),
                     r.GetService<ILogger<Operator>>()));

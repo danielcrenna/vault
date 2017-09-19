@@ -79,7 +79,6 @@ namespace NaiveCoin.Models
                     }
                     return properties;
                 }
-                
             }
         }
     }

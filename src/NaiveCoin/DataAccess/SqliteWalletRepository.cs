@@ -8,10 +8,12 @@ namespace NaiveCoin.DataAccess
 {
     public class SqliteWalletRepository : SqliteRepository, IWalletRepository
     {
+        private readonly IWalletProvider _provider;
         private readonly ILogger<SqliteWalletRepository> _logger;
 
-        public SqliteWalletRepository(string @namespace, ILogger<SqliteWalletRepository> logger) : base(@namespace, "wallets", logger)
+        public SqliteWalletRepository(string @namespace, IWalletProvider provider, ILogger<SqliteWalletRepository> logger) : base(@namespace, "wallets", logger)
         {
+            _provider = provider;
             _logger = logger;
         }
 
@@ -63,14 +65,14 @@ namespace NaiveCoin.DataAccess
 
         public Wallet CreateFromPassword(string password)
         {
-            var wallet = Wallet.CreateFromPassword(password);
+            var wallet = _provider.CreateFromPassword(password);
 
             return Add(wallet);
         }
 
         public Wallet CreateFromPasswordHash(string passwordHash)
         {
-            var wallet = Wallet.CreateFromPasswordHash(passwordHash);
+            var wallet = _provider.CreateFromPasswordHash(passwordHash);
 
             return Add(wallet);
         }
@@ -79,7 +81,7 @@ namespace NaiveCoin.DataAccess
         {
             if (wallet.KeyPairs.Count == 0)
             {
-                wallet.GenerateAddress();
+                _provider.GenerateAddress(wallet);
             }
 
             using (var db = new SqliteConnection($"Data Source={DataFile}"))

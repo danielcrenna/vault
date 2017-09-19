@@ -6,10 +6,12 @@ namespace NaiveCoin.Tests.Fixtures
     {
         public WalletWithTwoAddressesFixture()
         {
-            var wallet = Wallet.CreateFromPassword("rosebud");
+            var provider = new WalletProviderFixture();
 
-            wallet.GenerateAddress();
-            wallet.GenerateAddress();
+            var wallet = provider.Value.CreateFromPassword("rosebud");
+
+            provider.Value.GenerateAddress(wallet);
+            provider.Value.GenerateAddress(wallet);
 
             Value = wallet;
         }

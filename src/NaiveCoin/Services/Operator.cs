@@ -11,13 +11,15 @@ namespace NaiveCoin.Services
     public class Operator
     {
         private readonly Blockchain _blockchain;
+        private readonly IWalletProvider _provider;
         private readonly IWalletRepository _wallets;
         private readonly CoinSettings _coinSettings;
         private readonly ILogger<Operator> _logger;
 
-        public Operator(Blockchain blockchain, IWalletRepository wallets, IOptions<CoinSettings> coinSettings, ILogger<Operator> logger)
+        public Operator(Blockchain blockchain, IWalletProvider provider, IWalletRepository wallets, IOptions<CoinSettings> coinSettings, ILogger<Operator> logger)
         {
             _blockchain = blockchain;
+            _provider = provider;
             _wallets = wallets;
             _coinSettings = coinSettings.Value;
             _logger = logger;
@@ -60,7 +62,7 @@ namespace NaiveCoin.Services
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{id}'");
 
-            var address = wallet.GenerateAddress();
+            var address = _provider.GenerateAddress(wallet);
 
             _wallets.SaveAddresses(wallet);
 
