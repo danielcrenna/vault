@@ -17,6 +17,7 @@ namespace NaiveCoin.Tests.Controllers
         public TestFixture()
         {
             var builder = new WebHostBuilder()
+                .UseConfiguration(UseConfiguration())
                 .ConfigureServices(ConfigureServices)
                 .ConfigureAppConfiguration(ConfigureAppConfiguration)
                 .ConfigureLogging(ConfigureLogging)
@@ -27,12 +28,16 @@ namespace NaiveCoin.Tests.Controllers
             Client = _server.CreateClient();
         }
 
+        private IConfiguration UseConfiguration()
+        {
+            return BuildConfiguration();
+        }
+
         protected virtual IConfiguration BuildConfiguration()
         {
             var config = new ConfigurationBuilder();
-            config.AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.InteractionTest.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
+            config.AddJsonFile($"appsettings.InteractionTest.json", true, true);
+            config.AddEnvironmentVariables();
             return config.Build();
         }
 

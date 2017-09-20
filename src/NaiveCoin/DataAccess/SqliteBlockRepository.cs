@@ -232,7 +232,7 @@ namespace NaiveCoin.DataAccess
         {
             try
             {
-                using (var db = new SqliteConnection("Data Source={DataFile}"))
+                using (var db = new SqliteConnection($"Data Source={DataFile}"))
                 {
                     db.Execute(@"
 CREATE TABLE IF NOT EXISTS 'Block'
