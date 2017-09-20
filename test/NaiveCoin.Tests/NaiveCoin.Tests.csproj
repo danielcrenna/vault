@@ -24,6 +24,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NaiveCoin.Core\NaiveCoin.Core.csproj" />
+    <ProjectReference Include="..\..\NaiveCoin.Wallets\NaiveCoin.Wallets.csproj" />
     <ProjectReference Include="..\..\src\NaiveCoin\NaiveCoin.csproj" />
   </ItemGroup>
 

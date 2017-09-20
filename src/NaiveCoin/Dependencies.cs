@@ -10,6 +10,8 @@ using NaiveCoin.Models;
 using NaiveCoin.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NaiveCoin.Core.Providers;
+using NaiveCoin.Wallets;
 
 namespace NaiveCoin
 {

@@ -1,4 +1,5 @@
 using Microsoft.Data.Sqlite;
+using NaiveCoin.Core.Providers;
 using NaiveCoin.Models;
 using NaiveCoin.Tests.Fixtures;
 using NaiveCoin.Tests.Fixtures.DataAccess.Blocks;

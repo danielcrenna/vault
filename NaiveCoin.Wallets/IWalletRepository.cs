@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NaiveCoin.Models
+namespace NaiveCoin.Wallets
 {
     public interface IWalletRepository
     {

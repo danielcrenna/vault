@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 using Chaos.NaCl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NaiveCoin.Helpers;
 using NaiveCoin.Models;
+using NaiveCoin.Core.Providers;
+using NaiveCoin.Core.Helpers;
 
 namespace NaiveCoin.Services
 {

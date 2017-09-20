@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Chaos.NaCl;
 
-namespace NaiveCoin.Helpers
+namespace NaiveCoin.Core.Helpers
 {
     public class CryptoEdDsaUtil
     {

@@ -1,4 +1,4 @@
-﻿namespace NaiveCoin.Models
+﻿namespace NaiveCoin.Wallets
 {
     public interface IWalletProvider
     {

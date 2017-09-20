@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using Newtonsoft.Json;
+using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Services
 {

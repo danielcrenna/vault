@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
-using NaiveCoin.Models;
+using NaiveCoin.Core.Providers;
 
-namespace NaiveCoin.Helpers
+namespace NaiveCoin.Core.Helpers
 {
     public static class CryptoUtil
     {
@@ -16,7 +16,7 @@ namespace NaiveCoin.Helpers
             return ToHex(random);
         }
 
-        internal static string ToHex(this byte[] value)
+        public static string ToHex(this byte[] value)
         {
             var sb = new StringBuilder();
             foreach (var b in value)

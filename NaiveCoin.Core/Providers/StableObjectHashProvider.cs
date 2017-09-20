@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using FastMember;
-using NaiveCoin.Helpers;
+using NaiveCoin.Core.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace NaiveCoin.Models
+namespace NaiveCoin.Core.Providers
 {
     public class StableObjectHashProvider : IObjectHashProvider
     {

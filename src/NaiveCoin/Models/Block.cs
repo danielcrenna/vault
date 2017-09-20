@@ -1,6 +1,7 @@
-﻿using System;
+﻿using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core.Providers;
+using System;
 using System.Collections.Generic;
-using NaiveCoin.Helpers;
 
 namespace NaiveCoin.Models
 {

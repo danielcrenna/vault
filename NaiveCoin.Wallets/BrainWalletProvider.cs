@@ -1,7 +1,8 @@
 using System.Linq;
-using NaiveCoin.Helpers;
+using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core.Models;
 
-namespace NaiveCoin.Models
+namespace NaiveCoin.Wallets
 {
     /// <summary>
     /// "Brain wallets" are wallets whose private key is generated through human memory.

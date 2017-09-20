@@ -1,4 +1,4 @@
-﻿namespace NaiveCoin.Models
+﻿namespace NaiveCoin.Core.Providers
 {
     public interface IObjectHashProvider
     {

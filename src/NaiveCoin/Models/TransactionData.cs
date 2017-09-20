@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using NaiveCoin.Helpers;
 using NaiveCoin.Models.Exceptions;
+using NaiveCoin.Core.Helpers;
 
 namespace NaiveCoin.Models
 {

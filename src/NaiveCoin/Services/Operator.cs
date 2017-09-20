@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NaiveCoin.Helpers;
 using NaiveCoin.Models;
+using NaiveCoin.Wallets;
+using NaiveCoin.Core.Helpers;
 
 namespace NaiveCoin.Services
 {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NaiveCoin.Helpers;
+using NaiveCoin.Core.Models;
 
-namespace NaiveCoin.Models
+namespace NaiveCoin.Wallets
 {
     public class Wallet
     {

@@ -1,4 +1,4 @@
-using NaiveCoin.Models;
+using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Tests.Fixtures
 {

@@ -1,5 +1,5 @@
-using NaiveCoin.Models;
 using NaiveCoin.Tests.Fixtures;
+using NaiveCoin.Wallets;
 using Xunit;
 
 namespace NaiveCoin.Tests

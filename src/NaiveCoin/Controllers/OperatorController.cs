@@ -4,11 +4,13 @@ using System.Text.RegularExpressions;
 using Chaos.NaCl;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using NaiveCoin.Helpers;
+using NaiveCoin.Core;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using NaiveCoin.Services;
 using NaiveCoin.ViewModels;
+using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Controllers
 {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
-namespace NaiveCoin.Helpers
+namespace NaiveCoin.Core.Helpers
 {
     /// <summary>
     /// Source: https://github.com/defuse/password-hashing/blob/master/PasswordStorage.cs
@@ -226,12 +227,17 @@ namespace NaiveCoin.Helpers
 
         private static byte[] PBKDF2(string password, byte[] salt, int iterations, int outputBytes, HashAlgorithmName hashAlgorithmName)
         {
-            using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt, iterations, hashAlgorithmName))
-            {
-                pbkdf2.IterationCount = iterations;
+            KeyDerivationPrf algorithm;
+            if (hashAlgorithmName == HashAlgorithmName.SHA1)
+                algorithm = KeyDerivationPrf.HMACSHA1;
+            else if(hashAlgorithmName == HashAlgorithmName.SHA256)
+                algorithm = KeyDerivationPrf.HMACSHA256;
+            else if (hashAlgorithmName == HashAlgorithmName.SHA512)
+                algorithm = KeyDerivationPrf.HMACSHA512;
+            else
+             throw new NotSupportedException();
 
-                return pbkdf2.GetBytes(outputBytes);
-            }
+            return KeyDerivation.Pbkdf2(password, salt, algorithm, iterations, outputBytes);
         }
     }
 }

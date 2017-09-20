@@ -1,4 +1,5 @@
 using NaiveCoin.Models;
+using NaiveCoin.Wallets;
 
 namespace NaiveCoin.Tests.Fixtures
 {

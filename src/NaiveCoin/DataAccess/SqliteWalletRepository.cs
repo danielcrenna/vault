@@ -3,6 +3,8 @@ using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using NaiveCoin.Models;
+using NaiveCoin.Wallets;
+using NaiveCoin.Core.Models;
 
 namespace NaiveCoin.DataAccess
 {

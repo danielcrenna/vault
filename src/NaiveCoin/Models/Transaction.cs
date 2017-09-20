@@ -1,4 +1,5 @@
-﻿using NaiveCoin.Helpers;
+﻿using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core.Providers;
 using NaiveCoin.Models.Exceptions;
 
 namespace NaiveCoin.Models
