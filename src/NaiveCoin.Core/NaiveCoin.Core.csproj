@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Chaos.NaCl\Chaos.NaCl.csproj" />
+    <ProjectReference Include="..\Chaos.NaCl\Chaos.NaCl.csproj" />
   </ItemGroup>
 
   <ItemGroup>

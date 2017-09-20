@@ -7,7 +7,7 @@ namespace NaiveCoin.Wallets
     /// <summary>
     /// "Brain wallets" are wallets whose private key is generated through human memory.
     /// These wallets are less secure, because the private key can be obtained by anyone who
-    /// memorizes the passphrase, or any machine that guesses the password correctly.
+    /// memorizes the passphrase, or any machine that guesses the passphrase correctly.
     /// 
     /// They are more convenient for humans, though, since all that is required to gain
     /// access to a wallet address is knowledge of the passphrase, rather than also requiring

@@ -18,11 +18,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		ROADMAP.md = ROADMAP.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaiveCoin.Wallets", "NaiveCoin.Wallets\NaiveCoin.Wallets.csproj", "{9ECF0317-B96A-4FD4-9ADE-185FC3903353}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaiveCoin.Core", "NaiveCoin.Core\NaiveCoin.Core.csproj", "{72D48167-0B2C-4EE3-8440-1B1DB56EA308}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CDB35376-B48C-42B0-BC8B-1B5B55829FC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{991B4E3D-37D4-412A-B706-C29ACA0ECDB9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Core", "src\NaiveCoin.Core\NaiveCoin.Core.csproj", "{8E7E3B75-7D93-4EAB-8730-0C5403820E93}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Wallets", "src\NaiveCoin.Wallets\NaiveCoin.Wallets.csproj", "{4EE4BEE6-453C-467E-9CCD-1FEFE6E40BA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +44,14 @@ Global
 		{71F85FE7-7C66-4E40-8398-974394CCB910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71F85FE7-7C66-4E40-8398-974394CCB910}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71F85FE7-7C66-4E40-8398-974394CCB910}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9ECF0317-B96A-4FD4-9ADE-185FC3903353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9ECF0317-B96A-4FD4-9ADE-185FC3903353}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9ECF0317-B96A-4FD4-9ADE-185FC3903353}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9ECF0317-B96A-4FD4-9ADE-185FC3903353}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72D48167-0B2C-4EE3-8440-1B1DB56EA308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72D48167-0B2C-4EE3-8440-1B1DB56EA308}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72D48167-0B2C-4EE3-8440-1B1DB56EA308}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72D48167-0B2C-4EE3-8440-1B1DB56EA308}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E7E3B75-7D93-4EAB-8730-0C5403820E93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E7E3B75-7D93-4EAB-8730-0C5403820E93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E7E3B75-7D93-4EAB-8730-0C5403820E93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E7E3B75-7D93-4EAB-8730-0C5403820E93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EE4BEE6-453C-467E-9CCD-1FEFE6E40BA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EE4BEE6-453C-467E-9CCD-1FEFE6E40BA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EE4BEE6-453C-467E-9CCD-1FEFE6E40BA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EE4BEE6-453C-467E-9CCD-1FEFE6E40BA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
