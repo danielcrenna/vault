@@ -23,7 +23,7 @@ namespace NaiveCoin
 
             return WebHost.CreateDefaultBuilder(args)
                 .UseConfiguration(configuration)
-                .ConfigureAppConfiguration(ConfigureAppSettings)
+                .ConfigureAppConfiguration(ConfigureAppConfiguration)
                 .ConfigureLogging(ConfigureLogging)
                 .UseStartup<Startup>()
                 .Build();
@@ -36,7 +36,7 @@ namespace NaiveCoin
             logging.AddDebug();
         }
 
-        private static void ConfigureAppSettings(WebHostBuilderContext hostingContext, IConfigurationBuilder config)
+        private static void ConfigureAppConfiguration(WebHostBuilderContext hostingContext, IConfigurationBuilder config)
         {
             var env = hostingContext.HostingEnvironment;
             

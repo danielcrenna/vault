@@ -11,12 +11,14 @@ namespace NaiveCoin
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            Environment = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IHostingEnvironment Environment { get; set; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -35,19 +37,22 @@ namespace NaiveCoin
                 o.DefaultPolicyName = "DefaultPolicy";
             });
 
-            services.AddSwaggerGen(options =>
+            if (!Environment.IsEnvironment("InteractionTest"))
             {
-                options.SwaggerDoc("v1", new Info
+                services.AddSwaggerGen(options =>
                 {
-                    Version = "v1",
-                    Title = "NaiveCoin",
-                    Description = "A cryptocurrency implementation in less than 1500 lines of code.",
-                    TermsOfService = "https://github.com/danielcrenna/naivecoin/LICENSE"
+                    options.SwaggerDoc("v1", new Info
+                    {
+                        Version = "v1",
+                        Title = "NaiveCoin",
+                        Description = "A cryptocurrency implementation in less than 1500 lines of code.",
+                        TermsOfService = "https://github.com/danielcrenna/naivecoin/LICENSE"
+                    });
+                    options.IncludeXmlComments(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, $"{PlatformServices.Default.Application.ApplicationName}.xml"));
+                    options.DescribeAllEnumsAsStrings();
                 });
-                options.IncludeXmlComments(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, $"{PlatformServices.Default.Application.ApplicationName}.xml"));
-                options.DescribeAllEnumsAsStrings();
-            });
-
+            }
+           
             services.AddMvc();
         }
 
@@ -57,12 +62,15 @@ namespace NaiveCoin
 
             app.UseCors("DefaultPolicy");
 
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
+            if (!env.IsEnvironment("InteractionTest"))
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "NaiveCoin");
-            });
-
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "NaiveCoin");
+                });
+            }
+           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

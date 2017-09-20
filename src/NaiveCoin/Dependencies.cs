@@ -71,11 +71,15 @@ namespace NaiveCoin
 
                 services.AddScoped(r =>
                 {
-                    var url = new Uri(configuration["urls"].ToString());
+                    Uri url = null;
+                    var commandLineUrls = configuration["urls"];
+                    if (!string.IsNullOrWhiteSpace(commandLineUrls))
+                        url = new Uri(commandLineUrls);
+
                     var peers = configuration.GetValue<string[]>("peers");
                     return new Node(
-                        url.Host,
-                        url.Port,
+                        url?.Host ?? "localhost",
+                        url?.Port ?? 5001,
                         r.GetRequiredService<Blockchain>(),
                         r.GetRequiredService<JsonSerializerSettings>(),
                         r.GetRequiredService<ILogger<Node>>(),
