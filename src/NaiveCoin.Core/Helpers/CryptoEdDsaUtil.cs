@@ -20,6 +20,11 @@ namespace NaiveCoin.Core.Helpers
         {
             var privateKeySeed = Encoding.UTF8.GetBytes(secret);
 
+            return GenerateKeyPairFromSecret(privateKeySeed);
+        }
+
+        public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
+        {
             Ed25519.KeyPairFromSeed(out var publicKey, out var privateKey,
                 privateKeySeed);
 

@@ -1,7 +1,4 @@
-using NaiveCoin.Models;
-using NaiveCoin.Wallets;
-
-namespace NaiveCoin.Tests.Fixtures
+namespace NaiveCoin.Wallets.Tests.Fixtures
 {
     public class WalletProviderFixture
     {

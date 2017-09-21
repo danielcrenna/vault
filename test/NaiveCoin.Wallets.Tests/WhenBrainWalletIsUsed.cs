@@ -1,8 +1,7 @@
-using NaiveCoin.Tests.Fixtures;
-using NaiveCoin.Wallets;
+using NaiveCoin.Wallets.Tests.Fixtures;
 using Xunit;
 
-namespace NaiveCoin.Tests
+namespace NaiveCoin.Wallets.Tests
 {
     public class WhenBrainWalletIsUsed : IClassFixture<WalletProviderFixture>
     {

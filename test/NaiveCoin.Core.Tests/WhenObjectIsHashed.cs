@@ -1,8 +1,7 @@
-using System;
-using NaiveCoin.Tests.Fixtures;
+using NaiveCoin.Core.Tests.Fixtures;
 using Xunit;
 
-namespace NaiveCoin.Tests
+namespace NaiveCoin.Core.Tests
 {
     public class WhenObjectIsHashed : IClassFixture<ObjectHashProviderFixture>
     {
@@ -60,25 +59,5 @@ namespace NaiveCoin.Tests
             public string B { get; set; }
             public string C { get; set; }
         }
-    }
-
-    public static class Inline
-    {
-        public static string Template(Func<string> func)
-        {
-            return func();
-        }
-    }
-}
-
-
-namespace NaiveCoin.Types
-{
-    public class Type_a441c2cfd233eefe04f93ea5
-    {
-        public string Property_983d { get; set; }
-        public string Property_06b84b7832 { get; set; }
-        public string Property_4b3d7c6943 { get; set; }
-
     }
 }

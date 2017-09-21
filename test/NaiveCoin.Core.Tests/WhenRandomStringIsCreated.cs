@@ -1,7 +1,7 @@
-using NaiveCoin.Tests.Fixtures;
+using NaiveCoin.Core.Tests.Fixtures;
 using Xunit;
 
-namespace NaiveCoin.Tests
+namespace NaiveCoin.Core.Tests
 {
     public class WhenRandomStringIsCreated : IClassFixture<RandomStringFixture>
     {

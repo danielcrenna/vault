@@ -1,7 +1,7 @@
-using NaiveCoin.Tests.Fixtures;
+using NaiveCoin.Wallets.Tests.Fixtures;
 using Xunit;
 
-namespace NaiveCoin.Tests
+namespace NaiveCoin.Wallets.Tests
 {
     public class WhenWalletIsCreatedWithTwoAddresses : IClassFixture<WalletWithTwoAddressesFixture>
     {
