@@ -14,7 +14,7 @@ namespace NaiveCoin.Models
             // Check if the signature of all input transactions are correct (transaction data is signed by the public key of the address)
             var checks = Inputs.Select(input =>
             {
-                var hash = CryptoUtil.HashBytes(new
+                var hash = CryptoUtil.ObjectHashBytes(new
                 {
                     Transaction = input.TransactionId,
                     input.Index,

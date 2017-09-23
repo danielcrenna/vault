@@ -37,14 +37,21 @@ namespace NaiveCoin
                 });
                 services.AddSingleton<ITransactionDataSerializer>(r => new JsonTransactionDataSerializer(r.GetRequiredService<JsonSerializerSettings>()));
                 services.AddSingleton<IObjectHashProvider>(r => new StableObjectHashProvider(SHA512.Create()));
-                services.AddSingleton<IWalletProvider>(r => new BrainWalletProvider());
+
+                var provider = new BrainWalletProvider();
+                services.AddSingleton<IWalletProvider>(r => provider);
+                services.AddSingleton<IWalletAddressProvider>(r => provider);
+                services.AddSingleton<IWalletSecretProvider>(r => provider);
             }
 
             // Repositories:
             {
                 services.AddScoped<IBlockRepository>(r => new SqliteBlockRepository(Namespace, r.GetService<ILogger<SqliteBlockRepository>>()));
                 services.AddScoped<ITransactionRepository>(r => new SqliteTransactionRepository(Namespace, r.GetRequiredService<ITransactionDataSerializer>(), r.GetService<ILogger<SqliteTransactionRepository>>()));
-                services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace, r.GetRequiredService<IWalletProvider>(), r.GetService<ILogger<SqliteWalletRepository>>()));
+                services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace,
+                    r.GetRequiredService<IWalletSecretProvider>(),
+                    r.GetRequiredService<IWalletAddressProvider>(), 
+                    r.GetService<ILogger<SqliteWalletRepository>>()));
             }
 
             // Services:

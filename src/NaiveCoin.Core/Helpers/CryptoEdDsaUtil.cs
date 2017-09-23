@@ -7,19 +7,20 @@ namespace NaiveCoin.Core.Helpers
 {
     public class CryptoEdDsaUtil
     {
-        private const string Salt = "0ffaa74d206930aaece253f090c88dbe6685b9e66ec49ad988d84fd7dff230d1";
-
-        public static string GenerateSecret(string password)
+        public static string GenerateSecret(string seed)
         {
-            var hash = Pbkdf2.CreateRawHash(password, Salt, 10000, 512, HashAlgorithmName.SHA512);
-
-            return hash.ToHex();
+            return Pbkdf2.CreateRawHash(seed, "fixed_salt_is_bad_mkay", 64000, 512, HashAlgorithmName.SHA512).ToHex();
         }
 
         public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(string secret)
         {
             var privateKeySeed = Encoding.UTF8.GetBytes(secret);
 
+            return GenerateKeyPairFromSecret(privateKeySeed);
+        }
+
+        private static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
+        {
             Ed25519.KeyPairFromSeed(out var publicKey, out var privateKey,
                 privateKeySeed);
 

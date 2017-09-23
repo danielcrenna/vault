@@ -14,6 +14,5 @@ namespace NaiveCoin.Tests
 
         [Fact]
         public void There_are_no_migration_errors() { }
-        
     }
 }

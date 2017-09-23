@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NaiveCoin.Core.Helpers;
 using NaiveCoin.Core.Models;
 
 namespace NaiveCoin.Wallets
@@ -11,6 +12,8 @@ namespace NaiveCoin.Wallets
         public string Secret { get; set; }
         public IList<KeyPair> KeyPairs { get; } = new List<KeyPair>();
 
+        internal Wallet() { /* Required for serialization */ }
+
         public string GetAddressByIndex(int index)
         {
             return KeyPairs.SingleOrDefault(x => x.Index == index)?.PublicKey;
@@ -21,14 +24,34 @@ namespace NaiveCoin.Wallets
             return KeyPairs.SingleOrDefault(x => x.PublicKey == publicKey)?.PublicKey;
         }
 
-        public string GetSecretKeyByAddress(string publicKey)
+        public string GetPrivateKeyByAddress(string publicKey)
         {
-            return KeyPairs.SingleOrDefault(x => x.PublicKey == publicKey)?.SecretKey;
+            return KeyPairs.SingleOrDefault(x => x.PublicKey == publicKey)?.PrivateKey;
         }
 
         public IEnumerable<string> GetAddresses()
         {
             return KeyPairs.Select(x => x.PublicKey);
+        }
+
+        internal static Wallet FromPassword(string password, string salt = null)
+        {
+            var wallet = new Wallet
+            {
+                Id = CryptoUtil.RandomString(),
+                PasswordHash = CryptoUtil.PasswordHash(password, salt)
+            };
+            return wallet;
+        }
+
+        internal static Wallet FromPasswordHash(string passwordHash)
+        {
+            var wallet = new Wallet
+            {
+                Id = CryptoUtil.RandomString(),
+                PasswordHash = passwordHash
+            };
+            return wallet;
         }
     }
 }

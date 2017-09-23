@@ -16,7 +16,7 @@ namespace NaiveCoin.Models
 
         public string ToHash(IObjectHashProvider provider)
         {
-            return CryptoUtil.Hash($"{Index}{PreviousHash}{Timestamp}{provider.ComputeHash(Transactions)}{Nonce}");
+            return CryptoUtil.ObjectHash($"{Index}{PreviousHash}{Timestamp}{provider.ComputeHash(Transactions)}{Nonce}");
         }
         
         public double GetDifficulty()
