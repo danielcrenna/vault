@@ -13,7 +13,7 @@ namespace NaiveCoin.Models
 
         public string ToHash(IObjectHashProvider provider)
         {
-            return CryptoUtil.Hash($"{Id}{Type}{provider.ComputeHash(Data)}");
+            return CryptoUtil.ObjectHash($"{Id}{Type}{provider.ComputeHash(Data)}");
         }
 
         public void Check(IObjectHashProvider provider, CoinSettings coinSettings)

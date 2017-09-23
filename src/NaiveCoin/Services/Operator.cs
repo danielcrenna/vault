@@ -17,10 +17,10 @@ namespace NaiveCoin.Services
         private readonly CoinSettings _coinSettings;
         private readonly ILogger<Operator> _logger;
 
-        public Operator(Blockchain blockchain, IWalletProvider provider, IWalletRepository wallets, IOptions<CoinSettings> coinSettings, ILogger<Operator> logger)
+        public Operator(Blockchain blockchain, IWalletProvider walletProvider, IWalletRepository wallets, IOptions<CoinSettings> coinSettings, ILogger<Operator> logger)
         {
             _blockchain = blockchain;
-            _provider = provider;
+            _provider = walletProvider;
             _wallets = wallets;
             _coinSettings = coinSettings.Value;
             _logger = logger;
@@ -33,14 +33,9 @@ namespace NaiveCoin.Services
         
         public Wallet CreateWalletFromPassword(string password)
         {
-            return _wallets.CreateFromPassword(password);
+            return _provider.Create(password);
         }
-
-        public Wallet CreateWalletFromHash(string passwordHash)
-        {
-            return _wallets.CreateFromPasswordHash(passwordHash);
-        }
-
+        
         public bool CheckWalletPassword(string id, string passwordHash)
         {
             var wallet = GetWalletById(id);
@@ -108,7 +103,7 @@ namespace NaiveCoin.Services
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{walletId}'");
 
-            var secretKey = wallet.GetSecretKeyByAddress(fromAddress.ToHex());
+            var secretKey = wallet.GetPrivateKeyByAddress(fromAddress.ToHex());
             if (secretKey == null)
                 throw new ArgumentException($"Secret key not found with Wallet id '${walletId}' and address '${fromAddress}'");
 

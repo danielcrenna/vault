@@ -35,7 +35,7 @@ namespace NaiveCoin.Core.Tests
             {
                 var bytes = tuple.Item2;
                 var expectedText = tuple.Item1;
-                var actualText = Base58CheckEncoding.EncodePlain(bytes);
+                var actualText = Base58Check.EncodePlain(bytes);
                 Assert.Equal(expectedText, actualText);
             }
         }
@@ -47,7 +47,7 @@ namespace NaiveCoin.Core.Tests
             {
                 var text = tuple.Item1;
                 var expectedBytes = tuple.Item2;
-                var actualBytes = Base58CheckEncoding.DecodePlain(text);
+                var actualBytes = Base58Check.DecodePlain(text);
                 Assert.Equal(BitConverter.ToString(expectedBytes), BitConverter.ToString(actualBytes));
             }
         }
@@ -57,21 +57,21 @@ namespace NaiveCoin.Core.Tests
         {
             Assert.Throws<FormatException>(() =>
             {
-                Base58CheckEncoding.DecodePlain("ab0");
+                Base58Check.DecodePlain("ab0");
             });
         }
 
         [Fact]
         public void EncodeBitcoinAddress()
         {
-            var actualText = Base58CheckEncoding.Encode(AddressBytes);
+            var actualText = Base58Check.Encode(AddressBytes);
             Assert.Equal(ADDRESS_TEXT, actualText);
         }
 
         [Fact]
         public void DecodeBitcoinAddress()
         {
-            var actualBytes = Base58CheckEncoding.Decode(ADDRESS_TEXT);
+            var actualBytes = Base58Check.Decode(ADDRESS_TEXT);
             Assert.Equal(BitConverter.ToString(AddressBytes), BitConverter.ToString(actualBytes));
         }
 
@@ -80,7 +80,7 @@ namespace NaiveCoin.Core.Tests
         {
             Assert.Throws<FormatException>(() =>
             {
-                var actualBytes = Base58CheckEncoding.Decode(BROKEN_ADDRESS_TEXT);
+                var actualBytes = Base58Check.Decode(BROKEN_ADDRESS_TEXT);
                 Assert.Equal(BitConverter.ToString(AddressBytes), BitConverter.ToString(actualBytes));
             });
         }

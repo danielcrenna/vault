@@ -1,9 +1,7 @@
 TODO/Ideas:
 ===========
-[X] Initial implementation matches original in functionality
 [ ] GetAllBlocks should support Range, or even enforce it
 [ ] Encrypt Sqlite databases
-[ ] Make sure this isn't a "brain wallet" implementation
 [ ] Need a way to enforce coin settings are the same between peers (another hash?)
 [ ] CLI client
 [ ] Light client
@@ -21,7 +19,7 @@ TODO/Ideas:
 [ ] Refactor repository methods for future partial replication implementation
 [ ] 100% unit test coverage
 [ ] Side chains
-[ ] Offline wallet
+[ ] Offline wallet / CLI
 [ ] Online wallet
 [ ] Block Explorer
 [ ] Coin Logos
@@ -36,3 +34,4 @@ TODO/Ideas:
 [ ] Pluggable consensus
 [ ] Built-in stratum pool miner?
 [ ] Export/Import private key with WIF
+[ ] Vanity addresses (ala vanitygen)

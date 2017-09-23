@@ -10,12 +10,14 @@ namespace NaiveCoin.DataAccess
 {
     public class SqliteWalletRepository : SqliteRepository, IWalletRepository
     {
-        private readonly IWalletProvider _provider;
+        private readonly IWalletSecretProvider _secretProvider;
+        private readonly IWalletAddressProvider _addressProvider;
         private readonly ILogger<SqliteWalletRepository> _logger;
 
-        public SqliteWalletRepository(string @namespace, IWalletProvider provider, ILogger<SqliteWalletRepository> logger) : base(@namespace, "wallets", logger)
+        public SqliteWalletRepository(string @namespace, IWalletSecretProvider secretProvider, IWalletAddressProvider addressProvider, ILogger<SqliteWalletRepository> logger) : base(@namespace, "wallets", logger)
         {
-            _provider = provider;
+            _secretProvider = secretProvider;
+            _addressProvider = addressProvider;
             _logger = logger;
         }
 
@@ -65,25 +67,11 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public Wallet CreateFromPassword(string password)
-        {
-            var wallet = _provider.CreateFromPassword(password);
-
-            return Add(wallet);
-        }
-
-        public Wallet CreateFromPasswordHash(string passwordHash)
-        {
-            var wallet = _provider.CreateFromPasswordHash(passwordHash);
-
-            return Add(wallet);
-        }
-
         public Wallet Add(Wallet wallet)
         {
             if (wallet.KeyPairs.Count == 0)
             {
-                _provider.GenerateAddress(wallet);
+                _addressProvider.GenerateAddress(wallet);
             }
 
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
@@ -122,12 +110,12 @@ namespace NaiveCoin.DataAccess
 
             foreach (var keyPair in wallet.KeyPairs)
             {
-                db.Execute("INSERT INTO Address ('WalletId','Index','SecretKey','PublicKey') VALUES (@WalletId,@Index,@SecretKey,@PublicKey)",
+                db.Execute("INSERT INTO Address ('WalletId','Index','PrivateKey','PublicKey') VALUES (@WalletId,@Index,@PrivateKey,@PublicKey)",
                 new
                 {
                     WalletId = wallet.Id,
                     keyPair.Index,
-                    keyPair.SecretKey,
+                    keyPair.PrivateKey,
                     keyPair.PublicKey
                 }, t);
             }
@@ -151,7 +139,7 @@ CREATE TABLE IF NOT EXISTS 'Address'
 (  
     'WalletId' VARCHAR(64) NOT NULL,
     'Index' INTEGER NOT NULL, 
-    'SecretKey' VARCHAR(1024) NOT NULL,
+    'PrivateKey' VARCHAR(1024) NOT NULL,
     'PublicKey' VARCHAR(64) NOT NULL,
 
     FOREIGN KEY('WalletId') REFERENCES Wallet('Id')

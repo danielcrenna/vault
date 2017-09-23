@@ -102,7 +102,7 @@ namespace NaiveCoin.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             
-            if (_operator.CheckWalletPassword(model.Password, CryptoUtil.Hash(model.Password)))
+            if (_operator.CheckWalletPassword(model.Password, CryptoUtil.ObjectHash(model.Password)))
                 return NotFound();
 
             try
@@ -167,7 +167,7 @@ namespace NaiveCoin.Controllers
             if (wallet == null)
                 return NotFound();
 
-            var passwordHash = CryptoUtil.Hash(model.Password);
+            var passwordHash = CryptoUtil.ObjectHash(model.Password);
             if (wallet.PasswordHash != passwordHash)
                 return NotFound();
 

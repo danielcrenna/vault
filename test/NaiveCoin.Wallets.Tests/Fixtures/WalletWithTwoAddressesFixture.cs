@@ -4,9 +4,9 @@ namespace NaiveCoin.Wallets.Tests.Fixtures
     {
         public WalletWithTwoAddressesFixture()
         {
-            var provider = new WalletProviderFixture();
-
-            var wallet = provider.Value.CreateFromPassword("rosebud");
+            var factory = new FixedSaltWalletFactoryProvider("salt");
+            var provider = new WalletAddressProviderFixture();
+            var wallet = factory.Create("rosebud");
 
             provider.Value.GenerateAddress(wallet);
             provider.Value.GenerateAddress(wallet);

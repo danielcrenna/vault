@@ -30,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Core.Tests", "tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Wallets.Tests", "test\NaiveCoin.Wallets.Tests\NaiveCoin.Wallets.Tests.csproj", "{BA6325F4-DB23-4D42-8B48-58B331EA4612}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaiveCoin.Cli", "NaiveCoin.Cli\NaiveCoin.Cli.csproj", "{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{BA6325F4-DB23-4D42-8B48-58B331EA4612}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA6325F4-DB23-4D42-8B48-58B331EA4612}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA6325F4-DB23-4D42-8B48-58B331EA4612}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{71F85FE7-7C66-4E40-8398-974394CCB910} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
 		{8CD7FC48-33BD-4E7E-AFC1-B7175D85D894} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
 		{BA6325F4-DB23-4D42-8B48-58B331EA4612} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
+		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F} = {991B4E3D-37D4-412A-B706-C29ACA0ECDB9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9332D765-4E73-4CAD-88FB-243D4CFF2185}

@@ -1,8 +1,8 @@
 namespace NaiveCoin.Wallets.Tests.Fixtures
 {
-    public class WalletProviderFixture
+    public class BrainWalletProviderFixture
     {
-        public WalletProviderFixture()
+        public BrainWalletProviderFixture()
         {
             Value = new BrainWalletProvider();
         }

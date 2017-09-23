@@ -7,15 +7,15 @@ namespace NaiveCoin.Core.Models
     {
         public int Index { get; }
         public string PublicKey { get; }
-        public string SecretKey { get; }
+        public string PrivateKey { get; }
 
         internal KeyPair() { /* required for serialization */ }
 
-        public KeyPair(int index, string publicKey, string secretKey)
+        public KeyPair(int index, string publicKey, string privateKey)
         {
             Index = index;
             PublicKey = publicKey;
-            SecretKey = secretKey;
+            PrivateKey = privateKey;
         }
 
         public override bool Equals(object obj)
@@ -28,7 +28,7 @@ namespace NaiveCoin.Core.Models
             return other != null &&
                    Index == other.Index &&
                    PublicKey == other.PublicKey &&
-                   SecretKey == other.SecretKey;
+                   PrivateKey == other.PrivateKey;
         }
 
         public override int GetHashCode()
@@ -36,7 +36,7 @@ namespace NaiveCoin.Core.Models
             var hashCode = -1787115702;
             hashCode = hashCode * -1521134295 + Index.GetHashCode();
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PublicKey);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SecretKey);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PrivateKey);
             return hashCode;
         }
 

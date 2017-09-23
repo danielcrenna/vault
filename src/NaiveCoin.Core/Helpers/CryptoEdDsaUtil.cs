@@ -7,13 +7,9 @@ namespace NaiveCoin.Core.Helpers
 {
     public class CryptoEdDsaUtil
     {
-        private const string Salt = "0ffaa74d206930aaece253f090c88dbe6685b9e66ec49ad988d84fd7dff230d1";
-
-        public static string GenerateSecret(string password)
+        public static string GenerateSecret(string seed)
         {
-            var hash = Pbkdf2.CreateRawHash(password, Salt, 10000, 512, HashAlgorithmName.SHA512);
-
-            return hash.ToHex();
+            return Pbkdf2.CreateRawHash(seed, "salt", 64000, 512, HashAlgorithmName.SHA512).ToHex();
         }
 
         public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(string secret)

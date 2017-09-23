@@ -44,14 +44,14 @@ namespace NaiveCoin.Core.Helpers
         public static byte[] CreateRawHash(string password, string salt, int iterations, int hashBytes, HashAlgorithmName algorithmName)
         {
             byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
-            byte[] hash = PBKDF2(password, saltBytes, PBKDF2_ITERATIONS, hashBytes, algorithmName);
+            byte[] hash = DeriveKey(password, saltBytes, PBKDF2_ITERATIONS, hashBytes, algorithmName);
             return hash;
         }
 
-        public static string CreateStorageHash(string password, HashAlgorithmName algorithmName)
+        public static string CreateStorageHash(string password, int saltBytes = SALT_BYTES, int iterations = PBKDF2_ITERATIONS, int hashBytes = HASH_BYTES, HashAlgorithmName? algorithmName = null)
         {
             // Generate a random salt
-            byte[] salt = new byte[SALT_BYTES];
+            byte[] salt = new byte[saltBytes];
             try
             {
                 using (RNGCryptoServiceProvider csprng = new RNGCryptoServiceProvider())
@@ -74,10 +74,10 @@ namespace NaiveCoin.Core.Helpers
                 );
             }
 
-            byte[] hash = PBKDF2(password, salt, PBKDF2_ITERATIONS, HASH_BYTES, algorithmName);
+            byte[] hash = DeriveKey(password, salt, iterations, hashBytes, algorithmName ?? HashAlgorithmName.SHA256);
 
-            // format = algorithm:iterations:hashSize:salt:hash
-            String parts = $"sha1:{PBKDF2_ITERATIONS}:{hash.Length}:{Convert.ToBase64String(salt)}:{Convert.ToBase64String(hash)}";
+            // format = algorithmName:iterations:hashSize:salt:hash
+            var parts = $"{algorithmName}:{iterations}:{hash.Length}:{Convert.ToBase64String(salt)}:{Convert.ToBase64String(hash)}";
 
             return parts;
         }
@@ -93,19 +93,11 @@ namespace NaiveCoin.Core.Helpers
                     "Fields are missing from the password hash."
                 );
             }
-
-            // We only support SHA1 with C#.
-            if (split[HASH_ALGORITHM_INDEX] != "sha1")
-            {
-                throw new CannotPerformOperationException(
-                    "Unsupported hash type."
-                );
-            }
-
-            int iterations = 0;
+            
+            int iterations;
             try
             {
-                iterations = Int32.Parse(split[ITERATION_INDEX]);
+                iterations = int.Parse(split[ITERATION_INDEX]);
             }
             catch (ArgumentNullException ex)
             {
@@ -136,7 +128,7 @@ namespace NaiveCoin.Core.Helpers
                 );
             }
 
-            byte[] salt = null;
+            byte[] salt;
             try
             {
                 salt = Convert.FromBase64String(split[SALT_INDEX]);
@@ -176,10 +168,10 @@ namespace NaiveCoin.Core.Helpers
                 );
             }
 
-            int storedHashSize = 0;
+            int storedHashSize;
             try
             {
-                storedHashSize = Int32.Parse(split[HASH_SIZE_INDEX]);
+                storedHashSize = int.Parse(split[HASH_SIZE_INDEX]);
             }
             catch (ArgumentNullException ex)
             {
@@ -210,12 +202,25 @@ namespace NaiveCoin.Core.Helpers
                 );
             }
 
-            byte[] testHash = PBKDF2(password, salt, iterations, hash.Length, HashAlgorithmName.SHA1);
+            HashAlgorithmName algorithm;
+            try
+            {
+                algorithm = new HashAlgorithmName(split[HASH_ALGORITHM_INDEX]);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidHashException(
+                    "The hash algorithm is invalid.",
+                    ex
+                );
+            }
+
+            byte[] testHash = DeriveKey(password, salt, iterations, hash.Length, algorithm);
 
             return SlowEquals(hash, testHash);
         }
 
-        private static bool SlowEquals(byte[] a, byte[] b)
+        public static bool SlowEquals(byte[] a, byte[] b)
         {
             uint diff = (uint)a.Length ^ (uint)b.Length;
             for (int i = 0; i < a.Length && i < b.Length; i++)
@@ -225,7 +230,7 @@ namespace NaiveCoin.Core.Helpers
             return diff == 0;
         }
 
-        private static byte[] PBKDF2(string password, byte[] salt, int iterations, int outputBytes, HashAlgorithmName hashAlgorithmName)
+        public static byte[] DeriveKey(string password, byte[] salt, int iterations, int outputBytes, HashAlgorithmName hashAlgorithmName)
         {
             KeyDerivationPrf algorithm;
             if (hashAlgorithmName == HashAlgorithmName.SHA1)
