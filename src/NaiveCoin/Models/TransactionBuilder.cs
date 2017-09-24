@@ -15,7 +15,7 @@ namespace NaiveCoin.Models
         private byte[] _changeAddress;
         private byte[] _outputAddress;
         private long? _totalAmount;
-        private IEnumerable<TransactionOutput> _utxo;
+        private IEnumerable<TransactionItem> _utxo;
 
         public TransactionBuilder(IHashProvider hashProvider)
         {
@@ -23,7 +23,7 @@ namespace NaiveCoin.Models
             _type = TransactionType.Regular;
         }
 
-        public TransactionBuilder From(IEnumerable<TransactionOutput> utxo)
+        public TransactionBuilder From(IEnumerable<TransactionItem> utxo)
         {
             _utxo = utxo;
             return this;
@@ -83,7 +83,7 @@ namespace NaiveCoin.Models
                     utxo.Address
                 }));
                 return utxo;
-            }).Select(x => new TransactionInput
+            }).Select(x => new TransactionItem
             {
                 Address = x.Address,
                 Amount = x.Amount,
@@ -92,9 +92,9 @@ namespace NaiveCoin.Models
             }).ToArray();
 
             // Add target receiver
-            var outputs = new List<TransactionOutput>
+            var outputs = new List<TransactionItem>
             {
-                new TransactionOutput
+                new TransactionItem
                 {
                     Amount = _totalAmount.Value,
                     Address = _outputAddress
@@ -104,7 +104,8 @@ namespace NaiveCoin.Models
             // Add change amount
             if (changeAmount > 0)
             {
-                outputs.Add(new TransactionOutput {
+                outputs.Add(new TransactionItem
+                {
                     Amount = changeAmount.GetValueOrDefault(),
                     Address = _changeAddress
                 });

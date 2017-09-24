@@ -14,9 +14,7 @@ namespace NaiveCoin.Models
 
         void Add(Block block);
 
-        IEnumerable<TransactionInput> GetTransactionInputsForAddress(string address);
-        IEnumerable<TransactionOutput> GetTransactionOutputsForAddress(string address);
-        
+        IEnumerable<TransactionItem> GetTransactionItemsForAddress(TransactionDataType type, string address);
         IEnumerable<string> GetAllTransactionIds();
     }
 }

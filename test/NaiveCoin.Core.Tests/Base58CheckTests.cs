@@ -7,7 +7,7 @@ namespace NaiveCoin.Core.Tests
     public class Base58CheckTests
     {
         // Test cases from https://github.com/bitcoin/bitcoin/blob/master/src/test/base58_tests.cpp
-        readonly Tuple<string, byte[]>[] _testCases = new[]{
+        private readonly Tuple<string, byte[]>[] _testCases = {
             Tuple.Create("",new byte[]{}),
             Tuple.Create("1112",new byte[]{0x00, 0x00, 0x00, 0x01}),
             Tuple.Create("2g",new byte[]{0x61}),
@@ -24,7 +24,7 @@ namespace NaiveCoin.Core.Tests
         };
 
         // Example address from https://en.bitcoin.it/wiki/Technical_background_of_version_1_Bitcoin_addresses
-        private static readonly byte[] AddressBytes = new byte[] { 0x00, 0x01, 0x09, 0x66, 0x77, 0x60, 0x06, 0x95, 0x3D, 0x55, 0x67, 0x43, 0x9E, 0x5E, 0x39, 0xF8, 0x6A, 0x0D, 0x27, 0x3B, 0xEE };
+        private static readonly byte[] AddressBytes = { 0x00, 0x01, 0x09, 0x66, 0x77, 0x60, 0x06, 0x95, 0x3D, 0x55, 0x67, 0x43, 0x9E, 0x5E, 0x39, 0xF8, 0x6A, 0x0D, 0x27, 0x3B, 0xEE };
         private const string ADDRESS_TEXT = "16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM";
         private const string BROKEN_ADDRESS_TEXT = "16UwLl9Risc3QfPqBUvKofHmBQ7wMtjvM";
 

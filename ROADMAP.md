@@ -6,7 +6,6 @@ TODO/Ideas:
 [ ] CLI client
 [ ] Light client
 [ ] Pluggable transaction types
-[ ] Merge transaction input and output data types
 [ ] Current implementation has layer/responsibility disease
 [ ] Move pending transactions into the same data file as blocks (artificial performance impact crossing databases)
 [ ] Remove exceptions thrown when they can be handled higher up
@@ -35,3 +34,4 @@ TODO/Ideas:
 [ ] Built-in stratum pool miner?
 [ ] Export/Import private key with WIF
 [ ] Vanity addresses (ala vanitygen)
+[ ] Bootstrap chain

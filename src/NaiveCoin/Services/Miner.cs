@@ -52,10 +52,10 @@ namespace NaiveCoin.Services
                     Type = TransactionType.Fee,
                     Data = new TransactionData
                     {
-                        Inputs = new TransactionInput[] {},
+                        Inputs = new TransactionItem[] {},
                         Outputs = new[]
                         {
-                            new TransactionOutput
+                            new TransactionItem
                             {
                                 Amount = _coinSettings.FeePerTransaction * transactions.Count, // satoshis format
                                 Address = CryptoBytes.FromHexString(address) // INFO: Usually here is a locking script (to check who and when this transaction output can be used), in this case it's a simple destination address     
@@ -77,10 +77,10 @@ namespace NaiveCoin.Services
                     Type = TransactionType.Fee,
                     Data =
                     {
-                        Inputs = new TransactionInput[] {},
+                        Inputs = new TransactionItem[] {},
                         Outputs = new[]
                         {
-                            new TransactionOutput
+                            new TransactionItem
                             {
                                 Amount = _coinSettings.Mining.MiningReward,
                                 Address = CryptoBytes.FromHexString(address) // INFO: Usually here is a locking script (to check who and when this transaction output can be used), in this case it's a simple destination address     

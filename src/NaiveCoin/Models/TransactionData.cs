@@ -7,8 +7,8 @@ namespace NaiveCoin.Models
 {
     public class TransactionData
     {
-        public TransactionInput[] Inputs { get; set; }
-        public TransactionOutput[] Outputs { get; set; }
+        public TransactionItem[] Inputs { get; set; }
+        public TransactionItem[] Outputs { get; set; }
         
         public void Check(CoinSettings coinSettings, IHashProvider hashProvider)
         {

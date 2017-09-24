@@ -51,14 +51,14 @@ namespace NaiveCoin.DataAccess
         {
             transaction.Data = new TransactionData
             {
-                Inputs = db.Query<TransactionInput>("SELECT i.* " +
+                Inputs = db.Query<TransactionItem>("SELECT i.* " +
                                                     "FROM 'TransactionData' i " +
                                                     "WHERE i.Type = @Type AND i.TransactionId = @Id",
                     new { Type = TransactionDataType.Input, transaction.Id }).ToArray(),
 
-                Outputs = db.Query<TransactionOutput>("SELECT o.* " +
-                                                      "FROM 'TransactionData' o " +
-                                                      "WHERE o.Type = @Type AND o.TransactionId = @Id",
+                Outputs = db.Query<TransactionItem>("SELECT o.* " +
+                                                    "FROM 'TransactionData' o " +
+                                                    "WHERE o.Type = @Type AND o.TransactionId = @Id",
                     new { Type = TransactionDataType.Output, transaction.Id }).ToArray(),
             };
 
@@ -110,7 +110,7 @@ namespace NaiveCoin.DataAccess
                         Data = _dataSerializer.Serialize(transaction.Data)
                     }, t);
 
-                    foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionInput>())
+                    foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionItem>())
                     {
                         db.Execute("INSERT INTO 'TransactionData' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                             new
@@ -124,7 +124,7 @@ namespace NaiveCoin.DataAccess
                             }, t);
                     }
 
-                    foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionOutput>())
+                    foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionItem>())
                     {
                         db.Execute("INSERT INTO 'TransactionData' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                             new

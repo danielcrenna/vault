@@ -270,16 +270,16 @@ namespace NaiveCoin.Services
             return true;
         }
 
-        public IEnumerable<TransactionOutput> GetUnspentTransactionsForAddress(string address)
+        public IEnumerable<TransactionItem> GetUnspentTransactionsForAddress(string address)
         {
             // Create a list of all transactions outputs found for an address (or all).
-            IEnumerable<TransactionOutput> outputs = _blocks.GetTransactionOutputsForAddress(address);
+            IEnumerable<TransactionItem> outputs = _blocks.GetTransactionItemsForAddress(TransactionDataType.Output, address);
 
             // Create a list of all transactions inputs found for an address (or all).
-            IEnumerable<TransactionInput> inputs = _blocks.GetTransactionInputsForAddress(address);
+            IEnumerable<TransactionItem> inputs = _blocks.GetTransactionItemsForAddress(TransactionDataType.Input, address);
 
             // Cross both lists and find transactions outputs without a corresponding transaction input
-            var unspent = new HashSet<TransactionOutput>();
+            var unspent = new HashSet<TransactionItem>();
             foreach (var output in outputs)
             {
                 if (!inputs.Any(x => x.TransactionId == output.TransactionId && x.Index == output.Index))

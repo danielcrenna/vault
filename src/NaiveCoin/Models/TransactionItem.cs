@@ -1,6 +1,6 @@
 ﻿namespace NaiveCoin.Models
 {
-    public class TransactionOutput
+    public class TransactionItem
     {
         public string TransactionId { get; set; }
         public long Index { get; set; }

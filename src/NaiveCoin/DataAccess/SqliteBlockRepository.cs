@@ -63,7 +63,7 @@ namespace NaiveCoin.DataAccess
                             transaction.Type
                         }, t);
 
-                        foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionInput>())
+                        foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionItem>())
                         {
                             db.Execute("INSERT INTO 'BlockTransactionData' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                                 new
@@ -77,7 +77,7 @@ namespace NaiveCoin.DataAccess
                                 }, t);
                         }
 
-                        foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionOutput>())
+                        foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionItem>())
                         {
                             db.Execute("INSERT INTO 'BlockTransactionData' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                                 new
@@ -98,18 +98,8 @@ namespace NaiveCoin.DataAccess
                 }
             }
         }
-
-        public IEnumerable<TransactionInput> GetTransactionInputsForAddress(string address)
-        {
-            return GetTransactionDataForAddress<TransactionInput>(address, TransactionDataType.Input);
-        }
-
-        public IEnumerable<TransactionOutput> GetTransactionOutputsForAddress(string address)
-        {
-            return GetTransactionDataForAddress<TransactionOutput>(address, TransactionDataType.Output);
-        }
-
-        private IEnumerable<T> GetTransactionDataForAddress<T>(string address, TransactionDataType type)
+        
+        public IEnumerable<TransactionItem> GetTransactionItemsForAddress(TransactionDataType type, string address)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -118,10 +108,10 @@ namespace NaiveCoin.DataAccess
                                    "WHERE d.'Address' = @Address " +
                                    "AND d.'Type' = @Type";
 
-                var outputs = db.Query<T>(sql, new
+                var outputs = db.Query<TransactionItem>(sql, new
                 {
                     Address = CryptoBytes.FromHexString(address),
-                    Type = TransactionDataType.Output
+                    Type = type
                 });
 
                 return outputs;
@@ -213,14 +203,14 @@ namespace NaiveCoin.DataAccess
             {
                 transaction.Data = new TransactionData
                 {
-                    Inputs = db.Query<TransactionInput>("SELECT i.* " +
-                                                        "FROM 'BlockTransactionData' i " +
-                                                        "WHERE i.Type = @Type AND i.TransactionId = @Id",
+                    Inputs = db.Query<TransactionItem>("SELECT i.* " +
+                                                       "FROM 'BlockTransactionData' i " +
+                                                       "WHERE i.Type = @Type AND i.TransactionId = @Id",
                         new { Type = TransactionDataType.Input, transaction.Id }).ToArray(),
 
-                    Outputs = db.Query<TransactionOutput>("SELECT o.* " +
-                                                          "FROM 'BlockTransactionData' o " +
-                                                          "WHERE o.Type = @Type AND o.TransactionId = @Id",
+                    Outputs = db.Query<TransactionItem>("SELECT o.* " +
+                                                        "FROM 'BlockTransactionData' o " +
+                                                        "WHERE o.Type = @Type AND o.TransactionId = @Id",
                         new { Type = TransactionDataType.Output, transaction.Id }).ToArray(),
                 };
 
