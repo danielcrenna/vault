@@ -12,14 +12,14 @@ using Newtonsoft.Json.Serialization;
 
 namespace NaiveCoin.Core.Providers
 {
-    public class StableObjectHashProvider : IObjectHashProvider
+    public class StableHashProvider : IHashProvider
     {
         private readonly HashAlgorithm _algorithm;
         private readonly JsonSerializerSettings _settings;
 
-        public StableObjectHashProvider() : this(SHA256.Create()) { }
+        public StableHashProvider() : this(SHA256.Create()) { }
 
-        public StableObjectHashProvider(HashAlgorithm algorithm)
+        public StableHashProvider(HashAlgorithm algorithm)
         {
             _algorithm = algorithm;
             _settings = new JsonSerializerSettings

@@ -6,29 +6,37 @@ using Microsoft.Extensions.Options;
 using NaiveCoin.Models;
 using NaiveCoin.Wallets;
 using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Services
 {
     public class Operator
     {
         private readonly Blockchain _blockchain;
+        private readonly IHashProvider _hashProvider;
         private readonly IWalletProvider _provider;
-        private readonly IWalletRepository _wallets;
+        private readonly IWalletRepository _walletRepository;
         private readonly CoinSettings _coinSettings;
         private readonly ILogger<Operator> _logger;
 
-        public Operator(Blockchain blockchain, IWalletProvider walletProvider, IWalletRepository wallets, IOptions<CoinSettings> coinSettings, ILogger<Operator> logger)
+        public Operator(Blockchain blockchain, 
+            IHashProvider hashProvider,
+            IWalletProvider walletProvider, 
+            IWalletRepository walletRepository, 
+            IOptions<CoinSettings> coinSettings, 
+            ILogger<Operator> logger)
         {
             _blockchain = blockchain;
+            _hashProvider = hashProvider;
             _provider = walletProvider;
-            _wallets = wallets;
+            _walletRepository = walletRepository;
             _coinSettings = coinSettings.Value;
             _logger = logger;
         }
 
         public Wallet AddWallet(Wallet wallet)
         {
-            return _wallets.Add(wallet);
+            return _walletRepository.Add(wallet);
         }
         
         public Wallet CreateWalletFromPassword(string password)
@@ -36,20 +44,22 @@ namespace NaiveCoin.Services
             return _provider.Create(password);
         }
         
-        public bool CheckWalletPassword(string id, string passwordHash)
+        public Wallet CheckWalletPassword(string id, string password)
         {
             var wallet = GetWalletById(id);
-            return wallet != null && wallet.PasswordHash == passwordHash;
+            if (wallet != null && CryptoUtil.VerifyPassword(password, wallet.PasswordHash))
+                return wallet;
+            return null;
         }
 
         public IEnumerable<Wallet> GetWallets()
         {
-            return _wallets.GetAll();
+            return _walletRepository.GetAll();
         }
 
         public Wallet GetWalletById(string id)
         {
-            return _wallets.GetById(id);
+            return _walletRepository.GetById(id);
         }
 
         public string GenerateAddressForWallet(string id)
@@ -60,7 +70,7 @@ namespace NaiveCoin.Services
 
             var address = _provider.GenerateAddress(wallet);
 
-            _wallets.SaveAddresses(wallet);
+            _walletRepository.SaveAddresses(wallet);
 
             return address;
         }
@@ -107,7 +117,7 @@ namespace NaiveCoin.Services
             if (secretKey == null)
                 throw new ArgumentException($"Secret key not found with Wallet id '${walletId}' and address '${fromAddress}'");
 
-            var tx = new TransactionBuilder();
+            var tx = new TransactionBuilder(_hashProvider);
             tx.From(utxo)
                 .To(toAddress, amount)
                 .Change(changeAddress ?? fromAddress)

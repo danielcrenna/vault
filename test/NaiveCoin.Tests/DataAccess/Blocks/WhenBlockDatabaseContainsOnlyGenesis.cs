@@ -1,5 +1,6 @@
 using Microsoft.Data.Sqlite;
 using NaiveCoin.Core.Providers;
+using NaiveCoin.Extensions;
 using NaiveCoin.Models;
 using NaiveCoin.Tests.Fixtures;
 using NaiveCoin.Tests.Fixtures.DataAccess.Blocks;
@@ -16,10 +17,10 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         {
             Fixture = blockDatabase;
             CoinSettings = coinSettings.Value;
-            ObjectHashProvider = objectHashProvider.Value;
+            HashProvider = objectHashProvider.Value;
         }
 
-        public IObjectHashProvider ObjectHashProvider { get; set; }
+        public IHashProvider HashProvider { get; set; }
 
         public BlockDatabaseWithGenesisBlockFixture Fixture { get; set; }
         public CoinSettings CoinSettings { get; }
@@ -83,8 +84,8 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         private void BeforeSave(Block block)
         {
             foreach (var transaction in block.Transactions)
-                transaction.Hash = transaction.ToHash(ObjectHashProvider);
-            block.Hash = block.ToHash(ObjectHashProvider);
+                transaction.Hash = transaction.ToHash(HashProvider);
+            block.Hash = block.ToHash(HashProvider);
         }
     }
 }

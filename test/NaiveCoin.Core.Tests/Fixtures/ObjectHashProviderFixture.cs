@@ -6,9 +6,9 @@ namespace NaiveCoin.Core.Tests.Fixtures
     {
         public ObjectHashProviderFixture()
         {
-            Value = new StableObjectHashProvider();
+            Value = new StableHashProvider();
         }
 
-        public StableObjectHashProvider Value { get; set; }
+        public StableHashProvider Value { get; set; }
     }
 }

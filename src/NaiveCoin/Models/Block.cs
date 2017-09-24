@@ -1,7 +1,6 @@
-﻿using NaiveCoin.Core.Helpers;
-using NaiveCoin.Core.Providers;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace NaiveCoin.Models
 {
@@ -13,14 +12,11 @@ namespace NaiveCoin.Models
         public long? Nonce { get; set; }
         public ICollection<Transaction> Transactions { get; set; }
         public string Hash { get; set; }
-
-        public string ToHash(IObjectHashProvider provider)
-        {
-            return CryptoUtil.ObjectHash($"{Index}{PreviousHash}{Timestamp}{provider.ComputeHash(Transactions)}{Nonce}");
-        }
         
         public double GetDifficulty()
         {
+            Contract.Assert(!string.IsNullOrWhiteSpace(Hash));
+
             // 14 is the maximum precision length supported by javascript
             return Convert.ToByte(Hash.Substring(0, 14), 16);
         }

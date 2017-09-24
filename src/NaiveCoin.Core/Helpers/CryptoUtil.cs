@@ -51,17 +51,5 @@ namespace NaiveCoin.Core.Helpers
         {
             return Pbkdf2.SlowEquals(a, b);
         }
-
-        private static readonly IObjectHashProvider Provider = new StableObjectHashProvider(SHA256.Create());
-
-        public static string ObjectHash(object any)
-        {
-            return Provider.ComputeHash(any);
-        }
-
-        public static byte[] ObjectHashBytes(object any)
-        {
-            return Provider.ComputeHashBytes(any);
-        }
     }
 }

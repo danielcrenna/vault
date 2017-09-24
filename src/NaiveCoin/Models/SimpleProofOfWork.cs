@@ -2,19 +2,16 @@ using System;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Models
 {
     public class SimpleProofOfWork : IProofOfWork
     {
-        private readonly IObjectHashProvider _hashProvider;
         private readonly ILogger<SimpleProofOfWork> _logger;
         private readonly CoinSettings _coinSettings;
 
-        public SimpleProofOfWork(IObjectHashProvider hashProvider, IOptions<CoinSettings> coinSettings, ILogger<SimpleProofOfWork> logger = null)
+        public SimpleProofOfWork(IOptions<CoinSettings> coinSettings, ILogger<SimpleProofOfWork> logger = null)
         {
-            _hashProvider = hashProvider;
             _logger = logger;
             _coinSettings = coinSettings.Value;
         }
@@ -45,7 +42,6 @@ namespace NaiveCoin.Models
             {
                 block.Timestamp = DateTimeOffset.UtcNow.Ticks;
                 block.Nonce++;
-                block.Hash = block.ToHash(_hashProvider);
                 blockDifficulty = block.GetDifficulty();
             } while (blockDifficulty >= difficulty);
 

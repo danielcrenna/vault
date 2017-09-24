@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 using NaiveCoin.DataAccess;
+using NaiveCoin.Extensions;
 
 namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
 {

@@ -1,6 +1,8 @@
-﻿namespace NaiveCoin.Core.Providers
+﻿using System;
+
+namespace NaiveCoin.Core.Providers
 {
-    public interface IObjectHashProvider
+    public interface IHashProvider
     {
         byte[] ComputeHashBytes(string any);
         byte[] ComputeHashBytes(object instance);

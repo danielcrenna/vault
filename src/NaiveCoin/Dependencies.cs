@@ -36,7 +36,7 @@ namespace NaiveCoin
                     }
                 });
                 services.AddSingleton<ITransactionDataSerializer>(r => new JsonTransactionDataSerializer(r.GetRequiredService<JsonSerializerSettings>()));
-                services.AddSingleton<IObjectHashProvider>(r => new StableObjectHashProvider(SHA512.Create()));
+                services.AddSingleton<IHashProvider>(r => new StableHashProvider(SHA512.Create()));
 
                 var provider = new BrainWalletProvider();
                 services.AddSingleton<IWalletProvider>(r => provider);
@@ -44,8 +44,7 @@ namespace NaiveCoin
                 services.AddSingleton<IWalletSecretProvider>(r => provider);
 
                 services.AddSingleton<IProofOfWork>(r =>
-                    new SimpleProofOfWork(r.GetRequiredService<IObjectHashProvider>(),
-                        r.GetRequiredService<IOptions<CoinSettings>>(), r.GetService<ILogger<SimpleProofOfWork>>()));
+                    new SimpleProofOfWork(r.GetRequiredService<IOptions<CoinSettings>>(), r.GetService<ILogger<SimpleProofOfWork>>()));
             }
 
             // Repositories:
@@ -65,7 +64,7 @@ namespace NaiveCoin
                     r.GetRequiredService<IBlockRepository>(),
                     r.GetRequiredService<IProofOfWork>(),
                     r.GetRequiredService<ITransactionRepository>(), 
-                    r.GetRequiredService<IObjectHashProvider>(), 
+                    r.GetRequiredService<IHashProvider>(), 
                     r.GetRequiredService<JsonSerializerSettings>(), 
                     r.GetService<ILogger<Blockchain>>()));
 
@@ -78,6 +77,7 @@ namespace NaiveCoin
 
                 services.AddScoped(r => new Operator(
                     r.GetRequiredService<Blockchain>(),
+                    r.GetRequiredService<IHashProvider>(),
                     r.GetRequiredService<IWalletProvider>(),
                     r.GetRequiredService<IWalletRepository>(),
                     r.GetRequiredService<IOptions<CoinSettings>>(),

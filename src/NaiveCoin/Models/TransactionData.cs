@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using NaiveCoin.Models.Exceptions;
 using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Models
 {
@@ -9,12 +10,12 @@ namespace NaiveCoin.Models
         public TransactionInput[] Inputs { get; set; }
         public TransactionOutput[] Outputs { get; set; }
         
-        public void Check(CoinSettings coinSettings)
+        public void Check(CoinSettings coinSettings, IHashProvider hashProvider)
         {
             // Check if the signature of all input transactions are correct (transaction data is signed by the public key of the address)
             var checks = Inputs.Select(input =>
             {
-                var hash = CryptoUtil.ObjectHashBytes(new
+                var hash = hashProvider.ComputeHashBytes(new
                 {
                     Transaction = input.TransactionId,
                     input.Index,

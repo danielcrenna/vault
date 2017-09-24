@@ -4,12 +4,10 @@ using System.Text.RegularExpressions;
 using Chaos.NaCl;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using NaiveCoin.Core;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using NaiveCoin.Services;
 using NaiveCoin.ViewModels;
-using NaiveCoin.Core.Helpers;
 using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Controllers
@@ -23,10 +21,10 @@ namespace NaiveCoin.Controllers
     {
         private readonly Operator _operator;
         private readonly Blockchain _blockchain;
-        private readonly IObjectHashProvider _hashProvider;
+        private readonly IHashProvider _hashProvider;
         private readonly CoinSettings _coinSettings;
 
-        public OperatorController(Operator @operator, Blockchain blockchain, IObjectHashProvider hashProvider,IOptions<CoinSettings> coinSettings)
+        public OperatorController(Operator @operator, Blockchain blockchain, IHashProvider hashProvider, IOptions<CoinSettings> coinSettings)
         {
             _operator = @operator;
             _blockchain = blockchain;
@@ -102,7 +100,7 @@ namespace NaiveCoin.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             
-            if (_operator.CheckWalletPassword(model.Password, CryptoUtil.ObjectHash(model.Password)))
+            if (_operator.CheckWalletPassword(id, model.Password) == null)
                 return NotFound();
 
             try
@@ -161,14 +159,10 @@ namespace NaiveCoin.Controllers
                 return BadRequest();
 
             if (string.IsNullOrWhiteSpace(model?.Password))
-                return NotFound();
+                return BadRequest();
 
-            var wallet = _operator.GetWalletById(id);
+            var wallet = _operator.CheckWalletPassword(id, model.Password);
             if (wallet == null)
-                return NotFound();
-
-            var passwordHash = CryptoUtil.ObjectHash(model.Password);
-            if (wallet.PasswordHash != passwordHash)
                 return NotFound();
 
             var address = wallet.KeyPairs[0].PublicKey;

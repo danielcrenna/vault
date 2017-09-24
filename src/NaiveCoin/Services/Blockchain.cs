@@ -7,6 +7,7 @@ using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using Newtonsoft.Json;
 using NaiveCoin.Core.Providers;
+using NaiveCoin.Extensions;
 
 namespace NaiveCoin.Services
 {
@@ -15,13 +16,13 @@ namespace NaiveCoin.Services
         private readonly IBlockRepository _blocks;
         private readonly IProofOfWork _proofOfWork;
         private readonly ITransactionRepository _transactions;
-        private readonly IObjectHashProvider _hashProvider;
+        private readonly IHashProvider _hashProvider;
         private readonly ILogger _logger;
 
         private readonly CoinSettings _coinSettings;
         private readonly JsonSerializerSettings _jsonSettings;
 
-        public Blockchain(IOptions<CoinSettings> coinSettings, IBlockRepository blocks, IProofOfWork proofOfWork, ITransactionRepository transactions, IObjectHashProvider hashProvider, JsonSerializerSettings jsonSettings, ILogger<Blockchain> logger)
+        public Blockchain(IOptions<CoinSettings> coinSettings, IBlockRepository blocks, IProofOfWork proofOfWork, ITransactionRepository transactions, IHashProvider hashProvider, JsonSerializerSettings jsonSettings, ILogger<Blockchain> logger)
         {
             _coinSettings = coinSettings.Value;
             _blocks = blocks;
@@ -39,10 +40,9 @@ namespace NaiveCoin.Services
             // Create the genesis block if the blockchain is empty
             if (_blocks.GetLength() == 0)
             {
-                foreach (var transaction in _coinSettings.GenesisBlock.Transactions)
+                foreach (var transaction in _coinSettings.GenesisBlock.Transactions ?? Enumerable.Empty<Transaction>())
                     transaction.Hash = transaction.ToHash(_hashProvider);
                 _coinSettings.GenesisBlock.Hash = _coinSettings.GenesisBlock.ToHash(_hashProvider);
-
                 _blocks.Add(_coinSettings.GenesisBlock);
             }
 

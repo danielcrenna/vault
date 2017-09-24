@@ -11,18 +11,18 @@ namespace NaiveCoin.Models
         public TransactionType Type { get; set; }
         public TransactionData Data { get; set; }
 
-        public string ToHash(IObjectHashProvider provider)
+        public string ToHash(IHashProvider provider)
         {
-            return CryptoUtil.ObjectHash($"{Id}{Type}{provider.ComputeHash(Data)}");
+            return provider.ComputeHash($"{Id}{Type}{provider.ComputeHash(Data)}");
         }
 
-        public void Check(IObjectHashProvider provider, CoinSettings coinSettings)
+        public void Check(IHashProvider hashProvider, CoinSettings coinSettings)
         {
             // Check if the transaction hash is correct
-            if (Hash != ToHash(provider))
+            if (Hash != ToHash(hashProvider))
                 throw new TransactionAssertionException($"Invalid transaction hash '{Hash}'");
 
-            Data.Check(coinSettings);
+            Data.Check(coinSettings, hashProvider);
         }
     }
 }

@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Models
 {
     public class TransactionBuilder
     {
+        private readonly IHashProvider _hashProvider;
         private string _secretKey;
         private TransactionType _type;
         private long _feeAmount;
@@ -15,8 +17,9 @@ namespace NaiveCoin.Models
         private long? _totalAmount;
         private IEnumerable<TransactionOutput> _utxo;
 
-        public TransactionBuilder()
+        public TransactionBuilder(IHashProvider hashProvider)
         {
+            _hashProvider = hashProvider;
             _type = TransactionType.Regular;
         }
 
@@ -73,7 +76,7 @@ namespace NaiveCoin.Models
             // For each transaction input, calculates the hash of the input and signs the data
             var inputs = _utxo.Select(utxo =>
             {
-                utxo.Signature = CryptoEdDsaUtil.SignHash(CryptoEdDsaUtil.GenerateKeyPairFromSecret(_secretKey), CryptoUtil.ObjectHash(new
+                utxo.Signature = CryptoEdDsaUtil.SignHash(CryptoEdDsaUtil.GenerateKeyPairFromSecret(_secretKey), _hashProvider.ComputeHash(new
                 {
                     Transaction = utxo.TransactionId,
                     utxo.Index,
