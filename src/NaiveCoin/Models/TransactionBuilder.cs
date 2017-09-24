@@ -76,7 +76,8 @@ namespace NaiveCoin.Models
             // For each transaction input, calculates the hash of the input and signs the data
             var inputs = _utxo.Select(utxo =>
             {
-                utxo.Signature = CryptoEdDsaUtil.SignHash(CryptoEdDsaUtil.GenerateKeyPairFromSecret(_secretKey), _hashProvider.ComputeHash(new
+                var keyPair = CryptoEdDsaUtil.GenerateKeyPairFromSecret(_secretKey);
+                utxo.Signature = CryptoEdDsaUtil.SignHash(keyPair, _hashProvider.ComputeHash(new
                 {
                     Transaction = utxo.TransactionId,
                     utxo.Index,

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Chaos.NaCl;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
+using NaiveCoin.Core.Helpers;
 using NaiveCoin.Models;
 
 namespace NaiveCoin.DataAccess
@@ -110,7 +110,7 @@ namespace NaiveCoin.DataAccess
 
                 var outputs = db.Query<TransactionItem>(sql, new
                 {
-                    Address = CryptoBytes.FromHexString(address),
+                    Address = address.FromHex(),
                     Type = type
                 });
 

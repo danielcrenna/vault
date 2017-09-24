@@ -27,7 +27,7 @@
             return _addresses.GenerateAddress(wallet);
         }
 
-        public string GenerateSecret(Wallet wallet)
+        public byte[] GenerateSecret(Wallet wallet)
         {
             return _secrets.GenerateSecret(wallet);
         }

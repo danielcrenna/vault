@@ -1,6 +1,9 @@
 TODO/Ideas:
 ===========
 [ ] GetAllBlocks should support Range, or even enforce it
+[ ] Remove Index from KeyPair
+[ ] KeyPair properties should be byte[] to eliminate unnecessary thunking
+[ ] Need to wipe all working arrays
 [ ] Encrypt Sqlite databases
 [ ] Need a way to enforce coin settings are the same between peers (another hash?)
 [ ] CLI client

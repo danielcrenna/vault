@@ -14,8 +14,8 @@ namespace NaiveCoin.Wallets
         
         public string GenerateAddress(Wallet wallet)
         {
-            byte[] randomBytes = new byte[_buffer];
-            using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
+            var randomBytes = new byte[_buffer];
+            using (var rng = RandomNumberGenerator.Create())
                 rng.GetBytes(randomBytes);
             return randomBytes.ToHex();
         }

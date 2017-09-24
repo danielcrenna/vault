@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
-using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Core.Helpers
 {
@@ -22,6 +22,28 @@ namespace NaiveCoin.Core.Helpers
             foreach (var b in value)
                 sb.Append(b.ToString("x2"));
             return sb.ToString();
+        }
+
+        public static byte[] FromHex(this string input)
+        {
+            Contract.Assert(!string.IsNullOrWhiteSpace(input));
+            Contract.Assert(input.Length % 2 == 0);
+
+            var result = new byte[input.Length / 2];
+            for (var i = 0; i < result.Length; i++)
+                result[i] = Convert.ToByte(input.Substring(i * 2, 2), 16);
+            return result;
+        }
+
+        public static byte[] Sha256(this byte[] input)
+        {
+            using (var algorithm = SHA256.Create())
+                return algorithm.ComputeHash(input);
+        }
+
+        public static byte[] Sha256(this string input)
+        {
+            return Sha256(Encoding.UTF8.GetBytes(input));
         }
 
         /// <summary>
@@ -45,11 +67,6 @@ namespace NaiveCoin.Core.Helpers
         public static bool VerifyPassword(string password, string passwordHash)
         {
             return Pbkdf2.VerifyPassword(password, passwordHash);
-        }
-
-        public static bool SlowEquals(byte[] a, byte[] b)
-        {
-            return Pbkdf2.SlowEquals(a, b);
         }
     }
 }

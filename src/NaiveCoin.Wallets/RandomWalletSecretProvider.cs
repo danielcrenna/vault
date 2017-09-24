@@ -21,12 +21,12 @@ namespace NaiveCoin.Wallets
             _buffer = (ushort) (bitsOfEntropy / 8);
         }
 
-        public string GenerateSecret(Wallet wallet)
+        public byte[] GenerateSecret(Wallet wallet)
         {
             byte[] randomBytes = new byte[_buffer];
             using (RandomNumberGenerator rng = RandomNumberGenerator.Create())
                 rng.GetBytes(randomBytes);
-            return randomBytes.ToHex();
+            return randomBytes;
         }
     }    
 }

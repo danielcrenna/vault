@@ -8,7 +8,7 @@ namespace Chaos.NaCl
         public static readonly int PublicKeySizeInBytes = 32;
         public static readonly int SignatureSizeInBytes = 64;
         public static readonly int ExpandedPrivateKeySizeInBytes = 32 * 2;
-        public static readonly int PrivateKeySeedSizeInBytes = 1024;
+        public static readonly int PrivateKeySeedSizeInBytes = 32;
         public static readonly int SharedKeySizeInBytes = 32;
 
         public static bool Verify(ArraySegment<byte> signature, ArraySegment<byte> message, ArraySegment<byte> publicKey)
@@ -59,9 +59,7 @@ namespace Chaos.NaCl
 
         public static byte[] PublicKeyFromSeed(byte[] privateKeySeed)
         {
-            byte[] privateKey;
-            byte[] publicKey;
-            KeyPairFromSeed(out publicKey, out privateKey, privateKeySeed);
+            KeyPairFromSeed(out var publicKey, out var privateKey, privateKeySeed);
             CryptoBytes.Wipe(privateKey);
             return publicKey;
         }

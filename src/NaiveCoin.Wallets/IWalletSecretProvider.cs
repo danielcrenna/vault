@@ -2,6 +2,6 @@
 {
     public interface IWalletSecretProvider
     {
-        string GenerateSecret(Wallet wallet);
+        byte[] GenerateSecret(Wallet wallet);
     }
 }

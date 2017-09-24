@@ -9,7 +9,7 @@ namespace NaiveCoin.Wallets
     {
         public string Id { get; internal set; }
         public string PasswordHash { get; internal set; }
-        public string Secret { get; set; }
+        public byte[] Secret { get; set; }
         public IList<KeyPair> KeyPairs { get; } = new List<KeyPair>();
 
         internal Wallet() { /* Required for serialization */ }

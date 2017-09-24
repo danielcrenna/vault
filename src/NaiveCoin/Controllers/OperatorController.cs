@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Chaos.NaCl;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using NaiveCoin.Core.Helpers;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using NaiveCoin.Services;
@@ -106,10 +106,10 @@ namespace NaiveCoin.Controllers
             try
             {
                 Transaction newTransaction = _operator.CreateTransaction(id,
-                    CryptoBytes.FromHexString(model.FromAddress), 
-                    CryptoBytes.FromHexString(model.ToAddress), 
-                    model.Amount, 
-                    CryptoBytes.FromHexString(model.ChangeAddress)
+                    model.FromAddress.FromHex(),
+                    model.ToAddress.FromHex(), 
+                    model.Amount,
+                    model.ChangeAddress.FromHex()
                 );
 
                 newTransaction.Check(_hashProvider, _coinSettings);

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NaiveCoin.Core.Providers
+﻿namespace NaiveCoin.Core.Providers
 {
     public interface IHashProvider
     {

@@ -22,18 +22,19 @@ namespace NaiveCoin.Wallets
 
         public string GenerateAddress(Wallet wallet)
         {
-            if (string.IsNullOrWhiteSpace(wallet.Secret))
+            if (wallet.Secret == null || wallet.Secret.Length == 0)
                 _secrets.GenerateSecret(wallet);
 
             // Generate next seed based on the first secret or a new secret from the last key pair
             var lastKeyPair = wallet.KeyPairs.LastOrDefault();
             var seed = lastKeyPair == null ? wallet.Secret : CryptoEdDsaUtil.GenerateSecret(lastKeyPair.PrivateKey);
 
-            var keyPairRaw = CryptoEdDsaUtil.GenerateKeyPairFromSecret(seed);
+            var keyPair = CryptoEdDsaUtil.GenerateKeyPairFromSecret(seed);
+
             var newKeyPair = new KeyPair(
                 wallet.KeyPairs.Count + 1,
-                keyPairRaw.Item2.ToHex(),
-                keyPairRaw.Item1.ToHex()
+                keyPair.Item2.ToHex(),
+                keyPair.Item1.ToHex()
             );
 
             wallet.KeyPairs.Add(newKeyPair);

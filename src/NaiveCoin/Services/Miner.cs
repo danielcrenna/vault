@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Chaos.NaCl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveCoin.Models;
@@ -58,7 +57,7 @@ namespace NaiveCoin.Services
                             new TransactionItem
                             {
                                 Amount = _coinSettings.FeePerTransaction * transactions.Count, // satoshis format
-                                Address = CryptoBytes.FromHexString(address) // INFO: Usually here is a locking script (to check who and when this transaction output can be used), in this case it's a simple destination address     
+                                Address = address.FromHex() // INFO: Usually here is a locking script (to check who and when this transaction output can be used), in this case it's a simple destination address     
                             }
                         }
                     }
@@ -83,7 +82,7 @@ namespace NaiveCoin.Services
                             new TransactionItem
                             {
                                 Amount = _coinSettings.Mining.MiningReward,
-                                Address = CryptoBytes.FromHexString(address) // INFO: Usually here is a locking script (to check who and when this transaction output can be used), in this case it's a simple destination address     
+                                Address = address.FromHex() // INFO: Usually here is a locking script (to check who and when this transaction output can be used), in this case it's a simple destination address     
                             }
                         }
                     }
