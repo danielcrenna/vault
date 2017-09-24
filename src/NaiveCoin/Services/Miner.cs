@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Chaos.NaCl;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveCoin.Models;
-using NaiveCoin.Core.Providers;
 using NaiveCoin.Core.Helpers;
 
 namespace NaiveCoin.Services
@@ -15,14 +13,14 @@ namespace NaiveCoin.Services
     public class Miner
     {
         private readonly Blockchain _blockchain;
-        private readonly IObjectHashProvider _hashProvider;
+        private readonly IProofOfWork _proofOfWork;
         private readonly ILogger<Miner> _logger;
         private readonly CoinSettings _coinSettings;
 
-        public Miner(Blockchain blockchain, IObjectHashProvider hashProvider, IOptions<CoinSettings> coinSettings, ILogger<Miner> logger)
+        public Miner(Blockchain blockchain, IProofOfWork proofOfWork, IOptions<CoinSettings> coinSettings, ILogger<Miner> logger)
         {
             _blockchain = blockchain;
-            _hashProvider = hashProvider;
+            _proofOfWork = proofOfWork;
             _logger = logger;
             _coinSettings = coinSettings.Value;
         }
@@ -31,7 +29,7 @@ namespace NaiveCoin.Services
         {
             var baseBlock = GenerateNextBlock(address, _blockchain.GetLastBlock(), _blockchain.GetAllTransactions());
 
-            return Task.Run(() => ProveWorkFor(baseBlock, _blockchain.GetDifficulty(baseBlock.Index.GetValueOrDefault())));
+            return Task.Run(() => _proofOfWork.ProveWorkFor(baseBlock, _blockchain.GetDifficulty(baseBlock.Index.GetValueOrDefault())));
         }
 
         private Block GenerateNextBlock(string address, Block previousBlock, IEnumerable<Transaction> pendingTransactions)
@@ -40,7 +38,7 @@ namespace NaiveCoin.Services
             var previousHash = previousBlock.Hash;
             var timestamp = DateTimeOffset.UtcNow.Ticks;
 
-            // Get the first two avaliable transactions, if there aren't 2, it's empty
+            // Get the first two available transactions, if there aren't 2, it's empty
             var transactions = pendingTransactions.Take(2).ToList();
 
             // Add fee transaction (1 satoshi per transaction)
@@ -102,28 +100,6 @@ namespace NaiveCoin.Services
                 Timestamp = timestamp,
                 Transactions = transactions
             };
-        }
-
-        private Block ProveWorkFor(Block block, double difficulty)
-        {
-            _logger?.LogInformation($"Mining a new block with difficulty '{difficulty}'");
-
-            double? blockDifficulty;
-            var sw = Stopwatch.StartNew();
-
-            // INFO: Every cryptocurrency has a different way to prove work, this is a simple hash sequence
-
-            // Loop incrementing the nonce to find the hash at desired difficulty
-            do
-            {
-                block.Timestamp = DateTimeOffset.UtcNow.Ticks;
-                block.Nonce++;
-                block.Hash = block.ToHash(_hashProvider);
-                blockDifficulty = block.GetDifficulty();
-            } while (blockDifficulty >= difficulty);
-
-            _logger?.LogInformation($"Block found: time '{sw.Elapsed.TotalSeconds} sec' difficulty '{difficulty}' hash '{block.Hash}' nonce '{block.Nonce}'");
-            return block;
         }
     }
 }

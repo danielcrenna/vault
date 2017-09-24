@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using Newtonsoft.Json;
@@ -12,6 +13,7 @@ namespace NaiveCoin.Services
     public class Blockchain
     {
         private readonly IBlockRepository _blocks;
+        private readonly IProofOfWork _proofOfWork;
         private readonly ITransactionRepository _transactions;
         private readonly IObjectHashProvider _hashProvider;
         private readonly ILogger _logger;
@@ -19,14 +21,15 @@ namespace NaiveCoin.Services
         private readonly CoinSettings _coinSettings;
         private readonly JsonSerializerSettings _jsonSettings;
 
-        public Blockchain(CoinSettings coinSettings, IBlockRepository blocks, ITransactionRepository transactions, IObjectHashProvider hashProvider, JsonSerializerSettings jsonSettings, ILogger<Blockchain> logger)
+        public Blockchain(IOptions<CoinSettings> coinSettings, IBlockRepository blocks, IProofOfWork proofOfWork, ITransactionRepository transactions, IObjectHashProvider hashProvider, JsonSerializerSettings jsonSettings, ILogger<Blockchain> logger)
         {
-            _coinSettings = coinSettings;
+            _coinSettings = coinSettings.Value;
             _blocks = blocks;
             _transactions = transactions;
             _hashProvider = hashProvider;
             _logger = logger;
             _jsonSettings = jsonSettings;
+            _proofOfWork = proofOfWork;
 
             Init();
         }
@@ -69,14 +72,7 @@ namespace NaiveCoin.Services
 
         public double GetDifficulty(long index)
         {
-            var pow = _coinSettings.ProofOfWork;
-
-            // INFO: The difficulty is the formula that naivecoin choose to check the proof a work, this number is later converted to base 16 to represent the minimal initial hash expected value
-
-            // Calculates the difficulty based on the index since the difficulty value increases every two blocks        
-            return Math.Max(
-                Math.Floor(pow.BaseDifficulty / Math.Pow(Math.Floor((index + 1D) / pow.EveryXBlocks) + 1,
-                               pow.PowCurve)), 0);
+            return _proofOfWork.GetDifficulty(index);
         }
 
         public IEnumerable<Transaction> GetAllTransactions()

@@ -42,6 +42,10 @@ namespace NaiveCoin
                 services.AddSingleton<IWalletProvider>(r => provider);
                 services.AddSingleton<IWalletAddressProvider>(r => provider);
                 services.AddSingleton<IWalletSecretProvider>(r => provider);
+
+                services.AddSingleton<IProofOfWork>(r =>
+                    new SimpleProofOfWork(r.GetRequiredService<IObjectHashProvider>(),
+                        r.GetRequiredService<IOptions<CoinSettings>>(), r.GetService<ILogger<SimpleProofOfWork>>()));
             }
 
             // Repositories:
@@ -57,8 +61,9 @@ namespace NaiveCoin
             // Services:
             {
                 services.AddScoped(r => new Blockchain(
-                    r.GetRequiredService<IOptions<CoinSettings>>().Value, 
-                    r.GetRequiredService<IBlockRepository>(), 
+                    r.GetRequiredService<IOptions<CoinSettings>>(), 
+                    r.GetRequiredService<IBlockRepository>(),
+                    r.GetRequiredService<IProofOfWork>(),
                     r.GetRequiredService<ITransactionRepository>(), 
                     r.GetRequiredService<IObjectHashProvider>(), 
                     r.GetRequiredService<JsonSerializerSettings>(), 
@@ -66,7 +71,7 @@ namespace NaiveCoin
 
                 services.AddScoped(r => new Miner(
                     r.GetRequiredService<Blockchain>(),
-                    r.GetRequiredService<IObjectHashProvider>(),
+                    r.GetRequiredService<IProofOfWork>(),
                     r.GetRequiredService<IOptions<CoinSettings>>(),
                     r.GetService<ILogger<Miner>>())
                 );
