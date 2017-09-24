@@ -9,7 +9,7 @@ namespace NaiveCoin.Core.Helpers
     {
         public static string GenerateSecret(string seed)
         {
-            return Pbkdf2.CreateRawHash(seed, "fixed_salt_is_bad_mkay", 64000, 512, HashAlgorithmName.SHA512).ToHex();
+            return Pbkdf2.CreateRawHash(seed, "salt", 64000, 512, HashAlgorithmName.SHA512).ToHex();
         }
 
         public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(string secret)
@@ -19,7 +19,7 @@ namespace NaiveCoin.Core.Helpers
             return GenerateKeyPairFromSecret(privateKeySeed);
         }
 
-        private static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
+        public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
         {
             Ed25519.KeyPairFromSeed(out var publicKey, out var privateKey,
                 privateKeySeed);
