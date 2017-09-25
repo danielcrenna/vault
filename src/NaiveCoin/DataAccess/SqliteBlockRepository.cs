@@ -13,7 +13,7 @@ namespace NaiveCoin.DataAccess
     {
         private readonly ILogger<SqliteBlockRepository> _logger;
 
-        public SqliteBlockRepository(string @namespace, ILogger<SqliteBlockRepository> logger) : base(@namespace, "blocks", logger)
+        public SqliteBlockRepository(string @namespace, string databaseName, ILogger<SqliteBlockRepository> logger) : base(@namespace, databaseName, logger)
         {
             _logger = logger;
         }

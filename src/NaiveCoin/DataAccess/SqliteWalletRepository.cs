@@ -14,7 +14,7 @@ namespace NaiveCoin.DataAccess
         private readonly IWalletAddressProvider _addressProvider;
         private readonly ILogger<SqliteWalletRepository> _logger;
 
-        public SqliteWalletRepository(string @namespace, IWalletSecretProvider secretProvider, IWalletAddressProvider addressProvider, ILogger<SqliteWalletRepository> logger) : base(@namespace, "wallets", logger)
+        public SqliteWalletRepository(string @namespace, string databaseName, IWalletSecretProvider secretProvider, IWalletAddressProvider addressProvider, ILogger<SqliteWalletRepository> logger) : base(@namespace, databaseName, logger)
         {
             _secretProvider = secretProvider;
             _addressProvider = addressProvider;

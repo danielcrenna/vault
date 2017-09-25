@@ -14,7 +14,7 @@ namespace NaiveCoin.DataAccess
         private readonly ITransactionDataSerializer _dataSerializer;
         private readonly ILogger<SqliteTransactionRepository> _logger;
 
-        public SqliteTransactionRepository(string @namespace, ITransactionDataSerializer dataSerializer, ILogger<SqliteTransactionRepository> logger) : base(@namespace, "transactions", logger)
+        public SqliteTransactionRepository(string @namespace, string databaseName, ITransactionDataSerializer dataSerializer, ILogger<SqliteTransactionRepository> logger) : base(@namespace, databaseName, logger)
         {
             _dataSerializer = dataSerializer;
             _logger = logger;

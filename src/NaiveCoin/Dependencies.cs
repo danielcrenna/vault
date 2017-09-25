@@ -49,9 +49,9 @@ namespace NaiveCoin
 
             // Repositories:
             {
-                services.AddScoped<IBlockRepository>(r => new SqliteBlockRepository(Namespace, r.GetService<ILogger<SqliteBlockRepository>>()));
-                services.AddScoped<ITransactionRepository>(r => new SqliteTransactionRepository(Namespace, r.GetRequiredService<ITransactionDataSerializer>(), r.GetService<ILogger<SqliteTransactionRepository>>()));
-                services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace,
+                services.AddScoped<IBlockRepository>(r => new SqliteBlockRepository(Namespace, "blockchain", r.GetService<ILogger<SqliteBlockRepository>>()));
+                services.AddScoped<ITransactionRepository>(r => new SqliteTransactionRepository(Namespace, "blockchain", r.GetRequiredService<ITransactionDataSerializer>(), r.GetService<ILogger<SqliteTransactionRepository>>()));
+                services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace, "wallets",
                     r.GetRequiredService<IWalletSecretProvider>(),
                     r.GetRequiredService<IWalletAddressProvider>(), 
                     r.GetService<ILogger<SqliteWalletRepository>>()));
