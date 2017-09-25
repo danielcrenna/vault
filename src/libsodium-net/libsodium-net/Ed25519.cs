@@ -75,11 +75,9 @@ namespace Sodium
       // NOTE: This assumes this is possible for the wallet implementation.
       // (See: https://bitcoin.stackexchange.com/a/42456)
 
-      var seed = new byte[32];
       var pk = new byte[32];
       var sk = new byte[32];
-      SodiumLibrary.crypto_sign_ed25519_sk_to_seed(seed, privateKey);
-      SodiumLibrary.crypto_sign_seed_keypair(pk, sk, seed);
+      SodiumLibrary.crypto_sign_seed_keypair(pk, sk, privateKey);
       publicKey = pk;
     }
   }
