@@ -20,8 +20,8 @@ namespace NaiveCoin.Wallets.Tests
             Wallet wallet1 = _provider.Value.Create(passphrase);
             Wallet wallet2 = _provider.Value.Create(passphrase);
 
-            Assert.True(CryptoUtil.VerifyPassword(passphrase, wallet1.PasswordHash));
-            Assert.True(CryptoUtil.VerifyPassword(passphrase, wallet2.PasswordHash));
+            Assert.True(PasswordUtil.Verify(passphrase, wallet1.PasswordHash));
+            Assert.True(PasswordUtil.Verify(passphrase, wallet2.PasswordHash));
         }
     }
 }

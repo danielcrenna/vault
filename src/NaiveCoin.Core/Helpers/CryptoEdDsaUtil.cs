@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using System.Text;
 using Sodium;
 
@@ -7,17 +6,7 @@ namespace NaiveCoin.Core.Helpers
 {
     public class CryptoEdDsaUtil
     {
-	    public static byte[] GenerateSecret(byte[] seed)
-	    {
-		    return GenerateSecret(seed.ToHex());
-	    }
-
-		public static byte[] GenerateSecret(string seed)
-        {
-            return Pbkdf2.CreateRawHash(seed, "salt", 64000, 32, HashAlgorithmName.SHA512);
-        }
-		
-        public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
+	    public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
         {
             Ed25519.KeyPairFromSeed(out var publicKey, out var privateKey, privateKeySeed);
             return new Tuple<byte[], byte[]>(publicKey, privateKey);

@@ -47,7 +47,7 @@ namespace NaiveCoin.Services
         public Wallet CheckWalletPassword(string id, string password)
         {
             var wallet = GetWalletById(id);
-            if (wallet != null && CryptoUtil.VerifyPassword(password, wallet.PasswordHash))
+            if (wallet != null && PasswordUtil.Verify(password, wallet.PasswordHash))
                 return wallet;
             return null;
         }
