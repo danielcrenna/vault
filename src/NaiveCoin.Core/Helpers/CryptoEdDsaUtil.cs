@@ -16,13 +16,7 @@ namespace NaiveCoin.Core.Helpers
         {
             return Pbkdf2.CreateRawHash(seed, "salt", 64000, 32, HashAlgorithmName.SHA512);
         }
-
-        [Obsolete]
-        public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(string secret)
-        {
-            return GenerateKeyPairFromSecret(Encoding.UTF8.GetBytes(secret));
-        }
-
+		
         public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
         {
             Ed25519.KeyPairFromSeed(out var publicKey, out var privateKey,
@@ -33,7 +27,7 @@ namespace NaiveCoin.Core.Helpers
 
         public static Tuple<byte[], byte[]> GenerateKeyPairFromPrivateKey(byte[] privateKey)
         {
-            Ed25519.KeyPairFromPrivateKey(out var publicKey, privateKey);
+            Ed25519.PublicKeyFromPrivateKey(out var publicKey, privateKey);
             return new Tuple<byte[], byte[]>(publicKey, privateKey);
         }
 

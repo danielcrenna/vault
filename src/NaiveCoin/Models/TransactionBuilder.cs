@@ -9,7 +9,7 @@ namespace NaiveCoin.Models
     public class TransactionBuilder
     {
         private readonly IHashProvider _hashProvider;
-        private string _secretKey;
+        private byte[] _secretKey;
         private TransactionType _type;
         private long _feeAmount;
         private byte[] _changeAddress;
@@ -50,11 +50,18 @@ namespace NaiveCoin.Models
 
         public TransactionBuilder Sign(string secretKey)
         {
-            _secretKey = secretKey;
+            _secretKey = secretKey.FromHex();
             return this;
         }
 
-        public TransactionBuilder Type(TransactionType type)
+	    public TransactionBuilder Sign(byte[] secretKey)
+	    {
+		    _secretKey = secretKey;
+		    return this;
+	    }
+
+
+		public TransactionBuilder Type(TransactionType type)
         {
             _type = type;
             return this;
