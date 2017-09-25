@@ -15,7 +15,7 @@
         private readonly DeterministicWalletAddressProvider _addresses;
         private readonly FixedSaltWalletFactoryProvider _factory;
 
-        public BrainWalletProvider(string salt = "rosebud")
+        public BrainWalletProvider(string salt = "_NaiveCoin_Salt_")
         {
             _secrets = new PasswordHashSecretProvider();
             _addresses = new DeterministicWalletAddressProvider(_secrets);

@@ -12,7 +12,7 @@ namespace NaiveCoin.Wallets.Tests
         {
             _provider = provider;
         }
-
+		
         [Theory]
         [InlineData("purple monkey dishwasher")]
         public void The_wallet_password_hash_is_verifiable(string passphrase)

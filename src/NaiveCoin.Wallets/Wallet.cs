@@ -39,7 +39,7 @@ namespace NaiveCoin.Wallets
             var wallet = new Wallet
             {
                 Id = CryptoUtil.RandomString(),
-                PasswordHash = CryptoUtil.PasswordHash(password, salt)
+                PasswordHash = CryptoUtil.HashPassword(password, salt)
             };
             return wallet;
         }

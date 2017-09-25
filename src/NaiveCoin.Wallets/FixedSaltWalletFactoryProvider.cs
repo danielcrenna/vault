@@ -1,4 +1,6 @@
-﻿namespace NaiveCoin.Wallets
+﻿using System.Diagnostics.Contracts;
+
+namespace NaiveCoin.Wallets
 {
     public class FixedSaltWalletFactoryProvider : IWalletFactoryProvider
     {
@@ -6,12 +8,15 @@
 
         public FixedSaltWalletFactoryProvider(string salt)
         {
-            _salt = salt;
+	        Contract.Assert(!string.IsNullOrWhiteSpace(salt));
+			Contract.Assert(salt.Length == 16);
+			_salt = salt;
         }
 
         public Wallet Create(string password)
         {
-            return Wallet.FromPassword(password, _salt);
+			Contract.Assert(!string.IsNullOrWhiteSpace(password));
+			return Wallet.FromPassword(password, _salt);
         }
     }
 }

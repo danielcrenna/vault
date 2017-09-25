@@ -2,8 +2,7 @@ TODO/Ideas:
 ===========
 [ ] GetAllBlocks should support Range, or even enforce it
 [ ] Remove Index from KeyPair
-[ ] KeyPair properties should be byte[] to eliminate unnecessary thunking
-[ ] Need to wipe all working arrays
+[ ] Need to wipe all working arrays (ala Chaos.NaCl)
 [ ] Encrypt Sqlite databases
 [ ] Need a way to enforce coin settings are the same between peers (another hash?)
 [ ] CLI client
@@ -35,6 +34,5 @@ TODO/Ideas:
 [ ] Pluggable storage
 [ ] Pluggable consensus
 [ ] Built-in stratum pool miner?
-[ ] Export/Import private key with WIF
 [ ] Vanity addresses (ala vanitygen)
-[ ] Bootstrap chain
+[ ] Bootstrap chain (ala log shipping)

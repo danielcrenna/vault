@@ -19,9 +19,7 @@ namespace NaiveCoin.Core.Helpers
 		
         public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
         {
-            Ed25519.KeyPairFromSeed(out var publicKey, out var privateKey,
-                privateKeySeed);
-
+            Ed25519.KeyPairFromSeed(out var publicKey, out var privateKey, privateKeySeed);
             return new Tuple<byte[], byte[]>(publicKey, privateKey);
         }
 
@@ -33,9 +31,7 @@ namespace NaiveCoin.Core.Helpers
 
         public static byte[] SignHash(Tuple<byte[], byte[]> keyPair, string message)
         {
-            var signature = Ed25519.Sign(Encoding.UTF8.GetBytes(message), keyPair.Item2);
-
-            return signature;
+            return Ed25519.Sign(Encoding.UTF8.GetBytes(message), keyPair.Item2);
         }
 
         public static bool VerifySignature(byte[] publicKey, byte[] signature, byte[] message)

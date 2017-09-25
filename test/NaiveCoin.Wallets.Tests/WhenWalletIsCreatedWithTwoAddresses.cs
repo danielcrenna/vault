@@ -45,7 +45,7 @@ namespace NaiveCoin.Wallets.Tests
 			var wif1 = _wif.Value.Export(wallet1, wallet1.KeyPairs[0].PublicKey);
 			var wif2 = _wif.Value.Export(wallet1, wallet1.KeyPairs[1].PublicKey);
 
-			var factory = new FixedSaltWalletFactoryProvider("salt");
+			var factory = new FixedSaltWalletFactoryProvider("_NaiveCoin_Salt_");
 			var wallet2 = factory.Create("rosebud");
 			_wif.Value.Import(wallet2, wif1);
 			_wif.Value.Import(wallet2, wif2);
