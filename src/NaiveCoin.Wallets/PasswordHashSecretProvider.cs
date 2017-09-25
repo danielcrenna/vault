@@ -1,6 +1,5 @@
 using NaiveCoin.Core.Helpers;
 using System.Diagnostics.Contracts;
-using System.Text;
 
 namespace NaiveCoin.Wallets
 {

@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Chaos.NaCl\Chaos.NaCl.csproj" />
+    <ProjectReference Include="..\libsodium-net\libsodium-net\libsodium-net.csproj" />
   </ItemGroup>
 
 </Project>

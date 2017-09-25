@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{E0058907-0471-4950-A816-18BA2391FB22}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chaos.NaCl", "src\Chaos.NaCl\Chaos.NaCl.csproj", "{AD85F0D8-09C6-46D1-8577-9A5C3F556331}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin", "src\NaiveCoin\NaiveCoin.csproj", "{00209BFE-B3DE-4190-A443-64B3E8D5A33C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Tests", "test\NaiveCoin.Tests\NaiveCoin.Tests.csproj", "{71F85FE7-7C66-4E40-8398-974394CCB910}"
@@ -20,8 +18,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CDB35376-B48C-42B0-BC8B-1B5B55829FC5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{991B4E3D-37D4-412A-B706-C29ACA0ECDB9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Core", "src\NaiveCoin.Core\NaiveCoin.Core.csproj", "{8E7E3B75-7D93-4EAB-8730-0C5403820E93}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Wallets", "src\NaiveCoin.Wallets\NaiveCoin.Wallets.csproj", "{4EE4BEE6-453C-467E-9CCD-1FEFE6E40BA1}"
@@ -30,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Core.Tests", "tes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NaiveCoin.Wallets.Tests", "test\NaiveCoin.Wallets.Tests\NaiveCoin.Wallets.Tests.csproj", "{BA6325F4-DB23-4D42-8B48-58B331EA4612}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaiveCoin.Cli", "NaiveCoin.Cli\NaiveCoin.Cli.csproj", "{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libsodium-net", "src\libsodium-net\libsodium-net\libsodium-net.csproj", "{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,10 +34,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AD85F0D8-09C6-46D1-8577-9A5C3F556331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD85F0D8-09C6-46D1-8577-9A5C3F556331}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD85F0D8-09C6-46D1-8577-9A5C3F556331}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD85F0D8-09C6-46D1-8577-9A5C3F556331}.Release|Any CPU.Build.0 = Release|Any CPU
 		{00209BFE-B3DE-4190-A443-64B3E8D5A33C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00209BFE-B3DE-4190-A443-64B3E8D5A33C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00209BFE-B3DE-4190-A443-64B3E8D5A33C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,20 +58,19 @@ Global
 		{BA6325F4-DB23-4D42-8B48-58B331EA4612}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA6325F4-DB23-4D42-8B48-58B331EA4612}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA6325F4-DB23-4D42-8B48-58B331EA4612}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{AD85F0D8-09C6-46D1-8577-9A5C3F556331} = {E0058907-0471-4950-A816-18BA2391FB22}
 		{71F85FE7-7C66-4E40-8398-974394CCB910} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
 		{8CD7FC48-33BD-4E7E-AFC1-B7175D85D894} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
 		{BA6325F4-DB23-4D42-8B48-58B331EA4612} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
-		{5CA993A2-C3EA-42D3-83C8-13DCF7CB7B4F} = {991B4E3D-37D4-412A-B706-C29ACA0ECDB9}
+		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27} = {E0058907-0471-4950-A816-18BA2391FB22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9332D765-4E73-4CAD-88FB-243D4CFF2185}

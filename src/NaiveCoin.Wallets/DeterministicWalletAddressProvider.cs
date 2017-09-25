@@ -33,8 +33,8 @@ namespace NaiveCoin.Wallets
 
             var newKeyPair = new KeyPair(
                 wallet.KeyPairs.Count + 1,
-                keyPair.Item2.ToHex(),
-                keyPair.Item1.ToHex()
+                keyPair.Item1.ToHex(),
+                keyPair.Item2.ToHex()
             );
 
             wallet.KeyPairs.Add(newKeyPair);

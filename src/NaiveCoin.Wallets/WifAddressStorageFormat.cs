@@ -11,39 +11,37 @@ namespace NaiveCoin.Wallets
     /// </summary>
     public class WifAddressStorageFormat : IWalletAddressStorageFormat
     {
-        public KeyPair Import(Wallet wallet, string wif)
-        {
-            // Take a Wallet Import Format string
-            Contract.Assert(wallet != null);
-            Contract.Assert(!string.IsNullOrWhiteSpace(wif));
+      public KeyPair Import(Wallet wallet, string wif)
+      {
+        // Take a Wallet Import Format string
+        Contract.Assert(wallet != null);
+        Contract.Assert(!string.IsNullOrWhiteSpace(wif));
 
-            // Convert it to a byte string using Base58Check encoding
-            var decoded = Base58Check.DecodePlain(wif);
+        // Convert it to a byte string using Base58Check encoding
+        var decoded = Base58Check.DecodePlain(wif);
 
-            // Drop the last 4 checksum bytes from the byte string
-            var privateKey = decoded.Take(decoded.Length - 4);
+        // Drop the last 4 checksum bytes from the byte string
+        var privateKey = decoded.Take(decoded.Length - 4);
 
-            // Drop the first byte (it should be 0x80)
-            privateKey = privateKey.Skip(1);
+        // Drop the first byte (it should be 0x80)
+        privateKey = privateKey.Skip(1);
 
-            // If the private key corresponded to a compressed public key, also drop the last byte (it should be 0x01)
-            privateKey = privateKey.Take(32);
+        // If the private key corresponded to a compressed public key, also drop the last byte (it should be 0x01)
+        privateKey = privateKey.Take(32);
 
-            var importedRaw = CryptoEdDsaUtil.GenerateKeyPairFromPrivateKey(
-                wallet.PasswordHash.FromHex(), 
-                privateKey.ToArray());
+        var importedRaw = CryptoEdDsaUtil.GenerateKeyPairFromPrivateKey(privateKey.ToArray());
 
-            var imported = new KeyPair(
-                wallet.KeyPairs.Count + 1,
-                importedRaw.Item2.ToHex(),
-                importedRaw.Item1.ToHex()
-            );
+        var imported = new KeyPair(
+          wallet.KeyPairs.Count + 1,
+          importedRaw.Item1.ToHex(),
+          importedRaw.Item2.ToHex()
+        );
 
-            wallet.KeyPairs.Add(imported);
-            return imported;
-        }
+        wallet.KeyPairs.Add(imported);
+        return imported;
+      }
 
-        public string Export(Wallet wallet, string publicKey)
+      public string Export(Wallet wallet, string publicKey)
         {
             Contract.Assert(wallet != null);
             Contract.Assert(!string.IsNullOrWhiteSpace(publicKey));
