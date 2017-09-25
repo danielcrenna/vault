@@ -80,7 +80,8 @@ namespace NaiveCoin.Services
                 var response = await _http.PostAsync(url, null);
                 var json = await response.Content.ReadAsStringAsync();
                 var block = JsonConvert.DeserializeObject<Block>(json, _jsonSettings);
-                CheckReceivedBlocks(block);
+
+				await CheckReceivedBlocksAsync(block);
             }
             catch (Exception e)
             {
@@ -104,7 +105,8 @@ namespace NaiveCoin.Services
                 var response = await _http.GetAsync(url);
                 var json = await response.Content.ReadAsStringAsync();
                 var block = JsonConvert.DeserializeObject<Block>(json, _jsonSettings);
-                CheckReceivedBlocks(block);
+
+				await CheckReceivedBlocksAsync(block);
             }
             catch (Exception e)
             {
@@ -140,7 +142,8 @@ namespace NaiveCoin.Services
                 var response = await _http.GetAsync(url);
                 var json = await response.Content.ReadAsStringAsync();
                 var block = JsonConvert.DeserializeObject<Block>(json, _jsonSettings);
-                CheckReceivedBlocks(block);
+
+				await CheckReceivedBlocksAsync(block);
             }
             catch (Exception e)
             {
@@ -235,11 +238,11 @@ namespace NaiveCoin.Services
             }
         }
 
-        public bool? CheckReceivedBlocks(params Block[] blocks)
+        public async Task<bool?> CheckReceivedBlocksAsync(params Block[] blocks)
         {
             var receivedBlocks = blocks.OrderBy(x => x.Index).ToList();
             var latestBlockReceived = receivedBlocks[receivedBlocks.Count - 1];
-            var latestBlockHeld = _blockchain.GetLastBlock();
+            var latestBlockHeld = await _blockchain.GetLastBlockAsync();
 
             // If the received blockchain is not longer than blockchain. Do nothing.
             if (latestBlockReceived.Index <= latestBlockHeld.Index)
@@ -254,7 +257,7 @@ namespace NaiveCoin.Services
             {
                 // We can append the received block to our chain
                 _logger?.LogInformation("Appending received block to our chain");
-                _blockchain.AddBlock(latestBlockReceived);
+                await _blockchain.AddBlockAsync(latestBlockReceived);
                 return true;
             }
 
@@ -268,7 +271,7 @@ namespace NaiveCoin.Services
 
             // Received blockchain is longer than current blockchain
             _logger?.LogInformation("Received blockchain is longer than current blockchain");
-            _blockchain.ReplaceChain(receivedBlocks);
+            await _blockchain.ReplaceChainAsync(receivedBlocks);
             return true;
         }
     }

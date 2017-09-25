@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using NaiveCoin.Core.Providers;
 using NaiveCoin.Extensions;
@@ -21,7 +22,6 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         }
 
         public IHashProvider HashProvider { get; set; }
-
         public BlockDatabaseWithGenesisBlockFixture Fixture { get; set; }
         public CoinSettings CoinSettings { get; }
 
@@ -52,7 +52,7 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         [Fact]
         public void Can_retrieve_genesis_block_by_index()
         {
-            var retrieved = Fixture.Value.GetByIndex(1);
+            var retrieved = Fixture.Value.GetByIndexAsync(1);
             Assert.NotNull(retrieved);
         }
         
@@ -62,22 +62,22 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
             Block block = CoinSettings.GenesisBlock;
             BeforeSave(block);
 
-            var retrieved = Fixture.Value.GetByHash(block.Hash);
+            var retrieved = Fixture.Value.GetByHashAsync(block.Hash);
             Assert.NotNull(retrieved);
         }
 
         [Fact]
-        public void Length_is_one()
+        public async Task Length_is_one()
         {
-            var retrieved = Fixture.Value.GetLength();
+            var retrieved = await Fixture.Value.GetLengthAsync();
             Assert.Equal(1, retrieved);
         }
 
         [Fact]
-        public void Last_block_is_genesis_block()
+        public async Task Last_block_is_genesis_block()
         {
             var genesis = CoinSettings.GenesisBlock;
-            var retrieved = Fixture.Value.GetLastBlock();
+            var retrieved = await Fixture.Value.GetLastBlockAsync();
             Assert.Equal(genesis.Timestamp, retrieved.Timestamp);
         }
 

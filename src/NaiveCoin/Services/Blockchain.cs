@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveCoin.Models;
@@ -38,10 +39,12 @@ namespace NaiveCoin.Services
         public void Init()
         {
             // Create the genesis block if the blockchain is empty
-            if (_blocks.GetLength() == 0)
+	        var height = _blocks.GetLengthAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+	        if (height == 0)
             {
                 foreach (var transaction in _coinSettings.GenesisBlock.Transactions ?? Enumerable.Empty<Transaction>())
                     transaction.Hash = transaction.ToHash(_hashProvider);
+
                 _coinSettings.GenesisBlock.Hash = _coinSettings.GenesisBlock.ToHash(_hashProvider);
                 _blocks.Add(_coinSettings.GenesisBlock);
             }
@@ -50,24 +53,24 @@ namespace NaiveCoin.Services
             _transactions.Delete(_blocks.GetAllTransactionIds());
         }
 
-        public IEnumerable<Block> GetAllBlocks()
+        public IEnumerable<Block> StreamAllBlocks()
         {
-            return _blocks.GetAll();
+            return _blocks.StreamAllBlocks();
         }
 
-        public Block GetBlockByIndex(long index)
+        public async Task<Block> GetBlockByIndexAsync(long index)
         {
-            return _blocks.GetByIndex(index);
+            return await _blocks.GetByIndexAsync(index);
         }
 
-        public Block GetBlockByHash(string hash)
+        public async Task<Block> GetBlockByHashAsync(string hash)
         {
-            return _blocks.GetByHash(hash);
+            return await _blocks.GetByHashAsync(hash);
         }
         
-        public Block GetLastBlock()
+        public async Task<Block> GetLastBlockAsync()
         {
-            return _blocks.GetLastBlock();
+            return await _blocks.GetLastBlockAsync();
         }
 
         public double GetDifficulty(long index)
@@ -85,15 +88,17 @@ namespace NaiveCoin.Services
             return _transactions.GetById(id);
         }
 
-        public Transaction GetTransactionFromBlocks(string transactionId)
+        public async Task<Transaction> GetTransactionFromBlocks(string transactionId)
         {
-            return _blocks.GetByTransactionId(transactionId)?.Transactions.SingleOrDefault(x => x.Id == transactionId);
+	        var blocks = await _blocks.GetByTransactionIdAsync(transactionId);
+
+			return blocks?.Transactions.SingleOrDefault(x => x.Id == transactionId);
         }
 
-        public void ReplaceChain(List<Block> newBlockchain)
+        public async Task ReplaceChainAsync(List<Block> newBlockchain)
         {
             // It doesn't make sense to replace this blockchain by a smaller one
-            if (newBlockchain.Count <= _blocks.GetLength())
+            if (newBlockchain.Count <= await _blocks.GetLengthAsync())
             {
                 var message = $"Blockchain shorter than the current blockchain";
                 _logger?.LogError(message);
@@ -107,10 +112,10 @@ namespace NaiveCoin.Services
             _logger?.LogInformation($"Received blockchain is valid. Replacing current blockchain with received blockchain");
 
             // Get the blocks that diverge from our blockchain
-            var start = (int)(newBlockchain.Count - _blocks.GetLength());
+            var start = (int)(newBlockchain.Count - await _blocks.GetLengthAsync());
             foreach (var block in newBlockchain.Skip(start))
             {
-                AddBlock(block);
+                await AddBlockAsync(block);
             }
         }
 
@@ -143,10 +148,10 @@ namespace NaiveCoin.Services
             return true;
         }
 
-        public Block AddBlock(Block block)
+        public async Task<Block> AddBlockAsync(Block block)
         {
             // It only adds the block if it's valid (we need to compare to the previous one)
-            if (CheckBlock(block, GetLastBlock()))
+            if (CheckBlock(block, await GetLastBlockAsync()))
             {
                 _blocks.Add(block);
 
@@ -249,7 +254,7 @@ namespace NaiveCoin.Services
             transaction.Check(_hashProvider, _coinSettings);
 
             // Verify if the transaction isn't already in the blockchain
-            if (_blocks.GetByTransactionId(transaction.Id) != null)
+            if (_blocks.GetByTransactionIdAsync(transaction.Id) != null)
             {
                 var message = $"Transaction '{transaction.Id}' is already in the blockchain";
                 _logger?.LogError(message);
@@ -257,7 +262,9 @@ namespace NaiveCoin.Services
             }
 
             // Verify if all input transactions are unspent in the blockchain
-            var blockInputs = _blocks.GetAll().SelectMany(x => x.Transactions).SelectMany(x => x.Data.Inputs);
+			// (this needs serious re-work to use snapshots)
+	        var stream = _blocks.StreamAllBlocks();
+		    var blockInputs = stream.SelectMany(x => x.Transactions).SelectMany(x => x.Data.Inputs);
             var txInputs = transaction.Data.Inputs.Zip(blockInputs, (ti, i) => ti.Index == i.Index && ti.TransactionId == i.TransactionId);
             var isInputTransactionsUnspent = txInputs.All(x => false);
             if (!isInputTransactionsUnspent)

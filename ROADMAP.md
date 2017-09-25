@@ -9,7 +9,6 @@ TODO/Ideas:
 [ ] Light client
 [ ] Pluggable transaction types
 [ ] Current implementation has layer/responsibility disease
-[ ] Move pending transactions into the same data file as blocks (artificial performance impact crossing databases)
 [ ] Remove exceptions thrown when they can be handled higher up
 [ ] Audit access of _logger
 [ ] Audit access of JsonConvert

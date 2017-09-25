@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
@@ -31,7 +32,7 @@ namespace NaiveCoin.Controllers
         [HttpGet("blocks")]
         public IActionResult GetAllBlocks()
         {
-            var blocks = _blockchain.GetAllBlocks();
+            var blocks = _blockchain.StreamAllBlocks();
             if (!blocks.Any())
                 return NotFound();
 
@@ -45,7 +46,7 @@ namespace NaiveCoin.Controllers
         [HttpGet("blocks/latest")]
         public IActionResult GetLastBlock()
         {
-            var last = _blockchain.GetLastBlock();
+            var last = _blockchain.GetLastBlockAsync();
             if (last == null)
             {
                 return NotFound(new
@@ -61,9 +62,9 @@ namespace NaiveCoin.Controllers
         /// Attempt to append the chain with the provided block. Used as a mechanism to sync peers. 
         /// </summary>
         [HttpPut("blocks/latest")]
-        public IActionResult VerifyLastBlock([FromBody]Block block)
+        public async Task<IActionResult> VerifyLastBlock([FromBody]Block block)
         {
-            var result = _node.CheckReceivedBlocks(block);
+            var result = await _node.CheckReceivedBlocksAsync(block);
             if (result == null)
             {
                 return Accepted(new
@@ -89,7 +90,7 @@ namespace NaiveCoin.Controllers
         [HttpGet("blocks/{hash}")]
         public IActionResult GetBlockByHash(string hash)
         {
-            var blockFound = _blockchain.GetBlockByHash(hash);
+            var blockFound = _blockchain.GetBlockByHashAsync(hash);
             if (blockFound == null)
                 return NotFound(new
                 {
@@ -105,7 +106,7 @@ namespace NaiveCoin.Controllers
         [HttpGet("blocks/{index}")]
         public IActionResult GetBlockByIndex(long index)
         {
-            var blockFound = _blockchain.GetBlockByIndex(index);
+            var blockFound = _blockchain.GetBlockByIndexAsync(index);
             if (blockFound == null)
                 return NotFound(new
                 {

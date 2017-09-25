@@ -24,11 +24,11 @@ namespace NaiveCoin.Services
             _coinSettings = coinSettings.Value;
         }
 
-        public Task<Block> MineAsync(string address)
+        public async Task<Block> MineAsync(string address)
         {
-            var baseBlock = GenerateNextBlock(address, _blockchain.GetLastBlock(), _blockchain.GetAllTransactions());
+            var baseBlock = GenerateNextBlock(address, await _blockchain.GetLastBlockAsync(), _blockchain.GetAllTransactions());
 
-            return Task.Run(() => _proofOfWork.ProveWorkFor(baseBlock, _blockchain.GetDifficulty(baseBlock.Index.GetValueOrDefault())));
+            return _proofOfWork.ProveWorkFor(baseBlock, _blockchain.GetDifficulty(baseBlock.Index.GetValueOrDefault()));
         }
 
         private Block GenerateNextBlock(string address, Block previousBlock, IEnumerable<Transaction> pendingTransactions)

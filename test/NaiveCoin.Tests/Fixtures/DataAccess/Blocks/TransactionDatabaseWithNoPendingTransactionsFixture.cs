@@ -15,7 +15,7 @@ namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
 
             var serializer = new TransactionDataSerializerFixture();
 
-            Value = new SqliteTransactionRepository($"{Guid.NewGuid()}", serializer.Value, factory.CreateLogger<SqliteTransactionRepository>());
+            Value = new SqliteTransactionRepository($"{Guid.NewGuid()}", "blockchain", serializer.Value, factory.CreateLogger<SqliteTransactionRepository>());
         }
 
         public void Dispose()

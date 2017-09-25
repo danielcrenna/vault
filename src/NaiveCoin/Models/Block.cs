@@ -11,6 +11,7 @@ namespace NaiveCoin.Models
         public long? Timestamp { get; set; }
         public long? Nonce { get; set; }
         public ICollection<Transaction> Transactions { get; set; }
+		public ICollection<BlockObject> Objects { get; set; }
         public string Hash { get; set; }
         
         public double GetDifficulty()

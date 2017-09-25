@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
@@ -18,23 +19,28 @@ namespace NaiveCoin.DataAccess
             _logger = logger;
         }
 
-        public long GetLength()
+        public async Task<long> GetLengthAsync()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                return db.QuerySingleOrDefault<long?>("SELECT MAX(b.'Index') FROM 'Block' b").GetValueOrDefault(0L);
+	            const string sql = "SELECT MAX(b.'Index') FROM 'Block' b";
+
+	            return (await db.QuerySingleOrDefaultAsync<long?>(sql))
+					.GetValueOrDefault(0L);
             }
         }
 
-        public Block GetByTransactionId(string transactionId)
+        public async Task<Block> GetByTransactionIdAsync(string transactionId)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                var block = db.QuerySingleOrDefault<Block>("SELECT b.* FROM 'Block' b " +
-                                                           "LEFT JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index' " +
-                                                           "WHERE bt.'Id' = @Id", new { Id = transactionId });
+	            const string sql = "SELECT b.* FROM 'Block' b " +
+	                               "LEFT JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index' " +
+	                               "WHERE bt.'Id' = @Id";
 
-                TransformBlock(block, db);
+	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new { Id = transactionId });
+
+                await TransformBlockAsync(block, db);
 
                 return block;
             }
@@ -124,7 +130,8 @@ namespace NaiveCoin.DataAccess
             {
                 const string sql = "SELECT bt.'Id' " +
                                    "FROM 'Block' b " +
-                                   "INNER JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index'";
+                                   "INNER JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index' " +
+                                   "ORDER BY b.'Index'";
 
                 var ids = db.Query<string>(sql, buffered: false);
 
@@ -132,7 +139,22 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public IEnumerable<Block> GetAll()
+	    public IEnumerable<BlockObject> StreamAllBlockObjects()
+	    {
+			using (var db = new SqliteConnection($"Data Source={DataFile}"))
+			{
+				const string sql = "SELECT bo.* " +
+				                   "FROM 'Block' b " +
+				                   "INNER JOIN 'BlockObject' bo ON bo.'BlockIndex' = b.'Index' " +
+				                   "ORDER BY b.'Index', bo.'Index'";
+
+				var objects = db.Query<BlockObject>(sql, buffered: false);
+
+				return objects;
+			}
+		}
+
+	    public IEnumerable<Block> StreamAllBlocks()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -142,76 +164,84 @@ namespace NaiveCoin.DataAccess
 
                 foreach (var block in db.Query<Block>(sql, buffered: false))
                 {
-                    TransformBlock(block, db);
+                    TransformBlockAsync(block, db).ConfigureAwait(false).GetAwaiter().GetResult();
 
                     yield return block;
                 }
             }
         }
 
-        public Block GetByIndex(long index)
+        public async Task<Block> GetByIndexAsync(long index)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                var block = db.QuerySingleOrDefault<Block>("SELECT b.* FROM 'Block' b WHERE b.'Index' = @Index", new {Index = index});
+	            const string sql = "SELECT b.* FROM 'Block' b WHERE b.'Index' = @Index";
 
-                TransformBlock(block, db);
+	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new {Index = index});
+
+                await TransformBlockAsync(block, db);
 
                 return block;
             }
         }
 
-        public Block GetByHash(string hash)
+        public async Task<Block> GetByHashAsync(string hash)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                var block = db.QuerySingleOrDefault<Block>("SELECT b.* FROM 'Block' b WHERE b.'Hash' = @Hash", new { Hash = hash });
+	            const string sql = "SELECT b.* FROM 'Block' b WHERE b.'Hash' = @Hash";
 
-                TransformBlock(block, db);
+	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new { Hash = hash });
+
+                await TransformBlockAsync(block, db);
 
                 return block;
             }
         }
 
-        public Block GetLastBlock()
+        public async Task<Block> GetLastBlockAsync()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                var block = db.QuerySingleOrDefault<Block>("SELECT COUNT(1), b.* " +
-                                                           "FROM 'Block' b " +
-                                                           "GROUP BY b.'Index' " +
-                                                           "ORDER BY b.'Index' DESC LIMIT 1");
+	            const string sql = "SELECT COUNT(1), b.* " +
+	                               "FROM 'Block' b " +
+	                               "GROUP BY b.'Index' " +
+	                               "ORDER BY b.'Index' DESC LIMIT 1";
 
-                TransformBlock(block, db);
+	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql);
+
+                await TransformBlockAsync(block, db);
                 
                 return block;
             }
         }
 
-        private static void TransformBlock(Block block, IDbConnection db)
+        private static async Task TransformBlockAsync(Block block, IDbConnection db)
         {
             if (block == null)
                 return;
 
             block.Transactions = new List<Transaction>();
 
-            var transactions = db.Query<Transaction>("SELECT t.* " +
-                                                     "FROM 'BlockTransaction' t " +
-                                                     "WHERE t.'BlockIndex' = @Index", new { block.Index }, buffered: false);
+	        const string transactionsSql = "SELECT t.* " +
+	                                       "FROM 'BlockTransaction' t " +
+	                                       "WHERE t.'BlockIndex' = @Index";
+
+	        var transactions = await db.QueryAsync<Transaction>(transactionsSql, new { block.Index });
 
             foreach (var transaction in transactions)
             {
-                transaction.Data = new TransactionData
-                {
-                    Inputs = db.Query<TransactionItem>("SELECT i.* " +
-                                                       "FROM 'BlockTransactionData' i " +
-                                                       "WHERE i.Type = @Type AND i.TransactionId = @Id",
-                        new { Type = TransactionDataType.Input, transaction.Id }).ToArray(),
+	            const string transactionItemSql = "SELECT i.* " +
+	                                              "FROM 'BlockTransactionItem' i " +
+	                                              "WHERE i.Type = @Type AND i.TransactionId = @Id";
 
-                    Outputs = db.Query<TransactionItem>("SELECT o.* " +
-                                                        "FROM 'BlockTransactionData' o " +
-                                                        "WHERE o.Type = @Type AND o.TransactionId = @Id",
-                        new { Type = TransactionDataType.Output, transaction.Id }).ToArray(),
+				transaction.Data = new TransactionData
+                {
+                    Inputs = (await db.QueryAsync<TransactionItem>(transactionItemSql,
+                        new { Type = TransactionDataType.Input, transaction.Id })).ToArray(),
+
+                    Outputs = (await db.QueryAsync<TransactionItem>(transactionItemSql,
+                        new { Type = TransactionDataType.Output, transaction.Id })).ToArray()
                 };
 
                 block.Transactions.Add(transaction);
@@ -234,18 +264,26 @@ CREATE TABLE IF NOT EXISTS 'Block'
     'Hash' VARCHAR(64) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS 'BlockObject'
+(
+	'BlockIndex' INTEGER NOT NULL,
+	'Index' INTEGER NOT NULL,
+	'Timestamp' INTEGER NOT NULL,
+	'Data' BLOB NOT NULL,
+	'Hash' VARCHAR(64) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS 'BlockTransaction'
 (  
     'BlockIndex' INTEGER NOT NULL,
-
-    'Id' VARCHAR(64) NOT NULL PRIMARY KEY, 
-    'Hash' VARCHAR(64) NOT NULL,
+    'Id' VARCHAR(64) NOT NULL PRIMARY KEY,
     'Type' INTEGER NOT NULL,
+	'Hash' VARCHAR(64) NOT NULL,
 
     FOREIGN KEY('BlockIndex') REFERENCES Block('Index')
 );
 
-CREATE TABLE IF NOT EXISTS 'BlockTransactionData'
+CREATE TABLE IF NOT EXISTS 'BlockTransactionItem'
 (  
     'TransactionId' VARCHAR(64) NOT NULL PRIMARY KEY, 
     'Type' INTEGER NOT NULL,
@@ -261,7 +299,7 @@ CREATE TABLE IF NOT EXISTS 'BlockTransactionData'
             }
             catch (SqliteException e)
             {
-                _logger?.LogError(e, "Error migrating blocks table");
+                _logger?.LogError(e, "Error migrating blocks database");
                 throw;
             }
         }

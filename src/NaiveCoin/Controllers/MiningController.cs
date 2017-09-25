@@ -29,7 +29,7 @@ namespace NaiveCoin.Controllers
             try
             {
                 var newBlock = await _miner.MineAsync(rewardAddress);
-                var block = _blockchain.AddBlock(newBlock);
+                var block = await _blockchain.AddBlockAsync(newBlock);
                 return Created($"blockchain/blocks/{block.Index}", block);
             }
             catch (Exception ex)

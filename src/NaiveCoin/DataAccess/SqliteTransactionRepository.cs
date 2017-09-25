@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS 'TransactionData'
             }
             catch (SqliteException e)
             {
-                _logger?.LogError(e, "Error migrating transactions table");
+                _logger?.LogError(e, "Error migrating transactions database");
                 throw;
             }
         }

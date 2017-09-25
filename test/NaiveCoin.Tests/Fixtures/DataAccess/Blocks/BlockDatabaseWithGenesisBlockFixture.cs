@@ -15,7 +15,7 @@ namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
             var factory = new LoggerFactory();
             factory.AddConsole();
             
-            Value = new SqliteBlockRepository($"{Guid.NewGuid()}", factory.CreateLogger<SqliteBlockRepository>());
+            Value = new SqliteBlockRepository($"{Guid.NewGuid()}", "blockchain", factory.CreateLogger<SqliteBlockRepository>());
 
             var block = coinSettings.GenesisBlock;
             foreach (var transaction in block.Transactions)

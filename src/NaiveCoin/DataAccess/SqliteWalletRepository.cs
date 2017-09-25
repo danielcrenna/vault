@@ -2,7 +2,6 @@
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
-using NaiveCoin.Models;
 using NaiveCoin.Wallets;
 using NaiveCoin.Core.Models;
 
@@ -148,7 +147,7 @@ CREATE TABLE IF NOT EXISTS 'Address'
             }
             catch (SqliteException e)
             {
-                _logger?.LogError(e, "Error migrating wallets table");
+                _logger?.LogError(e, "Error migrating wallets database");
                 throw;
             }
         }
