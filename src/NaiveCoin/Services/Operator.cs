@@ -82,7 +82,8 @@ namespace NaiveCoin.Services
                 throw new ArgumentException($"Wallet not found with id '{id}'");
 
             var addresses = wallet.GetAddresses();
-            return addresses;
+
+	        return addresses.Select(x => x.ToHex());
         }
 
         public string GetAddressForWallet(string walletId, string addressId)
@@ -91,11 +92,11 @@ namespace NaiveCoin.Services
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{walletId}'");
 
-            var addressFound = wallet.GetAddressByPublicKey(addressId);
+            var addressFound = wallet.GetAddressByPublicKey(addressId.FromHex());
             if (addressFound == null)
                 throw new ArgumentException($"Address not found with id '{addressId}' for wallet { walletId}");
 
-            return addressFound;
+            return addressFound.ToHex();
         }
 
         public long GetBalanceForWalletAddress(string id, string addressId)
@@ -113,7 +114,7 @@ namespace NaiveCoin.Services
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{walletId}'");
 
-            var secretKey = wallet.GetPrivateKeyByAddress(fromAddress.ToHex());
+            var secretKey = wallet.GetPrivateKeyByAddress(fromAddress);
             if (secretKey == null)
                 throw new ArgumentException($"Secret key not found with Wallet id '${walletId}' and address '${fromAddress}'");
 
@@ -122,7 +123,7 @@ namespace NaiveCoin.Services
                 .To(toAddress, amount)
                 .Change(changeAddress ?? fromAddress)
                 .Fee(_coinSettings.FeePerTransaction)
-                .Sign(secretKey);
+                .Sign(secretKey.ToHex());
 
             return tx.Build();
         }

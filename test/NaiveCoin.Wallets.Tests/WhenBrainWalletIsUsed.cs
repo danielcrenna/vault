@@ -1,3 +1,4 @@
+using NaiveCoin.Core.Helpers;
 using NaiveCoin.Wallets.Tests.Fixtures;
 using Xunit;
 
@@ -25,8 +26,10 @@ namespace NaiveCoin.Wallets.Tests
             _provider.Value.GenerateAddress(wallet2);
 
             Assert.Equal(wallet1.KeyPairs.Count, wallet2.KeyPairs.Count);
-            Assert.Equal(wallet1.KeyPairs[0], wallet2.KeyPairs[0]);
-            Assert.Equal(wallet1.KeyPairs[1], wallet2.KeyPairs[1]);
-        }
+	        Assert.Equal(wallet1.KeyPairs[0].PublicKey.ToHex(), wallet2.KeyPairs[0].PublicKey.ToHex());
+			Assert.Equal(wallet1.KeyPairs[0].PrivateKey.ToHex(), wallet2.KeyPairs[0].PrivateKey.ToHex());
+			Assert.Equal(wallet1.KeyPairs[1].PublicKey.ToHex(), wallet2.KeyPairs[1].PublicKey.ToHex());
+	        Assert.Equal(wallet1.KeyPairs[1].PrivateKey.ToHex(), wallet2.KeyPairs[1].PrivateKey.ToHex());
+		}
     }
 }

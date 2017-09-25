@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Security.Cryptography;
 using System.Text;
+using Sodium;
 
 namespace NaiveCoin.Core.Helpers
 {
@@ -16,23 +17,14 @@ namespace NaiveCoin.Core.Helpers
             return ToHex(random);
         }
 
-        public static string ToHex(this byte[] value)
+        public static string ToHex(this byte[] input)
         {
-            var sb = new StringBuilder();
-            foreach (var b in value)
-                sb.Append(b.ToString("x2"));
-            return sb.ToString();
+	        return Utilities.BinaryToHex(input);
         }
 
         public static byte[] FromHex(this string input)
         {
-            Contract.Assert(!string.IsNullOrWhiteSpace(input));
-            Contract.Assert(input.Length % 2 == 0);
-
-            var result = new byte[input.Length / 2];
-            for (var i = 0; i < result.Length; i++)
-                result[i] = Convert.ToByte(input.Substring(i * 2, 2), 16);
-            return result;
+	        return Utilities.HexToBinary(input);
         }
 
         public static byte[] Sha256(this byte[] input)
@@ -45,6 +37,11 @@ namespace NaiveCoin.Core.Helpers
         {
             return Sha256(Encoding.UTF8.GetBytes(input));
         }
+
+	    public static bool SlowEquals(byte[] a, byte[] b)
+	    {
+		    return Utilities.Compare(a, b);
+	    }
 
         /// <summary>
         /// Produces a password hash suitable for long term storage. This means using a random salt per password, high entropy, and

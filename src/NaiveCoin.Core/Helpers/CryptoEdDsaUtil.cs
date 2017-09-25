@@ -7,7 +7,12 @@ namespace NaiveCoin.Core.Helpers
 {
     public class CryptoEdDsaUtil
     {
-        public static byte[] GenerateSecret(string seed)
+	    public static byte[] GenerateSecret(byte[] seed)
+	    {
+		    return GenerateSecret(seed.ToHex());
+	    }
+
+		public static byte[] GenerateSecret(string seed)
         {
             return Pbkdf2.CreateRawHash(seed, "salt", 64000, 32, HashAlgorithmName.SHA512);
         }

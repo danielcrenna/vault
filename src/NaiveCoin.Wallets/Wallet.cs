@@ -14,22 +14,22 @@ namespace NaiveCoin.Wallets
 
         internal Wallet() { /* Required for serialization */ }
 
-        public string GetAddressByIndex(int index)
+        public byte[] GetAddressByIndex(int index)
         {
             return KeyPairs.SingleOrDefault(x => x.Index == index)?.PublicKey;
         }
 
-        public string GetAddressByPublicKey(string publicKey)
+        public byte[] GetAddressByPublicKey(byte[] publicKey)
         {
             return KeyPairs.SingleOrDefault(x => x.PublicKey == publicKey)?.PublicKey;
         }
 
-        public string GetPrivateKeyByAddress(string publicKey)
+        public byte[] GetPrivateKeyByAddress(byte[] publicKey)
         {
             return KeyPairs.SingleOrDefault(x => x.PublicKey == publicKey)?.PrivateKey;
         }
 
-        public IEnumerable<string> GetAddresses()
+        public IEnumerable<byte[]> GetAddresses()
         {
             return KeyPairs.Select(x => x.PublicKey);
         }
