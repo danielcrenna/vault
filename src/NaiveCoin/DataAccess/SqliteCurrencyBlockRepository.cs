@@ -253,11 +253,9 @@ namespace NaiveCoin.DataAccess
 	                                       "FROM 'BlockTransaction' t " +
 	                                       "WHERE t.'BlockIndex' = @Index";
 			
-	        block.Transactions = new List<Transaction>();
-
-			var transactions = await db.QueryAsync<Transaction>(transactionsSql, new { block.Index });
+	        block.Transactions = (await db.QueryAsync<Transaction>(transactionsSql, new { block.Index })).AsList();
 			
-			foreach (var transaction in transactions)
+			foreach (var transaction in block.Transactions)
             {
 	            const string transactionItemSql = "SELECT i.* " +
 	                                              "FROM 'BlockTransactionItem' i " +
@@ -271,8 +269,6 @@ namespace NaiveCoin.DataAccess
                     Outputs = (await db.QueryAsync<TransactionItem>(transactionItemSql,
                         new { Type = TransactionDataType.Output, transaction.Id })).ToArray()
                 };
-
-                block.Transactions.Add(transaction);
             }
         }
 

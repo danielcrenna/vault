@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using NaiveChain;
 using NaiveCoin.Models;
 
 namespace NaiveCoin.Tests.Fixtures
@@ -16,6 +18,7 @@ namespace NaiveCoin.Tests.Fixtures
                     PreviousHash = "0",
                     Timestamp = 1465154705L,
                     Nonce = 0L,
+					Objects = new BlockObject[] { },
                     Transactions = new[]
                     {
                         new Transaction
