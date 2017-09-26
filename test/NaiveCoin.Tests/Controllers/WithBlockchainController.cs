@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using NaiveChain;
 using NaiveCoin.Models;
 using Xunit;
 

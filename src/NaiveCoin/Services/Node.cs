@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Rest;
+using NaiveChain;
 using NaiveCoin.Models;
 using Newtonsoft.Json;
 
@@ -79,7 +80,7 @@ namespace NaiveCoin.Services
             {
                 var response = await _http.PostAsync(url, null);
                 var json = await response.Content.ReadAsStringAsync();
-                var block = JsonConvert.DeserializeObject<Block>(json, _jsonSettings);
+                var block = JsonConvert.DeserializeObject<CurrencyBlock>(json, _jsonSettings);
 
 				await CheckReceivedBlocksAsync(block);
             }
@@ -104,7 +105,7 @@ namespace NaiveCoin.Services
             {
                 var response = await _http.GetAsync(url);
                 var json = await response.Content.ReadAsStringAsync();
-                var block = JsonConvert.DeserializeObject<Block>(json, _jsonSettings);
+                var block = JsonConvert.DeserializeObject<CurrencyBlock>(json, _jsonSettings);
 
 				await CheckReceivedBlocksAsync(block);
             }
@@ -141,7 +142,7 @@ namespace NaiveCoin.Services
             {
                 var response = await _http.GetAsync(url);
                 var json = await response.Content.ReadAsStringAsync();
-                var block = JsonConvert.DeserializeObject<Block>(json, _jsonSettings);
+                var block = JsonConvert.DeserializeObject<CurrencyBlock>(json, _jsonSettings);
 
 				await CheckReceivedBlocksAsync(block);
             }
@@ -179,7 +180,8 @@ namespace NaiveCoin.Services
                 var response = await _http.GetAsync(url);
                 var json = await response.Content.ReadAsStringAsync();
                 var transactions = JsonConvert.DeserializeObject<IEnumerable<Transaction>>(json, _jsonSettings);
-                SyncTransactions(transactions);
+
+				await SyncTransactionsAsync(transactions);
             }
             catch (Exception e)
             {
@@ -209,7 +211,7 @@ namespace NaiveCoin.Services
         public async Task<int> GetConfirmationsAsync(string transactionId)
         {
             // Get from all peers if the transaction has been confirmed
-            var foundLocally = _blockchain.GetTransactionFromBlocksAsync(transactionId) != null;
+            var foundLocally = await _blockchain.GetTransactionFromBlocksAsync(transactionId) != null;
             var confirmed = 0;
             foreach (var peer in _peers)
                 confirmed += await GetConfirmationAsync(peer, transactionId) ? 1 : 0;
@@ -224,12 +226,12 @@ namespace NaiveCoin.Services
             }
         }
 
-        private void SyncTransactions(IEnumerable<Transaction> transactions)
+        private async Task SyncTransactionsAsync(IEnumerable<Transaction> transactions)
         {
             // For each received transaction check if we have it, if not, add.
             foreach (var transaction in transactions)
             {
-                var transactionFound = _blockchain.GetTransactionByIdAsync(transaction.Id);
+                var transactionFound = await _blockchain.GetTransactionByIdAsync(transaction.Id);
                 if (transactionFound == null)
                 {
                     _logger?.LogInformation($"Syncing transaction '{transaction.Id}");
@@ -238,7 +240,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        public async Task<bool?> CheckReceivedBlocksAsync(params Block[] blocks)
+        public async Task<bool?> CheckReceivedBlocksAsync(params CurrencyBlock[] blocks)
         {
             var receivedBlocks = blocks.OrderBy(x => x.Index).ToList();
             var latestBlockReceived = receivedBlocks[receivedBlocks.Count - 1];

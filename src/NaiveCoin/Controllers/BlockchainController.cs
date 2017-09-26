@@ -62,7 +62,7 @@ namespace NaiveCoin.Controllers
         /// Attempt to append the chain with the provided block. Used as a mechanism to sync peers. 
         /// </summary>
         [HttpPut("blocks/latest")]
-        public async Task<IActionResult> VerifyLastBlock([FromBody]Block block)
+        public async Task<IActionResult> VerifyLastBlock([FromBody]CurrencyBlock block)
         {
             var result = await _node.CheckReceivedBlocksAsync(block);
             if (result == null)

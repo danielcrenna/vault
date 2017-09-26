@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
+using NaiveChain;
 using NaiveCoin.Core.Providers;
 using NaiveCoin.Extensions;
 using NaiveCoin.Models;
@@ -33,7 +34,7 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         {
             Assert.Throws<SqliteException>(() =>
             {
-                Block block = new Block();
+	            CurrencyBlock block = new CurrencyBlock();
                 Fixture.Value.Add(block);
             });
         }
@@ -43,7 +44,7 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         {
             Assert.Throws<SqliteException>(() =>
             {
-                Block block = CoinSettings.GenesisBlock;
+	            CurrencyBlock block = CoinSettings.GenesisBlock;
                 BeforeSave(block);
                 Fixture.Value.Add(block);
             });
@@ -59,7 +60,7 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         [Fact]
         public void Can_retrieve_genesis_block_by_hash()
         {
-            Block block = CoinSettings.GenesisBlock;
+	        CurrencyBlock block = CoinSettings.GenesisBlock;
             BeforeSave(block);
 
             var retrieved = Fixture.Value.GetByHashAsync(block.Hash);
@@ -81,7 +82,7 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
             Assert.Equal(genesis.Timestamp, retrieved.Timestamp);
         }
 
-        private void BeforeSave(Block block)
+        private void BeforeSave(CurrencyBlock block)
         {
             foreach (var transaction in block.Transactions)
                 transaction.Hash = transaction.ToHash(HashProvider);

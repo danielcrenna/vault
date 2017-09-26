@@ -6,7 +6,7 @@ namespace NaiveCoin
     {
         public string Name { get; set; }
         public long FeePerTransaction { get; set; }
-        public Block GenesisBlock { get; set; }
+        public CurrencyBlock GenesisBlock { get; set; }
         public ProofOfWorkSettings ProofOfWork { get; set; }
         public MiningSettings Mining { get; set; }
 

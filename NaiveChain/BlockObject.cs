@@ -1,4 +1,4 @@
-﻿namespace NaiveCoin.Models
+﻿namespace NaiveChain
 {
 	public class BlockObject
 	{

@@ -10,8 +10,8 @@ namespace NaiveCoin.Tests.Fixtures
             {
                 Name = "NaiveCoin",
                 FeePerTransaction = 1L,
-                GenesisBlock = new Block
-                {
+                GenesisBlock = new CurrencyBlock
+				{
                     Index = 0L,
                     PreviousHash = "0",
                     Timestamp = 1465154705L,

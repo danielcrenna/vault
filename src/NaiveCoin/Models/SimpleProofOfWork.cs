@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NaiveChain;
 
 namespace NaiveCoin.Models
 {
@@ -28,7 +29,7 @@ namespace NaiveCoin.Models
                                pow.PowCurve)), 0);
         }
 
-        public Block ProveWorkFor(Block block, double difficulty)
+        public CurrencyBlock ProveWorkFor(CurrencyBlock block, double difficulty)
         {
             _logger?.LogInformation($"Mining a new block with difficulty '{difficulty}'");
 

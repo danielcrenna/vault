@@ -14,7 +14,7 @@ namespace NaiveCoin.Services
 {
     public class Blockchain
     {
-        private readonly IBlockRepository _blocks;
+        private readonly ICurrencyBlockRepository _blocks;
         private readonly IProofOfWork _proofOfWork;
         private readonly ITransactionRepository _transactions;
         private readonly IHashProvider _hashProvider;
@@ -23,7 +23,7 @@ namespace NaiveCoin.Services
         private readonly CoinSettings _coinSettings;
         private readonly JsonSerializerSettings _jsonSettings;
 
-        public Blockchain(IOptions<CoinSettings> coinSettings, IBlockRepository blocks, IProofOfWork proofOfWork, ITransactionRepository transactions, IHashProvider hashProvider, JsonSerializerSettings jsonSettings, ILogger<Blockchain> logger)
+        public Blockchain(IOptions<CoinSettings> coinSettings, ICurrencyBlockRepository blocks, IProofOfWork proofOfWork, ITransactionRepository transactions, IHashProvider hashProvider, JsonSerializerSettings jsonSettings, ILogger<Blockchain> logger)
         {
             _coinSettings = coinSettings.Value;
             _blocks = blocks;
@@ -53,22 +53,22 @@ namespace NaiveCoin.Services
             _transactions.DeleteAsync(_blocks.StreamAllTransactionIds());
         }
 
-        public IEnumerable<Block> StreamAllBlocks()
+        public IEnumerable<CurrencyBlock> StreamAllBlocks()
         {
             return _blocks.StreamAllBlocks();
         }
 
-        public async Task<Block> GetBlockByIndexAsync(long index)
+        public async Task<CurrencyBlock> GetBlockByIndexAsync(long index)
         {
             return await _blocks.GetByIndexAsync(index);
         }
 
-        public async Task<Block> GetBlockByHashAsync(string hash)
+        public async Task<CurrencyBlock> GetBlockByHashAsync(string hash)
         {
             return await _blocks.GetByHashAsync(hash);
         }
         
-        public async Task<Block> GetLastBlockAsync()
+        public async Task<CurrencyBlock> GetLastBlockAsync()
         {
             return await _blocks.GetLastBlockAsync();
         }
@@ -95,7 +95,7 @@ namespace NaiveCoin.Services
 			return blocks?.Transactions.SingleOrDefault(x => x.Id == transactionId);
         }
 
-        public async Task ReplaceChainAsync(List<Block> newBlockchain)
+        public async Task ReplaceChainAsync(List<CurrencyBlock> newBlockchain)
         {
             // It doesn't make sense to replace this blockchain by a smaller one
             if (newBlockchain.Count <= await _blocks.GetLengthAsync())
@@ -119,7 +119,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        private bool CheckChain(IReadOnlyList<Block> blockchainToValidate)
+        private bool CheckChain(IReadOnlyList<CurrencyBlock> blockchainToValidate)
         {
             // Check if the genesis block is the same
             if (_hashProvider.ComputeHash(blockchainToValidate[0]) !=
@@ -148,7 +148,7 @@ namespace NaiveCoin.Services
             return true;
         }
 
-        public async Task<Block> AddBlockAsync(Block block)
+        public async Task<CurrencyBlock> AddBlockAsync(CurrencyBlock block)
         {
             // It only adds the block if it's valid (we need to compare to the previous one)
             if (CheckBlock(block, await GetLastBlockAsync()))
@@ -180,12 +180,12 @@ namespace NaiveCoin.Services
             return transaction;
         }
 
-        private async Task RemoveBlockTransactionsFromTransactionsAsync(Block block)
+        private async Task RemoveBlockTransactionsFromTransactionsAsync(CurrencyBlock block)
         {
             await _transactions.DeleteAsync(block.Transactions.Select(x => x.Id));
         }
 
-        private bool CheckBlock(Block newBlock, Block previousBlock)
+        private bool CheckBlock(CurrencyBlock newBlock, CurrencyBlock previousBlock)
         {
             var blockHash = newBlock.ToHash(_hashProvider);
 

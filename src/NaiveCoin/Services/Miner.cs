@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NaiveChain;
 using NaiveCoin.Models;
 using NaiveCoin.Core.Helpers;
 
@@ -24,14 +25,14 @@ namespace NaiveCoin.Services
             _coinSettings = coinSettings.Value;
         }
 
-        public async Task<Block> MineAsync(string address)
+        public async Task<CurrencyBlock> MineAsync(string address)
         {
             var baseBlock = GenerateNextBlock(address, await _blockchain.GetLastBlockAsync(), _blockchain.StreamAllTransactions());
 
             return _proofOfWork.ProveWorkFor(baseBlock, _blockchain.GetDifficulty(baseBlock.Index.GetValueOrDefault()));
         }
 
-        private Block GenerateNextBlock(string address, Block previousBlock, IEnumerable<Transaction> pendingTransactions)
+        private CurrencyBlock GenerateNextBlock(string address, CurrencyBlock previousBlock, IEnumerable<Transaction> pendingTransactions)
         {
             var index = previousBlock.Index + 1;
             var previousHash = previousBlock.Hash;
@@ -91,8 +92,8 @@ namespace NaiveCoin.Services
                 transactions.Add(rewardTransaction);
             }
 
-            return new Block
-            {
+            return new CurrencyBlock
+			{
                 Index = index,
                 Nonce = 0,
                 PreviousHash = previousHash,

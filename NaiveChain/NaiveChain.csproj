@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\src\NaiveCoin.Core\NaiveCoin.Core.csproj" />
   </ItemGroup>
 
 </Project>

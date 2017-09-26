@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
+using NaiveChain;
 using NaiveCoin.Core.Helpers;
 using NaiveCoin.Models;
 
 namespace NaiveCoin.DataAccess
 {
-    public class SqliteBlockRepository : SqliteRepository, IBlockRepository
+    public class SqliteBlockRepository : SqliteRepository, ICurrencyBlockRepository
     {
         private readonly ILogger<SqliteBlockRepository> _logger;
 
@@ -30,7 +31,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public async Task<Block> GetByTransactionIdAsync(string transactionId)
+        public async Task<CurrencyBlock> GetByTransactionIdAsync(string transactionId)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -38,7 +39,7 @@ namespace NaiveCoin.DataAccess
 	                               "LEFT JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index' " +
 	                               "WHERE bt.'Id' = @Id";
 
-	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new { Id = transactionId });
+	            var block = await db.QuerySingleOrDefaultAsync<CurrencyBlock>(sql, new { Id = transactionId });
 
                 await TransformBlockAsync(block, db);
 
@@ -46,7 +47,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public void Add(Block block)
+        public void Add(CurrencyBlock block)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -71,7 +72,7 @@ namespace NaiveCoin.DataAccess
 
                         foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionItem>())
                         {
-                            db.Execute("INSERT INTO 'BlockTransactionData' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+                            db.Execute("INSERT INTO 'BlockTransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                                 new
                                 {
                                     input.TransactionId,
@@ -85,7 +86,7 @@ namespace NaiveCoin.DataAccess
 
                         foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionItem>())
                         {
-                            db.Execute("INSERT INTO 'BlockTransactionData' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+                            db.Execute("INSERT INTO 'BlockTransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                                 new
                                 {
                                     output.TransactionId,
@@ -155,7 +156,7 @@ namespace NaiveCoin.DataAccess
 			}
 		}
 
-	    public IEnumerable<Block> StreamAllBlocks()
+	    public IEnumerable<CurrencyBlock> StreamAllBlocks()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -163,7 +164,7 @@ namespace NaiveCoin.DataAccess
                                    "FROM 'Block' b " +
                                    "ORDER BY b.'Index' ASC";
 
-                foreach (var block in db.Query<Block>(sql, buffered: false))
+                foreach (var block in db.Query<CurrencyBlock>(sql, buffered: false))
                 {
                     TransformBlockAsync(block, db).ConfigureAwait(false).GetAwaiter().GetResult();
 
@@ -172,13 +173,13 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public async Task<Block> GetByIndexAsync(long index)
+        public async Task<CurrencyBlock> GetByIndexAsync(long index)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
 	            const string sql = "SELECT b.* FROM 'Block' b WHERE b.'Index' = @Index";
 
-	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new {Index = index});
+	            var block = await db.QuerySingleOrDefaultAsync<CurrencyBlock>(sql, new {Index = index});
 
                 await TransformBlockAsync(block, db);
 
@@ -186,13 +187,13 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public async Task<Block> GetByHashAsync(string hash)
+        public async Task<CurrencyBlock> GetByHashAsync(string hash)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
 	            const string sql = "SELECT b.* FROM 'Block' b WHERE b.'Hash' = @Hash";
 
-	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new { Hash = hash });
+	            var block = await db.QuerySingleOrDefaultAsync<CurrencyBlock>(sql, new { Hash = hash });
 
                 await TransformBlockAsync(block, db);
 
@@ -200,7 +201,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public async Task<Block> GetLastBlockAsync()
+        public async Task<CurrencyBlock> GetLastBlockAsync()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -209,7 +210,7 @@ namespace NaiveCoin.DataAccess
 	                               "GROUP BY b.'Index' " +
 	                               "ORDER BY b.'Index' DESC LIMIT 1";
 
-	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql);
+	            var block = await db.QuerySingleOrDefaultAsync<CurrencyBlock>(sql);
 
                 await TransformBlockAsync(block, db);
                 
@@ -217,7 +218,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        private static async Task TransformBlockAsync(Block block, IDbConnection db)
+        private static async Task TransformBlockAsync(CurrencyBlock block, IDbConnection db)
         {
             if (block == null)
                 return;

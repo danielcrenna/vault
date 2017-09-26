@@ -1,13 +1,14 @@
-﻿using NaiveCoin.Core.Providers;
+﻿using NaiveChain;
+using NaiveCoin.Core.Providers;
 using NaiveCoin.Models;
 
 namespace NaiveCoin.Extensions
 {
     public static class BlockExtensions
     {
-        public static string ToHash(this Block block, IHashProvider hashProvider)
+        public static string ToHash(this CurrencyBlock block, IHashProvider hashProvider)
         {
-            return hashProvider.ComputeHash($"{block.Index}{block.PreviousHash}{block.Timestamp}{hashProvider.ComputeHash(block.Transactions)}{block.Nonce}");
+            return hashProvider.ComputeHash($"{block.Index}{block.PreviousHash}{block.Timestamp}{hashProvider.ComputeHash(block.Transactions)}{hashProvider.ComputeHash(block.Objects)}{block.Nonce}");
         }
     }
 }
