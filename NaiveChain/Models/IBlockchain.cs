@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NaiveChain
+namespace NaiveChain.Models
 {
 	public interface IBlockchain<T> where T : Block
 	{
@@ -13,10 +13,12 @@ namespace NaiveChain
 		Task ReplaceChainAsync(List<T> newBlockchain);
 		Task<T> AddBlockAsync(T block);
 		
-		bool CheckChain(IReadOnlyList<T> blockchainToValidate);
+		Task<bool> CheckChainAsync(IReadOnlyList<T> blockchainToValidate);
 		bool CheckBlock(T newBlock, T previousBlock);
 		
 		IEnumerable<T> StreamAllBlocks();
 		IEnumerable<BlockObject> StreamAllBlockObjects();
+
+		double GetDifficulty(long index);
 	}
 }

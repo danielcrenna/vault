@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Rest;
 using NaiveChain;
+using NaiveChain.Models;
 using NaiveCoin.Models;
 using Newtonsoft.Json;
 
@@ -235,7 +236,7 @@ namespace NaiveCoin.Services
                 if (transactionFound == null)
                 {
                     _logger?.LogInformation($"Syncing transaction '{transaction.Id}");
-                    _blockchain.AddTransactionAsync(transaction);
+                    await _blockchain.AddTransactionAsync(transaction);
                 }
             }
         }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NaiveChain;
+using NaiveChain.Models;
 using NaiveCoin.Models;
 
 namespace NaiveCoin.Tests.Fixtures

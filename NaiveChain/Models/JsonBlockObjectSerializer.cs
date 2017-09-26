@@ -1,7 +1,7 @@
 using System.Text;
 using Newtonsoft.Json;
 
-namespace NaiveChain
+namespace NaiveChain.Models
 {
     public class JsonBlockObjectSerializer : IBlockObjectSerializer
     {

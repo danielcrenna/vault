@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
-namespace NaiveChain
+namespace NaiveChain.Models
 {
     public class Block
     {

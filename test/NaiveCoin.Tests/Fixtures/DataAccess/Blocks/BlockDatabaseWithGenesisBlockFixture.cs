@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using NaiveCoin.DataAccess;
 using NaiveCoin.Extensions;
 
@@ -19,6 +20,8 @@ namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
             Value = new SqliteCurrencyBlockRepository(
 				$"{Guid.NewGuid()}", 
 				"blockchain",
+				new OptionsWrapper<CoinSettings>(coinSettings), 
+				hashProvider,
 				blockObjectSerializer,
 				factory.CreateLogger<SqliteCurrencyBlockRepository>());
 

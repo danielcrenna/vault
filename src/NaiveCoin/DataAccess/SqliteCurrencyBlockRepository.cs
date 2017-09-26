@@ -5,29 +5,46 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
-using NaiveChain;
+using Microsoft.Extensions.Options;
 using NaiveChain.DataAccess;
+using NaiveChain.Models;
 using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core.Providers;
+using NaiveCoin.Extensions;
 using NaiveCoin.Models;
 
 namespace NaiveCoin.DataAccess
 {
     public class SqliteCurrencyBlockRepository : SqliteRepository, ICurrencyBlockRepository
     {
+	    private readonly IOptions<CoinSettings> _coinSettings;
+	    private readonly IHashProvider _hashProvider;
 	    private readonly IBlockObjectSerializer _serializer;
 	    private readonly ILogger<SqliteCurrencyBlockRepository> _logger;
 
         public SqliteCurrencyBlockRepository(
 			string @namespace, 
 			string databaseName,
+			IOptions<CoinSettings> coinSettings,
+			IHashProvider hashProvider,
 			IBlockObjectSerializer serializer,
 			ILogger<SqliteCurrencyBlockRepository> logger) : base(@namespace, databaseName, logger)
         {
+	        _coinSettings = coinSettings;
+	        _hashProvider = hashProvider;
 	        _serializer = serializer;
 	        _logger = logger;
         }
 
-        public async Task<long> GetLengthAsync()
+	    public Task<CurrencyBlock> GetGenesisBlockAsync()
+	    {
+			foreach (var transaction in _coinSettings.Value.GenesisBlock.Transactions ?? Enumerable.Empty<Transaction>())
+			    transaction.Hash = transaction.ToHash(_hashProvider);
+		    _coinSettings.Value.GenesisBlock.Hash = _coinSettings.Value.GenesisBlock.ToHash(_hashProvider);
+		    return Task.FromResult(_coinSettings.Value.GenesisBlock);
+	    }
+
+		public async Task<long> GetLengthAsync()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveChain;
+using NaiveChain.Models;
 using NaiveCoin.Models;
 using NaiveCoin.Core.Helpers;
 
@@ -12,12 +13,12 @@ namespace NaiveCoin.Services
 {
     public class Miner
     {
-        private readonly Blockchain _blockchain;
+        private readonly ICurrencyBlockchain _blockchain;
         private readonly IProofOfWork _proofOfWork;
-        private readonly ILogger<Miner> _logger;
         private readonly CoinSettings _coinSettings;
+	    private readonly ILogger<Miner> _logger;
 
-        public Miner(Blockchain blockchain, IProofOfWork proofOfWork, IOptions<CoinSettings> coinSettings, ILogger<Miner> logger)
+		public Miner(ICurrencyBlockchain blockchain, IProofOfWork proofOfWork, IOptions<CoinSettings> coinSettings, ILogger<Miner> logger)
         {
             _blockchain = blockchain;
             _proofOfWork = proofOfWork;
@@ -27,9 +28,9 @@ namespace NaiveCoin.Services
 
         public async Task<CurrencyBlock> MineAsync(string address)
         {
-            var baseBlock = GenerateNextBlock(address, await _blockchain.GetLastBlockAsync(), _blockchain.StreamAllTransactions());
+            CurrencyBlock baseBlock = GenerateNextBlock(address, await _blockchain.GetLastBlockAsync(), _blockchain.StreamAllTransactions());
 
-            return _proofOfWork.ProveWorkFor(baseBlock, _blockchain.GetDifficulty(baseBlock.Index.GetValueOrDefault()));
+            return (CurrencyBlock) _proofOfWork.ProveWorkFor(baseBlock, _blockchain.GetDifficulty(baseBlock.Index.GetValueOrDefault()));
         }
 
         private CurrencyBlock GenerateNextBlock(string address, CurrencyBlock previousBlock, IEnumerable<Transaction> pendingTransactions)
@@ -47,7 +48,7 @@ namespace NaiveCoin.Services
             {
                 var feeTransaction = new Transaction
                 {
-                    Id = CryptoUtil.RandomString(64),
+                    Id = CryptoUtil.RandomString(),
                     Hash = null,
                     Type = TransactionType.Fee,
                     Data = new TransactionData
@@ -72,7 +73,7 @@ namespace NaiveCoin.Services
             {
                 var rewardTransaction = new Transaction
                 {
-                    Id = CryptoUtil.RandomString(64),
+                    Id = CryptoUtil.RandomString(),
                     Hash = null,
                     Type = TransactionType.Fee,
                     Data =

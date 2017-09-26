@@ -1,6 +1,7 @@
-﻿using NaiveCoin.Core.Providers;
+﻿using NaiveChain.Models;
+using NaiveCoin.Core.Providers;
 
-namespace NaiveChain
+namespace NaiveChain.Extensions
 {
 	public static class BlockExtensions
 	{

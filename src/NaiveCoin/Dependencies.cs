@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NaiveChain;
+using NaiveChain.Models;
 using NaiveCoin.DataAccess;
 using NaiveCoin.Models;
 using NaiveCoin.Services;
@@ -45,12 +45,18 @@ namespace NaiveCoin
                 services.AddSingleton<IWalletSecretProvider>(r => provider);
 
                 services.AddSingleton<IProofOfWork>(r =>
-                    new SimpleProofOfWork(r.GetRequiredService<IOptions<CoinSettings>>(), r.GetService<ILogger<SimpleProofOfWork>>()));
+                    new CoinBasedProofOfWork(r.GetRequiredService<IOptions<CoinSettings>>(), r.GetService<ILogger<CoinBasedProofOfWork>>()));
             }
 
             // Repositories:
             {
-                services.AddScoped<ICurrencyBlockRepository>(r => new SqliteCurrencyBlockRepository(Namespace, "blockchain", r.GetRequiredService<IBlockObjectSerializer>(), r.GetService<ILogger<SqliteCurrencyBlockRepository>>()));
+                services.AddScoped<ICurrencyBlockRepository>(r => new SqliteCurrencyBlockRepository(
+					Namespace,
+					"blockchain",
+					r.GetRequiredService<IOptions<CoinSettings>>(),
+					r.GetRequiredService<IHashProvider>(),
+					r.GetRequiredService<IBlockObjectSerializer>(), 
+					r.GetService<ILogger<SqliteCurrencyBlockRepository>>()));
                 services.AddScoped<ITransactionRepository>(r => new SqliteTransactionRepository(Namespace, "blockchain", r.GetService<ILogger<SqliteTransactionRepository>>()));
                 services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace, "wallets",
                     r.GetRequiredService<IWalletAddressProvider>(), 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NaiveChain;
+using NaiveChain.Models;
 
 namespace NaiveCoin.Models
 {

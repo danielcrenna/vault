@@ -1,4 +1,4 @@
-﻿namespace NaiveChain
+﻿namespace NaiveChain.Models
 {
 	public class BlockSource
 	{

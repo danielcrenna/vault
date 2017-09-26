@@ -4,25 +4,34 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
+using NaiveChain.Models;
 
 namespace NaiveChain.DataAccess
 {
     public class SqliteBlockRepository : SqliteRepository, IBlockRepository<Block>
     {
+	    private readonly Block _genesisBlock;
 	    private readonly IBlockObjectSerializer _serializer;
 	    private readonly ILogger<SqliteBlockRepository> _logger;
 
         public SqliteBlockRepository(
 			string @namespace, 
 			string databaseName,
+			Block genesisBlock,
 			IBlockObjectSerializer serializer,
 			ILogger<SqliteBlockRepository> logger) : base(@namespace, databaseName, logger)
         {
+	        _genesisBlock = genesisBlock;
 	        _serializer = serializer;
 	        _logger = logger;
         }
 
-        public async Task<long> GetLengthAsync()
+	    public Task<Block> GetGenesisBlockAsync()
+	    {
+		    return Task.FromResult(_genesisBlock);
+	    }
+
+	    public async Task<long> GetLengthAsync()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {

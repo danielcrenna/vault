@@ -14,7 +14,7 @@ namespace NaiveCoin.Tests.Fixtures
             var blocks = new BlockDatabaseWithGenesisBlockFixture();
             var transactions = new EmptyTransactionDatabaseFixture();
             var hashProvider = new ObjectHashProviderFixture();
-            var pow = new SimpleProofOfWork(coinSettings);
+            var pow = new CoinBasedProofOfWork(coinSettings);
 
             var factory = new LoggerFactory();
             factory.AddConsole();

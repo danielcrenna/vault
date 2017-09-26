@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NaiveChain
+namespace NaiveChain.Models
 {
     public interface IBlockRepository<T> where T : Block
     {
-        Task<long> GetLengthAsync();
+	    Task<T> GetGenesisBlockAsync();
+		Task<long> GetLengthAsync();
         Task<T> GetByIndexAsync(long index);
 	    Task<T> GetByHashAsync(string hash);
         Task<T> GetLastBlockAsync();

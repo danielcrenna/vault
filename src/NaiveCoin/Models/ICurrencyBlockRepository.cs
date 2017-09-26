@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using NaiveChain;
+using NaiveChain.Models;
 
 namespace NaiveCoin.Models
 {

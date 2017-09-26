@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NaiveChain;
 using NaiveChain.Exceptions;
+using NaiveChain.Models;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using Newtonsoft.Json;
@@ -15,7 +15,7 @@ using NaiveCoin.Extensions;
 
 namespace NaiveCoin.Services
 {
-	public class Blockchain : IBlockchain<CurrencyBlock>
+	public class Blockchain : ICurrencyBlockchain
 	{
         private readonly ICurrencyBlockRepository _blocks;
         private readonly IProofOfWork _proofOfWork;
@@ -45,12 +45,8 @@ namespace NaiveCoin.Services
 	        var height = _blocks.GetLengthAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 	        if (height == 0)
             {
-                foreach (var transaction in _coinSettings.GenesisBlock.Transactions ?? Enumerable.Empty<Transaction>())
-                    transaction.Hash = transaction.ToHash(_hashProvider);
-
-                _coinSettings.GenesisBlock.Hash = _coinSettings.GenesisBlock.ToHash(_hashProvider);
-
-                _blocks.AddAsync(_coinSettings.GenesisBlock).ConfigureAwait(false).GetAwaiter().GetResult();
+				var genesisBlock = _blocks.GetGenesisBlockAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+				_blocks.AddAsync(genesisBlock).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             // Remove transactions that are in the blockchain
@@ -115,7 +111,7 @@ namespace NaiveCoin.Services
             }
 
             // Verify if the new blockchain is correct
-            CheckChain(newBlockchain);
+            await CheckChainAsync(newBlockchain);
 
             // Get the blocks that diverge from our blockchain
             _logger?.LogInformation($"Received blockchain is valid. Replacing current blockchain with received blockchain");
@@ -128,11 +124,11 @@ namespace NaiveCoin.Services
             }
         }
 
-		public bool CheckChain(IReadOnlyList<CurrencyBlock> blockchainToValidate)
+		public async Task<bool> CheckChainAsync(IReadOnlyList<CurrencyBlock> blockchainToValidate)
         {
             // Check if the genesis block is the same
             if (_hashProvider.ComputeHash(blockchainToValidate[0]) !=
-                _hashProvider.ComputeHash(_coinSettings.GenesisBlock))
+                _hashProvider.ComputeHash(await _blocks.GetGenesisBlockAsync()))
             {
                 var message = $"Genesis blocks aren't the same";
                 _logger?.LogError(message);
@@ -165,9 +161,9 @@ namespace NaiveCoin.Services
 	            await _blocks.AddAsync(block);
 
 				// After adding the block it removes the transactions of this block from the list of pending transactions
-				await RemoveBlockTransactionsFromTransactionsAsync(block);
+				await _transactions.DeleteAsync(block.Transactions.Select(x => x.Id));
 
-                _logger?.LogInformation($"Block added: {block.Hash}");
+				_logger?.LogInformation($"Block added: {block.Hash}");
                 _logger?.LogDebug($"Block added: {JsonConvert.SerializeObject(block)}");
                 
                 return block;
@@ -175,8 +171,8 @@ namespace NaiveCoin.Services
 
             return null;
         }
-
-        public async Task<Transaction> AddTransactionAsync(Transaction transaction)
+		
+		public async Task<Transaction> AddTransactionAsync(Transaction transaction)
         {
             // It only adds the transaction if it's valid
             if (!CheckTransaction(transaction))
@@ -188,12 +184,7 @@ namespace NaiveCoin.Services
 
             return transaction;
         }
-
-        private async Task RemoveBlockTransactionsFromTransactionsAsync(CurrencyBlock block)
-        {
-            await _transactions.DeleteAsync(block.Transactions.Select(x => x.Id));
-        }
-
+		
 		public bool CheckBlock(CurrencyBlock newBlock, CurrencyBlock previousBlock)
         {
             var blockHash = newBlock.ToHash(_hashProvider);

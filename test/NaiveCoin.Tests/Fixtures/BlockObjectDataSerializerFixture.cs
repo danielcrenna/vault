@@ -1,4 +1,5 @@
 using NaiveChain;
+using NaiveChain.Models;
 
 namespace NaiveCoin.Tests.Fixtures
 {

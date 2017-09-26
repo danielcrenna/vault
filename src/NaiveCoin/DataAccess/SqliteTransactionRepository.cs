@@ -75,7 +75,7 @@ namespace NaiveCoin.DataAccess
 
 	            using (var t = db.BeginTransaction())
 	            {
-		            var sets = ids.Split().AsList();
+		            var sets = ids.Batch(100);
 
 		            foreach (var set in sets)
 		            {

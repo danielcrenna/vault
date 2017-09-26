@@ -3,15 +3,16 @@ using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveChain;
+using NaiveChain.Models;
 
 namespace NaiveCoin.Models
 {
-    public class SimpleProofOfWork : IProofOfWork
+    public class CoinBasedProofOfWork : IProofOfWork
     {
-        private readonly ILogger<SimpleProofOfWork> _logger;
+        private readonly ILogger<CoinBasedProofOfWork> _logger;
         private readonly CoinSettings _coinSettings;
 
-        public SimpleProofOfWork(IOptions<CoinSettings> coinSettings, ILogger<SimpleProofOfWork> logger = null)
+        public CoinBasedProofOfWork(IOptions<CoinSettings> coinSettings, ILogger<CoinBasedProofOfWork> logger = null)
         {
             _logger = logger;
             _coinSettings = coinSettings.Value;
@@ -29,7 +30,7 @@ namespace NaiveCoin.Models
                                pow.PowCurve)), 0);
         }
 
-        public CurrencyBlock ProveWorkFor(CurrencyBlock block, double difficulty)
+        public Block ProveWorkFor(Block block, double difficulty)
         {
             _logger?.LogInformation($"Mining a new block with difficulty '{difficulty}'");
 
@@ -49,6 +50,5 @@ namespace NaiveCoin.Models
             _logger?.LogInformation($"Block found: time '{sw.Elapsed.TotalSeconds} sec' difficulty '{difficulty}' hash '{block.Hash}' nonce '{block.Nonce}'");
             return block;
         }
-
     }
 }
