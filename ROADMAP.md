@@ -15,7 +15,6 @@ TODO/Ideas:
 [ ] Database performance improvements 
 [ ] Convert everything to use asynchronous I/O
 [ ] Remove code behaviour from Block, Transaction
-[ ] Move chain code into its own library (ala NaiveChain)
 [ ] Refactor repository methods for future partial replication implementation
 [ ] 100% unit test coverage
 [ ] Side chains

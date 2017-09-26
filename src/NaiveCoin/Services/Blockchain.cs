@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NaiveChain;
+using NaiveChain.Exceptions;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using Newtonsoft.Json;
@@ -12,8 +15,8 @@ using NaiveCoin.Extensions;
 
 namespace NaiveCoin.Services
 {
-    public class Blockchain
-    {
+	public class Blockchain : IBlockchain<CurrencyBlock>
+	{
         private readonly ICurrencyBlockRepository _blocks;
         private readonly IProofOfWork _proofOfWork;
         private readonly ITransactionRepository _transactions;
@@ -119,7 +122,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        private bool CheckChain(IReadOnlyList<CurrencyBlock> blockchainToValidate)
+		public bool CheckChain(IReadOnlyList<CurrencyBlock> blockchainToValidate)
         {
             // Check if the genesis block is the same
             if (_hashProvider.ComputeHash(blockchainToValidate[0]) !=
@@ -185,7 +188,7 @@ namespace NaiveCoin.Services
             await _transactions.DeleteAsync(block.Transactions.Select(x => x.Id));
         }
 
-        private bool CheckBlock(CurrencyBlock newBlock, CurrencyBlock previousBlock)
+		public bool CheckBlock(CurrencyBlock newBlock, CurrencyBlock previousBlock)
         {
             var blockHash = newBlock.ToHash(_hashProvider);
 
@@ -283,7 +286,7 @@ namespace NaiveCoin.Services
             IEnumerable<TransactionItem> outputs = await _blocks.GetTransactionItemsForAddressAsync(TransactionDataType.Output, address);
 
             // Create a list of all transactions inputs found for an address (or all).
-            IEnumerable<TransactionItem> inputs = await _blocks.GetTransactionItemsForAddressAsync(TransactionDataType.Input, address);
+            IEnumerable<TransactionItem> inputs = (await _blocks.GetTransactionItemsForAddressAsync(TransactionDataType.Input, address)).AsList();
 
             // Cross both lists and find transactions outputs without a corresponding transaction input
             var unspent = new HashSet<TransactionItem>();

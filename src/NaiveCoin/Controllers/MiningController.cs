@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NaiveChain.Exceptions;
 using NaiveCoin.Models.Exceptions;
 using NaiveCoin.Services;
 

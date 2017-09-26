@@ -1,6 +1,6 @@
 using System;
 
-namespace NaiveCoin.Models.Exceptions
+namespace NaiveChain.Exceptions
 {
     public class BlockchainAssertionException : Exception
     {
