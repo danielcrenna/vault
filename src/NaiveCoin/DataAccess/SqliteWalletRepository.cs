@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
+using NaiveChain.DataAccess;
 using NaiveCoin.Wallets;
 using NaiveCoin.Core.Models;
 

@@ -62,7 +62,12 @@ namespace NaiveCoin.Services
             return _blocks.StreamAllBlocks();
         }
 
-        public async Task<CurrencyBlock> GetBlockByIndexAsync(long index)
+		public IEnumerable<BlockObject> StreamAllBlockObjects()
+		{
+			return _blocks.StreamAllBlockObjects();
+		}
+
+		public async Task<CurrencyBlock> GetBlockByIndexAsync(long index)
         {
             return await _blocks.GetByIndexAsync(index);
         }

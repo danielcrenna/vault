@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.Extensions.Logging;
 
-namespace NaiveCoin.DataAccess
+namespace NaiveChain.DataAccess
 {
     public abstract class SqliteRepository
     {

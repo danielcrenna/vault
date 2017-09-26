@@ -6,6 +6,7 @@ using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using NaiveChain;
+using NaiveChain.DataAccess;
 using NaiveCoin.Core.Helpers;
 using NaiveCoin.Models;
 
@@ -74,7 +75,7 @@ namespace NaiveCoin.DataAccess
 								@object.Index,
 								@object.Timestamp,
 								Data = _serializer.Serialize(@object),
-								@object.Hash,
+								@object.Hash
 							}, t);
 					}
 
@@ -167,7 +168,7 @@ namespace NaiveCoin.DataAccess
 				const string sql = "SELECT bo.* " +
 				                   "FROM 'Block' b " +
 				                   "INNER JOIN 'BlockObject' bo ON bo.'BlockIndex' = b.'Index' " +
-				                   "ORDER BY b.'Index', bo.'Index'";
+				                   "ORDER BY b.'Index', bo.'Index', bo.'SourceId', bo.'Version'";
 
 				var objects = db.Query<BlockObject>(sql, buffered: false);
 
@@ -292,6 +293,8 @@ CREATE TABLE IF NOT EXISTS 'BlockObject'
 (
 	'BlockIndex' INTEGER NOT NULL,
 	'Index' INTEGER NOT NULL,
+	'SourceId' VARCHAR(64) NOT NULL,
+	'Version' INTEGER NOT NULL,
 	'Timestamp' INTEGER NOT NULL,
 	'Data' BLOB NOT NULL,
 	'Hash' VARCHAR(64) NOT NULL

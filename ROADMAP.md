@@ -1,36 +1,55 @@
 TODO/Ideas:
 ===========
-[ ] GetAllBlocks should support Range, or even enforce it
-[ ] Remove Index from KeyPair
-[ ] Need to wipe all working arrays (ala Chaos.NaCl)
-[ ] Encrypt Sqlite databases
-[ ] Need a way to enforce coin settings are the same between peers (another hash?)
-[ ] CLI client
-[ ] Light client
-[ ] Pluggable transaction types
-[ ] Current implementation has layer/responsibility disease
-[ ] Remove exceptions thrown when they can be handled higher up
-[ ] Audit access of _logger
-[ ] Audit access of JsonConvert
-[ ] Database performance improvements 
-[ ] Convert everything to use asynchronous I/O
-[ ] Remove code behaviour from Block, Transaction
-[ ] Refactor repository methods for future partial replication implementation
-[ ] 100% unit test coverage
+Blockchain:
+[ ] Smart contracts
 [ ] Side chains
-[ ] Offline wallet / CLI
-[ ] Online wallet
+[ ] Verification of block objects (sources, order, etc.)
+
+UI:
 [ ] Block Explorer
 [ ] Coin Logos
-[ ] Partial replication
+[ ] CLI client
+[ ] Light client
+
+I/O:
+[ ] Pluggable storage
+[ ] Bootstrap chain (ala log shipping)
+[ ] Database performance improvements
+[ ] Encrypt Sqlite databases
+[ ] GetAllBlocks should support Range, or even enforce it
+[ ] Performance optimization of block objects using snapshots
+
+Security:
+[ ] Need to wipe all working arrays (ala Chaos.NaCl)
+[ ] Block object encryption (different than sqlite encryption, as its block layer level and address specific)
+
+Mining:
 [ ] Proof of Stake implementation
+[ ] Built-in stratum pool miner?
+
+Wallets:
+[ ] Passphrase wallet (non-human)
+[ ] Vanity addresses (ala vanitygen)
+[ ] Offline wallet
+[ ] Online wallet
+[ ] Brainwallets (improvements ala warpwallet)
+
+Peers:
+[ ] Full replication (default)
+[ ] Partial replication
 [ ] Pluggable peer protocols
 [ ] Proper peer network (Lidgren, Neo, etc.)
 [ ] Peer discovery over UPNP/UDP beacons
 [ ] Efficient peer replication 
 [ ] Consensus with Paxos and/or Raft
-[ ] Pluggable storage
 [ ] Pluggable consensus
-[ ] Built-in stratum pool miner?
-[ ] Vanity addresses (ala vanitygen)
-[ ] Bootstrap chain (ala log shipping)
+[ ] Need a way to enforce coin settings are the same between peers (another hash / version checksum)
+
+Misc:
+[ ] 100% unit test coverage
+[ ] Remove code behaviour from Block, Transaction
+[ ] Audit access of _logger
+[ ] Audit access of JsonConvert
+[ ] Remove exceptions thrown when they can be handled higher up
+[ ] Investigate performance of removing first-class transaction objects
+[ ] Remove Index from KeyPair?
