@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NaiveCoin.Models
 {
     public interface ITransactionRepository
     {
-        IEnumerable<Transaction> GetAll();
-        Transaction GetById(string id);
-        void Add(Transaction transaction);
-        int Delete(IEnumerable<string> ids);
-        bool Delete(string id);
+        IEnumerable<Transaction> StreamAllTransactions();
+        Task<Transaction> GetByIdAsync(string id);
+        Task AddTransactionAsync(Transaction transaction);
+        Task<int> DeleteAsync(IEnumerable<string> ids);
+        Task<bool> DeleteAsync(string id);
     }
 }

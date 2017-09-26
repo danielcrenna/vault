@@ -30,7 +30,7 @@ namespace NaiveCoin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("blocks")]
-        public IActionResult GetAllBlocks()
+        public IActionResult StreamAllBlocks()
         {
             var blocks = _blockchain.StreamAllBlocks();
             if (!blocks.Any())
@@ -44,9 +44,9 @@ namespace NaiveCoin.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("blocks/latest")]
-        public IActionResult GetLastBlock()
+        public async Task<IActionResult> GetLastBlock()
         {
-            var last = _blockchain.GetLastBlockAsync();
+            var last = await _blockchain.GetLastBlockAsync();
             if (last == null)
             {
                 return NotFound(new
@@ -88,9 +88,9 @@ namespace NaiveCoin.Controllers
         /// Retrieve a block by hash.
         /// </summary>
         [HttpGet("blocks/{hash}")]
-        public IActionResult GetBlockByHash(string hash)
+        public async Task<IActionResult> GetBlockByHash(string hash)
         {
-            var blockFound = _blockchain.GetBlockByHashAsync(hash);
+            var blockFound = await _blockchain.GetBlockByHashAsync(hash);
             if (blockFound == null)
                 return NotFound(new
                 {
@@ -104,9 +104,9 @@ namespace NaiveCoin.Controllers
         /// Retrieve a block by index.
         /// </summary>
         [HttpGet("blocks/{index}")]
-        public IActionResult GetBlockByIndex(long index)
+        public async Task<IActionResult> GetBlockByIndex(long index)
         {
-            var blockFound = _blockchain.GetBlockByIndexAsync(index);
+            var blockFound = await _blockchain.GetBlockByIndexAsync(index);
             if (blockFound == null)
                 return NotFound(new
                 {
@@ -120,9 +120,9 @@ namespace NaiveCoin.Controllers
         /// Retrieves a block transaction by its ID.
         /// </summary>
         [HttpGet("blocks/transactions/{transactionId}")]
-        public IActionResult GetTransactionFromBlocks(string transactionId)
+        public async Task<IActionResult> GetTransactionFromBlocks(string transactionId)
         {
-            var blockFound = _blockchain.GetTransactionFromBlocks(transactionId);
+            var blockFound = await _blockchain.GetTransactionFromBlocksAsync(transactionId);
             if (blockFound == null)
             {
                 return NotFound(new
@@ -141,7 +141,7 @@ namespace NaiveCoin.Controllers
         [HttpGet("transactions")]
         public IActionResult GetAllTransactions()
         {
-            var transactions = _blockchain.GetAllTransactions();
+            var transactions = _blockchain.StreamAllTransactions();
             if (!transactions.Any())
                 return NotFound();
             return Ok(transactions);
@@ -153,9 +153,9 @@ namespace NaiveCoin.Controllers
         /// <param name="transaction"></param>
         /// <returns></returns>
         [HttpPost("transactions")]
-        public IActionResult AddTransaction([FromBody] Transaction transaction)
+        public async Task<IActionResult> AddTransaction([FromBody] Transaction transaction)
         {
-            var transactionFound = _blockchain.GetTransactionById(transaction.Id);
+            var transactionFound = await _blockchain.GetTransactionByIdAsync(transaction.Id);
             if(transactionFound != null)
                 return StatusCode((int)HttpStatusCode.Conflict, new
                 {
@@ -184,7 +184,7 @@ namespace NaiveCoin.Controllers
         [HttpGet("transactions/unspent/{address}")]
         public IActionResult GetUnspentTransactionsForAddress([FromRoute]string address)
         {
-            return Ok(_blockchain.GetUnspentTransactionsForAddress(address));
+            return Ok(_blockchain.GetUnspentTransactionsForAddressAsync(address));
         }
     }
 }

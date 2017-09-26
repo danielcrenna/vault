@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NaiveCoin.Models;
-using NaiveCoin.Wallets;
 using NaiveCoin.Core.Helpers;
 using NaiveCoin.Core.Providers;
+using NaiveCoin.Models;
+using NaiveCoin.Wallets;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace NaiveCoin.Services
 {
-    public class Operator
+	public class Operator
     {
         private readonly Blockchain _blockchain;
         private readonly IHashProvider _hashProvider;
@@ -34,50 +35,50 @@ namespace NaiveCoin.Services
             _logger = logger;
         }
 
-        public Wallet AddWallet(Wallet wallet)
-        {
-            return _walletRepository.Add(wallet);
-        }
-        
         public Wallet CreateWalletFromPassword(string password)
         {
             return _provider.Create(password);
         }
-        
-        public Wallet CheckWalletPassword(string id, string password)
+
+		public async Task<Wallet> AddWalletAsync(Wallet wallet)
+		{
+			return await _walletRepository.AddAsync(wallet);
+		}
+
+		public async Task<Wallet> CheckWalletPasswordAsync(string id, string password)
         {
-            var wallet = GetWalletById(id);
+            var wallet = await GetWalletByIdAsync(id);
             if (wallet != null && PasswordUtil.Verify(password, wallet.PasswordHash))
                 return wallet;
             return null;
         }
 
-        public IEnumerable<Wallet> GetWallets()
+        public async Task<IEnumerable<Wallet>> GetWalletsAsync()
         {
-            return _walletRepository.GetAll();
+            return await _walletRepository.GetAllAsync();
         }
 
-        public Wallet GetWalletById(string id)
+        public async Task<Wallet> GetWalletByIdAsync(string id)
         {
-            return _walletRepository.GetById(id);
+            return await _walletRepository.GetByIdAsync(id);
         }
 
-        public string GenerateAddressForWallet(string id)
+        public async Task<string> GenerateAddressForWalletAsync(string id)
         {
-            var wallet = GetWalletById(id);
+            var wallet = await GetWalletByIdAsync(id);
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{id}'");
 
             var address = _provider.GenerateAddress(wallet);
 
-            _walletRepository.SaveAddresses(wallet);
+            await _walletRepository.SaveAddressesAsync(wallet);
 
             return address;
         }
 
-        public IEnumerable<string> GetAddressesForWallet(string id)
+        public async Task<IEnumerable<string>> GetAddressesForWalletAsync(string id)
         {
-            var wallet = GetWalletById(id);
+            var wallet = await GetWalletByIdAsync(id);
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{id}'");
 
@@ -86,9 +87,9 @@ namespace NaiveCoin.Services
 	        return addresses.Select(x => x.ToHex());
         }
 
-        public string GetAddressForWallet(string walletId, string addressId)
+        public async Task<string> GetAddressForWalletAsync(string walletId, string addressId)
         {
-            var wallet = GetWalletById(walletId);
+            var wallet = await GetWalletByIdAsync(walletId);
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{walletId}'");
 
@@ -99,17 +100,17 @@ namespace NaiveCoin.Services
             return addressFound.ToHex();
         }
 
-        public long GetBalanceForWalletAddress(string id, string addressId)
+        public async Task<long> GetBalanceForWalletAddressAsync(string id, string addressId)
         {
-            var address = GetAddressForWallet(id, addressId);
-            var utxo = _blockchain.GetUnspentTransactionsForAddress(address);
+            var address = await GetAddressForWalletAsync(id, addressId);
+            var utxo = await _blockchain.GetUnspentTransactionsForAddressAsync(address);
             return utxo.Sum(x => x.Amount);
         }
 
-        public Transaction CreateTransaction(string walletId, byte[] fromAddress, byte[] toAddress, long amount, byte[] changeAddress)
+        public async Task<Transaction> CreateTransactionAsync(string walletId, byte[] fromAddress, byte[] toAddress, long amount, byte[] changeAddress)
         {
-            var utxo = _blockchain.GetUnspentTransactionsForAddress(fromAddress.ToHex());
-            var wallet = GetWalletById(walletId);
+            var utxo = await _blockchain.GetUnspentTransactionsForAddressAsync(fromAddress.ToHex());
+            var wallet = await GetWalletByIdAsync(walletId);
 
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{walletId}'");

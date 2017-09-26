@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NaiveChain\NaiveChain.csproj" />
     <ProjectReference Include="..\NaiveCoin.Core\NaiveCoin.Core.csproj" />
     <ProjectReference Include="..\NaiveCoin.Wallets\NaiveCoin.Wallets.csproj" />
   </ItemGroup>

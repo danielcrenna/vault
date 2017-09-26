@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
@@ -20,7 +21,7 @@ namespace NaiveCoin.DataAccess
             _logger = logger;
         }
 
-        public IEnumerable<Transaction> GetAll()
+        public IEnumerable<Transaction> StreamAllTransactions()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -28,81 +29,94 @@ namespace NaiveCoin.DataAccess
 
                 foreach (var transaction in transactions)
                 {
-                    yield return TransformTransaction(transaction, db);
+	                TransformTransactionAsync(transaction, db).ConfigureAwait(false).GetAwaiter().GetResult();
+
+					yield return transaction;
                 }
             }
         }
 
-        public Transaction GetById(string id)
+        public async Task<Transaction> GetByIdAsync(string id)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
                 const string sql = "SELECT t.* FROM 'Transaction' t WHERE t.'Id' = @Id";
 
-                var transaction = db.QuerySingleOrDefault<Transaction>(sql, new { Id = id });
+                var transaction = await db.QuerySingleOrDefaultAsync<Transaction>(sql, new { Id = id });
 
-                TransformTransaction(transaction, db);
+                await TransformTransactionAsync(transaction, db);
 
                 return transaction;
             }
         }
 
-        private static Transaction TransformTransaction(Transaction transaction, IDbConnection db)
+        private static async Task TransformTransactionAsync(Transaction transaction, IDbConnection db)
         {
-            transaction.Data = new TransactionData
+	        const string sql = "SELECT i.* " +
+							   "FROM 'TransactionItem' i " +
+	                           "WHERE i.Type = @Type AND i.TransactionId = @Id";
+
+	        transaction.Data = new TransactionData
             {
-                Inputs = db.Query<TransactionItem>("SELECT i.* " +
-                                                    "FROM 'TransactionData' i " +
-                                                    "WHERE i.Type = @Type AND i.TransactionId = @Id",
-                    new { Type = TransactionDataType.Input, transaction.Id }).ToArray(),
+                Inputs = (await db.QueryAsync<TransactionItem>(sql,
+                    new { Type = TransactionDataType.Input, transaction.Id })).ToArray(),
 
-                Outputs = db.Query<TransactionItem>("SELECT o.* " +
-                                                    "FROM 'TransactionData' o " +
-                                                    "WHERE o.Type = @Type AND o.TransactionId = @Id",
-                    new { Type = TransactionDataType.Output, transaction.Id }).ToArray(),
+                Outputs = (await db.QueryAsync<TransactionItem>(sql,
+                    new { Type = TransactionDataType.Output, transaction.Id })).ToArray()
             };
-
-            return transaction;
         }
 
-        public int Delete(IEnumerable<string> ids)
+        public async Task<int> DeleteAsync(IEnumerable<string> ids)
         {
             var deleted = 0;
+
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                var sets = ids.Split().ToList();
+	            await db.OpenAsync();
 
-                foreach (var set in sets)
-                {
-                    db.Execute("DELETE FROM 'TransactionData' WHERE 'TransactionId' IN @Set", new { Set = set });
+	            using (var t = db.BeginTransaction())
+	            {
+		            var sets = ids.Split().AsList();
 
-                    deleted += db.Execute("DELETE FROM 'Transaction' WHERE 'Id' IN @Set", new {Set = set});
-                }
+		            foreach (var set in sets)
+		            {
+			            var list = set.AsList();
+
+			            await db.ExecuteAsync("DELETE FROM 'TransactionItem' WHERE 'TransactionId' IN @Set", new { Set = list }, t);
+
+			            deleted += await db.ExecuteAsync("DELETE FROM 'Transaction' WHERE 'Id' IN @Set", new { Set = list }, t);
+		            }
+	            }
             }
             return deleted;
         }
 
-        public bool Delete(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                db.Execute("DELETE FROM 'TransactionData' WHERE 'TransactionId' = @Id", new { Id = id });
+	            await db.OpenAsync();
 
-                var deleted = db.Execute("DELETE FROM 'Transaction' WHERE 'Id' = @Id", new {Id = id});
+	            using (var t = db.BeginTransaction())
+	            {
+		            await db.ExecuteAsync("DELETE FROM 'TransactionItem' WHERE 'TransactionId' = @Id", new {Id = id}, t);
 
-                return deleted == 1;
+		            var deleted = await db.ExecuteAsync("DELETE FROM 'Transaction' WHERE 'Id' = @Id", new {Id = id}, t);
+
+		            return deleted == 1;
+	            }
             }
         }
 
-        public void Add(Transaction transaction)
+        public async Task AddTransactionAsync(Transaction transaction)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                db.Open();
+                await db.OpenAsync();
 
                 using (var t = db.BeginTransaction())
                 {
-                    db.Execute("INSERT INTO 'Transaction' ('Id','Hash','Type','Data') VALUES (@Id,@Hash,@Type,@Data);", new
+                    await db.ExecuteAsync("INSERT INTO 'Transaction' ('Id','Hash','Type','Data') VALUES (@Id,@Hash,@Type,@Data);", new
                     {
                         transaction.Id,
                         transaction.Hash,
@@ -112,7 +126,7 @@ namespace NaiveCoin.DataAccess
 
                     foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionItem>())
                     {
-                        db.Execute("INSERT INTO 'TransactionData' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+                        await db.ExecuteAsync("INSERT INTO 'TransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                             new
                             {
                                 input.TransactionId,
@@ -126,7 +140,7 @@ namespace NaiveCoin.DataAccess
 
                     foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionItem>())
                     {
-                        db.Execute("INSERT INTO 'TransactionData' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+                        await db.ExecuteAsync("INSERT INTO 'TransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                             new
                             {
                                 output.TransactionId,
@@ -157,7 +171,7 @@ CREATE TABLE IF NOT EXISTS 'Transaction'
     'Type' INTEGER NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS 'TransactionData'
+CREATE TABLE IF NOT EXISTS 'TransactionItem'
 (  
     'TransactionId' VARCHAR(64) NOT NULL PRIMARY KEY, 
     'Type' INTEGER NOT NULL,

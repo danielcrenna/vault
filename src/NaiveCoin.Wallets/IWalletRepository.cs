@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NaiveCoin.Wallets
 {
     public interface IWalletRepository
     {
-        IEnumerable<Wallet> GetAll();
-        Wallet GetById(string id);
-        Wallet Add(Wallet wallet);
-        void SaveAddresses(Wallet wallet);
+        Task<IEnumerable<Wallet>> GetAllAsync();
+	    Task<Wallet> GetByIdAsync(string id);
+        Task<Wallet> AddAsync(Wallet wallet);
+        Task SaveAddressesAsync(Wallet wallet);
     }
 }

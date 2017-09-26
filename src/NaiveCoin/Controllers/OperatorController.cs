@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using NaiveCoin.Core.Helpers;
@@ -36,9 +37,11 @@ namespace NaiveCoin.Controllers
         /// Retrieves all wallets.
         /// </summary>
         [HttpGet("wallets")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var wallets = _operator.GetWallets().Select(wallet => new
+	        var all = await _operator.GetWalletsAsync();
+
+			var wallets = all.Select(wallet => new
             {
                 wallet.Id,
                 Addresses = wallet.GetAddresses()
@@ -78,9 +81,9 @@ namespace NaiveCoin.Controllers
         /// Retrieves a wallet by ID.
         /// </summary>
         [HttpGet("wallets/{id}")]
-        public IActionResult GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var wallet = _operator.GetWalletById(id);
+            var wallet = await _operator.GetWalletByIdAsync(id);
             if (wallet == null)
                 return NotFound();
 
@@ -95,17 +98,17 @@ namespace NaiveCoin.Controllers
         /// Creates a new wallet transaction.
         /// </summary>
         [HttpPost("wallets/{id}/transactions")]
-        public IActionResult CreateTransaction([FromRoute] string id, [FromBody] CreateTransactionViewModel model)
+        public async Task<IActionResult> CreateTransaction([FromRoute] string id, [FromBody] CreateTransactionViewModel model)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             
-            if (_operator.CheckWalletPassword(id, model.Password) == null)
+            if (await _operator.CheckWalletPasswordAsync(id, model.Password) == null)
                 return NotFound();
 
             try
             {
-                Transaction newTransaction = _operator.CreateTransaction(id,
+                Transaction newTransaction = await _operator.CreateTransactionAsync(id,
                     model.FromAddress.FromHex(),
                     model.ToAddress.FromHex(), 
                     model.Amount,
@@ -134,12 +137,12 @@ namespace NaiveCoin.Controllers
         /// Retrieves all wallet addresses.
         /// </summary>
         [HttpGet("wallets/{id}/addresses")]
-        public IActionResult GetAddresses([FromRoute] string id)
+        public async Task<IActionResult> GetAddresses([FromRoute] string id)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return BadRequest();
 
-            var wallet = _operator.GetWalletById(id);
+            var wallet = await _operator.GetWalletByIdAsync(id);
             if (wallet == null)
                 return NotFound();
 
@@ -153,7 +156,7 @@ namespace NaiveCoin.Controllers
         /// Creates a new wallet address.
         /// </summary>
         [HttpPost("wallets/{id}/addresses")]
-        public IActionResult CreateAddress([FromRoute] string id, [FromBody] CreateAddressViewModel model)
+        public async Task<IActionResult> CreateAddress([FromRoute] string id, [FromBody] CreateAddressViewModel model)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return BadRequest();
@@ -161,7 +164,7 @@ namespace NaiveCoin.Controllers
             if (string.IsNullOrWhiteSpace(model?.Password))
                 return BadRequest();
 
-            var wallet = _operator.CheckWalletPassword(id, model.Password);
+            var wallet = await _operator.CheckWalletPasswordAsync(id, model.Password);
             if (wallet == null)
                 return NotFound();
 
@@ -176,7 +179,7 @@ namespace NaiveCoin.Controllers
         [HttpGet("wallets/{id}/addresses/{address}/balance")]
         public IActionResult GetAddressBalance([FromRoute] string id, [FromRoute] string address)
         {
-            var balance = _operator.GetBalanceForWalletAddress(id, address);
+            var balance = _operator.GetBalanceForWalletAddressAsync(id, address);
             return Ok(new
             {
                 Balance = balance

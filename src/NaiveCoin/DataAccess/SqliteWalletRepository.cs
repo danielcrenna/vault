@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
@@ -9,18 +11,16 @@ namespace NaiveCoin.DataAccess
 {
     public class SqliteWalletRepository : SqliteRepository, IWalletRepository
     {
-        private readonly IWalletSecretProvider _secretProvider;
-        private readonly IWalletAddressProvider _addressProvider;
+	    private readonly IWalletAddressProvider _addressProvider;
         private readonly ILogger<SqliteWalletRepository> _logger;
 
-        public SqliteWalletRepository(string @namespace, string databaseName, IWalletSecretProvider secretProvider, IWalletAddressProvider addressProvider, ILogger<SqliteWalletRepository> logger) : base(@namespace, databaseName, logger)
+        public SqliteWalletRepository(string @namespace, string databaseName, IWalletAddressProvider addressProvider, ILogger<SqliteWalletRepository> logger) : base(@namespace, databaseName, logger)
         {
-            _secretProvider = secretProvider;
-            _addressProvider = addressProvider;
+	        _addressProvider = addressProvider;
             _logger = logger;
         }
 
-        public IEnumerable<Wallet> GetAll()
+        public async Task<IEnumerable<Wallet>> GetAllAsync()
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -30,7 +30,7 @@ namespace NaiveCoin.DataAccess
 
                 var wallets = new Dictionary<string, Wallet>();
 
-                db.Query<Wallet, KeyPair, Wallet>(sql, (parent, child) =>
+                await db.QueryAsync<Wallet, KeyPair, Wallet>(sql, (parent, child) =>
                 {
                     if (!wallets.ContainsKey(parent.Id))
                         wallets.Add(parent.Id, parent);
@@ -43,7 +43,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public Wallet GetById(string id)
+        public async Task<Wallet> GetByIdAsync(string id)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
@@ -54,7 +54,7 @@ namespace NaiveCoin.DataAccess
 
                 Wallet wallet = null;
 
-                db.Query<Wallet, KeyPair, Wallet>(sql, (parent, child) =>
+                await db.QueryAsync<Wallet, KeyPair, Wallet>(sql, (parent, child) =>
                 {
                     if (wallet == null)
                         wallet = parent;
@@ -66,7 +66,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public Wallet Add(Wallet wallet)
+        public async Task<Wallet> AddAsync(Wallet wallet)
         {
             if (wallet.KeyPairs.Count == 0)
             {
@@ -75,13 +75,13 @@ namespace NaiveCoin.DataAccess
 
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                db.Open();
+                await db.OpenAsync();
 
                 using (var t = db.BeginTransaction())
                 {
-                    db.Execute("INSERT INTO Wallet (Id,PasswordHash,Secret) VALUES (@Id,@PasswordHash,@Secret)", wallet, t);
+                    await db.ExecuteAsync("INSERT INTO Wallet (Id,PasswordHash,Secret) VALUES (@Id,@PasswordHash,@Secret)", wallet, t);
 
-                    SaveAddressesInTransaction(wallet, db, t);
+                    await SaveAddressesInTransactionAsync(wallet, db, t);
 
                     t.Commit();
                 }
@@ -90,26 +90,26 @@ namespace NaiveCoin.DataAccess
             return wallet;
         }
 
-        public void SaveAddresses(Wallet wallet)
+        public async Task SaveAddressesAsync(Wallet wallet)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                db.Open();
+                await db.OpenAsync();
 
                 using (var t = db.BeginTransaction())
                 {
-                    SaveAddressesInTransaction(wallet, db, t);
+                    await SaveAddressesInTransactionAsync(wallet, db, t);
                 }
             }
         }
 
-        private static void SaveAddressesInTransaction(Wallet wallet, SqliteConnection db, SqliteTransaction t)
+        private static async Task SaveAddressesInTransactionAsync(Wallet wallet, IDbConnection db, IDbTransaction t)
         {
-            db.Execute("DELETE FROM 'Address' WHERE 'WalletId' = @Id", wallet, t);
+            await db.ExecuteAsync("DELETE FROM 'Address' WHERE 'WalletId' = @Id", wallet, t);
 
             foreach (var keyPair in wallet.KeyPairs)
             {
-                db.Execute("INSERT INTO Address ('WalletId','Index','PrivateKey','PublicKey') VALUES (@WalletId,@Index,@PrivateKey,@PublicKey)",
+                await db.ExecuteAsync("INSERT INTO Address ('WalletId','Index','PrivateKey','PublicKey') VALUES (@WalletId,@Index,@PrivateKey,@PublicKey)",
                 new
                 {
                     WalletId = wallet.Id,

@@ -26,7 +26,7 @@ namespace NaiveCoin.Services
 
         public async Task<Block> MineAsync(string address)
         {
-            var baseBlock = GenerateNextBlock(address, await _blockchain.GetLastBlockAsync(), _blockchain.GetAllTransactions());
+            var baseBlock = GenerateNextBlock(address, await _blockchain.GetLastBlockAsync(), _blockchain.StreamAllTransactions());
 
             return _proofOfWork.ProveWorkFor(baseBlock, _blockchain.GetDifficulty(baseBlock.Index.GetValueOrDefault()));
         }

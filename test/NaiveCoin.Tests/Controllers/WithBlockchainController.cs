@@ -1,4 +1,5 @@
-﻿using NaiveCoin.Models;
+﻿using System.Threading.Tasks;
+using NaiveCoin.Models;
 using Xunit;
 
 namespace NaiveCoin.Tests.Controllers
@@ -13,7 +14,7 @@ namespace NaiveCoin.Tests.Controllers
         }
 
         [Fact]
-        public async void Can_get_latest_block()
+        public async Task Can_get_latest_block()
         {
             var block = await _fixture.Client.GetAsync<Block>("/blockchain/blocks/latest");
 

@@ -209,7 +209,7 @@ namespace NaiveCoin.Services
         public async Task<int> GetConfirmationsAsync(string transactionId)
         {
             // Get from all peers if the transaction has been confirmed
-            var foundLocally = _blockchain.GetTransactionFromBlocks(transactionId) != null;
+            var foundLocally = _blockchain.GetTransactionFromBlocksAsync(transactionId) != null;
             var confirmed = 0;
             foreach (var peer in _peers)
                 confirmed += await GetConfirmationAsync(peer, transactionId) ? 1 : 0;
@@ -229,7 +229,7 @@ namespace NaiveCoin.Services
             // For each received transaction check if we have it, if not, add.
             foreach (var transaction in transactions)
             {
-                var transactionFound = _blockchain.GetTransactionById(transaction.Id);
+                var transactionFound = _blockchain.GetTransactionByIdAsync(transaction.Id);
                 if (transactionFound == null)
                 {
                     _logger?.LogInformation($"Syncing transaction '{transaction.Id}");

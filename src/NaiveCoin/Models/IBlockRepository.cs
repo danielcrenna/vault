@@ -10,12 +10,11 @@ namespace NaiveCoin.Models
 	    Task<Block> GetByHashAsync(string hash);
         Task<Block> GetLastBlockAsync();
         Task<Block> GetByTransactionIdAsync(string transactionId);
+        Task<IEnumerable<TransactionItem>> GetTransactionItemsForAddressAsync(TransactionDataType type, string address);
 
         void Add(Block block);
 
-        IEnumerable<TransactionItem> GetTransactionItemsForAddress(TransactionDataType type, string address);
-        IEnumerable<string> GetAllTransactionIds();
-
+	    IEnumerable<string> StreamAllTransactionIds();
 	    IEnumerable<Block> StreamAllBlocks();
 		IEnumerable<BlockObject> StreamAllBlockObjects();
     }

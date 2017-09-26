@@ -105,41 +105,42 @@ namespace NaiveCoin.DataAccess
             }
         }
         
-        public IEnumerable<TransactionItem> GetTransactionItemsForAddress(TransactionDataType type, string address)
+        public async Task<IEnumerable<TransactionItem>> GetTransactionItemsForAddressAsync(TransactionDataType type, string address)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                const string sql = "SELECT d.* " +
-                                   "FROM 'BlockTransactionData' d " +
-                                   "WHERE d.'Address' = @Address " +
-                                   "AND d.'Type' = @Type";
+                const string sql = "SELECT i.* " +
+                                   "FROM 'BlockTransactionItem' i " +
+                                   "WHERE i.'Address' = @Address " +
+                                   "AND i.'Type' = @Type";
 
-                var outputs = db.Query<TransactionItem>(sql, new
+                var items = await db.QueryAsync<TransactionItem>(sql, new
                 {
                     Address = address.FromHex(),
                     Type = type
                 });
 
-                return outputs;
+                return items;
             }
         }
 
-        public IEnumerable<string> GetAllTransactionIds()
-        {
-            using (var db = new SqliteConnection($"Data Source={DataFile}"))
-            {
-                const string sql = "SELECT bt.'Id' " +
-                                   "FROM 'Block' b " +
-                                   "INNER JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index' " +
-                                   "ORDER BY b.'Index'";
 
-                var ids = db.Query<string>(sql, buffered: false);
+	    public IEnumerable<string> StreamAllTransactionIds()
+	    {
+		    using (var db = new SqliteConnection($"Data Source={DataFile}"))
+		    {
+			    const string sql = "SELECT bt.'Id' " +
+			                       "FROM 'Block' b " +
+			                       "INNER JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index' " +
+			                       "ORDER BY b.'Index'";
 
-                return ids;
-            }
-        }
+			    var ids = db.Query<string>(sql, buffered: false);
 
-	    public IEnumerable<BlockObject> StreamAllBlockObjects()
+			    return ids;
+		    }
+	    }
+
+		public IEnumerable<BlockObject> StreamAllBlockObjects()
 	    {
 			using (var db = new SqliteConnection($"Data Source={DataFile}"))
 			{
@@ -221,15 +222,22 @@ namespace NaiveCoin.DataAccess
             if (block == null)
                 return;
 
-            block.Transactions = new List<Transaction>();
+	        const string objectsSql = "SELECT bo.* " +
+	                                  "FROM 'Block' b " +
+	                                  "INNER JOIN 'BlockObject' bo ON bo.'BlockIndex' = b.'Index' " +
+	                                  "ORDER BY b.'Index', bo.'Index'";
 
-	        const string transactionsSql = "SELECT t.* " +
+	        block.Objects = (await db.QueryAsync<BlockObject>(objectsSql, new {block.Index})).AsList();
+
+            const string transactionsSql = "SELECT t.* " +
 	                                       "FROM 'BlockTransaction' t " +
 	                                       "WHERE t.'BlockIndex' = @Index";
+			
+	        block.Transactions = new List<Transaction>();
 
-	        var transactions = await db.QueryAsync<Transaction>(transactionsSql, new { block.Index });
-
-            foreach (var transaction in transactions)
+			var transactions = await db.QueryAsync<Transaction>(transactionsSql, new { block.Index });
+			
+			foreach (var transaction in transactions)
             {
 	            const string transactionItemSql = "SELECT i.* " +
 	                                              "FROM 'BlockTransactionItem' i " +

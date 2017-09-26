@@ -50,7 +50,7 @@ namespace NaiveCoin.Services
             }
 
             // Remove transactions that are in the blockchain
-            _transactions.Delete(_blocks.GetAllTransactionIds());
+            _transactions.DeleteAsync(_blocks.StreamAllTransactionIds());
         }
 
         public IEnumerable<Block> StreamAllBlocks()
@@ -78,17 +78,17 @@ namespace NaiveCoin.Services
             return _proofOfWork.GetDifficulty(index);
         }
 
-        public IEnumerable<Transaction> GetAllTransactions()
+        public IEnumerable<Transaction> StreamAllTransactions()
         {
-            return _transactions.GetAll();
+            return _transactions.StreamAllTransactions();
         }
 
-        public Transaction GetTransactionById(string id)
+        public async Task<Transaction> GetTransactionByIdAsync(string id)
         {
-            return _transactions.GetById(id);
+            return await _transactions.GetByIdAsync(id);
         }
 
-        public async Task<Transaction> GetTransactionFromBlocks(string transactionId)
+        public async Task<Transaction> GetTransactionFromBlocksAsync(string transactionId)
         {
 	        var blocks = await _blocks.GetByTransactionIdAsync(transactionId);
 
@@ -156,7 +156,7 @@ namespace NaiveCoin.Services
                 _blocks.Add(block);
 
                 // After adding the block it removes the transactions of this block from the list of pending transactions
-                RemoveBlockTransactionsFromTransactions(block);
+                await RemoveBlockTransactionsFromTransactionsAsync(block);
 
                 _logger?.LogInformation($"Block added: {block.Hash}");
                 _logger?.LogDebug($"Block added: {JsonConvert.SerializeObject(block)}");
@@ -173,16 +173,16 @@ namespace NaiveCoin.Services
             if (!CheckTransaction(transaction))
                 return null;
 
-            _transactions.Add(transaction);
+            _transactions.AddTransactionAsync(transaction);
             _logger?.LogInformation($"Transaction added: {transaction.Id}");
             _logger?.LogDebug($"Transaction added: {JsonConvert.SerializeObject(transaction, _jsonSettings)}");
 
             return transaction;
         }
 
-        private void RemoveBlockTransactionsFromTransactions(Block block)
+        private async Task RemoveBlockTransactionsFromTransactionsAsync(Block block)
         {
-            _transactions.Delete(block.Transactions.Select(x => x.Id));
+            await _transactions.DeleteAsync(block.Transactions.Select(x => x.Id));
         }
 
         private bool CheckBlock(Block newBlock, Block previousBlock)
@@ -195,25 +195,25 @@ namespace NaiveCoin.Services
                 _logger?.LogError(message);
                 throw new BlockAssertionException(message);
             }
-            else if (previousBlock.Hash != newBlock.PreviousHash)
-            { // Check if the previous block is correct
-                var message = $"Invalid previoushash: expected '{previousBlock.Hash}' got '{newBlock.PreviousHash}'";
-                _logger?.LogError(message);
-                throw new BlockAssertionException(message);
-            }
-            else if (blockHash != newBlock.Hash)
-            { // Check if the hash is correct
-                var message = $"Invalid hash: expected '{blockHash}' got '{newBlock.Hash}'";
-                throw new BlockAssertionException(message);
-            }
-            else if (newBlock.GetDifficulty() >= GetDifficulty(newBlock.Index ?? 0))
-            { // If the difficulty level of the proof-of-work challenge is correct
-                var message = $"Invalid proof-of-work difficulty: expected '${newBlock.GetDifficulty()}' to be smaller than '${GetDifficulty(newBlock.Index ?? 0)}'";
-                _logger?.LogError(message);
-                throw new BlockAssertionException(message);
-            }
+	        if (previousBlock.Hash != newBlock.PreviousHash)
+	        { // Check if the previous block is correct
+		        var message = $"Invalid previoushash: expected '{previousBlock.Hash}' got '{newBlock.PreviousHash}'";
+		        _logger?.LogError(message);
+		        throw new BlockAssertionException(message);
+	        }
+	        if (blockHash != newBlock.Hash)
+	        { // Check if the hash is correct
+		        var message = $"Invalid hash: expected '{blockHash}' got '{newBlock.Hash}'";
+		        throw new BlockAssertionException(message);
+	        }
+	        if (newBlock.GetDifficulty() >= GetDifficulty(newBlock.Index ?? 0))
+	        { // If the difficulty level of the proof-of-work challenge is correct
+		        var message = $"Invalid proof-of-work difficulty: expected '${newBlock.GetDifficulty()}' to be smaller than '${GetDifficulty(newBlock.Index ?? 0)}'";
+		        _logger?.LogError(message);
+		        throw new BlockAssertionException(message);
+	        }
 
-            // For each transaction in this block, check if it is valid
+	        // For each transaction in this block, check if it is valid
             foreach (var transaction in newBlock.Transactions)
                 CheckTransaction(transaction);
 
@@ -277,13 +277,13 @@ namespace NaiveCoin.Services
             return true;
         }
 
-        public IEnumerable<TransactionItem> GetUnspentTransactionsForAddress(string address)
+        public async Task<IEnumerable<TransactionItem>> GetUnspentTransactionsForAddressAsync(string address)
         {
             // Create a list of all transactions outputs found for an address (or all).
-            IEnumerable<TransactionItem> outputs = _blocks.GetTransactionItemsForAddress(TransactionDataType.Output, address);
+            IEnumerable<TransactionItem> outputs = await _blocks.GetTransactionItemsForAddressAsync(TransactionDataType.Output, address);
 
             // Create a list of all transactions inputs found for an address (or all).
-            IEnumerable<TransactionItem> inputs = _blocks.GetTransactionItemsForAddress(TransactionDataType.Input, address);
+            IEnumerable<TransactionItem> inputs = await _blocks.GetTransactionItemsForAddressAsync(TransactionDataType.Input, address);
 
             // Cross both lists and find transactions outputs without a corresponding transaction input
             var unspent = new HashSet<TransactionItem>();
