@@ -164,7 +164,7 @@ namespace NaiveCoin.Controllers
 
             try
             {
-                Transaction newTransaction = _blockchain.AddTransaction(transaction);
+                Transaction newTransaction = await _blockchain.AddTransactionAsync(transaction);
 
                 return Ok(newTransaction);
             }
@@ -182,9 +182,11 @@ namespace NaiveCoin.Controllers
         }
 
         [HttpGet("transactions/unspent/{address}")]
-        public IActionResult GetUnspentTransactionsForAddress([FromRoute]string address)
+        public async Task<IActionResult> GetUnspentTransactionsForAddress([FromRoute]string address)
         {
-            return Ok(_blockchain.GetUnspentTransactionsForAddressAsync(address));
+	        var model = await _blockchain.GetUnspentTransactionsForAddressAsync(address);
+
+	        return Ok(model);
         }
     }
 }

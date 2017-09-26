@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
-using NaiveChain;
 using NaiveCoin.Core.Providers;
 using NaiveCoin.Extensions;
 using NaiveCoin.Models;
@@ -30,23 +29,23 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         public void There_are_no_migration_errors() { }
 
         [Fact]
-        public void Cannot_add_unhashed_block()
+        public async Task Cannot_add_unhashed_block()
         {
-            Assert.Throws<SqliteException>(() =>
+            await Assert.ThrowsAsync<SqliteException>(async () =>
             {
 	            CurrencyBlock block = new CurrencyBlock();
-                Fixture.Value.Add(block);
+                await Fixture.Value.AddAsync(block);
             });
         }
 
         [Fact]
-        public void Cannot_add_non_unique_block()
+        public async Task Cannot_add_non_unique_block()
         {
-            Assert.Throws<SqliteException>(() =>
+            await Assert.ThrowsAsync<SqliteException>(async () =>
             {
 	            CurrencyBlock block = CoinSettings.GenesisBlock;
                 BeforeSave(block);
-                Fixture.Value.Add(block);
+                await Fixture.Value.AddAsync(block);
             });
         }
 

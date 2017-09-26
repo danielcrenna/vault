@@ -12,13 +12,11 @@ namespace NaiveCoin.DataAccess
 {
     public class SqliteTransactionRepository : SqliteRepository, ITransactionRepository
     {
-        private readonly ITransactionDataSerializer _dataSerializer;
-        private readonly ILogger<SqliteTransactionRepository> _logger;
+	    private readonly ILogger<SqliteTransactionRepository> _logger;
 
-        public SqliteTransactionRepository(string @namespace, string databaseName, ITransactionDataSerializer dataSerializer, ILogger<SqliteTransactionRepository> logger) : base(@namespace, databaseName, logger)
+        public SqliteTransactionRepository(string @namespace, string databaseName, ILogger<SqliteTransactionRepository> logger) : base(@namespace, databaseName, logger)
         {
-            _dataSerializer = dataSerializer;
-            _logger = logger;
+	        _logger = logger;
         }
 
         public IEnumerable<Transaction> StreamAllTransactions()
@@ -116,12 +114,11 @@ namespace NaiveCoin.DataAccess
 
                 using (var t = db.BeginTransaction())
                 {
-                    await db.ExecuteAsync("INSERT INTO 'Transaction' ('Id','Hash','Type','Data') VALUES (@Id,@Hash,@Type,@Data);", new
+                    await db.ExecuteAsync("INSERT INTO 'Transaction' ('Id','Hash','Type') VALUES (@Id,@Hash,@Type);", new
                     {
                         transaction.Id,
                         transaction.Hash,
-                        transaction.Type,
-                        Data = _dataSerializer.Serialize(transaction.Data)
+                        transaction.Type
                     }, t);
 
                     foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionItem>())

@@ -11,21 +11,26 @@ namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
         {
             var coinSettings = new CoinSettingsFixture().Value;
             var hashProvider = new ObjectHashProviderFixture().Value;
-            
+	        var blockObjectSerializer = new BlockObjectDataSerializerFixture().Value;
+
             var factory = new LoggerFactory();
             factory.AddConsole();
             
-            Value = new SqliteBlockRepository($"{Guid.NewGuid()}", "blockchain", factory.CreateLogger<SqliteBlockRepository>());
+            Value = new SqliteCurrencyBlockRepository(
+				$"{Guid.NewGuid()}", 
+				"blockchain",
+				blockObjectSerializer,
+				factory.CreateLogger<SqliteCurrencyBlockRepository>());
 
             var block = coinSettings.GenesisBlock;
             foreach (var transaction in block.Transactions)
                 transaction.Hash = transaction.ToHash(hashProvider);
             block.Hash = block.ToHash(hashProvider);
             
-            Value.Add(block);
+            Value.AddAsync(block).ConfigureAwait(false).GetAwaiter().GetResult(); ;
         }
 
-        public SqliteBlockRepository Value { get; set; }
+        public SqliteCurrencyBlockRepository Value { get; set; }
 
         public void Dispose()
         {

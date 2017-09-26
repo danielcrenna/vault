@@ -9,7 +9,7 @@ namespace NaiveChain
         Task<T> GetByIndexAsync(long index);
 	    Task<T> GetByHashAsync(string hash);
         Task<T> GetLastBlockAsync();
-        void Add(T block);
+        Task AddAsync(T block);
 	    IEnumerable<T> StreamAllBlocks();
 		IEnumerable<BlockObject> StreamAllBlockObjects();
     }

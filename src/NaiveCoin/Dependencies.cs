@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NaiveChain;
 using NaiveCoin.DataAccess;
 using NaiveCoin.Models;
 using NaiveCoin.Services;
@@ -35,7 +36,7 @@ namespace NaiveCoin
                         new StringEnumConverter()
                     }
                 });
-                services.AddSingleton<ITransactionDataSerializer>(r => new JsonTransactionDataSerializer(r.GetRequiredService<JsonSerializerSettings>()));
+                services.AddSingleton<IBlockObjectSerializer>(r => new JsonBlockObjectSerializer(r.GetRequiredService<JsonSerializerSettings>()));
                 services.AddSingleton<IHashProvider>(r => new StableHashProvider(SHA512.Create()));
 
                 var provider = new BrainWalletProvider();
@@ -49,8 +50,8 @@ namespace NaiveCoin
 
             // Repositories:
             {
-                services.AddScoped<ICurrencyBlockRepository>(r => new SqliteBlockRepository(Namespace, "blockchain", r.GetService<ILogger<SqliteBlockRepository>>()));
-                services.AddScoped<ITransactionRepository>(r => new SqliteTransactionRepository(Namespace, "blockchain", r.GetRequiredService<ITransactionDataSerializer>(), r.GetService<ILogger<SqliteTransactionRepository>>()));
+                services.AddScoped<ICurrencyBlockRepository>(r => new SqliteCurrencyBlockRepository(Namespace, "blockchain", r.GetRequiredService<IBlockObjectSerializer>(), r.GetService<ILogger<SqliteCurrencyBlockRepository>>()));
+                services.AddScoped<ITransactionRepository>(r => new SqliteTransactionRepository(Namespace, "blockchain", r.GetService<ILogger<SqliteTransactionRepository>>()));
                 services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace, "wallets",
                     r.GetRequiredService<IWalletAddressProvider>(), 
                     r.GetService<ILogger<SqliteWalletRepository>>()));

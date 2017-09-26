@@ -49,11 +49,12 @@ namespace NaiveCoin.Services
                     transaction.Hash = transaction.ToHash(_hashProvider);
 
                 _coinSettings.GenesisBlock.Hash = _coinSettings.GenesisBlock.ToHash(_hashProvider);
-                _blocks.Add(_coinSettings.GenesisBlock);
+
+                _blocks.AddAsync(_coinSettings.GenesisBlock).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             // Remove transactions that are in the blockchain
-            _transactions.DeleteAsync(_blocks.StreamAllTransactionIds());
+            _transactions.DeleteAsync(_blocks.StreamAllTransactionIds()).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         public IEnumerable<CurrencyBlock> StreamAllBlocks()
@@ -156,10 +157,10 @@ namespace NaiveCoin.Services
             // It only adds the block if it's valid (we need to compare to the previous one)
             if (CheckBlock(block, await GetLastBlockAsync()))
             {
-                _blocks.Add(block);
+	            await _blocks.AddAsync(block);
 
-                // After adding the block it removes the transactions of this block from the list of pending transactions
-                await RemoveBlockTransactionsFromTransactionsAsync(block);
+				// After adding the block it removes the transactions of this block from the list of pending transactions
+				await RemoveBlockTransactionsFromTransactionsAsync(block);
 
                 _logger?.LogInformation($"Block added: {block.Hash}");
                 _logger?.LogDebug($"Block added: {JsonConvert.SerializeObject(block)}");
@@ -170,13 +171,13 @@ namespace NaiveCoin.Services
             return null;
         }
 
-        public Transaction AddTransaction(Transaction transaction)
+        public async Task<Transaction> AddTransactionAsync(Transaction transaction)
         {
             // It only adds the transaction if it's valid
             if (!CheckTransaction(transaction))
                 return null;
 
-            _transactions.AddTransactionAsync(transaction);
+            await _transactions.AddTransactionAsync(transaction);
             _logger?.LogInformation($"Transaction added: {transaction.Id}");
             _logger?.LogDebug($"Transaction added: {JsonConvert.SerializeObject(transaction, _jsonSettings)}");
 

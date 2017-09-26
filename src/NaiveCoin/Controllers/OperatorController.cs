@@ -117,7 +117,7 @@ namespace NaiveCoin.Controllers
 
                 newTransaction.Check(_hashProvider, _coinSettings);
 
-                Transaction transaction = _blockchain.AddTransaction(newTransaction);
+                Transaction transaction = await _blockchain.AddTransactionAsync(newTransaction);
 
                 return Created($"/operator/wallets/{id}/transactions", transaction);
             }

@@ -235,7 +235,7 @@ namespace NaiveCoin.Services
                 if (transactionFound == null)
                 {
                     _logger?.LogInformation($"Syncing transaction '{transaction.Id}");
-                    _blockchain.AddTransaction(transaction);
+                    _blockchain.AddTransactionAsync(transaction);
                 }
             }
         }

@@ -11,13 +11,19 @@ using NaiveCoin.Models;
 
 namespace NaiveCoin.DataAccess
 {
-    public class SqliteBlockRepository : SqliteRepository, ICurrencyBlockRepository
+    public class SqliteCurrencyBlockRepository : SqliteRepository, ICurrencyBlockRepository
     {
-        private readonly ILogger<SqliteBlockRepository> _logger;
+	    private readonly IBlockObjectSerializer _serializer;
+	    private readonly ILogger<SqliteCurrencyBlockRepository> _logger;
 
-        public SqliteBlockRepository(string @namespace, string databaseName, ILogger<SqliteBlockRepository> logger) : base(@namespace, databaseName, logger)
+        public SqliteCurrencyBlockRepository(
+			string @namespace, 
+			string databaseName,
+			IBlockObjectSerializer serializer,
+			ILogger<SqliteCurrencyBlockRepository> logger) : base(@namespace, databaseName, logger)
         {
-            _logger = logger;
+	        _serializer = serializer;
+	        _logger = logger;
         }
 
         public async Task<long> GetLengthAsync()
@@ -47,21 +53,34 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public void Add(CurrencyBlock block)
+        public async Task AddAsync(CurrencyBlock block)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
-                db.Open();
+                await db.OpenAsync();
 
                 using (var t = db.BeginTransaction())
                 {
-                    var index = db.QuerySingle<long>(
+                    var index = await db.QuerySingleAsync<long>(
                         "INSERT INTO 'Block' ('PreviousHash','Timestamp','Nonce','Hash') VALUES (@PreviousHash,@Timestamp,@Nonce,@Hash); " +
                         "SELECT LAST_INSERT_ROWID();", block, t);
 
+	                foreach (var @object in block.Objects)
+	                {
+						await db.ExecuteAsync("INSERT INTO 'BlockObject' ('BlockIndex','Id','Hash','Type') VALUES (@BlockIndex,@Id,@Hash,@Type);",
+							new
+							{
+								BlockIndex = index,
+								@object.Index,
+								@object.Timestamp,
+								Data = _serializer.Serialize(@object),
+								@object.Hash,
+							}, t);
+					}
+
                     foreach (var transaction in block.Transactions)
                     {
-                        db.Execute("INSERT INTO 'BlockTransaction' ('BlockIndex','Id','Hash','Type') VALUES (@BlockIndex,@Id,@Hash,@Type);",
+                        await db.ExecuteAsync("INSERT INTO 'BlockTransaction' ('BlockIndex','Id','Hash','Type') VALUES (@BlockIndex,@Id,@Hash,@Type);",
                         new
                         {
                             BlockIndex = index,
@@ -72,7 +91,7 @@ namespace NaiveCoin.DataAccess
 
                         foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionItem>())
                         {
-                            db.Execute("INSERT INTO 'BlockTransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+                            await db.ExecuteAsync("INSERT INTO 'BlockTransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                                 new
                                 {
                                     input.TransactionId,
@@ -86,7 +105,7 @@ namespace NaiveCoin.DataAccess
 
                         foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionItem>())
                         {
-                            db.Execute("INSERT INTO 'BlockTransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+                            await db.ExecuteAsync("INSERT INTO 'BlockTransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                                 new
                                 {
                                     output.TransactionId,
