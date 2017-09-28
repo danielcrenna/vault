@@ -64,12 +64,19 @@ namespace NaiveCoin.Core.Providers
             {
                 var property = base.CreateProperty(member, memberSerialization);
                 var accessor = TypeAccessor.Create(property.PropertyType);
-                if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
-                    property.ShouldSerialize = instance => !(accessor[instance, member.Name] is IEnumerable enumerable) || enumerable.GetEnumerator().MoveNext();
+                //if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                //    property.ShouldSerialize = instance => IsEmptyEnumerable(member, accessor, instance);
                 return property;
             }
 
-            protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
+	        private static bool IsEmptyEnumerable(MemberInfo member, TypeAccessor accessor, object instance)
+	        {
+		        var property = accessor[instance, member.Name];
+
+		        return !(property is IEnumerable enumerable) || enumerable.GetEnumerator().MoveNext();
+	        }
+
+	        protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {
                 lock (Map)
                 {

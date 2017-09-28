@@ -1,14 +1,20 @@
-﻿namespace NaiveCoin.Wallets
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace NaiveCoin.Wallets
 {
     public class SecureWalletProvider : IWalletProvider
     {
-        private readonly RandomWalletAddressProvider _addresses;
+	    private readonly IWalletRepository _repository;
+
+	    private readonly RandomWalletAddressProvider _addresses;
         private readonly RandomWalletSecretProvider _secrets;
         private readonly SaltedWalletFactoryProvider _factory;
 
-        public SecureWalletProvider(ushort bitsOfEntropy = 256)
+        public SecureWalletProvider(IWalletRepository repository, ushort bitsOfEntropy = 256)
         {
-            _addresses = new RandomWalletAddressProvider(bitsOfEntropy);
+	        _repository = repository;
+	        _addresses = new RandomWalletAddressProvider(bitsOfEntropy);
             _secrets = new RandomWalletSecretProvider(bitsOfEntropy);
             _factory = new SaltedWalletFactoryProvider();
         }
@@ -27,5 +33,25 @@
         {
             return _factory.Create(password);
         }
-    }
+
+	    public Task<IEnumerable<Wallet>> GetAllAsync()
+	    {
+		    return _repository.GetAllAsync();
+	    }
+
+	    public Task<Wallet> GetByIdAsync(string id)
+	    {
+		    return _repository.GetByIdAsync(id);
+	    }
+
+	    public Task<Wallet> AddAsync(Wallet wallet)
+	    {
+		    return _repository.AddAsync(wallet);
+	    }
+
+		public Task SaveAddressesAsync(Wallet wallet)
+	    {
+		    return _repository.SaveAddressesAsync(wallet);
+	    }
+	}
 }

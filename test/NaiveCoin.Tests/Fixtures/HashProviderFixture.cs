@@ -2,13 +2,13 @@ using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Tests.Fixtures
 {
-    public class ObjectHashProviderFixture
+    public class HashProviderFixture
     {
-        public ObjectHashProviderFixture()
+        public HashProviderFixture()
         {
             Value = new StableHashProvider();
         }
 
-        public StableHashProvider Value { get; set; }
+        public IHashProvider Value { get; set; }
     }
 }

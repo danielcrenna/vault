@@ -21,12 +21,12 @@ namespace NaiveCoin.Wallets
 
         public byte[] GetAddressByPublicKey(byte[] publicKey)
         {
-            return KeyPairs.SingleOrDefault(x => x.PublicKey == publicKey)?.PublicKey;
+            return KeyPairs.SingleOrDefault(x => CryptoUtil.SlowEquals(x.PublicKey, publicKey))?.PublicKey;
         }
 
         public byte[] GetPrivateKeyByAddress(byte[] publicKey)
         {
-            return KeyPairs.SingleOrDefault(x => x.PublicKey == publicKey)?.PrivateKey;
+            return KeyPairs.SingleOrDefault(x => CryptoUtil.SlowEquals(x.PublicKey, publicKey))?.PrivateKey;
         }
 
         public IEnumerable<byte[]> GetAddresses()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -83,7 +84,7 @@ namespace NaiveCoin.DataAccess
                         "INSERT INTO 'Block' ('PreviousHash','Timestamp','Nonce','Hash') VALUES (@PreviousHash,@Timestamp,@Nonce,@Hash); " +
                         "SELECT LAST_INSERT_ROWID();", block, t);
 
-	                foreach (var @object in block.Objects)
+	                foreach (var @object in block.Objects ?? Enumerable.Empty<BlockObject>())
 	                {
 						await db.ExecuteAsync("INSERT INTO 'BlockObject' ('BlockIndex','Id','Hash','Type') VALUES (@BlockIndex,@Id,@Hash,@Type);",
 							new
@@ -96,7 +97,7 @@ namespace NaiveCoin.DataAccess
 							}, t);
 					}
 
-                    foreach (var transaction in block.Transactions)
+                    foreach (var transaction in block.Transactions ?? Enumerable.Empty<Transaction>())
                     {
                         await db.ExecuteAsync("INSERT INTO 'BlockTransaction' ('BlockIndex','Id','Hash','Type') VALUES (@BlockIndex,@Id,@Hash,@Type);",
                         new
@@ -113,7 +114,7 @@ namespace NaiveCoin.DataAccess
                                 new
                                 {
                                     input.TransactionId,
-                                    TransactionDataType.Input,
+                                    Type = TransactionDataType.Input,
                                     input.Index,
                                     input.Address,
                                     input.Amount,
@@ -121,20 +122,21 @@ namespace NaiveCoin.DataAccess
                                 }, t);
                         }
 
-                        foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionItem>())
-                        {
-                            await db.ExecuteAsync("INSERT INTO 'BlockTransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
-                                new
-                                {
-                                    output.TransactionId,
-                                    TransactionDataType.Output,
-                                    output.Index,
-                                    output.Address,
-                                    output.Amount,
-                                    output.Signature
-                                }, t);
-                        }
-                    }
+						foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionItem>())
+						{
+							await db.ExecuteAsync("INSERT INTO 'BlockTransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+								new
+								{
+									output.TransactionId,
+									Type = TransactionDataType.Output,
+									output.Index,
+									output.Address,
+									output.Amount,
+									output.Signature
+								}, t);
+						}
+
+					}
 
                     t.Commit();
 
@@ -282,15 +284,15 @@ namespace NaiveCoin.DataAccess
 				transaction.Data = new TransactionData
                 {
                     Inputs = (await db.QueryAsync<TransactionItem>(transactionItemSql,
-                        new { Type = TransactionDataType.Input, transaction.Id })).ToArray(),
+                        new { Type = TransactionDataType.Input, transaction.Id })).AsList(),
 
                     Outputs = (await db.QueryAsync<TransactionItem>(transactionItemSql,
-                        new { Type = TransactionDataType.Output, transaction.Id })).ToArray()
+                        new { Type = TransactionDataType.Output, transaction.Id })).AsList()
                 };
             }
         }
 
-        protected override void MigrateToLatest()
+	    public override void MigrateToLatest()
         {
             try
             {
@@ -329,12 +331,12 @@ CREATE TABLE IF NOT EXISTS 'BlockTransaction'
 
 CREATE TABLE IF NOT EXISTS 'BlockTransactionItem'
 (  
-    'TransactionId' VARCHAR(64) NOT NULL PRIMARY KEY, 
+    'TransactionId' VARCHAR(64), 
     'Type' INTEGER NOT NULL,
     'Index' INTEGER NOT NULL,
     'Amount' INTEGER NOT NULL,
     'Address' BLOB NOT NULL,
-    'Signature' BLOB NOT NULL,
+    'Signature' BLOB NULL,
 
     FOREIGN KEY('TransactionId') REFERENCES BlockTransaction('Id')
 );

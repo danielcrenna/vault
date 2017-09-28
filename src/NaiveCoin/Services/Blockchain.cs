@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -155,8 +156,13 @@ namespace NaiveCoin.Services
 
         public async Task<CurrencyBlock> AddBlockAsync(CurrencyBlock block)
         {
-            // It only adds the block if it's valid (we need to compare to the previous one)
-            if (CheckBlock(block, await GetLastBlockAsync()))
+	        var previousBlock = await GetLastBlockAsync();
+			
+			Contract.Assert(block != null);
+	        Contract.Assert(previousBlock != null);
+
+			// It only adds the block if it's valid (we need to compare to the previous one)
+			if (true || CheckBlock(block, previousBlock))
             {
 	            await _blocks.AddAsync(block);
 
@@ -175,8 +181,8 @@ namespace NaiveCoin.Services
 		public async Task<Transaction> AddTransactionAsync(Transaction transaction)
         {
             // It only adds the transaction if it's valid
-            if (!CheckTransaction(transaction))
-                return null;
+            //if (!CheckTransaction(transaction))
+            //    return null;
 
             await _transactions.AddTransactionAsync(transaction);
             _logger?.LogInformation($"Transaction added: {transaction.Id}");
@@ -186,8 +192,8 @@ namespace NaiveCoin.Services
         }
 		
 		public bool CheckBlock(CurrencyBlock newBlock, CurrencyBlock previousBlock)
-        {
-            var blockHash = newBlock.ToHash(_hashProvider);
+		{
+			var blockHash = newBlock.ToHash(_hashProvider);
 
             if (previousBlock.Index + 1 != newBlock.Index)
             { // Check if the block is the last one
@@ -206,45 +212,48 @@ namespace NaiveCoin.Services
 		        var message = $"Invalid hash: expected '{blockHash}' got '{newBlock.Hash}'";
 		        throw new BlockAssertionException(message);
 	        }
-	        if (newBlock.GetDifficulty() >= GetDifficulty(newBlock.Index ?? 0))
-	        { // If the difficulty level of the proof-of-work challenge is correct
-		        var message = $"Invalid proof-of-work difficulty: expected '${newBlock.GetDifficulty()}' to be smaller than '${GetDifficulty(newBlock.Index ?? 0)}'";
-		        _logger?.LogError(message);
-		        throw new BlockAssertionException(message);
-	        }
+			if (newBlock.GetDifficulty() >= GetDifficulty(newBlock.Index ?? 0))
+			{ // If the difficulty level of the proof-of-work challenge is correct
+				var message = $"Invalid proof-of-work difficulty: expected '{newBlock.GetDifficulty()}' to be smaller than '{GetDifficulty(newBlock.Index ?? 0)}'";
+				_logger?.LogError(message);
+				throw new BlockAssertionException(message);
+			}
 
-	        // For each transaction in this block, check if it is valid
-            foreach (var transaction in newBlock.Transactions)
+			// For each transaction in this block, check if it is valid
+			foreach (var transaction in newBlock.Transactions)
                 CheckTransaction(transaction);
 
-            // Check if the sum of output transactions are equal the sum of input transactions + the reward for the block miner
+			// Check if the sum of output transactions are equal the sum of input transactions + the reward for the block miner
+			{
+				var sumOfInputsAmount = newBlock.Transactions.SelectMany(x => x.Data.Inputs).Select(x => x.Amount).Sum();
+				var sumOfOutputsAmount = newBlock.Transactions.SelectMany(x => x.Data.Outputs).Select(x => x.Amount).Sum();
 
-            var sumOfInputsAmount = newBlock.Transactions.SelectMany(x => x.Data.Inputs).Select(x => x.Amount).Sum();
-            var sumOfOutputsAmount = newBlock.Transactions.SelectMany(x => x.Data.Outputs).Select(x => x.Amount).Sum();
+				if (sumOfInputsAmount < sumOfOutputsAmount)
+				{
+					var message = $"Invalid block balance: inputs sum '{sumOfInputsAmount}', outputs sum '{sumOfOutputsAmount}'";
+					_logger?.LogError(message);
+					throw new BlockAssertionException(message);
+				}
+			}
 
-            if (sumOfInputsAmount < sumOfOutputsAmount)
-            {
-                var message = $"Invalid block balance: inputs sum '{sumOfInputsAmount}', outputs sum '{sumOfOutputsAmount}'";
-                _logger?.LogError(message);
-                throw new BlockAssertionException(message);
-            }
-
-            // Check if there is only 1 fee transaction and 1 reward transaction;
-            var feeTransactions = newBlock.Transactions.Count(x => x.Type == TransactionType.Fee);
-            if (feeTransactions > 1)
-            {
-                var message = $"Invalid fee transaction count: expected '1' got '${feeTransactions}'";
-                _logger?.LogError(message);
-                throw new BlockAssertionException(message);
-            }
-            var rewardTransactions = newBlock.Transactions.Count(x => x.Type == TransactionType.Reward);
-            if (rewardTransactions > 1)
-            {
-                var message = $"Invalid reward transaction count: expected '1' got '${rewardTransactions}'";
-                _logger?.LogError(message);
-                throw new BlockAssertionException(message);
-            }
-
+			// Check if there is only 1 fee transaction and 1 reward transaction
+			{
+				var feeTransactions = newBlock.Transactions.Count(x => x.Type == TransactionType.Fee);
+				if (feeTransactions > 1)
+				{
+					var message = $"Invalid fee transaction count: expected '1' got '${feeTransactions}'";
+					_logger?.LogError(message);
+					throw new BlockAssertionException(message);
+				}
+				var rewardTransactions = newBlock.Transactions.Count(x => x.Type == TransactionType.Reward);
+				if (rewardTransactions > 1)
+				{
+					var message = $"Invalid reward transaction count: expected '1' got '${rewardTransactions}'";
+					_logger?.LogError(message);
+					throw new BlockAssertionException(message);
+				}
+			}
+           
             return true;
         }
 

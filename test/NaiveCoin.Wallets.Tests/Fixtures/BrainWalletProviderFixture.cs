@@ -4,7 +4,9 @@ namespace NaiveCoin.Wallets.Tests.Fixtures
     {
         public BrainWalletProviderFixture()
         {
-            Value = new BrainWalletProvider();
+			var repository = new WalletRepositoryFixture();
+
+            Value = new BrainWalletProvider(repository.Value);
         }
 
         public IWalletProvider Value { get; set; }

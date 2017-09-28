@@ -3,8 +3,9 @@
     public interface IWalletProvider : 
         IWalletAddressProvider, 
         IWalletSecretProvider,
-        IWalletFactoryProvider
+        IWalletFactoryProvider,
+		IWalletRepository
     {
-        
+		
     }
 }

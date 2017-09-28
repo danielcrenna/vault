@@ -38,7 +38,7 @@ namespace NaiveChain.DataAccess
 
         protected string DataFile { get; private set; }
 
-        protected abstract void MigrateToLatest();
+	    public abstract void MigrateToLatest();
 
         public void Purge()
         {

@@ -8,15 +8,17 @@ namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
     {
         public SqliteTransactionRepository Value { get; set; }
 
-        public EmptyTransactionDatabaseFixture()
+        public EmptyTransactionDatabaseFixture(string @namespace)
         {
             var factory = new LoggerFactory();
             factory.AddConsole();
 
             Value = new SqliteTransactionRepository(
-				$"{Guid.NewGuid()}", 
+				@namespace, 
 				"blockchain", 
 				factory.CreateLogger<SqliteTransactionRepository>());
+
+	        Value.MigrateToLatest();
         }
 
         public void Dispose()

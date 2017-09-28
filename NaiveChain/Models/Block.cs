@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using NaiveCoin.Core.Helpers;
 
 namespace NaiveChain.Models
 {
@@ -15,10 +16,8 @@ namespace NaiveChain.Models
         
         public double GetDifficulty()
         {
-            Contract.Assert(!string.IsNullOrWhiteSpace(Hash));
-
-            // 14 is the maximum precision length supported by javascript
-            return Convert.ToByte(Hash.Substring(0, 14), 16);
+	        byte[] array = Hash.FromHex();
+			return BitConverter.ToDouble(array, 24); // take last 8 bytes, not 14 like the original
         }
     }
 }

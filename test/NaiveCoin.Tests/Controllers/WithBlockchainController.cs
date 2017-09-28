@@ -1,7 +1,5 @@
 ﻿using System.Threading.Tasks;
-using NaiveChain;
 using NaiveChain.Models;
-using NaiveCoin.Models;
 using Xunit;
 
 namespace NaiveCoin.Tests.Controllers

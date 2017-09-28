@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\NaiveChain\NaiveChain.csproj" />
     <ProjectReference Include="..\NaiveCoin.Core\NaiveCoin.Core.csproj" />
   </ItemGroup>
 

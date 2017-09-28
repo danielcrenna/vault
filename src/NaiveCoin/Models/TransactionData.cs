@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NaiveCoin.Models.Exceptions;
 using NaiveCoin.Core.Helpers;
 using NaiveCoin.Core.Providers;
@@ -7,8 +8,8 @@ namespace NaiveCoin.Models
 {
     public class TransactionData
     {
-        public TransactionItem[] Inputs { get; set; }
-        public TransactionItem[] Outputs { get; set; }
+        public List<TransactionItem> Inputs { get; set; }
+        public List<TransactionItem> Outputs { get; set; }
         
         public void Check(CoinSettings coinSettings, IHashProvider hashProvider)
         {

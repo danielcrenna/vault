@@ -180,7 +180,7 @@ namespace NaiveChain.DataAccess
 	        block.Objects = (await db.QueryAsync<BlockObject>(objectsSql, new {block.Index})).AsList();
         }
 
-        protected override void MigrateToLatest()
+	    public override void MigrateToLatest()
         {
             try
             {

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Dapper;
 using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Models
@@ -79,33 +80,43 @@ namespace NaiveCoin.Models
 
             // Calculates the change amount
             var changeAmount = _utxo.Sum(x => x.Amount) - _totalAmount - _feeAmount;
+			
+	        var transactionId = CryptoUtil.RandomString();
 
-            // For each transaction input, calculates the hash of the input and signs the data
-            var inputs = _utxo.Select(utxo =>
+			// For each transaction input, calculates the hash of the input and signs the data
+	        var inputIndex = 1;
+			var inputs = _utxo.Select(utxo =>
             {
                 var keyPair = CryptoEdDsaUtil.GenerateKeyPairFromSecret(_secretKey);
-                utxo.Signature = CryptoEdDsaUtil.SignHash(keyPair, _hashProvider.ComputeHash(new
-                {
-                    Transaction = utxo.TransactionId,
-                    utxo.Index,
-                    utxo.Address
-                }));
+	            var hash = _hashProvider.ComputeHash(new
+	            {
+		            Transaction = utxo.TransactionId,
+		            utxo.Index,
+		            utxo.Address
+	            });
+	            utxo.Signature = CryptoEdDsaUtil.SignHash(keyPair, hash);
                 return utxo;
             }).Select(x => new TransactionItem
-            {
-                Address = x.Address,
-                Amount = x.Amount,
-                Index = x.Index,
-                Signature = x.Signature
-            }).ToArray();
+			{
+				TransactionId = transactionId,
+				Index = inputIndex++,
+				Address = x.Address,
+				Amount = x.Amount,
+				Signature = x.Signature,
+				Type = TransactionDataType.Input
+			}).AsList();
 
             // Add target receiver
+	        var outputIndex = 1;
             var outputs = new List<TransactionItem>
             {
                 new TransactionItem
                 {
+					Index = outputIndex++,
+					TransactionId = transactionId,
                     Amount = _totalAmount.Value,
-                    Address = _outputAddress
+                    Address = _outputAddress,
+					Type = TransactionDataType.Output
                 }
             };
 
@@ -114,23 +125,29 @@ namespace NaiveCoin.Models
             {
                 outputs.Add(new TransactionItem
                 {
+					Index = outputIndex,
+					TransactionId = transactionId,
                     Amount = changeAmount.GetValueOrDefault(),
-                    Address = _changeAddress
+                    Address = _changeAddress,
+					Type = TransactionDataType.Output
                 });
             }
 
             // The remaining value is the fee to be collected by the block's creator
-            return new Transaction
-            {
-                Id = CryptoUtil.RandomString(),
-                Hash = null,
-                Type = _type,
-                Data = new TransactionData
-                {
-                    Inputs = inputs,
-                    Outputs = outputs.ToArray()
-                }
-            };
+	        var transaction = new Transaction
+	        {
+		        Id = transactionId,
+		        Type = _type,
+		        Data = new TransactionData
+		        {
+			        Inputs = inputs,
+			        Outputs = outputs.AsList()
+		        }
+	        };
+
+	        transaction.Hash = transaction.ToHash(_hashProvider);
+
+	        return transaction;
         }
     }
 }

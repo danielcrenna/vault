@@ -58,10 +58,10 @@ namespace NaiveCoin.DataAccess
 	        transaction.Data = new TransactionData
             {
                 Inputs = (await db.QueryAsync<TransactionItem>(sql,
-                    new { Type = TransactionDataType.Input, transaction.Id })).ToArray(),
+                    new { Type = TransactionDataType.Input, transaction.Id })).AsList(),
 
                 Outputs = (await db.QueryAsync<TransactionItem>(sql,
-                    new { Type = TransactionDataType.Output, transaction.Id })).ToArray()
+                    new { Type = TransactionDataType.Output, transaction.Id })).AsList()
             };
         }
 
@@ -128,7 +128,7 @@ namespace NaiveCoin.DataAccess
                             new
                             {
                                 input.TransactionId,
-                                TransactionDataType.Input,
+                                Type = TransactionDataType.Input,
                                 input.Index,
                                 input.Address,
                                 input.Amount,
@@ -142,7 +142,7 @@ namespace NaiveCoin.DataAccess
                             new
                             {
                                 output.TransactionId,
-                                TransactionDataType.Output,
+                                Type = TransactionDataType.Output,
                                 output.Index,
                                 output.Address,
                                 output.Amount,
@@ -155,7 +155,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        protected override void MigrateToLatest()
+	    public override void MigrateToLatest()
         {
             try
             {
@@ -171,12 +171,12 @@ CREATE TABLE IF NOT EXISTS 'Transaction'
 
 CREATE TABLE IF NOT EXISTS 'TransactionItem'
 (  
-    'TransactionId' VARCHAR(64) NOT NULL PRIMARY KEY, 
+    'TransactionId' VARCHAR(64), 
     'Type' INTEGER NOT NULL,
     'Index' INTEGER NOT NULL,
     'Amount' INTEGER NOT NULL,
     'Address' BLOB NOT NULL,
-    'Signature' BLOB NOT NULL,
+    'Signature' BLOB NULL,
 
     FOREIGN KEY('TransactionId') REFERENCES 'Transaction'('Id')
 );

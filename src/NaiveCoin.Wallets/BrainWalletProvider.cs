@@ -1,4 +1,7 @@
-﻿namespace NaiveCoin.Wallets
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace NaiveCoin.Wallets
 {
     /// <summary>
     /// "Brain wallets" are wallets whose private key is generated through human memory.
@@ -11,13 +14,16 @@
     /// </summary>
     public class BrainWalletProvider : IWalletProvider
     {
-        private readonly PasswordHashSecretProvider _secrets;
+	    private readonly IWalletRepository _repository;
+
+	    private readonly PasswordHashSecretProvider _secrets;
         private readonly DeterministicWalletAddressProvider _addresses;
         private readonly FixedSaltWalletFactoryProvider _factory;
 
-        public BrainWalletProvider(string salt = "_NaiveCoin_Salt_")
+        public BrainWalletProvider(IWalletRepository repository, string salt = "_NaiveCoin_Salt_")
         {
-            _secrets = new PasswordHashSecretProvider();
+	        _repository = repository;
+	        _secrets = new PasswordHashSecretProvider();
             _addresses = new DeterministicWalletAddressProvider(_secrets);
             _factory = new FixedSaltWalletFactoryProvider(salt);
         }
@@ -36,5 +42,25 @@
         {
             return _factory.Create(password);
         }
+
+	    public Task<IEnumerable<Wallet>> GetAllAsync()
+	    {
+		    return _repository.GetAllAsync();
+	    }
+
+	    public Task<Wallet> GetByIdAsync(string id)
+	    {
+		    return _repository.GetByIdAsync(id);
+	    }
+
+	    public Task<Wallet> AddAsync(Wallet wallet)
+	    {
+		    return _repository.AddAsync(wallet);
+	    }
+
+	    public Task SaveAddressesAsync(Wallet wallet)
+	    {
+		    return _repository.SaveAddressesAsync(wallet);
+	    }
     }
 }

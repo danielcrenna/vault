@@ -5,10 +5,9 @@ using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using NaiveChain.DataAccess;
-using NaiveCoin.Wallets;
 using NaiveCoin.Core.Models;
 
-namespace NaiveCoin.DataAccess
+namespace NaiveCoin.Wallets.DataAccess
 {
     public class SqliteWalletRepository : SqliteRepository, IWalletRepository
     {
@@ -121,7 +120,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        protected override void MigrateToLatest()
+	    public override void MigrateToLatest()
         {
             try
             {

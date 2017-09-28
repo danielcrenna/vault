@@ -10,19 +10,19 @@ using Xunit;
 namespace NaiveCoin.Tests.DataAccess.Blocks
 {
     public class WhenBlockDatabaseContainsOnlyGenesis : 
-        IClassFixture<BlockDatabaseWithGenesisBlockFixture>, 
+        IClassFixture<EmptyBlockchainFixture>, 
         IClassFixture<CoinSettingsFixture>, 
-        IClassFixture<ObjectHashProviderFixture>
+        IClassFixture<HashProviderFixture>
     {
-        public WhenBlockDatabaseContainsOnlyGenesis(BlockDatabaseWithGenesisBlockFixture blockDatabase, CoinSettingsFixture coinSettings, ObjectHashProviderFixture objectHashProvider)
+        public WhenBlockDatabaseContainsOnlyGenesis(EmptyBlockchainFixture blockDatabase, CoinSettingsFixture coinSettings, HashProviderFixture hashProvider)
         {
             Fixture = blockDatabase;
             CoinSettings = coinSettings.Value;
-            HashProvider = objectHashProvider.Value;
+            HashProvider = hashProvider.Value;
         }
 
         public IHashProvider HashProvider { get; set; }
-        public BlockDatabaseWithGenesisBlockFixture Fixture { get; set; }
+        public EmptyBlockchainFixture Fixture { get; set; }
         public CoinSettings CoinSettings { get; }
 
         [Fact]

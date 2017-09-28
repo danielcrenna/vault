@@ -4,7 +4,9 @@ namespace NaiveCoin.Wallets.Tests.Fixtures
     {
         public SecureWalletProviderFixture()
         {
-            Value = new SecureWalletProvider();
+			var repository = new WalletRepositoryFixture();
+
+            Value = new SecureWalletProvider(repository.Value);
         }
 
         public IWalletProvider Value { get; set; }

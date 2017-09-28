@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NaiveCoin.Core.Providers;
 using NaiveCoin.Wallets;
+using NaiveCoin.Wallets.DataAccess;
 
 namespace NaiveCoin
 {
@@ -39,13 +40,15 @@ namespace NaiveCoin
                 services.AddSingleton<IBlockObjectSerializer>(r => new JsonBlockObjectSerializer(r.GetRequiredService<JsonSerializerSettings>()));
                 services.AddSingleton<IHashProvider>(r => new StableHashProvider(SHA512.Create()));
 
-                var provider = new BrainWalletProvider();
-                services.AddSingleton<IWalletProvider>(r => provider);
-                services.AddSingleton<IWalletAddressProvider>(r => provider);
-                services.AddSingleton<IWalletSecretProvider>(r => provider);
+                services.AddSingleton(r => new BrainWalletProvider(r.GetRequiredService<IWalletRepository>()));
+                services.AddSingleton<IWalletProvider>(r => r.GetRequiredService<BrainWalletProvider>());
+                services.AddSingleton<IWalletAddressProvider>(r => r.GetRequiredService<BrainWalletProvider>());
+                services.AddSingleton<IWalletSecretProvider>(r => r.GetRequiredService<BrainWalletProvider>());
 
                 services.AddSingleton<IProofOfWork>(r =>
-                    new CoinBasedProofOfWork(r.GetRequiredService<IOptions<CoinSettings>>(), r.GetService<ILogger<CoinBasedProofOfWork>>()));
+                    new CoinBasedProofOfWork(r.GetRequiredService<IOptions<CoinSettings>>(), 
+					r.GetRequiredService<IHashProvider>(),
+					r.GetService<ILogger<CoinBasedProofOfWork>>()));
             }
 
             // Repositories:
@@ -85,7 +88,6 @@ namespace NaiveCoin
                     r.GetRequiredService<Blockchain>(),
                     r.GetRequiredService<IHashProvider>(),
                     r.GetRequiredService<IWalletProvider>(),
-                    r.GetRequiredService<IWalletRepository>(),
                     r.GetRequiredService<IOptions<CoinSettings>>(),
                     r.GetService<ILogger<Operator>>()));
 

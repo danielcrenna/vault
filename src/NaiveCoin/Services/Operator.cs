@@ -15,34 +15,31 @@ namespace NaiveCoin.Services
     {
         private readonly Blockchain _blockchain;
         private readonly IHashProvider _hashProvider;
-        private readonly IWalletProvider _provider;
-        private readonly IWalletRepository _walletRepository;
+        private readonly IWalletProvider _walletProvider;
         private readonly CoinSettings _coinSettings;
         private readonly ILogger<Operator> _logger;
 
         public Operator(Blockchain blockchain, 
             IHashProvider hashProvider,
             IWalletProvider walletProvider, 
-            IWalletRepository walletRepository, 
             IOptions<CoinSettings> coinSettings, 
             ILogger<Operator> logger)
         {
             _blockchain = blockchain;
             _hashProvider = hashProvider;
-            _provider = walletProvider;
-            _walletRepository = walletRepository;
+            _walletProvider = walletProvider;
             _coinSettings = coinSettings.Value;
             _logger = logger;
         }
 
         public Wallet CreateWalletFromPassword(string password)
         {
-            return _provider.Create(password);
+            return _walletProvider.Create(password);
         }
 
 		public async Task<Wallet> AddWalletAsync(Wallet wallet)
 		{
-			return await _walletRepository.AddAsync(wallet);
+			return await _walletProvider.AddAsync(wallet);
 		}
 
 		public async Task<Wallet> CheckWalletPasswordAsync(string id, string password)
@@ -55,12 +52,12 @@ namespace NaiveCoin.Services
 
         public async Task<IEnumerable<Wallet>> GetWalletsAsync()
         {
-            return await _walletRepository.GetAllAsync();
+            return await _walletProvider.GetAllAsync();
         }
 
         public async Task<Wallet> GetWalletByIdAsync(string id)
         {
-            return await _walletRepository.GetByIdAsync(id);
+            return await _walletProvider.GetByIdAsync(id);
         }
 
         public async Task<string> GenerateAddressForWalletAsync(string id)
@@ -69,9 +66,9 @@ namespace NaiveCoin.Services
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{id}'");
 
-            var address = _provider.GenerateAddress(wallet);
+            var address = _walletProvider.GenerateAddress(wallet);
 
-            await _walletRepository.SaveAddressesAsync(wallet);
+            await _walletProvider.SaveAddressesAsync(wallet);
 
             return address;
         }
@@ -93,7 +90,8 @@ namespace NaiveCoin.Services
             if (wallet == null)
                 throw new ArgumentException($"Wallet not found with id '{walletId}'");
 
-            var addressFound = wallet.GetAddressByPublicKey(addressId.FromHex());
+	        var publicKey = addressId.FromHex();
+	        var addressFound = wallet.GetAddressByPublicKey(publicKey);
             if (addressFound == null)
                 throw new ArgumentException($"Address not found with id '{addressId}' for wallet { walletId}");
 
@@ -107,7 +105,7 @@ namespace NaiveCoin.Services
             return utxo.Sum(x => x.Amount);
         }
 
-        public async Task<Transaction> CreateTransactionAsync(string walletId, byte[] fromAddress, byte[] toAddress, long amount, byte[] changeAddress)
+        public async Task<Transaction> CreateTransactionAsync(string walletId, byte[] fromAddress, byte[] toAddress, long amount, byte[] changeAddress = null)
         {
             var utxo = await _blockchain.GetUnspentTransactionsForAddressAsync(fromAddress.ToHex());
             var wallet = await GetWalletByIdAsync(walletId);
@@ -117,7 +115,7 @@ namespace NaiveCoin.Services
 
             var secretKey = wallet.GetPrivateKeyByAddress(fromAddress);
             if (secretKey == null)
-                throw new ArgumentException($"Secret key not found with Wallet id '${walletId}' and address '${fromAddress}'");
+                throw new ArgumentException($"Secret key not found with Wallet id '{walletId}' and address '{fromAddress}'");
 
             var tx = new TransactionBuilder(_hashProvider);
             tx.From(utxo)

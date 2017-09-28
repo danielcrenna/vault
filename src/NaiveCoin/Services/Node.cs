@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Rest;
-using NaiveChain;
 using NaiveChain.Models;
 using NaiveCoin.Models;
 using Newtonsoft.Json;

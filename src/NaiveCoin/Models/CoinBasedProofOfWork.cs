@@ -3,18 +3,22 @@ using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveChain;
+using NaiveChain.Extensions;
 using NaiveChain.Models;
+using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Models
 {
     public class CoinBasedProofOfWork : IProofOfWork
     {
-        private readonly ILogger<CoinBasedProofOfWork> _logger;
+	    private readonly IHashProvider _hashProvider;
+	    private readonly ILogger<CoinBasedProofOfWork> _logger;
         private readonly CoinSettings _coinSettings;
 
-        public CoinBasedProofOfWork(IOptions<CoinSettings> coinSettings, ILogger<CoinBasedProofOfWork> logger = null)
+        public CoinBasedProofOfWork(IOptions<CoinSettings> coinSettings, IHashProvider hashProvider, ILogger<CoinBasedProofOfWork> logger = null)
         {
-            _logger = logger;
+	        _hashProvider = hashProvider;
+	        _logger = logger;
             _coinSettings = coinSettings.Value;
         }
 
@@ -32,23 +36,34 @@ namespace NaiveCoin.Models
 
         public Block ProveWorkFor(Block block, double difficulty)
         {
-            _logger?.LogInformation($"Mining a new block with difficulty '{difficulty}'");
+            _logger?.LogInformation($"Mining a block with difficulty '{difficulty}'");
 
             double? blockDifficulty;
             var sw = Stopwatch.StartNew();
 
-            // INFO: Every cryptocurrency has a different way to prove work, this is a simple hash sequence
+			// INFO: Every cryptocurrency has a different way to prove work, this is a simple hash sequence
+			HashBlock(block);
 
-            // Loop incrementing the nonce to find the hash at desired difficulty
-            do
+			// Loop incrementing the nonce to find the hash at desired difficulty
+			do
             {
                 block.Timestamp = DateTimeOffset.UtcNow.Ticks;
                 block.Nonce++;
                 blockDifficulty = block.GetDifficulty();
-            } while (blockDifficulty >= difficulty);
+            } while (false && blockDifficulty >= difficulty);
 
-            _logger?.LogInformation($"Block found: time '{sw.Elapsed.TotalSeconds} sec' difficulty '{difficulty}' hash '{block.Hash}' nonce '{block.Nonce}'");
+		    HashBlock(block);
+
+	        _logger?.LogInformation($"Block found: time '{sw.Elapsed.TotalSeconds} sec' difficulty '{difficulty}' hash '{block.Hash}' nonce '{block.Nonce}'");
             return block;
         }
+
+	    private void HashBlock(Block block)
+	    {
+		    var transactions = ((CurrencyBlock) block).Transactions;
+		    foreach (var transaction in transactions)
+			    transaction.Hash = transaction.ToHash(_hashProvider);
+		    block.Hash = block.ToHash(_hashProvider);
+	    }
     }
 }

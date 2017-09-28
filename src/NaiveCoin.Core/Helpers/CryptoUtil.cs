@@ -18,12 +18,47 @@ namespace NaiveCoin.Core.Helpers
 
         public static string ToHex(this byte[] input)
         {
-	        return Utilities.BinaryToHex(input);
+			// https://stackoverflow.com/a/3974535
+	        char[] c = new char[input.Length * 2];
+
+	        byte b;
+
+	        for (int bx = 0, cx = 0; bx < input.Length; ++bx, ++cx)
+	        {
+		        b = ((byte)(input[bx] >> 4));
+		        c[cx] = (char)(b > 9 ? b + 0x37 + 0x20 : b + 0x30);
+
+		        b = ((byte)(input[bx] & 0x0F));
+		        c[++cx] = (char)(b > 9 ? b + 0x37 + 0x20 : b + 0x30);
+	        }
+
+	        return new string(c);
+
+			return Utilities.BinaryToHex(input);
         }
 
         public static byte[] FromHex(this string input)
         {
-	        return Utilities.HexToBinary(input);
+			// https://stackoverflow.com/a/3974535
+	        if (input.Length == 0 || input.Length % 2 != 0)
+		        return new byte[0];
+
+	        byte[] buffer = new byte[input.Length / 2];
+	        char c;
+	        for (int bx = 0, sx = 0; bx < buffer.Length; ++bx, ++sx)
+	        {
+		        // Convert first half of byte
+		        c = input[sx];
+		        buffer[bx] = (byte)((c > '9' ? (c > 'Z' ? (c - 'a' + 10) : (c - 'A' + 10)) : (c - '0')) << 4);
+
+		        // Convert second half of byte
+		        c = input[++sx];
+		        buffer[bx] |= (byte)(c > '9' ? (c > 'Z' ? (c - 'a' + 10) : (c - 'A' + 10)) : (c - '0'));
+	        }
+
+	        return buffer;
+
+			return Utilities.HexToBinary(input);
         }
 
         public static byte[] Sha256(this byte[] input)
