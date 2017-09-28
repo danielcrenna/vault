@@ -43,8 +43,8 @@ namespace NaiveCoin.Services
 
 	        _logger?.LogInformation($"Generating next block at index {index}, previousHash={previousHash}");
 
-			// Get the first two available transactions, if there aren't 2, it's empty
-			var transactions = pendingTransactions.Take(2).ToList();
+			// Gets all available transactions without considering data size or quantity
+			var transactions = pendingTransactions.ToList();
 
             // Add fee transaction
             // INFO: usually it's a fee over transaction size (not amount)

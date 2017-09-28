@@ -78,8 +78,12 @@ namespace NaiveCoin.Models
             if (_totalAmount == null)
                 throw new ArgumentException($"It's necessary to provide the transaction value.");
 
-            // Calculates the change amount
+            // Calculates the change amount (or removes from total amount if we can't cover the fee)
             var changeAmount = _utxo.Sum(x => x.Amount) - _totalAmount - _feeAmount;
+	        if (changeAmount < 0)
+	        {
+		        _totalAmount += changeAmount;
+	        }
 			
 	        var transactionId = CryptoUtil.RandomString();
 
@@ -98,8 +102,8 @@ namespace NaiveCoin.Models
                 return utxo;
             }).Select(x => new TransactionItem
 			{
-				TransactionId = transactionId,
-				Index = inputIndex++,
+				TransactionId = x.TransactionId,
+				Index = x.Index,
 				Address = x.Address,
 				Amount = x.Amount,
 				Signature = x.Signature,

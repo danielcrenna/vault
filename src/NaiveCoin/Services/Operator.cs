@@ -124,7 +124,7 @@ namespace NaiveCoin.Services
                 .Fee(_coinSettings.FeePerTransaction)
                 .Sign(secretKey.ToHex());
 
-            return tx.Build();
+           return tx.Build();
         }
     }
 }

@@ -336,9 +336,7 @@ CREATE TABLE IF NOT EXISTS 'BlockTransactionItem'
     'Index' INTEGER NOT NULL,
     'Amount' INTEGER NOT NULL,
     'Address' BLOB NOT NULL,
-    'Signature' BLOB NULL,
-
-    FOREIGN KEY('TransactionId') REFERENCES BlockTransaction('Id')
+    'Signature' BLOB NULL
 );
 ");
                 }

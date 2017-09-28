@@ -53,7 +53,7 @@ namespace NaiveCoin.DataAccess
         {
 	        const string sql = "SELECT i.* " +
 							   "FROM 'TransactionItem' i " +
-	                           "WHERE i.Type = @Type AND i.TransactionId = @Id";
+	                           "WHERE i.Type = @Type AND i.TransactionParent = @Id";
 
 	        transaction.Data = new TransactionData
             {
@@ -124,10 +124,11 @@ namespace NaiveCoin.DataAccess
 
                     foreach (var input in transaction.Data?.Inputs ?? Enumerable.Empty<TransactionItem>())
                     {
-                        await db.ExecuteAsync("INSERT INTO 'TransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+                        await db.ExecuteAsync("INSERT INTO 'TransactionItem' ('TransactionParent','TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionParent,@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                             new
                             {
-                                input.TransactionId,
+	                            TransactionParent = transaction.Id,
+								input.TransactionId,
                                 Type = TransactionDataType.Input,
                                 input.Index,
                                 input.Address,
@@ -138,9 +139,10 @@ namespace NaiveCoin.DataAccess
 
                     foreach (var output in transaction.Data?.Outputs ?? Enumerable.Empty<TransactionItem>())
                     {
-                        await db.ExecuteAsync("INSERT INTO 'TransactionItem' ('TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
+                        await db.ExecuteAsync("INSERT INTO 'TransactionItem' ('TransactionParent','TransactionId','Type','Index','Address','Amount','Signature') VALUES (@TransactionParent,@TransactionId,@Type,@Index,@Address,@Amount,@Signature);",
                             new
                             {
+								TransactionParent = transaction.Id,
                                 output.TransactionId,
                                 Type = TransactionDataType.Output,
                                 output.Index,
@@ -171,14 +173,15 @@ CREATE TABLE IF NOT EXISTS 'Transaction'
 
 CREATE TABLE IF NOT EXISTS 'TransactionItem'
 (  
-    'TransactionId' VARCHAR(64), 
+	'TransactionParent' VARCHAR(64) NOT NULL, 
+    'TransactionId' VARCHAR(64) NOT NULL, 
     'Type' INTEGER NOT NULL,
     'Index' INTEGER NOT NULL,
     'Amount' INTEGER NOT NULL,
     'Address' BLOB NOT NULL,
     'Signature' BLOB NULL,
 
-    FOREIGN KEY('TransactionId') REFERENCES 'Transaction'('Id')
+    FOREIGN KEY('TransactionParent') REFERENCES 'Transaction'('Id')
 );
 ");
                 }
