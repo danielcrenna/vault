@@ -7,6 +7,6 @@ namespace NaiveCoin.Wallets.Tests.Fixtures
             Value = new WifAddressStorageFormat();
         }
 
-        public WifAddressStorageFormat Value { get; set; }
+        public IWalletAddressStorageFormat Value { get; set; }
     }
 }

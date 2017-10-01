@@ -16,7 +16,16 @@ namespace NaiveCoin.Core.Helpers
             return ToHex(random);
         }
 
-        public static string ToHex(this byte[] input)
+	    public static byte[] RandomBytes(int size)
+	    {
+		    return SodiumCore.GetRandomBytes(size);
+
+			var random = new byte[size];
+		    Random.GetNonZeroBytes(random);
+		    return random;
+	    }
+
+		public static string ToHex(this byte[] input)
         {
 			// https://stackoverflow.com/a/3974535
 	        char[] c = new char[input.Length * 2];
@@ -63,11 +72,21 @@ namespace NaiveCoin.Core.Helpers
 
         public static byte[] Sha256(this byte[] input)
         {
+	        return CryptoHash.Sha256(input);
+
             using (var algorithm = SHA256.Create())
                 return algorithm.ComputeHash(input);
         }
 
-        public static byte[] Sha256(this string input)
+	    public static byte[] Sha512(this byte[] input)
+	    {
+		    return CryptoHash.Sha512(input);
+
+		    using (var algorithm = SHA512.Create())
+			    return algorithm.ComputeHash(input);
+	    }
+
+		public static byte[] Sha256(this string input)
         {
             return Sha256(Encoding.UTF8.GetBytes(input));
         }

@@ -30,7 +30,7 @@ namespace NaiveCoin.Tests
 		{
 			// create a wallet!
 			Wallet wallet1 = _operator.Value.CreateWalletFromPassword("purple monkey dishwasher");
-			
+
 			// save the wallet (this will add a default address)
 			await _operator.Value.AddWalletAsync(wallet1);
 
@@ -39,10 +39,10 @@ namespace NaiveCoin.Tests
 
 			// now let's mine some coins (by creating a new block with our reward transaction in it)
 			var newBlock = await _miner.Value.MineAsync(address1);
-			
+
 			// time to cash in - what's our balance now?
 			var balance1 = await _operator.Value.GetBalanceForWalletAddressAsync(wallet1.Id, address1);
-			
+
 			// oh, we forgot to add the block to the block chain
 			await _blockchain.Value.AddBlockAsync(newBlock);
 
@@ -55,10 +55,10 @@ namespace NaiveCoin.Tests
 			var address2 = wallet2.GetAddressByIndex(1).ToHex();
 
 			// create and sign a new transaction to ourselves (we're not a charity!)
-			var transaction = await  _operator.Value.CreateTransactionAsync(wallet1.Id, fromAddress: address1.FromHex(),
+			var transaction = await _operator.Value.CreateTransactionAsync(wallet1.Id, fromAddress: address1.FromHex(),
 				toAddress: address2.FromHex(), amount: 5000000000L);
 			transaction = await _blockchain.Value.AddTransactionAsync(transaction);
-			
+
 			// time to cash in - what's our balance now?
 			balance1 = await _operator.Value.GetBalanceForWalletAddressAsync(wallet1.Id, address1);
 
