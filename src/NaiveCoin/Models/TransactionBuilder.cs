@@ -78,14 +78,10 @@ namespace NaiveCoin.Models
             if (_totalAmount == null)
                 throw new ArgumentException($"It's necessary to provide the transaction value.");
 
-            // Calculates the change amount (or removes from total amount if we can't cover the fee)
-            var changeAmount = _utxo.Sum(x => x.Amount) - _totalAmount - _feeAmount;
-	        if (changeAmount < 0)
-	        {
-		        _totalAmount += changeAmount;
-	        }
-			
-	        var transactionId = CryptoUtil.RandomString();
+			// Calculates the change amount
+			var changeAmount = _utxo.Sum(x => x.Amount) - _totalAmount - _feeAmount;
+
+			var transactionId = CryptoUtil.RandomString();
 
 			// For each transaction input, calculates the hash of the input and signs the data
 	        var inputIndex = 1;
