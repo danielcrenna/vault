@@ -7,10 +7,10 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NaiveChain\NaiveChain.csproj" />
     <ProjectReference Include="..\NaiveCoin.Core\NaiveCoin.Core.csproj" />
   </ItemGroup>
 
