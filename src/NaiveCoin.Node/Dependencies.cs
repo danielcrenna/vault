@@ -6,12 +6,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveChain.Models;
+using NaiveCoin.Core;
 using NaiveCoin.DataAccess;
 using NaiveCoin.Models;
 using NaiveCoin.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using NaiveCoin.Core.Providers;
 using NaiveCoin.Wallets;
 using NaiveCoin.Wallets.DataAccess;
 

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
-using NaiveCoin.Core.Providers;
+using NaiveChain.Models;
+using NaiveCoin.Core;
 using NaiveCoin.Extensions;
 using NaiveCoin.Models;
 using NaiveCoin.Tests.Fixtures;

@@ -1,4 +1,3 @@
-using NaiveCoin.Core.Helpers;
 using System;
 using Xunit;
 

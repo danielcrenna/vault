@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Sodium;
 
-namespace NaiveCoin.Core.Helpers
+namespace NaiveCoin.Core
 {
 	public static class PasswordUtil
 	{

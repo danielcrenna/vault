@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using NaiveCoin.Core.Helpers;
-using NaiveCoin.Core.Providers;
 using NaiveCoin.Models;
 using NaiveCoin.Wallets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using NaiveChain.Models;
+using NaiveCoin.Core;
 
 namespace NaiveCoin.Services
 {

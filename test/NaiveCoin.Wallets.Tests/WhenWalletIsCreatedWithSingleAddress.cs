@@ -1,5 +1,5 @@
 using System.IO;
-using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core;
 using NaiveCoin.Wallets.Tests.Fixtures;
 using Xunit;
 

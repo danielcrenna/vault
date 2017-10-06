@@ -1,7 +1,6 @@
 using System.Linq;
 using System.Text;
-using NaiveCoin.Core.Helpers;
-using NaiveCoin.Core.Models;
+using NaiveCoin.Core;
 
 namespace NaiveCoin.Wallets
 {
@@ -30,7 +29,7 @@ namespace NaiveCoin.Wallets
             var lastKeyPair = wallet.KeyPairs.LastOrDefault();
             var seed = lastKeyPair == null ? wallet.Secret : PasswordUtil.FastHash(Encoding.UTF8.GetString(lastKeyPair.PrivateKey));
 
-            var keyPair = CryptoEdDsaUtil.GenerateKeyPairFromSecret(seed);
+            var keyPair = Ed25519.GenerateKeyPairFromSecret(seed);
 
             var newKeyPair = new KeyPair(
                 wallet.KeyPairs.Count + 1,

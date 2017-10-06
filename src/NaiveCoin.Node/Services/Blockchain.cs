@@ -8,10 +8,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveChain.Exceptions;
 using NaiveChain.Models;
+using NaiveCoin.Core;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using Newtonsoft.Json;
-using NaiveCoin.Core.Providers;
 using NaiveCoin.Extensions;
 
 namespace NaiveCoin.Services

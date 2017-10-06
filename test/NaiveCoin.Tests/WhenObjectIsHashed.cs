@@ -1,4 +1,5 @@
 using NaiveCoin.Core.Tests.Fixtures;
+using NaiveCoin.Tests.Fixtures;
 using Xunit;
 
 namespace NaiveCoin.Core.Tests

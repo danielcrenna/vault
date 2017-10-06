@@ -5,7 +5,7 @@ using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using NaiveChain.DataAccess;
-using NaiveCoin.Core.Models;
+using NaiveCoin.Core;
 
 namespace NaiveCoin.Wallets.DataAccess
 {

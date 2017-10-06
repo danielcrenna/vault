@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using NaiveChain.Exceptions;
 using NaiveChain.Extensions;
 using NaiveChain.Models;
-using NaiveCoin.Core.Providers;
+using NaiveCoin.Core;
 using Newtonsoft.Json;
 
 namespace NaiveChain.Services

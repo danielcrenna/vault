@@ -1,6 +1,6 @@
-using NaiveCoin.Core.Providers;
+using NaiveChain.Models;
 
-namespace NaiveCoin.Core.Tests.Fixtures
+namespace NaiveChain.Tests.Fixtures
 {
     public class ObjectHashProviderFixture
     {

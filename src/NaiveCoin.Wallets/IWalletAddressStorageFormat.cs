@@ -1,4 +1,4 @@
-﻿using NaiveCoin.Core.Models;
+﻿using NaiveCoin.Core;
 
 namespace NaiveCoin.Wallets
 {

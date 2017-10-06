@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Security.Cryptography;
-using System.Text;
 using Sodium;
 
-namespace NaiveCoin.Core.Helpers
+namespace NaiveCoin.Core
 {
 	public static class CryptoUtil
     {
@@ -73,27 +72,11 @@ namespace NaiveCoin.Core.Helpers
         public static byte[] Sha256(this byte[] input)
         {
 	        return CryptoHash.Sha256(input);
-
-            using (var algorithm = SHA256.Create())
-                return algorithm.ComputeHash(input);
         }
-
-	    public static byte[] Sha512(this byte[] input)
-	    {
-		    return CryptoHash.Sha512(input);
-
-		    using (var algorithm = SHA512.Create())
-			    return algorithm.ComputeHash(input);
-	    }
-
-		public static byte[] Sha256(this string input)
-        {
-            return Sha256(Encoding.UTF8.GetBytes(input));
-        }
-
+		
 	    public static bool SlowEquals(byte[] a, byte[] b)
 	    {
-		    return Utilities.Compare(a, b); // WARNING: I am assuming this is constant time!
+		    return Utilities.Compare(a, b);
 	    }
 	}
 }

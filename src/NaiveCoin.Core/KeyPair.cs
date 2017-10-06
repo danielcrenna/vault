@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NaiveCoin.Core.Models
+namespace NaiveCoin.Core
 {
     public class KeyPair : IEquatable<KeyPair>
 	{

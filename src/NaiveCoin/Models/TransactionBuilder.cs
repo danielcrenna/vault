@@ -1,9 +1,9 @@
-﻿using NaiveCoin.Core.Helpers;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Dapper;
-using NaiveCoin.Core.Providers;
+using NaiveChain.Models;
+using NaiveCoin.Core;
 
 namespace NaiveCoin.Models
 {
@@ -87,14 +87,14 @@ namespace NaiveCoin.Models
 	        var inputIndex = 1;
 			var inputs = _utxo.Select(utxo =>
             {
-                var keyPair = CryptoEdDsaUtil.GenerateKeyPairFromSecret(_secretKey);
+                var keyPair = Ed25519.GenerateKeyPairFromSecret(_secretKey);
 	            var hash = _hashProvider.ComputeHash(new
 	            {
 		            Transaction = utxo.TransactionId,
 		            utxo.Index,
 		            utxo.Address
 	            });
-	            utxo.Signature = CryptoEdDsaUtil.SignHash(keyPair, hash);
+	            utxo.Signature = Ed25519.Sign(keyPair, hash);
                 return utxo;
             }).Select(x => new TransactionItem
 			{

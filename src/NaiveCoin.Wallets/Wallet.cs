@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NaiveCoin.Core.Helpers;
-using NaiveCoin.Core.Models;
+using NaiveCoin.Core;
 
 namespace NaiveCoin.Wallets
 {

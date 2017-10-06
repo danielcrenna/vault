@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using NaiveCoin.Core.Helpers;
-using NaiveCoin.Core.Models;
+using NaiveCoin.Core;
 
 namespace NaiveCoin.Wallets
 {
@@ -19,7 +18,7 @@ namespace NaiveCoin.Wallets
 
 			var privateKey = GetPrivateKeyFromImport(wif);
 
-			var importedRaw = CryptoEdDsaUtil.GenerateKeyPairFromPrivateKey(privateKey);
+			var importedRaw = Ed25519.GenerateKeyPairFromPrivateKey(privateKey);
 
 			var imported = new KeyPair(
 				wallet.KeyPairs.Count + 1,

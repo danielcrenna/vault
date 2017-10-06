@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\NaiveChain\NaiveChain.csproj" />
-    <ProjectReference Include="..\src\NaiveCoin.Core\NaiveCoin.Core.csproj" />
+    <ProjectReference Include="..\NaiveChain\NaiveChain.csproj" />
+    <ProjectReference Include="..\NaiveCoin.Core\NaiveCoin.Core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace NaiveCoin.Core.Providers
+﻿namespace NaiveChain.Models
 {
     public interface IHashProvider
     {

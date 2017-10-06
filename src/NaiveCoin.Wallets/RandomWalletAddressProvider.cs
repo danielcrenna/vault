@@ -1,5 +1,5 @@
-﻿using NaiveCoin.Core.Helpers;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
+using NaiveCoin.Core;
 
 namespace NaiveCoin.Wallets
 {

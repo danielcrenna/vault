@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using NaiveChain;
 using NaiveChain.Extensions;
 using NaiveChain.Models;
-using NaiveCoin.Core.Providers;
+using NaiveCoin.Core;
 
 namespace NaiveCoin.Models
 {

@@ -1,4 +1,5 @@
-﻿using NaiveCoin.Core.Providers;
+﻿using NaiveChain.Models;
+using NaiveCoin.Core;
 using NaiveCoin.Models;
 
 namespace NaiveCoin.Extensions

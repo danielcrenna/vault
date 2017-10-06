@@ -3,7 +3,7 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 
-namespace NaiveCoin.Core.Helpers
+namespace NaiveCoin.Core
 {
     /// <summary>
     /// https://github.com/adamcaudill/Base58Check

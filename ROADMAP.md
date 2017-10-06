@@ -54,3 +54,4 @@ Misc:
 [ ] Remove exceptions thrown when they can be handled higher up
 [ ] Investigate performance of removing first-class transaction objects
 [ ] Remove Index from KeyPair?
+[ ] Switch to NSec when it releases

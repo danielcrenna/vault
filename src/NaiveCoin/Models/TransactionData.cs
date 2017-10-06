@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NaiveChain.Models;
+using NaiveCoin.Core;
 using NaiveCoin.Models.Exceptions;
-using NaiveCoin.Core.Helpers;
-using NaiveCoin.Core.Providers;
 
 namespace NaiveCoin.Models
 {
@@ -25,7 +25,7 @@ namespace NaiveCoin.Models
 
                 return new
                 {
-                    valid = CryptoEdDsaUtil.VerifySignature(input.Address, input.Signature, hash),
+                    valid = Ed25519.VerifySignature(input.Address, input.Signature, hash),
                     input
                 };
             });

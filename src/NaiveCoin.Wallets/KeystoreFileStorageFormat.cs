@@ -4,11 +4,11 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
-using NaiveCoin.Core.Helpers;
+using NaiveCoin.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Sodium;
-using KeyPair = NaiveCoin.Core.Models.KeyPair;
+using KeyPair = NaiveCoin.Core.KeyPair;
 
 namespace NaiveCoin.Wallets
 {

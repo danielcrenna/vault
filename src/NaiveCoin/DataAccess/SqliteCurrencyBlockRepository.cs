@@ -9,8 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveChain.DataAccess;
 using NaiveChain.Models;
-using NaiveCoin.Core.Helpers;
-using NaiveCoin.Core.Providers;
+using NaiveCoin.Core;
 using NaiveCoin.Extensions;
 using NaiveCoin.Models;
 
