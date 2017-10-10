@@ -8,6 +8,7 @@ using NaiveChain.Models;
 using NaiveCoin.Core;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
+using NaiveCoin.Node.Services;
 using NaiveCoin.Services;
 using NaiveCoin.ViewModels;
 

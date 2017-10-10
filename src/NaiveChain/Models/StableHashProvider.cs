@@ -35,8 +35,9 @@ namespace NaiveChain.Models
             if (instance is string s)
                 return ComputeHashBytes(s);
 
-            return ComputeHashBytes(JsonConvert.SerializeObject(instance, _settings));
-        }
+	        var json = JsonConvert.SerializeObject(instance, _settings);
+	        return ComputeHashBytes(json);
+        } 
 
         public byte[] ComputeHashBytes(string any)
         {
@@ -63,16 +64,22 @@ namespace NaiveChain.Models
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {
                 var property = base.CreateProperty(member, memberSerialization);
-                var accessor = TypeAccessor.Create(property.PropertyType);
-                //if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
-                //    property.ShouldSerialize = instance => IsEmptyEnumerable(member, accessor, instance);
+
+				// treat computed properties as if they weren't there
+	            if (Attribute.IsDefined(member, typeof(ComputedAttribute)))
+		            property.ShouldSerialize = instance => false;
+
+				// treat null/empty collection properties as if they weren't there
+				else if (property.PropertyType != typeof(string) && typeof(IEnumerable).IsAssignableFrom(property.PropertyType))
+                    property.ShouldSerialize = instance => IsEmptyEnumerable(member, instance);
+
                 return property;
             }
 
-	        private static bool IsEmptyEnumerable(MemberInfo member, TypeAccessor accessor, object instance)
+	        private static bool IsEmptyEnumerable(MemberInfo member, object instance)
 	        {
-		        var property = accessor[instance, member.Name];
-
+		        var accessor = TypeAccessor.Create(instance.GetType());
+				var property = accessor[instance, member.Name];
 		        return !(property is IEnumerable enumerable) || enumerable.GetEnumerator().MoveNext();
 	        }
 

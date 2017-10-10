@@ -63,7 +63,7 @@ namespace NaiveCoin.Models
 		    var transactions = ((CurrencyBlock) block).Transactions;
 		    foreach (var transaction in transactions)
 			    transaction.Hash = transaction.ToHash(_hashProvider);
-		    block.Hash = block.ToHash(_hashProvider);
+		    block.Hash = block.ToHashBytes(_hashProvider);
 	    }
     }
 }

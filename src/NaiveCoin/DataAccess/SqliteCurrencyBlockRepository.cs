@@ -15,11 +15,11 @@ using NaiveCoin.Models;
 
 namespace NaiveCoin.DataAccess
 {
+	[Obsolete("moving to generic blockchain pattern with arbitrary data")]
     public class SqliteCurrencyBlockRepository : SqliteRepository, ICurrencyBlockRepository
     {
 	    private readonly IOptions<CoinSettings> _coinSettings;
 	    private readonly IHashProvider _hashProvider;
-	    private readonly IBlockObjectSerializer _serializer;
 	    private readonly ILogger<SqliteCurrencyBlockRepository> _logger;
 
         public SqliteCurrencyBlockRepository(
@@ -27,12 +27,10 @@ namespace NaiveCoin.DataAccess
 			string databaseName,
 			IOptions<CoinSettings> coinSettings,
 			IHashProvider hashProvider,
-			IBlockObjectSerializer serializer,
 			ILogger<SqliteCurrencyBlockRepository> logger) : base(@namespace, databaseName, logger)
         {
 	        _coinSettings = coinSettings;
 	        _hashProvider = hashProvider;
-	        _serializer = serializer;
 	        _logger = logger;
         }
 
@@ -40,7 +38,7 @@ namespace NaiveCoin.DataAccess
 	    {
 			foreach (var transaction in _coinSettings.Value.GenesisBlock.Transactions ?? Enumerable.Empty<Transaction>())
 			    transaction.Hash = transaction.ToHash(_hashProvider);
-		    _coinSettings.Value.GenesisBlock.Hash = _coinSettings.Value.GenesisBlock.ToHash(_hashProvider);
+		    _coinSettings.Value.GenesisBlock.Hash = _coinSettings.Value.GenesisBlock.ToHashBytes(_hashProvider);
 		    return Task.FromResult(_coinSettings.Value.GenesisBlock);
 	    }
 
@@ -91,7 +89,6 @@ namespace NaiveCoin.DataAccess
 								BlockIndex = index,
 								@object.Index,
 								@object.Timestamp,
-								Data = _serializer.Serialize(@object),
 								@object.Hash
 							}, t);
 					}
@@ -225,7 +222,7 @@ namespace NaiveCoin.DataAccess
             }
         }
 
-        public async Task<CurrencyBlock> GetByHashAsync(string hash)
+        public async Task<CurrencyBlock> GetByHashAsync(byte[] hash)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {

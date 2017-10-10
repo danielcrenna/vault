@@ -1,14 +1,14 @@
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using NaiveChain.Models;
-using NaiveCoin.Core;
 using NaiveCoin.Extensions;
 using NaiveCoin.Models;
+using NaiveCoin.Node.Tests.Fixtures;
 using NaiveCoin.Tests.Fixtures;
 using NaiveCoin.Tests.Fixtures.DataAccess.Blocks;
 using Xunit;
 
-namespace NaiveCoin.Tests.DataAccess.Blocks
+namespace NaiveCoin.Node.Tests.DataAccess.Blocks
 {
     public class WhenBlockDatabaseContainsOnlyGenesis : 
         IClassFixture<EmptyBlockchainFixture>, 
@@ -86,7 +86,7 @@ namespace NaiveCoin.Tests.DataAccess.Blocks
         {
             foreach (var transaction in block.Transactions)
                 transaction.Hash = transaction.ToHash(HashProvider);
-            block.Hash = block.ToHash(HashProvider);
+            block.Hash = block.ToHashBytes(HashProvider);
         }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveCoin.DataAccess;
 using NaiveCoin.Extensions;
+using NaiveCoin.Node.Tests.Fixtures;
 
 namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
 {
@@ -19,8 +20,6 @@ namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
 	    {
 		    var coinSettings = new CoinSettingsFixture().Value;
 		    var hashProvider = new HashProviderFixture().Value;
-		    var blockObjectSerializer = new BlockObjectDataSerializerFixture().Value;
-
 		    var factory = new LoggerFactory();
 		    factory.AddConsole();
 
@@ -29,13 +28,12 @@ namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
 			    "blockchain",
 			    new OptionsWrapper<CoinSettings>(coinSettings),
 			    hashProvider,
-			    blockObjectSerializer,
 			    factory.CreateLogger<SqliteCurrencyBlockRepository>());
 
 		    var block = coinSettings.GenesisBlock;
 		    foreach (var transaction in block.Transactions)
 			    transaction.Hash = transaction.ToHash(hashProvider);
-		    block.Hash = block.ToHash(hashProvider);
+		    block.Hash = block.ToHashBytes(hashProvider);
 
 		    Value.AddAsync(block).ConfigureAwait(false).GetAwaiter().GetResult();
 	    }

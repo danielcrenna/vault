@@ -1,7 +1,7 @@
 using NaiveChain.Models;
 using NaiveCoin.Models;
 
-namespace NaiveCoin.Tests.Fixtures
+namespace NaiveCoin.Node.Tests.Fixtures
 {
     public class CoinSettingsFixture
     {
@@ -14,7 +14,7 @@ namespace NaiveCoin.Tests.Fixtures
                 GenesisBlock = new CurrencyBlock
 				{
                     Index = 0L,
-                    PreviousHash = "0",
+                    PreviousHash = new byte[] { 0 },
                     Timestamp = 1465154705L,
                     Nonce = 0L,
 					Objects = new BlockObject[] { },

@@ -6,16 +6,16 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveChain.Models;
-using NaiveCoin.Core;
 using NaiveCoin.DataAccess;
 using NaiveCoin.Models;
+using NaiveCoin.Node.Services;
 using NaiveCoin.Services;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using NaiveCoin.Wallets;
 using NaiveCoin.Wallets.DataAccess;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
-namespace NaiveCoin
+namespace NaiveCoin.Node
 {
     public class Dependencies
     {
@@ -37,7 +37,6 @@ namespace NaiveCoin
                         new StringEnumConverter()
                     }
                 });
-                services.AddSingleton<IBlockObjectSerializer>(r => new JsonBlockObjectSerializer(r.GetRequiredService<JsonSerializerSettings>()));
                 services.AddSingleton<IHashProvider>(r => new StableHashProvider(SHA512.Create()));
 
                 services.AddSingleton(r => new BrainWalletProvider(r.GetRequiredService<IWalletRepository>()));
@@ -57,8 +56,7 @@ namespace NaiveCoin
 					Namespace,
 					"blockchain",
 					r.GetRequiredService<IOptions<CoinSettings>>(),
-					r.GetRequiredService<IHashProvider>(),
-					r.GetRequiredService<IBlockObjectSerializer>(), 
+					r.GetRequiredService<IHashProvider>(), 
 					r.GetService<ILogger<SqliteCurrencyBlockRepository>>()));
                 services.AddScoped<ITransactionRepository>(r => new SqliteTransactionRepository(Namespace, "blockchain", r.GetService<ILogger<SqliteTransactionRepository>>()));
                 services.AddScoped<IWalletRepository>(r => new SqliteWalletRepository(Namespace, "wallets",
@@ -99,12 +97,12 @@ namespace NaiveCoin
                         url = new Uri(commandLineUrls);
 
                     var peers = configuration.GetValue<string[]>("peers");
-                    return new Node(
+                    return new Services.Peer(
                         url?.Host ?? "localhost",
                         url?.Port ?? 5001,
                         r.GetRequiredService<Blockchain>(),
                         r.GetRequiredService<JsonSerializerSettings>(),
-                        r.GetRequiredService<ILogger<Node>>(),
+                        r.GetRequiredService<ILogger<Services.Peer>>(),
                         peers);
                 });
             }

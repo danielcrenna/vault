@@ -8,7 +8,7 @@ namespace NaiveChain.Models
 	    Task<T> GetGenesisBlockAsync();
 		Task<long> GetLengthAsync();
         Task<T> GetByIndexAsync(long index);
-	    Task<T> GetByHashAsync(string hash);
+	    Task<T> GetByHashAsync(byte[] hash);
         Task<T> GetLastBlockAsync();
         Task AddAsync(T block);
 	    IEnumerable<T> StreamAllBlocks();

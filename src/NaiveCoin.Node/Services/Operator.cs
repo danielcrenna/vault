@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NaiveChain.Models;
 using NaiveCoin.Core;
+using NaiveCoin.Node.Services;
 
 namespace NaiveCoin.Services
 {

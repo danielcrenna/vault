@@ -6,7 +6,6 @@ using Microsoft.Extensions.Logging;
 using NaiveChain.Exceptions;
 using NaiveChain.Extensions;
 using NaiveChain.Models;
-using NaiveCoin.Core;
 using Newtonsoft.Json;
 
 namespace NaiveChain.Services
@@ -54,7 +53,7 @@ namespace NaiveChain.Services
 			return await _blocks.GetByIndexAsync(index);
 		}
 
-		public async Task<Block> GetBlockByHashAsync(string hash)
+		public async Task<Block> GetBlockByHashAsync(byte[] hash)
 		{
 			return await _blocks.GetByHashAsync(hash);
 		}
@@ -140,7 +139,7 @@ namespace NaiveChain.Services
 
 		public bool CheckBlock(Block newBlock, Block previousBlock)
 		{
-			var blockHash = newBlock.ToHash(_hashProvider);
+			var blockHash = newBlock.ToHashBytes(_hashProvider);
 
 			if (previousBlock.Index + 1 != newBlock.Index)
 			{ // Check if the block is the last one

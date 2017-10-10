@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Text;
 using Sodium;
 
 namespace NaiveCoin.Core
@@ -24,7 +25,7 @@ namespace NaiveCoin.Core
 		    return random;
 	    }
 
-		public static string ToHex(this byte[] input)
+	    public static string ToHex(this byte[] input)
         {
 			// https://stackoverflow.com/a/3974535
 	        char[] c = new char[input.Length * 2];
@@ -69,7 +70,12 @@ namespace NaiveCoin.Core
 			return Utilities.HexToBinary(input);
         }
 
-        public static byte[] Sha256(this byte[] input)
+	    public static byte[] Sha256(this string input)
+	    {
+		    return Encoding.UTF8.GetBytes(input).Sha256();
+	    }
+
+		public static byte[] Sha256(this byte[] input)
         {
 	        return CryptoHash.Sha256(input);
         }

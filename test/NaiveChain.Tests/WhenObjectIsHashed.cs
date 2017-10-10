@@ -1,9 +1,10 @@
+using System.Collections.Generic;
 using NaiveChain.Tests.Fixtures;
 using Xunit;
 
 namespace NaiveChain.Tests
 {
-    public class WhenObjectIsHashed : IClassFixture<ObjectHashProviderFixture>
+	public class WhenObjectIsHashed : IClassFixture<ObjectHashProviderFixture>
     {
         private readonly ObjectHashProviderFixture _provider;
 
@@ -50,12 +51,29 @@ namespace NaiveChain.Tests
                 _provider.Value.ComputeHash(bar)
             );
         }
-        
-        private struct Stub
+
+	    [Fact]
+	    public void Null_collections_are_equivalent_to_empty_collections()
+	    {
+		    var foo = new Stub { D = null };
+		    var bar = new Stub { D = new List<string>() };
+
+		    var expected = _provider.Value.ComputeHash(foo);
+		    var actual = _provider.Value.ComputeHash(bar);
+
+		    Assert.Equal
+		    (
+			    expected,
+			    actual
+		    );
+	    }
+
+		private struct Stub
         {
             public string A { get; set; }
             public string B { get; set; }
             public string C { get; set; }
+			public List<string> D { get; set; }
         }
     }
 }

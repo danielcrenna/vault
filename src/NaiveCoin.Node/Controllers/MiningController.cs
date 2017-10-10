@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NaiveChain.Exceptions;
 using NaiveCoin.Models.Exceptions;
+using NaiveCoin.Node.Services;
 using NaiveCoin.Services;
 
 namespace NaiveCoin.Controllers

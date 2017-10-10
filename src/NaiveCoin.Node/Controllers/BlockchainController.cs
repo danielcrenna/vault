@@ -3,11 +3,12 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using NaiveCoin.Core;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
-using NaiveCoin.Services;
+using NaiveCoin.Node.Services;
 
-namespace NaiveCoin.Controllers
+namespace NaiveCoin.Node.Controllers
 {
     /// <inheritdoc />
     /// <summary>
@@ -16,10 +17,10 @@ namespace NaiveCoin.Controllers
     [Route("blockchain")]
     public class BlockchainController : Controller
     {
-        private readonly Node _node;
+        private readonly Peer _node;
         private readonly Blockchain _blockchain;
 
-        public BlockchainController(Node node, Blockchain blockchain)
+        public BlockchainController(Peer node, Blockchain blockchain)
         {
             _node = node;
             _blockchain = blockchain;
@@ -90,7 +91,7 @@ namespace NaiveCoin.Controllers
         [HttpGet("blocks/{hash}")]
         public async Task<IActionResult> GetBlockByHash(string hash)
         {
-            var blockFound = await _blockchain.GetBlockByHashAsync(hash);
+            var blockFound = await _blockchain.GetBlockByHashAsync(hash.FromHex());
             if (blockFound == null)
                 return NotFound(new
                 {

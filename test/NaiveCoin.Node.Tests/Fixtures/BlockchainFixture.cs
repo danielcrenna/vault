@@ -2,6 +2,8 @@ using System;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveCoin.Models;
+using NaiveCoin.Node.Services;
+using NaiveCoin.Node.Tests.Fixtures;
 using NaiveCoin.Services;
 using NaiveCoin.Tests.Fixtures.DataAccess.Blocks;
 

@@ -1,10 +1,10 @@
 ﻿using NaiveChain.Models;
-using NaiveCoin.Core;
+using NaiveChain.Serialization;
 using NaiveCoin.Models.Exceptions;
 
 namespace NaiveCoin.Models
 {
-    public class Transaction
+    public class Transaction : IBlockSerialized
     {
         public string Id { get; set; }
         public string Hash { get; set; }
@@ -24,5 +24,19 @@ namespace NaiveCoin.Models
 
             Data.Check(coinSettings, hashProvider);
         }
+
+	    public uint ObjectType { get; }
+
+	    public void Serialize(BlockSerializeContext context)
+	    {
+		    throw new System.NotImplementedException();
+	    }
+
+	    public object Deserialize(BlockDeserializeContext context)
+	    {
+		    throw new System.NotImplementedException();
+	    }
+
+
     }
 }

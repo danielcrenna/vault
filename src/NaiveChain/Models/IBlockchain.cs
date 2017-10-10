@@ -8,7 +8,7 @@ namespace NaiveChain.Models
 		void Init();
 
 		Task<T> GetBlockByIndexAsync(long index);
-		Task<T> GetBlockByHashAsync(string hash);
+		Task<T> GetBlockByHashAsync(byte[] hash);
 		Task<T> GetLastBlockAsync();
 		Task ReplaceChainAsync(List<T> newBlockchain);
 		Task<T> AddBlockAsync(T block);

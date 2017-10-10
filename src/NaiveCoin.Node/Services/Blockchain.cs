@@ -8,13 +8,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaiveChain.Exceptions;
 using NaiveChain.Models;
-using NaiveCoin.Core;
+using NaiveCoin.Extensions;
 using NaiveCoin.Models;
 using NaiveCoin.Models.Exceptions;
 using Newtonsoft.Json;
-using NaiveCoin.Extensions;
 
-namespace NaiveCoin.Services
+namespace NaiveCoin.Node.Services
 {
 	public class Blockchain : ICurrencyBlockchain
 	{
@@ -69,7 +68,7 @@ namespace NaiveCoin.Services
             return await _blocks.GetByIndexAsync(index);
         }
 
-        public async Task<CurrencyBlock> GetBlockByHashAsync(string hash)
+        public async Task<CurrencyBlock> GetBlockByHashAsync(byte[] hash)
         {
             return await _blocks.GetByHashAsync(hash);
         }
@@ -193,7 +192,7 @@ namespace NaiveCoin.Services
 		
 		public bool CheckBlock(CurrencyBlock newBlock, CurrencyBlock previousBlock)
 		{
-			var blockHash = newBlock.ToHash(_hashProvider);
+			var blockHash = newBlock.ToHashBytes(_hashProvider);
 
             if (previousBlock.Index + 1 != newBlock.Index)
             { // Check if the block is the last one

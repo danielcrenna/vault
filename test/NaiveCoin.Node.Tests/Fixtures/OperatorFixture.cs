@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NaiveCoin.Node.Tests.Fixtures;
 using NaiveCoin.Services;
 using Xunit;
 

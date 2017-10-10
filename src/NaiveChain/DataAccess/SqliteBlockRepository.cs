@@ -1,28 +1,31 @@
 ﻿using System.Collections.Generic;
-using System.Data;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
+using NaiveChain.Extensions;
 using NaiveChain.Models;
+using NaiveChain.Serialization;
 
 namespace NaiveChain.DataAccess
 {
     public class SqliteBlockRepository : SqliteRepository, IBlockRepository<Block>
     {
 	    private readonly Block _genesisBlock;
-	    private readonly IBlockObjectSerializer _serializer;
+	    private readonly IHashProvider _hashProvider;
 	    private readonly ILogger<SqliteBlockRepository> _logger;
 
         public SqliteBlockRepository(
 			string @namespace, 
 			string databaseName,
 			Block genesisBlock,
-			IBlockObjectSerializer serializer,
+			IHashProvider hashProvider,
 			ILogger<SqliteBlockRepository> logger) : base(@namespace, databaseName, logger)
         {
 	        _genesisBlock = genesisBlock;
-	        _serializer = serializer;
+	        _hashProvider = hashProvider;
 	        _logger = logger;
         }
 
@@ -50,47 +53,41 @@ namespace NaiveChain.DataAccess
 	                               "LEFT JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index' " +
 	                               "WHERE bt.'Id' = @Id";
 
-	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new { Id = transactionId });
+	            var block = await db.QuerySingleOrDefaultAsync<BlockResult>(sql, new { Id = transactionId });
 
-                await TransformBlockAsync(block, db);
+				DeserializeObjects(block, block.Data);
 
-                return block;
+				return block;
             }
         }
 
         public async Task AddAsync(Block block)
         {
-            using (var db = new SqliteConnection($"Data Source={DataFile}"))
-            {
-                await db.OpenAsync();
+	        using (var db = new SqliteConnection($"Data Source={DataFile}"))
+			{
+				await db.OpenAsync();
 
-                using (var t = db.BeginTransaction())
-                {
-                    var index = await db.QuerySingleAsync<long>(
-                        "INSERT INTO 'Block' ('PreviousHash','Timestamp','Nonce','Hash') VALUES (@PreviousHash,@Timestamp,@Nonce,@Hash); " +
-                        "SELECT LAST_INSERT_ROWID();", block, t);
+				using (var t = db.BeginTransaction())
+				{
+					var index = await db.QuerySingleAsync<long>(
+						"INSERT INTO 'Block' ('PreviousHash','Timestamp','Nonce','Hash','Data') VALUES (@PreviousHash,@Timestamp,@Nonce,@Hash,@Data); " +
+						"SELECT LAST_INSERT_ROWID();", new
+						{
+							block.PreviousHash,
+							block.Timestamp,
+							block.Nonce,
+							block.Hash,
+							Data = SerializeObjects(block)
+						}, t);
 
-	                foreach (var @object in block.Objects)
-	                {
-						await db.ExecuteAsync("INSERT INTO 'BlockObject' ('BlockIndex','Id','Hash','Type') VALUES (@BlockIndex,@Id,@Hash,@Type);",
-							new
-							{
-								BlockIndex = index,
-								@object.Index,
-								@object.Timestamp,
-								Data = _serializer.Serialize(@object),
-								@object.Hash
-							}, t);
-					}
+					t.Commit();
 
-                    t.Commit();
-
-                    block.Index = index;
-                }
-            }
+					block.Index = index;
+				}
+			}
         }
-        
-		public IEnumerable<BlockObject> StreamAllBlockObjects()
+
+	    public IEnumerable<BlockObject> StreamAllBlockObjects()
 	    {
 			using (var db = new SqliteConnection($"Data Source={DataFile}"))
 			{
@@ -113,9 +110,9 @@ namespace NaiveChain.DataAccess
                                    "FROM 'Block' b " +
                                    "ORDER BY b.'Index' ASC";
 
-                foreach (var block in db.Query<Block>(sql, buffered: false))
+                foreach (var block in db.Query<BlockResult>(sql, buffered: false))
                 {
-                    TransformBlockAsync(block, db).ConfigureAwait(false).GetAwaiter().GetResult();
+	                DeserializeObjects(block, block.Data);
 
                     yield return block;
                 }
@@ -128,23 +125,23 @@ namespace NaiveChain.DataAccess
             {
 	            const string sql = "SELECT b.* FROM 'Block' b WHERE b.'Index' = @Index";
 
-	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new {Index = index});
+	            var block = await db.QuerySingleOrDefaultAsync<BlockResult>(sql, new {Index = index});
 
-                await TransformBlockAsync(block, db);
+				DeserializeObjects(block, block.Data);
 
-                return block;
+				return block;
             }
         }
-
-        public async Task<Block> GetByHashAsync(string hash)
+		
+	    public async Task<Block> GetByHashAsync(byte[] hash)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
 	            const string sql = "SELECT b.* FROM 'Block' b WHERE b.'Hash' = @Hash";
 
-	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql, new { Hash = hash });
+	            var block = await db.QuerySingleOrDefaultAsync<BlockResult>(sql, new { Hash = hash });
 
-                await TransformBlockAsync(block, db);
+                DeserializeObjects(block, block.Data);
 
                 return block;
             }
@@ -159,25 +156,12 @@ namespace NaiveChain.DataAccess
 	                               "GROUP BY b.'Index' " +
 	                               "ORDER BY b.'Index' DESC LIMIT 1";
 
-	            var block = await db.QuerySingleOrDefaultAsync<Block>(sql);
+	            var block = await db.QuerySingleOrDefaultAsync<BlockResult>(sql);
 
-                await TransformBlockAsync(block, db);
+                DeserializeObjects(block, block.Data);
                 
                 return block;
             }
-        }
-
-        private static async Task TransformBlockAsync(Block block, IDbConnection db)
-        {
-            if (block == null)
-                return;
-
-	        const string objectsSql = "SELECT bo.* " +
-	                                  "FROM 'Block' b " +
-	                                  "INNER JOIN 'BlockObject' bo ON bo.'BlockIndex' = b.'Index' " +
-	                                  "ORDER BY b.'Index', bo.'Index'";
-
-	        block.Objects = (await db.QueryAsync<BlockObject>(objectsSql, new {block.Index})).AsList();
         }
 
 	    public override void MigrateToLatest()
@@ -189,24 +173,13 @@ namespace NaiveChain.DataAccess
                     db.Execute(@"
 CREATE TABLE IF NOT EXISTS 'Block'
 (  
-    'Index' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
+    'Index' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     'PreviousHash' VARCHAR(64) NOT NULL, 
     'Timestamp' INTEGER NOT NULL,
     'Nonce' INTEGER NOT NULL,
-    'Hash' VARCHAR(64) NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS 'BlockObject'
-(
-	'BlockIndex' INTEGER NOT NULL,
-	'Index' INTEGER NOT NULL,
-	'SourceId' VARCHAR(64) NOT NULL,
-	'Version' INTEGER NOT NULL,
-	'Timestamp' INTEGER NOT NULL,
-	'Data' BLOB NOT NULL,
-	'Hash' VARCHAR(64) NOT NULL
-);
-");
+    'Hash' VARCHAR(64) UNIQUE NOT NULL,
+	'Data' BLOB NOT NULL
+);");
                 }
             }
             catch (SqliteException e)
@@ -215,5 +188,38 @@ CREATE TABLE IF NOT EXISTS 'BlockObject'
                 throw;
             }
         }
-    }
+
+	    public class BlockResult : Block
+	    {
+		    public byte[] Data { get; set; }
+	    }
+
+	    private static byte[] SerializeObjects(Block block)
+	    {
+		    byte[] data;
+		    using (var ms = new MemoryStream())
+		    {
+			    using (var bw = new BinaryWriter(ms, Encoding.UTF8))
+			    {
+				    var context = new BlockSerializeContext(bw);
+				    block.SerializeObjects(context);
+			    }
+			    data = ms.ToArray();
+		    }
+		    return data;
+	    }
+
+	    private void DeserializeObjects(Block block, byte[] data)
+	    {
+		    using (var ms = new MemoryStream(data))
+		    {
+			    using (var br = new BinaryReader(ms))
+			    {
+				    var context = new BlockDeserializeContext(br);
+				    block.DeserializeObjects(context);
+				    block.Hash = block.ToHashBytes(_hashProvider);
+			    }
+		    }
+	    }
+	}
 }

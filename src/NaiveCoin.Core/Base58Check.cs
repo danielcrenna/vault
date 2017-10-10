@@ -14,8 +14,8 @@ namespace NaiveCoin.Core
     /// </remarks>
     public static class Base58Check
     {
-        private const int CHECK_SUM_SIZE = 4;
-        private const string DIGITS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+        private const int CheckSumSize = 4;
+        private const string Digits = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
         /// <summary>
         /// Encodes data with a 4-byte checksum
@@ -24,7 +24,7 @@ namespace NaiveCoin.Core
         /// <returns></returns>
         public static string Encode(byte[] data)
         {
-            return EncodePlain(_AddCheckSum(data));
+            return EncodePlain(AddCheckSum(data));
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace NaiveCoin.Core
             {
                 var remainder = (int)(intData % 58);
                 intData /= 58;
-                result = DIGITS[remainder] + result;
+                result = Digits[remainder] + result;
             }
 
             // Append `1` for each leading 0 byte
@@ -63,7 +63,7 @@ namespace NaiveCoin.Core
         public static byte[] Decode(string data)
         {
             var dataWithCheckSum = DecodePlain(data);
-            var dataWithoutCheckSum = _VerifyAndRemoveCheckSum(dataWithCheckSum);
+            var dataWithoutCheckSum = VerifyAndRemoveCheckSum(dataWithCheckSum);
 
             if (dataWithoutCheckSum == null)
             {
@@ -84,7 +84,7 @@ namespace NaiveCoin.Core
             BigInteger intData = 0;
             for (var i = 0; i < data.Length; i++)
             {
-                var digit = DIGITS.IndexOf(data[i]); //Slow
+                var digit = Digits.IndexOf(data[i]); //Slow
 
                 if (digit < 0)
                 {
@@ -107,30 +107,30 @@ namespace NaiveCoin.Core
             return result;
         }
 
-        private static byte[] _AddCheckSum(byte[] data)
+        private static byte[] AddCheckSum(byte[] data)
         {
-            var checkSum = _GetCheckSum(data);
+            var checkSum = GetCheckSum(data);
             var dataWithCheckSum = ConcatArrays(data, checkSum);
             return dataWithCheckSum;
         }
 
         //Returns null if the checksum is invalid
-        private static byte[] _VerifyAndRemoveCheckSum(byte[] data)
+        private static byte[] VerifyAndRemoveCheckSum(byte[] data)
         {
-            var result = SubArray(data, 0, data.Length - CHECK_SUM_SIZE);
-            var givenCheckSum = SubArray(data, data.Length - CHECK_SUM_SIZE);
-            var correctCheckSum = _GetCheckSum(result);
+            var result = SubArray(data, 0, data.Length - CheckSumSize);
+            var givenCheckSum = SubArray(data, data.Length - CheckSumSize);
+            var correctCheckSum = GetCheckSum(result);
 
             return givenCheckSum.SequenceEqual(correctCheckSum) ? result : null;
         }
 
-        private static byte[] _GetCheckSum(byte[] data)
+        private static byte[] GetCheckSum(byte[] data)
         {
             SHA256 sha256 = new SHA256Managed();
             var hash1 = sha256.ComputeHash(data);
             var hash2 = sha256.ComputeHash(hash1);
 
-            var result = new byte[CHECK_SUM_SIZE];
+            var result = new byte[CheckSumSize];
             Buffer.BlockCopy(hash2, 0, result, 0, result.Length);
             return result;
         }

@@ -1,5 +1,4 @@
 ﻿using NaiveChain.Models;
-using NaiveCoin.Core;
 using NaiveCoin.Models;
 
 namespace NaiveCoin.Extensions
@@ -8,7 +7,12 @@ namespace NaiveCoin.Extensions
     {
         public static string ToHash(this CurrencyBlock block, IHashProvider hashProvider)
         {
-			return hashProvider.ComputeHash($"{block.Index}{block.PreviousHash}{block.Timestamp}{hashProvider.ComputeHash(block.Transactions)}{hashProvider.ComputeHash(block.Objects)}{block.Nonce}");
+	        return hashProvider.ComputeHash(block);
         }
-    }
+
+		public static byte[] ToHashBytes(this CurrencyBlock block, IHashProvider hashProvider)
+		{
+			return hashProvider.ComputeHashBytes(block);
+	    }
+	}
 }

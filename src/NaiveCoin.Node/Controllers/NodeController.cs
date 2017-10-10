@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using NaiveCoin.Services;
 
-namespace NaiveCoin.Controllers
+namespace NaiveCoin.Node.Controllers
 {
     /// <inheritdoc />
     /// <summary>
@@ -11,9 +10,9 @@ namespace NaiveCoin.Controllers
     [Route("node")]
     public class NodeController : Controller
     {
-        private readonly Node _self;
+        private readonly Services.Peer _self;
 
-        public NodeController(Node self)
+        public NodeController(Services.Peer self)
         {
             _self = self;
         }
@@ -34,7 +33,7 @@ namespace NaiveCoin.Controllers
         /// <param name="peer"></param>
         /// <returns></returns>
         [HttpPost("peers")]
-        public IActionResult AddPeer([FromBody] Node peer)
+        public IActionResult AddPeer([FromBody] Services.Peer peer)
         {
             var newPeer = _self.ConnectToPeersAsync(peer);
 

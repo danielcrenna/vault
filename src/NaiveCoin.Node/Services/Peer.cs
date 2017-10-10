@@ -10,32 +10,32 @@ using NaiveChain.Models;
 using NaiveCoin.Models;
 using Newtonsoft.Json;
 
-namespace NaiveCoin.Services
+namespace NaiveCoin.Node.Services
 {
-    public class Node
+    public class Peer
     {
         private readonly string _host;
         private readonly int _port;
-        private readonly ICollection<Node> _peers;
+        private readonly ICollection<Peer> _peers;
         private readonly Blockchain _blockchain;
         private readonly JsonSerializerSettings _jsonSettings;
-        private readonly ILogger<Node> _logger;
+        private readonly ILogger<Peer> _logger;
         private readonly HttpClient _http;
 
         private string Url => $"http://{_host}:{_port}";
 
-        public IEnumerable<Node> Peers => _peers;
+        public IEnumerable<Peer> Peers => _peers;
 
-        public Node(string host, int port, Blockchain blockchain, JsonSerializerSettings jsonSettings, ILogger<Node> logger, IEnumerable<string> peers)
+        public Peer(string host, int port, Blockchain blockchain, JsonSerializerSettings jsonSettings, ILogger<Peer> logger, IEnumerable<string> peers)
         {
             _host = host;
             _port = port;
             if (peers != null)
             {
-                _peers = new HashSet<Node>(peers.Select(x =>
+                _peers = new HashSet<Peer>(peers.Select(x =>
                 {
                     var url = new Uri(x);
-                    return new Node(url.Host, url.Port, blockchain, jsonSettings, logger, null);
+                    return new Peer(url.Host, url.Port, blockchain, jsonSettings, logger, null);
                 }));
             }
             _blockchain = blockchain;
@@ -45,7 +45,7 @@ namespace NaiveCoin.Services
             _http = new HttpClient();
         }
 
-        public async Task ConnectToPeersAsync(params Node[] newPeers)
+        public async Task ConnectToPeersAsync(params Peer[] newPeers)
         {
             foreach (var peer in newPeers)
             {
@@ -71,7 +71,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        public async Task SendPeerAsync(Node peer, Node peerToSend)
+        public async Task SendPeerAsync(Peer peer, Peer peerToSend)
         {
             var url = $"{peer.Url}/node/peers";
             _logger.LogInformation($"Sending {peerToSend.Url} to peer {url}.");
@@ -90,13 +90,13 @@ namespace NaiveCoin.Services
             }
         }
 
-        public async Task InitConnectionAsync(Node peer)
+        public async Task InitConnectionAsync(Peer peer)
         {
             await GetLatestBlockAsync(peer);
             await GetTransactionsAsync(peer);
         }
 
-        public async Task GetLatestBlockAsync(Node peer)
+        public async Task GetLatestBlockAsync(Peer peer)
         {
             var url = $"{peer.Url}/blockchain/blocks/latest";
             _logger?.LogInformation($"Getting latest block from: {url}");
@@ -115,7 +115,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        public async Task SendLatestBlockAsync(Node peer, Block block)
+        public async Task SendLatestBlockAsync(Peer peer, Block block)
         {
             var url = $"{peer.Url}/blockchain/blocks/latest";
             _logger?.LogInformation($"Sending latest block to: {url}");
@@ -133,7 +133,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        public async Task GetBlocksAsync(Node peer)
+        public async Task GetBlocksAsync(Peer peer)
         {
             var url = $"{peer.Url}/blockchain/blocks";
             _logger?.LogInformation($"Getting blocks from: {url}");
@@ -152,7 +152,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        public async Task SendTransactionAsync(Node peer, Transaction transaction)
+        public async Task SendTransactionAsync(Peer peer, Transaction transaction)
         {
             var url = $"{peer.Url}/blockchain/transactions";
             _logger?.LogInformation($"Sending transaction '{transaction.Id}' to: {url}");
@@ -170,7 +170,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        public async Task GetTransactionsAsync(Node peer)
+        public async Task GetTransactionsAsync(Peer peer)
         {
             var url = $"{peer.Url}/blockchain/transactions";
             _logger?.LogInformation($"Getting transactions from: {url}");
@@ -189,7 +189,7 @@ namespace NaiveCoin.Services
             }
         }
 
-        public async Task<bool> GetConfirmationAsync(Node peer, string transactionId)
+        public async Task<bool> GetConfirmationAsync(Peer peer, string transactionId)
         {
             var url = $"{peer.Url}/blockchain/blocks/transactions/{transactionId}";
             _logger?.LogInformation($"Getting confirmation from: {url}for transaction '{transactionId}'");
@@ -218,7 +218,7 @@ namespace NaiveCoin.Services
             return (foundLocally ? 1 : 0) + confirmed;
         }
         
-        public void Broadcast(Action<Node> closure)
+        public void Broadcast(Action<Peer> closure)
         {
             foreach (var peer in _peers)
             {
