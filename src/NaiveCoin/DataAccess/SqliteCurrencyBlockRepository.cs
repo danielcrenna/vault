@@ -36,8 +36,8 @@ namespace NaiveCoin.DataAccess
 
 	    public Task<CurrencyBlock> GetGenesisBlockAsync()
 	    {
-			foreach (var transaction in _coinSettings.Value.GenesisBlock.Transactions ?? Enumerable.Empty<Transaction>())
-			    transaction.Hash = transaction.ToHash(_hashProvider);
+		    foreach (var transaction in _coinSettings.Value.GenesisBlock.Transactions ?? Enumerable.Empty<Transaction>())
+			    transaction.Hash = _hashProvider.ComputeHashBytes(transaction);
 		    _coinSettings.Value.GenesisBlock.Hash = _coinSettings.Value.GenesisBlock.ToHashBytes(_hashProvider);
 		    return Task.FromResult(_coinSettings.Value.GenesisBlock);
 	    }

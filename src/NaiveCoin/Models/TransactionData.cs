@@ -8,8 +8,8 @@ namespace NaiveCoin.Models
 {
     public class TransactionData
     {
-        public List<TransactionItem> Inputs { get; set; }
-        public List<TransactionItem> Outputs { get; set; }
+        public IList<TransactionItem> Inputs { get; set; }
+        public IList<TransactionItem> Outputs { get; set; }
         
         public void Check(CoinSettings coinSettings, IHashProvider hashProvider)
         {

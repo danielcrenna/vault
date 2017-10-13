@@ -145,7 +145,7 @@ namespace NaiveCoin.Models
 		        }
 	        };
 
-	        transaction.Hash = transaction.ToHash(_hashProvider);
+	        transaction.Hash = _hashProvider.ComputeHashBytes(transaction);
 
 	        return transaction;
         }

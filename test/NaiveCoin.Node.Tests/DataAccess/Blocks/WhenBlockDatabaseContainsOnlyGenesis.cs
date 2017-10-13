@@ -84,8 +84,8 @@ namespace NaiveCoin.Node.Tests.DataAccess.Blocks
 
         private void BeforeSave(CurrencyBlock block)
         {
-            foreach (var transaction in block.Transactions)
-                transaction.Hash = transaction.ToHash(HashProvider);
+	        foreach (var transaction in block.Transactions)
+		        transaction.Hash = HashProvider.ComputeHashBytes(transaction);
             block.Hash = block.ToHashBytes(HashProvider);
         }
     }

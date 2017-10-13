@@ -50,7 +50,7 @@ namespace NaiveCoin.Models
                 block.Timestamp = DateTimeOffset.UtcNow.Ticks;
                 block.Nonce++;
                 blockDifficulty = block.GetDifficulty();
-            } while (false && blockDifficulty >= difficulty);
+            } while (blockDifficulty >= difficulty);
 
 		    HashBlock(block);
 
@@ -62,8 +62,8 @@ namespace NaiveCoin.Models
 	    {
 		    var transactions = ((CurrencyBlock) block).Transactions;
 		    foreach (var transaction in transactions)
-			    transaction.Hash = transaction.ToHash(_hashProvider);
-		    block.Hash = block.ToHashBytes(_hashProvider);
+			    transaction.Hash = _hashProvider.ComputeHashBytes(transaction);
+			block.Hash = block.ToHashBytes(_hashProvider);
 	    }
     }
 }

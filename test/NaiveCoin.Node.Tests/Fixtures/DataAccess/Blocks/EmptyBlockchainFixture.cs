@@ -32,8 +32,8 @@ namespace NaiveCoin.Tests.Fixtures.DataAccess.Blocks
 
 		    var block = coinSettings.GenesisBlock;
 		    foreach (var transaction in block.Transactions)
-			    transaction.Hash = transaction.ToHash(hashProvider);
-		    block.Hash = block.ToHashBytes(hashProvider);
+			    transaction.Hash = hashProvider.ComputeHashBytes(transaction);
+			block.Hash = block.ToHashBytes(hashProvider);
 
 		    Value.AddAsync(block).ConfigureAwait(false).GetAwaiter().GetResult();
 	    }
