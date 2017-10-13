@@ -46,12 +46,12 @@ namespace NaiveChain.Models
             return hash;
         }
 
-        public string ComputeHash(object instance)
+        public string ComputeHashString(object instance)
         {
             return ComputeHashBytes(instance).ToHex();
         }
 
-        public string ComputeHash(string any)
+        public string ComputeHashString(string any)
         {
             return ComputeHashBytes(any).ToHex();
         }

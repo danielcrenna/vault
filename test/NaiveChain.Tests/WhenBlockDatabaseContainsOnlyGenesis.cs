@@ -10,7 +10,9 @@ namespace NaiveChain.Tests
 		IClassFixture<EmptyBlockchainFixture>,
 		IClassFixture<ObjectHashProviderFixture>
 	{
-		public WhenBlockDatabaseContainsOnlyGenesis(EmptyBlockchainFixture blockDatabase, ObjectHashProviderFixture hashProvider)
+		public WhenBlockDatabaseContainsOnlyGenesis(
+			EmptyBlockchainFixture blockDatabase, 
+			ObjectHashProviderFixture hashProvider)
 		{
 			Fixture = blockDatabase;
 			HashProvider = hashProvider.Value;

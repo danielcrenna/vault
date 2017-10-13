@@ -54,12 +54,18 @@ namespace NaiveChain.Serialization
 
 		public static void WriteBuffer(this BinaryWriter bw, byte[] buffer)
 		{
-			bw.Write(buffer.Length);
-			bw.Write(buffer);
+			var hasBuffer = buffer != null;
+			if (bw.WriteBoolean(hasBuffer) && hasBuffer)
+			{
+				bw.Write(buffer.Length);
+				bw.Write(buffer);
+			}
 		}
 
 		public static byte[] ReadBuffer(this BinaryReader br)
 		{
+			if (!br.ReadBoolean())
+				return null;
 			var length = br.ReadInt32();
 			var buffer = br.ReadBytes(length);
 			return buffer;

@@ -127,8 +127,8 @@ namespace NaiveCoin.Node.Services
 		public async Task<bool> CheckChainAsync(IReadOnlyList<CurrencyBlock> blockchainToValidate)
         {
             // Check if the genesis block is the same
-            if (_hashProvider.ComputeHash(blockchainToValidate[0]) !=
-                _hashProvider.ComputeHash(await _blocks.GetGenesisBlockAsync()))
+            if (_hashProvider.ComputeHashString(blockchainToValidate[0]) !=
+                _hashProvider.ComputeHashString(await _blocks.GetGenesisBlockAsync()))
             {
                 var message = $"Genesis blocks aren't the same";
                 _logger?.LogError(message);

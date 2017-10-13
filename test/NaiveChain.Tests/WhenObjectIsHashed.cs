@@ -21,8 +21,8 @@ namespace NaiveChain.Tests
 
             Assert.Equal
             (
-                _provider.Value.ComputeHash(foo), 
-                _provider.Value.ComputeHash(bar)
+                _provider.Value.ComputeHashString(foo), 
+                _provider.Value.ComputeHashString(bar)
             );
         }
 		
@@ -34,8 +34,8 @@ namespace NaiveChain.Tests
 
             Assert.NotEqual
             (
-                _provider.Value.ComputeHash(foo),
-                _provider.Value.ComputeHash(bar)
+                _provider.Value.ComputeHashString(foo),
+                _provider.Value.ComputeHashString(bar)
             );
         }
 		
@@ -47,8 +47,8 @@ namespace NaiveChain.Tests
 
             Assert.Equal
             (
-                _provider.Value.ComputeHash(foo),
-                _provider.Value.ComputeHash(bar)
+                _provider.Value.ComputeHashString(foo),
+                _provider.Value.ComputeHashString(bar)
             );
         }
 
@@ -58,8 +58,8 @@ namespace NaiveChain.Tests
 		    var foo = new Stub { D = null };
 		    var bar = new Stub { D = new List<string>() };
 
-		    var expected = _provider.Value.ComputeHash(foo);
-		    var actual = _provider.Value.ComputeHash(bar);
+		    var expected = _provider.Value.ComputeHashString(foo);
+		    var actual = _provider.Value.ComputeHashString(bar);
 
 		    Assert.Equal
 		    (

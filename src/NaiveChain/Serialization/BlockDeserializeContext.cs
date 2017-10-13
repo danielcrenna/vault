@@ -1,13 +1,15 @@
 using System;
 using System.IO;
+using NaiveChain.Models;
 
 namespace NaiveChain.Serialization
 {
 	public class BlockDeserializeContext
 	{
-		public BlockDeserializeContext(BinaryReader br)
+		public BlockDeserializeContext(BinaryReader br, IBlockObjectTypeProvider typeProvider)
 		{
 			this.br = br;
+			this.typeProvider = typeProvider;
 
 			Version = br.ReadInt32();
 
@@ -16,6 +18,7 @@ namespace NaiveChain.Serialization
 		}
 
 		public readonly BinaryReader br;
+		public readonly IBlockObjectTypeProvider typeProvider;
 
 		public int Version { get; private set; }
 	}

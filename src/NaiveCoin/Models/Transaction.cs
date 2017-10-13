@@ -13,7 +13,7 @@ namespace NaiveCoin.Models
 
         public string ToHash(IHashProvider provider)
         {
-            return provider.ComputeHash($"{Id}{Type}{provider.ComputeHash(Data)}");
+            return provider.ComputeHashString($"{Id}{Type}{provider.ComputeHashString(Data)}");
         }
 
         public void Check(IHashProvider hashProvider, CoinSettings coinSettings)
@@ -24,9 +24,7 @@ namespace NaiveCoin.Models
 
             Data.Check(coinSettings, hashProvider);
         }
-
-	    public uint ObjectType { get; }
-
+		
 	    public void Serialize(BlockSerializeContext context)
 	    {
 		    throw new System.NotImplementedException();
@@ -36,7 +34,5 @@ namespace NaiveCoin.Models
 	    {
 		    throw new System.NotImplementedException();
 	    }
-
-
     }
 }

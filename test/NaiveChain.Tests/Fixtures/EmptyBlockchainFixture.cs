@@ -18,6 +18,7 @@ namespace NaiveChain.Tests.Fixtures
 		protected void Init(string @namespace)
 		{
 			var hashProvider = new ObjectHashProviderFixture().Value;
+			var typeProvider = new BlockObjectTypeProviderFixture().Value;
 			var factory = new LoggerFactory();
 			factory.AddConsole();
 
@@ -35,6 +36,7 @@ namespace NaiveChain.Tests.Fixtures
 				"blockchain",
 				genesisBlock,
 				hashProvider,
+				typeProvider,
 				factory.CreateLogger<SqliteBlockRepository>());
 
 			genesisBlock.Index = 1;

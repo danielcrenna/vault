@@ -88,7 +88,7 @@ namespace NaiveCoin.Models
 			var inputs = _utxo.Select(utxo =>
             {
                 var keyPair = Ed25519.GenerateKeyPairFromSecret(_secretKey);
-	            var hash = _hashProvider.ComputeHash(new
+	            var hash = _hashProvider.ComputeHashString(new
 	            {
 		            Transaction = utxo.TransactionId,
 		            utxo.Index,

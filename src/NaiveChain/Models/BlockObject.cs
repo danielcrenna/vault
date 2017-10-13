@@ -7,15 +7,12 @@ namespace NaiveChain.Models
 		public BlockObject() { }
 
 		public int Index { get; set; }
-		public string SourceId { get; set; }
 		public long Version { get; set; }
 		public IBlockSerialized Data { get; set; }
 		public long Timestamp { get; set; }
 		public byte[] Hash { get; set; }
 
 		#region Serialization
-
-		public uint ObjectType => 0;
 
 		public object Deserialize(BlockDeserializeContext context)
 		{
@@ -24,35 +21,30 @@ namespace NaiveChain.Models
 
 		public void Serialize(BlockSerializeContext context)
 		{
-			SerializeHeader(context);
+			var typeId = context.typeProvider.Get(Data?.GetType());
 
-			if (context.bw.WriteBoolean(Data != null))
-			{
-				context.bw.Write(ObjectType);
+			context.bw.WriteNullableLong(typeId);    // TypeId
+			context.bw.Write(Version);               // Version
+			context.bw.Write(Timestamp);             // Timestamp
+			context.bw.WriteBuffer(Hash);            // Hash
+
+			if (context.bw.WriteBoolean(Data != null) && typeId.HasValue)
 				Data?.Serialize(context);
-			}
 		}
 		
-		private void SerializeHeader(BlockSerializeContext context)
-		{
-			context.bw.Write(SourceId);
-			context.bw.Write(Version);
-			context.bw.Write(Timestamp);
-			context.bw.WriteBuffer(Hash);
-		}
-
 		public BlockObject(BlockDeserializeContext context)
 		{
-			DeserializeHeader(context);
-			context.br.ReadUInt32();		// Type
-		}
+			var typeId = context.br.ReadNullableLong(); // TypeId
+			Version = context.br.ReadInt64();			// Version
+			Timestamp = context.br.ReadInt64();			// Timestamp
+			Hash = context.br.ReadBuffer();				// Hash
 
-		private void DeserializeHeader(BlockDeserializeContext context)
-		{
-			SourceId = context.br.ReadString();
-			Version = context.br.ReadInt64();
-			Timestamp = context.br.ReadInt64();
-			Hash = context.br.ReadBuffer();
+			if (context.br.ReadBoolean() && typeId.HasValue)
+			{
+				var type = context.typeProvider.Get(typeId.Value);
+				if (type != null)
+					Data = context.typeProvider.Deserialize(type, context);
+			}
 		}
 
 		#endregion

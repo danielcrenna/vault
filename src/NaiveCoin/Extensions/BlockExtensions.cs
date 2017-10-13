@@ -7,7 +7,7 @@ namespace NaiveCoin.Extensions
     {
         public static string ToHash(this CurrencyBlock block, IHashProvider hashProvider)
         {
-	        return hashProvider.ComputeHash(block);
+	        return hashProvider.ComputeHashString(block);
         }
 
 		public static byte[] ToHashBytes(this CurrencyBlock block, IHashProvider hashProvider)

@@ -53,10 +53,8 @@ namespace NaiveChain.Models
 		    var count = context.br.ReadInt32();
 		    Objects = new List<BlockObject>(count);
 		    for (var i = 0; i < count; i++)
-		    {
-			    Objects.Add(new BlockObject(context));
-		    }
-	    }
+				Objects.Add(new BlockObject(context));
+		}
 		
 	    public void SerializeHeader(BlockSerializeContext context)
 	    {
@@ -76,22 +74,22 @@ namespace NaiveChain.Models
 					@object.Serialize(context);
 		}
 		
-		public void RoundTripCheck(IHashProvider hashProvider)
+		public void RoundTripCheck(IHashProvider hashProvider, IBlockObjectTypeProvider typeProvider)
 	    {
 		    // Serialize a first time
 		    var firstMemoryStream = new MemoryStream();
-		    var firstSerializeContext = new BlockSerializeContext(new BinaryWriter(firstMemoryStream));
+		    var firstSerializeContext = new BlockSerializeContext(new BinaryWriter(firstMemoryStream), typeProvider);
 		    Serialize(firstSerializeContext);
 		    var originalData = firstMemoryStream.ToArray();
 
 		    // Then deserialize that data
 		    var br = new BinaryReader(new MemoryStream(originalData));
-		    var deserializeContext = new BlockDeserializeContext(br);
+		    var deserializeContext = new BlockDeserializeContext(br, typeProvider);
 		    var deserialized = new Block(deserializeContext, hashProvider);
 
 		    // Then serialize that deserialized data and see if it matches
 		    var secondMemoryStream = new MemoryCompareStream(originalData);
-		    var secondSerializeContext = new BlockSerializeContext(new BinaryWriter(secondMemoryStream));
+		    var secondSerializeContext = new BlockSerializeContext(new BinaryWriter(secondMemoryStream), typeProvider);
 		    deserialized.Serialize(secondSerializeContext);
 	    }
 

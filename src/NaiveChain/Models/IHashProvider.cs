@@ -4,7 +4,7 @@
     {
         byte[] ComputeHashBytes(string any);
         byte[] ComputeHashBytes(object instance);
-        string ComputeHash(object instance);
-        string ComputeHash(string any);
+        string ComputeHashString(object instance);
+        string ComputeHashString(string any);
     }
 }

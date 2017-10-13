@@ -15,6 +15,7 @@ namespace NaiveChain.DataAccess
     {
 	    private readonly Block _genesisBlock;
 	    private readonly IHashProvider _hashProvider;
+	    private readonly IBlockObjectTypeProvider _typeProvider;
 	    private readonly ILogger<SqliteBlockRepository> _logger;
 
         public SqliteBlockRepository(
@@ -22,10 +23,12 @@ namespace NaiveChain.DataAccess
 			string databaseName,
 			Block genesisBlock,
 			IHashProvider hashProvider,
+			IBlockObjectTypeProvider typeProvider,
 			ILogger<SqliteBlockRepository> logger) : base(@namespace, databaseName, logger)
         {
 	        _genesisBlock = genesisBlock;
 	        _hashProvider = hashProvider;
+	        _typeProvider = typeProvider;
 	        _logger = logger;
         }
 
@@ -194,14 +197,14 @@ CREATE TABLE IF NOT EXISTS 'Block'
 		    public byte[] Data { get; set; }
 	    }
 
-	    private static byte[] SerializeObjects(Block block)
+	    private byte[] SerializeObjects(Block block)
 	    {
 		    byte[] data;
 		    using (var ms = new MemoryStream())
 		    {
 			    using (var bw = new BinaryWriter(ms, Encoding.UTF8))
 			    {
-				    var context = new BlockSerializeContext(bw);
+				    var context = new BlockSerializeContext(bw, _typeProvider);
 				    block.SerializeObjects(context);
 			    }
 			    data = ms.ToArray();
@@ -215,7 +218,7 @@ CREATE TABLE IF NOT EXISTS 'Block'
 		    {
 			    using (var br = new BinaryReader(ms))
 			    {
-				    var context = new BlockDeserializeContext(br);
+				    var context = new BlockDeserializeContext(br, _typeProvider);
 				    block.DeserializeObjects(context);
 				    block.Hash = block.ToHashBytes(_hashProvider);
 			    }

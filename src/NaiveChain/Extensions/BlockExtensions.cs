@@ -6,7 +6,7 @@ namespace NaiveChain.Extensions
 	{
 		public static string ToHashString(this Block block, IHashProvider hashProvider)
 		{
-			return hashProvider.ComputeHash(block);
+			return hashProvider.ComputeHashString(block);
 		}
 
 		public static byte[] ToHashBytes(this Block block, IHashProvider hashProvider)

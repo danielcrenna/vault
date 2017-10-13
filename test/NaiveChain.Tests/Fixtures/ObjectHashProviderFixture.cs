@@ -9,6 +9,6 @@ namespace NaiveChain.Tests.Fixtures
             Value = new StableHashProvider();
         }
 
-        public StableHashProvider Value { get; set; }
+        public IHashProvider Value { get; set; }
     }
 }

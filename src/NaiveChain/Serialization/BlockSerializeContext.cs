@@ -1,13 +1,15 @@
 ﻿using System;
 using System.IO;
+using NaiveChain.Models;
 
 namespace NaiveChain.Serialization
 {
 	public partial class BlockSerializeContext
 	{
-		public BlockSerializeContext(BinaryWriter bw, int version = formatVersion)
+		public BlockSerializeContext(BinaryWriter bw, IBlockObjectTypeProvider typeProvider, int version = formatVersion)
 		{
 			this.bw = bw;
+			this.typeProvider = typeProvider;
 			if (Version > formatVersion)
 				throw new Exception("Tried to save block with a version that is too new");
 			Version = version;
@@ -16,6 +18,7 @@ namespace NaiveChain.Serialization
 		}
 
 		public readonly BinaryWriter bw;
+		public readonly IBlockObjectTypeProvider typeProvider;
 
 		#region Version
 
