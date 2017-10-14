@@ -6,9 +6,9 @@ using NaiveChain.Models;
 
 namespace NaiveChain.Tests.Fixtures
 {
-	public class EmptyBlockchainFixture : IDisposable
+	public class EmptyBlockRepositoryFixture : IDisposable
 	{
-		public EmptyBlockchainFixture()
+		public EmptyBlockRepositoryFixture()
 		{
 			var @namespace = $"{Guid.NewGuid()}";
 
@@ -46,11 +46,15 @@ namespace NaiveChain.Tests.Fixtures
 			Value.AddAsync(genesisBlock).ConfigureAwait(false).GetAwaiter().GetResult();
 			
 			GenesisBlock = genesisBlock;
+
+			TypeProvider = typeProvider;
 		}
 
 		public SqliteBlockRepository Value { get; set; }
 
 		public Block GenesisBlock { get; private set; }
+
+		public IBlockObjectTypeProvider TypeProvider { get; private set; }
 
 		public void Dispose()
 		{

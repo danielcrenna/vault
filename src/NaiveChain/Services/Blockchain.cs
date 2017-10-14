@@ -124,7 +124,7 @@ namespace NaiveChain.Services
 		public async Task<Block> AddBlockAsync(Block block)
 		{
 			// It only adds the block if it's valid (we need to compare to the previous one)
-			if (true || CheckBlock(block, await GetLastBlockAsync()))
+			if (CheckBlock(block, await GetLastBlockAsync()))
 			{
 				await _blocks.AddAsync(block);
 
@@ -166,11 +166,6 @@ namespace NaiveChain.Services
 			}
 
 			return true;
-		}
-
-		IEnumerable<BlockObject> IBlockchain<Block>.StreamAllBlockObjects()
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

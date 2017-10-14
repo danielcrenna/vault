@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 namespace NaiveChain.Models
 {
+	public interface IBlockRepository : IBlockRepository<Block> { }
+
     public interface IBlockRepository<T> where T : Block
     {
 	    Task<T> GetGenesisBlockAsync();

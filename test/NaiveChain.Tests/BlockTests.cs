@@ -65,13 +65,11 @@ namespace NaiveChain.Tests
 			{
 				Id = $"{Guid.NewGuid()}"
 			};
-
 			var blockObject = new BlockObject
 			{
 				Data = transaction,
 				Hash = null,
 			};
-
 			var block = new Block
 			{
 				Nonce = 1,
@@ -79,8 +77,8 @@ namespace NaiveChain.Tests
 				Timestamp = DateTimeOffset.UtcNow.Ticks,
 				Objects = new List<BlockObject> {blockObject}
 			};
-
 			block.Hash = block.ToHashBytes(_hash.Value);
+
 			block.RoundTripCheck(_hash.Value, _types.Value);
 		}
 	}

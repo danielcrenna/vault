@@ -11,7 +11,7 @@ using NaiveChain.Serialization;
 
 namespace NaiveChain.DataAccess
 {
-    public class SqliteBlockRepository : SqliteRepository, IBlockRepository<Block>
+    public class SqliteBlockRepository : SqliteRepository, IBlockRepository
     {
 	    private readonly Block _genesisBlock;
 	    private readonly IHashProvider _hashProvider;
@@ -48,25 +48,11 @@ namespace NaiveChain.DataAccess
             }
         }
 
-        public async Task<Block> GetByTransactionIdAsync(string transactionId)
-        {
-            using (var db = new SqliteConnection($"Data Source={DataFile}"))
-            {
-	            const string sql = "SELECT b.* FROM 'Block' b " +
-	                               "LEFT JOIN 'BlockTransaction' bt ON bt.'BlockIndex' = b.'Index' " +
-	                               "WHERE bt.'Id' = @Id";
-
-	            var block = await db.QuerySingleOrDefaultAsync<BlockResult>(sql, new { Id = transactionId });
-
-				DeserializeObjects(block, block.Data);
-
-				return block;
-            }
-        }
-
         public async Task AddAsync(Block block)
         {
-	        using (var db = new SqliteConnection($"Data Source={DataFile}"))
+	        var data = SerializeObjects(block);
+
+			using (var db = new SqliteConnection($"Data Source={DataFile}"))
 			{
 				await db.OpenAsync();
 
@@ -80,7 +66,7 @@ namespace NaiveChain.DataAccess
 							block.Timestamp,
 							block.Nonce,
 							block.Hash,
-							Data = SerializeObjects(block)
+							Data = data
 						}, t);
 
 					t.Commit();
@@ -92,17 +78,22 @@ namespace NaiveChain.DataAccess
 
 	    public IEnumerable<BlockObject> StreamAllBlockObjects()
 	    {
-			using (var db = new SqliteConnection($"Data Source={DataFile}"))
-			{
-				const string sql = "SELECT bo.* " +
-				                   "FROM 'Block' b " +
-				                   "INNER JOIN 'BlockObject' bo ON bo.'BlockIndex' = b.'Index' " +
-				                   "ORDER BY b.'Index', bo.'Index', bo.'SourceId', bo.'Version'";
+		    using (var db = new SqliteConnection($"Data Source={DataFile}"))
+		    {
+			    const string sql = "SELECT b.* " +
+			                       "FROM 'Block' b " +
+			                       "ORDER BY b.'Index' ASC";
 
-				var objects = db.Query<BlockObject>(sql, buffered: false);
+			    foreach (var block in db.Query<BlockResult>(sql, buffered: false))
+			    {
+				    DeserializeObjects(block, block.Data);
 
-				return objects;
-			}
+				    foreach (var @object in block.Objects)
+				    {
+					    yield return @object;
+				    }
+			    }
+		    }
 		}
 
 	    public IEnumerable<Block> StreamAllBlocks()

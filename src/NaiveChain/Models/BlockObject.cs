@@ -6,6 +6,7 @@ namespace NaiveChain.Models
 	{
 		public BlockObject() { }
 
+		public long? Type { get; set; }
 		public int Index { get; set; }
 		public long Version { get; set; }
 		public IBlockSerialized Data { get; set; }
@@ -21,27 +22,27 @@ namespace NaiveChain.Models
 
 		public void Serialize(BlockSerializeContext context)
 		{
-			var typeId = context.typeProvider.Get(Data?.GetType());
+			Type = context.typeProvider.Get(Data?.GetType());
 
-			context.bw.WriteNullableLong(typeId);    // TypeId
+			context.bw.WriteNullableLong(Type);		 // Type
 			context.bw.Write(Version);               // Version
 			context.bw.Write(Timestamp);             // Timestamp
 			context.bw.WriteBuffer(Hash);            // Hash
 
-			if (context.bw.WriteBoolean(Data != null) && typeId.HasValue)
+			if (context.bw.WriteBoolean(Data != null) && Type.HasValue)
 				Data?.Serialize(context);
 		}
 		
 		public BlockObject(BlockDeserializeContext context)
 		{
-			var typeId = context.br.ReadNullableLong(); // TypeId
+			Type = context.br.ReadNullableLong();		// Type
 			Version = context.br.ReadInt64();			// Version
 			Timestamp = context.br.ReadInt64();			// Timestamp
 			Hash = context.br.ReadBuffer();				// Hash
 
-			if (context.br.ReadBoolean() && typeId.HasValue)
+			if (context.br.ReadBoolean() && Type.HasValue)
 			{
-				var type = context.typeProvider.Get(typeId.Value);
+				var type = context.typeProvider.Get(Type.Value);
 				if (type != null)
 					Data = context.typeProvider.Deserialize(type, context);
 			}

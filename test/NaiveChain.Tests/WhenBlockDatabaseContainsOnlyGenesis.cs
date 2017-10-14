@@ -1,25 +1,36 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
+using NaiveChain.Extensions;
 using NaiveChain.Models;
+using NaiveChain.Streaming;
 using NaiveChain.Tests.Fixtures;
+using NaiveChain.Tests.Models;
+using NaiveCoin.Core;
 using Xunit;
 
 namespace NaiveChain.Tests
 {
 	public class WhenBlockDatabaseContainsOnlyGenesis :
-		IClassFixture<EmptyBlockchainFixture>,
+		IClassFixture<EmptyBlockRepositoryFixture>,
 		IClassFixture<ObjectHashProviderFixture>
 	{
 		public WhenBlockDatabaseContainsOnlyGenesis(
-			EmptyBlockchainFixture blockDatabase, 
+			EmptyBlockRepositoryFixture blockDatabase, 
 			ObjectHashProviderFixture hashProvider)
 		{
 			Fixture = blockDatabase;
+			TypeProvider = Fixture.TypeProvider;
 			HashProvider = hashProvider.Value;
+
+			TypeProvider.Add(0, typeof(Transaction));
 		}
 
 		public IHashProvider HashProvider { get; set; }
-		public EmptyBlockchainFixture Fixture { get; set; }
+		public EmptyBlockRepositoryFixture Fixture { get; set; }
+		public IBlockObjectTypeProvider TypeProvider { get; }
 
 		[Fact]
 		public void There_are_no_migration_errors() { }
@@ -72,6 +83,40 @@ namespace NaiveChain.Tests
 			var genesis = Fixture.GenesisBlock;
 			var retrieved = await Fixture.Value.GetLastBlockAsync();
 			Assert.Equal(genesis.Timestamp, retrieved.Timestamp);
+		}
+		
+		[Fact]
+		public async Task Can_stream_typed_objects()
+		{
+			await Fixture.Value.AddAsync(CreateBlock());
+
+			var projection = new BlockObjectProjection(Fixture.Value, TypeProvider);
+			var transactions = projection.StreamForwards<Transaction>();
+			
+			Assert.NotNull(transactions);
+			Assert.Equal(1, transactions.Count());
+		}
+
+		private Block CreateBlock()
+		{
+			var transaction = new Transaction
+			{
+				Id = $"{Guid.NewGuid()}"
+			};
+			var blockObject = new BlockObject
+			{
+				Data = transaction,
+				Hash = null,
+			};
+			var block = new Block
+			{
+				Nonce = 1,
+				PreviousHash = "rosebud".Sha256(),
+				Timestamp = DateTimeOffset.UtcNow.Ticks,
+				Objects = new List<BlockObject> {blockObject}
+			};
+			block.Hash = block.ToHashBytes(HashProvider);
+			return block;
 		}
 	}
 }
