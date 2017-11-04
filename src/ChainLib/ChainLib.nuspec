@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ChainLib</id>
+    <version>0.0.1-pre</version>
+    <title>ChainLib</title>
+    <authors>Daniel Crenna</authors>
+    <owners>Daniel Crenna</owners>
+    <licenseUrl>https://github.com/danielcrenna/ChainLib/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/danielcrenna/ChainLib</projectUrl>    
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>A general purpose blockchain programming library for .NET Standard 2.0.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>&#169; 2017 Daniel Crenna &amp; Contributors</copyright>
+    <tags>blockchain cryptocurrency</tags>
+  </metadata>
+</package>

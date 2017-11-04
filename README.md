@@ -1,7 +1,12 @@
-NaiveCoin
+ChainLib
 =========
 
-A cryptocurrency implementation in less than 1500 lines of code.
+A general purpose blockchain programming library for .NET Standard 2.0.
+
+The general goal of the project is to be generally useful for creating blockchains for various purposes, with a specific goal of enabling private, enterprise, and consortium chains,
+as well as provide cross-chain compatibility for any blockchain programmed using this library, with pluggable support for other blockchains.
+
+Cryptoeconomics is not the current focus, though that work will exist under a separate package.
 
 Third Party Software
 ====================

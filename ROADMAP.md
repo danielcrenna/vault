@@ -1,7 +1,7 @@
 TODO/Ideas:
 ===========
 Blockchain:
-[ ] Hoist proof system in NaiveChain
+[ ] Hoist proof system in ChainLib
 [ ] Smart contracts
 [ ] Side chains
 [ ] Verification of block objects (sources, order, etc.)
