@@ -1,3 +1,5 @@
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdanielcrenna%2Fvault.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdanielcrenna%2Fvault?ref=badge_shield)
+
 Open Source Vault
 =================
 
@@ -21,3 +23,7 @@ If you want to use code from this repository, fork, and provide a citation for t
 A quick note about NuGet:
 -------------------
 While most of these projects have NuGet libraries, I can't promise a timely upgrade schedule for those packages. 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdanielcrenna%2Fvault.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdanielcrenna%2Fvault?ref=badge_large)
