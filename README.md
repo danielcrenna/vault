@@ -1,5 +1,10 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fdanielcrenna%2FChainLib.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fdanielcrenna%2FChainLib?ref=badge_shield)
 
+<a href="https://scan.coverity.com/projects/danielcrenna-chainlib">
+  <img alt="Coverity Scan Build Status"
+       src="https://img.shields.io/coverity/scan/14680.svg"/>
+</a>
+
 ChainLib
 =========
 
