@@ -11,7 +11,7 @@ namespace ChainLib.Services
         private readonly IProofOfWork _proofOfWork;
 	    private readonly ILogger<Miner> _logger;
 
-		public Miner(IBlockchain<Block> blockchain, IProofOfWork proofOfWork, ILogger<Miner> logger)
+		public Miner(IBlockchain blockchain, IProofOfWork proofOfWork, ILogger<Miner> logger)
         {
             _blockchain = blockchain;
             _proofOfWork = proofOfWork;

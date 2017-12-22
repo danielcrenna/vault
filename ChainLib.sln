@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D799DE2C-F24A-4419-8C83-DF2E05024BB1}"
 	ProjectSection(SolutionItems) = preProject
@@ -26,6 +26,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.Tests", "test\ChainLib.Tests\ChainLib.Tests.csproj", "{7568E712-491D-42F2-89DC-25413DB4E6F8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crypto.Shim.Tests", "test\Crypto.Shim.Tests\Crypto.Shim.Tests.csproj", "{B6334B27-5B35-4A3B-9155-2451F192573D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{BF9BEFD5-C6CE-4EEC-8CE6-9EF5D84EFBE2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PasswordManager", "src\examples\PasswordManager\PasswordManager.csproj", "{7180120F-468D-48AC-AD56-20EB11C1D029}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainLib.WarpWallet", "ChainLib.WarpWallet\ChainLib.WarpWallet.csproj", "{A49FD43A-968F-41E3-B652-A2E4B8A3B111}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +59,14 @@ Global
 		{B6334B27-5B35-4A3B-9155-2451F192573D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6334B27-5B35-4A3B-9155-2451F192573D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6334B27-5B35-4A3B-9155-2451F192573D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7180120F-468D-48AC-AD56-20EB11C1D029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7180120F-468D-48AC-AD56-20EB11C1D029}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7180120F-468D-48AC-AD56-20EB11C1D029}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7180120F-468D-48AC-AD56-20EB11C1D029}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A49FD43A-968F-41E3-B652-A2E4B8A3B111}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49FD43A-968F-41E3-B652-A2E4B8A3B111}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A49FD43A-968F-41E3-B652-A2E4B8A3B111}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A49FD43A-968F-41E3-B652-A2E4B8A3B111}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -61,6 +75,7 @@ Global
 		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27} = {5077B8EE-66B1-472A-9839-5E245447F897}
 		{7568E712-491D-42F2-89DC-25413DB4E6F8} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
 		{B6334B27-5B35-4A3B-9155-2451F192573D} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
+		{7180120F-468D-48AC-AD56-20EB11C1D029} = {BF9BEFD5-C6CE-4EEC-8CE6-9EF5D84EFBE2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9332D765-4E73-4CAD-88FB-243D4CFF2185}

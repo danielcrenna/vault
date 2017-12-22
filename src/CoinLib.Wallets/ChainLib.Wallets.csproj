@@ -10,8 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NaiveChain\ChainLib.csproj" />
-    <ProjectReference Include="..\NaiveCoin.Core\Crypto.Shim.csproj" />
+    <ProjectReference Include="..\ChainLib\ChainLib.csproj" />
+    <ProjectReference Include="..\Crypto.Shim\Crypto.Shim.csproj" />
   </ItemGroup>
 
 </Project>

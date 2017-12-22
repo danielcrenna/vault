@@ -80,7 +80,7 @@ namespace Crypto.Shim
 	        return CryptoHash.Sha256(input);
         }
 		
-	    public static bool SlowEquals(byte[] a, byte[] b)
+	    public static bool SlowEquals(this byte[] a, byte[] b)
 	    {
 		    return Utilities.Compare(a, b);
 	    }

@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace ChainLib.Services
 {
-	public class Blockchain : IBlockchain<Block>
+	public class Blockchain : IBlockchain
 	{
 		private readonly IBlockRepository<Block> _blocks;
 		private readonly IProofOfWork _proofOfWork;
@@ -158,9 +158,9 @@ namespace ChainLib.Services
 				var message = $"Invalid hash: expected '{blockHash}' got '{newBlock.Hash}'";
 				throw new BlockAssertionException(message);
 			}
-			if (newBlock.GetDifficulty() >= GetDifficulty(newBlock.Index ?? 0))
+			if (newBlock.Difficulty >= GetDifficulty(newBlock.Index ?? 0))
 			{ // If the difficulty level of the proof-of-work challenge is correct
-				var message = $"Invalid proof-of-work difficulty: expected '${newBlock.GetDifficulty()}' to be smaller than '${GetDifficulty(newBlock.Index ?? 0)}'";
+				var message = $"Invalid proof-of-work difficulty: expected '${newBlock.Difficulty}' to be smaller than '${GetDifficulty(newBlock.Index ?? 0)}'";
 				_logger?.LogError(message);
 				throw new BlockAssertionException(message);
 			}

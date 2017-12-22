@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1-pre</Version>
+    <Description>A general purpose blockchain programming library for .NET Standard 2.0.</Description>
+    <Copyright>&gt;&amp;#169; 2017 Daniel Crenna &amp;amp; Contributors</Copyright>
+    <PackageLicenseUrl>https://github.com/danielcrenna/ChainLib/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>blockchain cryptocurrency</PackageTags>
+    <PackageProjectUrl>https://github.com/danielcrenna/ChainLib</PackageProjectUrl>
+    <Authors>Daniel Crenna</Authors>
+    <Company />
+    <RepositoryUrl>https://github.com/danielcrenna/ChainLib</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

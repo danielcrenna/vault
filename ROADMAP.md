@@ -55,3 +55,4 @@ Misc:
 [ ] Investigate performance of removing first-class transaction objects
 [ ] Remove Index from KeyPair?
 [ ] Switch to NSec when it releases
+[ ] coveralls and coverity badges

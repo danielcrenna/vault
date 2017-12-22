@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ChainLib.Wallets.Addresses;
+using ChainLib.Wallets.Factories;
+using ChainLib.Wallets.Secrets;
 
-namespace CoinLib.Wallets
+namespace ChainLib.Wallets.Providers
 {
-    /// <summary>
+	/// <summary>
     /// "Brain wallets" are wallets whose private key is generated through human memory.
     /// These wallets are not secure, because the private key can be obtained by anyone who
     /// memorizes the passphrase, or any machine that guesses the passphrase correctly.
@@ -15,12 +18,11 @@ namespace CoinLib.Wallets
     public class BrainWalletProvider : IWalletProvider
     {
 	    private readonly IWalletRepository _repository;
+		private readonly IWalletSecretProvider _secrets;
+        private readonly IWalletAddressProvider _addresses;
+        private readonly IWalletFactoryProvider _factory;
 
-	    private readonly PasswordHashSecretProvider _secrets;
-        private readonly DeterministicWalletAddressProvider _addresses;
-        private readonly FixedSaltWalletFactoryProvider _factory;
-
-        public BrainWalletProvider(IWalletRepository repository, string salt = "_ChainLib_Salt_")
+        public BrainWalletProvider(IWalletRepository repository, string salt = Constants.DefaultFixedSalt)
         {
 	        _repository = repository;
 	        _secrets = new PasswordHashSecretProvider();
@@ -33,12 +35,12 @@ namespace CoinLib.Wallets
             return _addresses.GenerateAddress(wallet);
         }
 
-        public byte[] GenerateSecret(Wallet wallet)
-        {
-            return _secrets.GenerateSecret(wallet);
-        }
+        public byte[] GenerateSecret(params object[] args)
+	    {
+			return _secrets.GenerateSecret(args);
+		}
 
-        public Wallet Create(string password)
+		public Wallet Create(string password)
         {
             return _factory.Create(password);
         }
@@ -62,5 +64,6 @@ namespace CoinLib.Wallets
 	    {
 		    return _repository.SaveAddressesAsync(wallet);
 	    }
+
     }
 }

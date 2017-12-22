@@ -34,9 +34,9 @@ namespace Crypto.Shim
 		/// </summary>
 		/// <param name="password"></param>
 		/// <returns></returns>
-		public static byte[] FastHash(string password)
+		public static byte[] FastHash(string password, string salt)
 		{
-			return KeyDerivation.Pbkdf2(password, Encoding.UTF8.GetBytes("salt"), KeyDerivationPrf.HMACSHA512, 64000, 32);
+			return KeyDerivation.Pbkdf2(password, Encoding.UTF8.GetBytes(salt), KeyDerivationPrf.HMACSHA512, 64000, 32);
 		}
 
 		public static bool Verify(string password, string passwordHash)
@@ -45,7 +45,7 @@ namespace Crypto.Shim
 			var saltBytes = Convert.FromBase64String(tokens[0]);
 			var compareHashBytes = Convert.FromBase64String(tokens[1]);
 			var hashBytes = ArgonHash(password, saltBytes);
-			return CryptoUtil.SlowEquals(compareHashBytes, hashBytes);
+			return compareHashBytes.SlowEquals(hashBytes);
 		}
 
 		private static byte[] ArgonSalt(string salt)

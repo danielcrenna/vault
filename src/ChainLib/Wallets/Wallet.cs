@@ -2,7 +2,7 @@
 using System.Linq;
 using Crypto.Shim;
 
-namespace CoinLib.Wallets
+namespace ChainLib.Wallets
 {
     public class Wallet
     {

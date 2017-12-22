@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using ChainLib.Extensions;
 using ChainLib.Serialization;
@@ -11,18 +10,16 @@ namespace ChainLib.Models
 		public Block() { }
 
 		public long? Index { get; set; }
+		public int Version { get; private set; }
         public byte[] PreviousHash { get; set; }
         public long Timestamp { get; set; }
-        public long Nonce { get; set; }
+	    public double Difficulty { get; set; }
+		public long Nonce { get; set; }
+
         public ICollection<BlockObject> Objects { get; set; }
 
 		[Computed]
 		public byte[] Hash { get; set; }
-
-		public double GetDifficulty()
-        {
-			return BitConverter.ToDouble(Hash, 24); // take last 8 bytes, not 14 like the original
-        }
 
 	    #region Serialization
 
@@ -41,10 +38,10 @@ namespace ChainLib.Models
 
 	    public void DeserializeHeader(BlockDeserializeContext context)
 	    {
-		    context.br.ReadInt32();                     // Version
+		    Version = context.br.ReadInt32();           // Version
 		    PreviousHash = context.br.ReadBuffer();     // PreviousHash
 		    Timestamp = context.br.ReadInt64();         // Timestamp
-		    context.br.ReadDouble();                    // Difficulty
+		    Difficulty = context.br.ReadDouble();       // Difficulty
 		    Nonce = context.br.ReadInt64();             // Nonce
 	    }
 
@@ -61,7 +58,7 @@ namespace ChainLib.Models
 		    context.bw.Write(context.Version);          // Version
 			context.bw.WriteBuffer(PreviousHash);       // PreviousHash
 			context.bw.Write(Timestamp);                // Timestamp
-			context.bw.Write(GetDifficulty());          // Difficulty
+			context.bw.Write(Difficulty);				// Difficulty
 			context.bw.Write(Nonce);                    // Nonce
 		}
 
