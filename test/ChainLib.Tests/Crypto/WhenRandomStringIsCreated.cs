@@ -1,7 +1,7 @@
-using CoinLib.Core.Tests.Fixtures;
+using ChainLib.Tests.Crypto.Fixtures;
 using Xunit;
 
-namespace Crypto.Shim.Tests
+namespace ChainLib.Tests.Crypto
 {
     public class WhenRandomStringIsCreated : IClassFixture<RandomStringFixture>
     {

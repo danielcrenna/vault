@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ChainLib.Crypto;
 using Microsoft.Data.Sqlite;
 using ChainLib.Extensions;
 using ChainLib.Models;
 using ChainLib.Models.Extended;
 using ChainLib.Streaming;
 using ChainLib.Tests.Fixtures;
-using Crypto.Shim;
 using Xunit;
 
 namespace ChainLib.Tests

@@ -7,7 +7,7 @@ namespace ChainLib.Tests.Wallets.Fixtures
     {
         public WalletWithTwoAddressesFixture()
         {
-            var factory = new FixedSaltWalletFactoryProvider("_NaiveCoin_Salt_");
+            var factory = new FixedSaltWalletFactoryProvider(Constants.DefaultFixedSalt16);
             var provider = new WalletAddressProviderFixture();
             var wallet = factory.Create("rosebud");
 

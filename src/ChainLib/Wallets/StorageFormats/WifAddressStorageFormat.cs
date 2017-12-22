@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Linq;
-using Crypto.Shim;
+using ChainLib.Crypto;
 
 namespace ChainLib.Wallets.StorageFormats
 {
@@ -10,13 +10,13 @@ namespace ChainLib.Wallets.StorageFormats
 	/// </summary>
 	public class WifAddressStorageFormat : IWalletAddressStorageFormat
 	{
-		public KeyPair Import(Wallet wallet, string wif)
+		public KeyPair Import(Wallet wallet, string wif, int len)
 		{
 			// Take a Wallet Import Format string
 			Contract.Assert(wallet != null);
 			Contract.Assert(!string.IsNullOrWhiteSpace(wif));
 
-			var privateKey = GetPrivateKeyFromImport(wif);
+			var privateKey = GetPrivateKeyFromImport(wif, len);
 
 			var importedRaw = Ed25519.GenerateKeyPairFromPrivateKey(privateKey);
 
@@ -30,7 +30,7 @@ namespace ChainLib.Wallets.StorageFormats
 			return imported;
 		}
 
-		public static byte[] GetPrivateKeyFromImport(string wif)
+		public static byte[] GetPrivateKeyFromImport(string wif, int len)
 		{
 			// Convert it to a byte string using Base58Check encoding
 			var decoded = Base58Check.DecodePlain(wif);
@@ -38,7 +38,7 @@ namespace ChainLib.Wallets.StorageFormats
 			// Drop the last 4 checksum bytes from the byte string
 			// Drop the first byte (it should be 0x80)
 			// If the private key corresponded to a compressed public key, also drop the last byte (it should be 0x01)
-			var privateKey = decoded.Take(decoded.Length - 4).Skip(1).Take(32).ToArray();
+			var privateKey = decoded.Take(decoded.Length - 4).Skip(1).Take(len).ToArray();
 
 			return privateKey;
 		}

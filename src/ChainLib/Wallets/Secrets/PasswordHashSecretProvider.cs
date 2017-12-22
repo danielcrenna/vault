@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.InteropServices;
-using Crypto.Shim;
+using ChainLib.Crypto;
 
 namespace ChainLib.Wallets.Secrets
 {

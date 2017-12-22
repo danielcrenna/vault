@@ -1,8 +1,8 @@
+using ChainLib.Crypto;
 using ChainLib.Tests.Wallets.Fixtures;
 using ChainLib.Wallets;
 using ChainLib.Wallets.Factories;
 using ChainLib.Wallets.StorageFormats;
-using Crypto.Shim;
 using Xunit;
 
 namespace ChainLib.Tests.Wallets
@@ -12,6 +12,9 @@ namespace ChainLib.Tests.Wallets
 		IClassFixture<WifAddressStorageFormatFixture>,
 		IClassFixture<KeyStoreStorageFormatFixture>
 	{
+		private const int WifKeyLength = 64;		// Bitcoin uses 32 but sodium forces 64
+		private const int KeystoreKeyLength = 24;
+
 		private readonly WifAddressStorageFormatFixture _wif;
 		private readonly KeyStoreStorageFormatFixture _keystore;
 
@@ -42,8 +45,8 @@ namespace ChainLib.Tests.Wallets
 			var wif1 = _wif.Value.Export(wallet1, wallet1.KeyPairs[0].PublicKey);
 			var wif2 = _wif.Value.Export(wallet1, wallet1.KeyPairs[1].PublicKey);
 
-			Assert.Equal(wallet1.KeyPairs[0].PrivateKey.ToHex(), WifAddressStorageFormat.GetPrivateKeyFromImport(wif1).ToHex());
-			Assert.Equal(wallet1.KeyPairs[1].PrivateKey.ToHex(), WifAddressStorageFormat.GetPrivateKeyFromImport(wif2).ToHex());
+			Assert.Equal(wallet1.KeyPairs[0].PrivateKey.ToHex(), WifAddressStorageFormat.GetPrivateKeyFromImport(wif1, WifKeyLength).ToHex());
+			Assert.Equal(wallet1.KeyPairs[1].PrivateKey.ToHex(), WifAddressStorageFormat.GetPrivateKeyFromImport(wif2, WifKeyLength).ToHex());
 		}
 
 		[Fact]
@@ -53,10 +56,10 @@ namespace ChainLib.Tests.Wallets
 			var wif1 = _wif.Value.Export(wallet1, wallet1.KeyPairs[0].PublicKey);
 			var wif2 = _wif.Value.Export(wallet1, wallet1.KeyPairs[1].PublicKey);
 
-			var factory = new FixedSaltWalletFactoryProvider("_NaiveCoin_Salt_");
+			var factory = new FixedSaltWalletFactoryProvider(Constants.DefaultFixedSalt16);
 			var wallet2 = factory.Create("rosebud");
-			_wif.Value.Import(wallet2, wif1);
-			_wif.Value.Import(wallet2, wif2);
+			_wif.Value.Import(wallet2, wif1, WifKeyLength); 
+			_wif.Value.Import(wallet2, wif2, WifKeyLength);
 
 			Assert.Equal(wallet1.KeyPairs.Count, wallet2.KeyPairs.Count);
 			Assert.Equal(wallet1.KeyPairs[0].PublicKey.ToHex(), wallet2.KeyPairs[0].PublicKey.ToHex());
@@ -74,10 +77,10 @@ namespace ChainLib.Tests.Wallets
 			Assert.NotNull(kstore1);
 			Assert.NotNull(kstore2);
 			
-			var factory = new FixedSaltWalletFactoryProvider("_NaiveCoin_Salt_");
+			var factory = new FixedSaltWalletFactoryProvider(Constants.DefaultFixedSalt16);
 			var wallet2 = factory.Create("rosebud");
-			_keystore.Value.Import(wallet2, kstore1);
-			_keystore.Value.Import(wallet2, kstore2);
+			_keystore.Value.Import(wallet2, kstore1, KeystoreKeyLength);
+			_keystore.Value.Import(wallet2, kstore2, KeystoreKeyLength);
 
 			Assert.Equal(wallet1.KeyPairs.Count, wallet2.KeyPairs.Count);
 			Assert.Equal(wallet1.KeyPairs[0].PublicKey.ToHex(), wallet2.KeyPairs[0].PublicKey.ToHex());

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
+using ChainLib.Crypto;
 using ChainLib.Extensions;
 using ChainLib.Models;
 using ChainLib.Models.Extended;
 using ChainLib.Tests.Fixtures;
-using Crypto.Shim;
 using Xunit;
 
 namespace ChainLib.Tests

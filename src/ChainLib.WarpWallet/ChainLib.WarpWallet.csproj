@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ChainLib\ChainLib.csproj" />
+    <ProjectReference Include="..\ChainLib\ChainLib.csproj" />
   </ItemGroup>
 
 </Project>

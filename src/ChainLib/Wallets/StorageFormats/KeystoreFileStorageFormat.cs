@@ -4,11 +4,11 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Crypto.Shim;
+using ChainLib.Crypto;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Sodium;
-using KeyPair = Crypto.Shim.KeyPair;
+using KeyPair = ChainLib.Crypto.KeyPair;
 
 namespace ChainLib.Wallets.StorageFormats
 {
@@ -50,9 +50,9 @@ namespace ChainLib.Wallets.StorageFormats
 			};
 		}
 
-		public KeyPair Import(Wallet wallet, string input)
+		public KeyPair Import(Wallet wallet, string input, int len)
 		{
-			return ImportFromKeystore(wallet, input, _jsonSettings);
+			return ImportFromKeystore(wallet, input, len, _jsonSettings);
 		}
 
 		public string Export(Wallet wallet, byte[] address)
@@ -85,7 +85,7 @@ namespace ChainLib.Wallets.StorageFormats
 			return filename;
 		}
 
-		public static KeyPair ImportFromKeystore(Wallet wallet, string input, JsonSerializerSettings jsonSettings)
+		public static KeyPair ImportFromKeystore(Wallet wallet, string input, int len, JsonSerializerSettings jsonSettings)
 		{
 			Contract.Assert(!string.IsNullOrWhiteSpace(wallet.PasswordHash));
 			var passwordHashBytes = Encoding.UTF8.GetBytes(wallet.PasswordHash);
@@ -127,7 +127,7 @@ namespace ChainLib.Wallets.StorageFormats
 			string mac = kstore.Crypto.Mac;
 			string iv = kstore.Crypto.CipherParameters.Iv;
 
-			byte[] nonce = derivedKey.Take(24).ToArray();
+			byte[] nonce = derivedKey.Take(len).ToArray();
 			byte[] seed = SecretBox.OpenDetached(ciphertext, mac.FromHex(), nonce, iv.FromHex());
 
 			var imported = new KeyPair(

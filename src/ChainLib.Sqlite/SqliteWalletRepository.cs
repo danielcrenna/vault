@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
+using ChainLib.Crypto;
 using ChainLib.Wallets;
-using Crypto.Shim;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 
-namespace ChainLib.DataAccess
+namespace ChainLib.Sqlite
 {
     public class SqliteWalletRepository : SqliteRepository, IWalletRepository
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Crypto.Shim
+namespace ChainLib.Crypto
 {
     public class KeyPair : IEquatable<KeyPair>
 	{

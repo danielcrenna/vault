@@ -2,7 +2,7 @@
 using System.IO;
 using Microsoft.Extensions.Logging;
 
-namespace ChainLib.DataAccess
+namespace ChainLib.Sqlite
 {
     public abstract class SqliteRepository
     {

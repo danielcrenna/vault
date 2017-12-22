@@ -5,8 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
+using ChainLib.Crypto;
 using FastMember;
-using Crypto.Shim;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

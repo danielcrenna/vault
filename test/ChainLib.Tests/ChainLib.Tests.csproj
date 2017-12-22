@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\ChainLib.Sqlite\ChainLib.Sqlite.csproj" />
     <ProjectReference Include="..\..\src\ChainLib\ChainLib.csproj" />
   </ItemGroup>
 

@@ -1,9 +1,9 @@
 using System.IO;
+using ChainLib.Crypto;
 using ChainLib.Tests.Wallets.Fixtures;
 using ChainLib.Wallets;
 using ChainLib.Wallets.Factories;
 using ChainLib.Wallets.StorageFormats;
-using Crypto.Shim;
 using Xunit;
 
 namespace ChainLib.Tests.Wallets
@@ -38,9 +38,9 @@ namespace ChainLib.Tests.Wallets
 			var filename = KeystoreFileStorageFormat.WriteToFile(Path.GetTempPath(), wallet1);
 			var keystore = File.ReadAllText(filename);
 
-			var factory = new FixedSaltWalletFactoryProvider("_NaiveCoin_Salt_");
+			var factory = new FixedSaltWalletFactoryProvider(Constants.DefaultFixedSalt16);
 			var wallet2 = factory.Create("rosebud");
-			_keystore.Value.Import(wallet2, keystore);
+			_keystore.Value.Import(wallet2, keystore, 24);
 
 			Assert.Equal(wallet1.KeyPairs.Count, wallet2.KeyPairs.Count);
 			Assert.Equal(wallet1.KeyPairs[0].PublicKey.ToHex(), wallet2.KeyPairs[0].PublicKey.ToHex());

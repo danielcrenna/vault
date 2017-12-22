@@ -2,14 +2,14 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
-using Microsoft.Data.Sqlite;
-using Microsoft.Extensions.Logging;
 using ChainLib.Extensions;
 using ChainLib.Models;
 using ChainLib.Serialization;
+using Dapper;
+using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Logging;
 
-namespace ChainLib.DataAccess
+namespace ChainLib.Sqlite
 {
     public class SqliteBlockRepository : SqliteRepository, IBlockRepository
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Crypto.Shim;
+using ChainLib.Crypto;
 
 namespace ChainLib.Wallets
 {
@@ -20,12 +20,12 @@ namespace ChainLib.Wallets
 
         public byte[] GetAddressByPublicKey(byte[] publicKey)
         {
-            return KeyPairs.SingleOrDefault(x => x.PublicKey.SlowEquals(publicKey))?.PublicKey;
+            return KeyPairs.SingleOrDefault(x => x.PublicKey.ConstantTimeEquals(publicKey))?.PublicKey;
         }
 
         public byte[] GetPrivateKeyByAddress(byte[] publicKey)
         {
-            return KeyPairs.SingleOrDefault(x => x.PublicKey.SlowEquals(publicKey))?.PrivateKey;
+            return KeyPairs.SingleOrDefault(x => x.PublicKey.ConstantTimeEquals(publicKey))?.PrivateKey;
         }
 
         public IEnumerable<byte[]> GetAddresses()

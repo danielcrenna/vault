@@ -1,8 +1,8 @@
 using System;
 using Microsoft.Extensions.Logging;
-using ChainLib.DataAccess;
 using ChainLib.Extensions;
 using ChainLib.Models;
+using ChainLib.Sqlite;
 
 namespace ChainLib.Tests.Fixtures
 {

@@ -22,7 +22,7 @@ namespace ChainLib.Wallets.Providers
         private readonly IWalletAddressProvider _addresses;
         private readonly IWalletFactoryProvider _factory;
 
-        public BrainWalletProvider(IWalletRepository repository, string salt = Constants.DefaultFixedSalt)
+        public BrainWalletProvider(IWalletRepository repository, string salt = Constants.DefaultFixedSalt16)
         {
 	        _repository = repository;
 	        _secrets = new PasswordHashSecretProvider();

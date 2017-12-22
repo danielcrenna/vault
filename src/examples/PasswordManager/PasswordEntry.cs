@@ -5,7 +5,7 @@ namespace PasswordManager
 {
 	/// <summary>
 	/// A wallet is the beginning of user participation in a blockchain.
-	/// When we have a place to place protected assets, storage is the only we feature we need for many applications.
+	/// When we have a place to place protected assets, storage is the only feature we need for many applications.
 	/// An ideal use is a password manager, where we store multiple passwords identified by a key (where the password is for)
 	/// and the password hashes themselves are protected by our private key.
 	/// 

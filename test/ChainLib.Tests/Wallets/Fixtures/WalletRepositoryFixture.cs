@@ -1,6 +1,5 @@
 using System;
-using ChainLib.DataAccess;
-using ChainLib.Wallets;
+using ChainLib.Sqlite;
 using ChainLib.Wallets.Addresses;
 using ChainLib.Wallets.Secrets;
 using Microsoft.Extensions.Logging;

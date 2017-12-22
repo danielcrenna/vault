@@ -2,7 +2,7 @@
 using System.Text;
 using Sodium;
 
-namespace Crypto.Shim
+namespace ChainLib.Crypto
 {
     public class Ed25519
     {

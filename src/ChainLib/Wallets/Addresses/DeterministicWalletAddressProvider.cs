@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Text;
-using Crypto.Shim;
+using ChainLib.Crypto;
 
 namespace ChainLib.Wallets.Addresses
 {

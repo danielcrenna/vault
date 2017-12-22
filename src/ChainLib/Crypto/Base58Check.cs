@@ -3,7 +3,7 @@ using System.Linq;
 using System.Numerics;
 using System.Security.Cryptography;
 
-namespace Crypto.Shim
+namespace ChainLib.Crypto
 {
     /// <summary>
     /// https://github.com/adamcaudill/Base58Check

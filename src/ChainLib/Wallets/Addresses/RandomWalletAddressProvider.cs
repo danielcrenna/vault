@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography;
-using Crypto.Shim;
+using ChainLib.Crypto;
 
 namespace ChainLib.Wallets.Addresses
 {

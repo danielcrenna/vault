@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Sodium;
 
-namespace Crypto.Shim
+namespace ChainLib.Crypto
 {
 	public static class PasswordUtil
 	{
@@ -45,7 +45,7 @@ namespace Crypto.Shim
 			var saltBytes = Convert.FromBase64String(tokens[0]);
 			var compareHashBytes = Convert.FromBase64String(tokens[1]);
 			var hashBytes = ArgonHash(password, saltBytes);
-			return compareHashBytes.SlowEquals(hashBytes);
+			return compareHashBytes.ConstantTimeEquals(hashBytes);
 		}
 
 		private static byte[] ArgonSalt(string salt)

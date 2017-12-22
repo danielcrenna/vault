@@ -1,6 +1,6 @@
+using ChainLib.Crypto;
 using ChainLib.Tests.Wallets.Fixtures;
 using ChainLib.Wallets;
-using Crypto.Shim;
 using Xunit;
 
 namespace ChainLib.Tests.Wallets

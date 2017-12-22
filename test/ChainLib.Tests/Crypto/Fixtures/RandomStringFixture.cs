@@ -1,6 +1,6 @@
-using Crypto.Shim;
+using ChainLib.Crypto;
 
-namespace CoinLib.Core.Tests.Fixtures
+namespace ChainLib.Tests.Crypto.Fixtures
 {
     public class RandomStringFixture
     {

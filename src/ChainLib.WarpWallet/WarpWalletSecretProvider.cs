@@ -1,8 +1,8 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using ChainLib.Crypto;
 using ChainLib.Wallets;
-using Crypto.Shim;
 
 namespace ChainLib.WarpWallet
 {

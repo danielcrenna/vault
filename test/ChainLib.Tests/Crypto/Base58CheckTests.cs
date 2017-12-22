@@ -1,7 +1,8 @@
 using System;
+using ChainLib.Crypto;
 using Xunit;
 
-namespace Crypto.Shim.Tests
+namespace ChainLib.Tests.Crypto
 {
     public class Base58CheckTests
     {
