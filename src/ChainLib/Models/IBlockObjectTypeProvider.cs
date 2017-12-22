@@ -5,7 +5,7 @@ namespace ChainLib.Models
 {
 	public interface IBlockObjectTypeProvider
 	{
-		void Add(long id, Type type);
+		bool TryAdd(long id, Type type);
 		long? Get(Type type);
 		Type Get(long typeId);
 		IBlockSerialized Deserialize(Type type, BlockDeserializeContext context);

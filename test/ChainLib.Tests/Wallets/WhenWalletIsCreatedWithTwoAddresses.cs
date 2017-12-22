@@ -12,9 +12,6 @@ namespace ChainLib.Tests.Wallets
 		IClassFixture<WifAddressStorageFormatFixture>,
 		IClassFixture<KeyStoreStorageFormatFixture>
 	{
-		private const int WifKeyLength = 64;		// Bitcoin uses 32 but sodium forces 64
-		private const int KeystoreKeyLength = 24;
-
 		private readonly WifAddressStorageFormatFixture _wif;
 		private readonly KeyStoreStorageFormatFixture _keystore;
 
@@ -45,8 +42,8 @@ namespace ChainLib.Tests.Wallets
 			var wif1 = _wif.Value.Export(wallet1, wallet1.KeyPairs[0].PublicKey);
 			var wif2 = _wif.Value.Export(wallet1, wallet1.KeyPairs[1].PublicKey);
 
-			Assert.Equal(wallet1.KeyPairs[0].PrivateKey.ToHex(), WifAddressStorageFormat.GetPrivateKeyFromImport(wif1, WifKeyLength).ToHex());
-			Assert.Equal(wallet1.KeyPairs[1].PrivateKey.ToHex(), WifAddressStorageFormat.GetPrivateKeyFromImport(wif2, WifKeyLength).ToHex());
+			Assert.Equal(wallet1.KeyPairs[0].PrivateKey.ToHex(), WifAddressStorageFormat.GetPrivateKeyFromImport(wif1, Constants.WifKeyLength).ToHex());
+			Assert.Equal(wallet1.KeyPairs[1].PrivateKey.ToHex(), WifAddressStorageFormat.GetPrivateKeyFromImport(wif2, Constants.WifKeyLength).ToHex());
 		}
 
 		[Fact]
@@ -58,8 +55,8 @@ namespace ChainLib.Tests.Wallets
 
 			var factory = new FixedSaltWalletFactoryProvider(Constants.DefaultFixedSalt16);
 			var wallet2 = factory.Create("rosebud");
-			_wif.Value.Import(wallet2, wif1, WifKeyLength); 
-			_wif.Value.Import(wallet2, wif2, WifKeyLength);
+			_wif.Value.Import(wallet2, wif1, Constants.WifKeyLength); 
+			_wif.Value.Import(wallet2, wif2, Constants.WifKeyLength);
 
 			Assert.Equal(wallet1.KeyPairs.Count, wallet2.KeyPairs.Count);
 			Assert.Equal(wallet1.KeyPairs[0].PublicKey.ToHex(), wallet2.KeyPairs[0].PublicKey.ToHex());
@@ -79,8 +76,8 @@ namespace ChainLib.Tests.Wallets
 			
 			var factory = new FixedSaltWalletFactoryProvider(Constants.DefaultFixedSalt16);
 			var wallet2 = factory.Create("rosebud");
-			_keystore.Value.Import(wallet2, kstore1, KeystoreKeyLength);
-			_keystore.Value.Import(wallet2, kstore2, KeystoreKeyLength);
+			_keystore.Value.Import(wallet2, kstore1, Constants.KeystoreKeyLength);
+			_keystore.Value.Import(wallet2, kstore2, Constants.KeystoreKeyLength);
 
 			Assert.Equal(wallet1.KeyPairs.Count, wallet2.KeyPairs.Count);
 			Assert.Equal(wallet1.KeyPairs[0].PublicKey.ToHex(), wallet2.KeyPairs[0].PublicKey.ToHex());

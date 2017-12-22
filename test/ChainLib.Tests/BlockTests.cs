@@ -61,7 +61,7 @@ namespace ChainLib.Tests
 		[Fact]
 		public void Can_round_trip_with_transaction_objects()
 		{
-			_types.Value.Add(0, typeof(Transaction));
+			_types.Value.TryAdd(0, typeof(Transaction));
 
 			var transaction = new Transaction
 			{

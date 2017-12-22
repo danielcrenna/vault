@@ -25,7 +25,7 @@ namespace ChainLib.Tests
 			TypeProvider = Fixture.TypeProvider;
 			HashProvider = hashProvider.Value;
 
-			TypeProvider.Add(0, typeof(Transaction));
+			TypeProvider.TryAdd(0, typeof(Transaction));
 		}
 
 		public IHashProvider HashProvider { get; set; }

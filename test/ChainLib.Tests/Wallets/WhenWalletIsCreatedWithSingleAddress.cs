@@ -40,7 +40,7 @@ namespace ChainLib.Tests.Wallets
 
 			var factory = new FixedSaltWalletFactoryProvider(Constants.DefaultFixedSalt16);
 			var wallet2 = factory.Create("rosebud");
-			_keystore.Value.Import(wallet2, keystore, 24);
+			_keystore.Value.Import(wallet2, keystore, Constants.KeystoreKeyLength);
 
 			Assert.Equal(wallet1.KeyPairs.Count, wallet2.KeyPairs.Count);
 			Assert.Equal(wallet1.KeyPairs[0].PublicKey.ToHex(), wallet2.KeyPairs[0].PublicKey.ToHex());

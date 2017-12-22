@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
@@ -10,21 +11,27 @@ namespace ChainLib.Models
 	{
 		public BlockObjectTypeProvider()
 		{
-			Map = new Dictionary<long, Type>();
-			ReverseMap = new Dictionary<Type, long>();
-			Serializers = new Dictionary<Type, ConstructorInfo>();
+			Map = new ConcurrentDictionary<long, Type>();
+			ReverseMap = new ConcurrentDictionary<Type, long>();
+			Serializers = new ConcurrentDictionary<Type, ConstructorInfo>();
 		}
 		
-		public Dictionary<long, Type> Map { get; }
-		public Dictionary<Type, long> ReverseMap { get; }
-		public Dictionary<Type, ConstructorInfo> Serializers { get; }
+		public IDictionary<long, Type> Map { get; }
+		public IDictionary<Type, long> ReverseMap { get; }
+		public IDictionary<Type, ConstructorInfo> Serializers { get; }
 
-		public void Add(long id, Type type)
+		public bool TryAdd(long id, Type type)
 		{
 			Debug.Assert(typeof(IBlockSerialized).IsAssignableFrom(type));
-			Map.Add(id, type);
-			ReverseMap.Add(type, id);
-			Serializers.Add(type, type.GetConstructor(new[] { typeof(BlockDeserializeContext) }));
+
+			if (!Map.TryGetValue(id, out Type added))
+			{
+				Map.Add(id, type);
+				ReverseMap.Add(type, id);
+				Serializers.Add(type, type.GetConstructor(new[] { typeof(BlockDeserializeContext) }));
+				return true;
+			}
+			return false;
 		}
 		
 		public long? Get(Type type)
