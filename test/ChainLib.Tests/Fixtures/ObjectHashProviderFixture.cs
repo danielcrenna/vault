@@ -6,7 +6,7 @@ namespace ChainLib.Tests.Fixtures
     {
         public ObjectHashProviderFixture()
         {
-            Value = new StableHashProvider();
+            Value = new ObjectHashProvider();
         }
 
         public IHashProvider Value { get; set; }

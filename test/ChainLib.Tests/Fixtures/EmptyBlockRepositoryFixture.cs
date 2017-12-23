@@ -15,7 +15,7 @@ namespace ChainLib.Tests.Fixtures
 			Init(@namespace);
 		}
 
-		protected void Init(string @namespace)
+		protected void Init(string subDirectory)
 		{
 			var hashProvider = new ObjectHashProviderFixture().Value;
 			var typeProvider = new BlockObjectTypeProviderFixture().Value;
@@ -31,8 +31,11 @@ namespace ChainLib.Tests.Fixtures
 				Objects = new BlockObject[] { },
 			};
 
+			var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
 			Value = new SqliteBlockRepository(
-				@namespace,
+				baseDirectory,
+				subDirectory,
 				"blockchain",
 				genesisBlock,
 				hashProvider,

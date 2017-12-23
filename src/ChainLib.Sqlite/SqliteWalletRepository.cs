@@ -14,7 +14,8 @@ namespace ChainLib.Sqlite
 	    private readonly IWalletAddressProvider _addressProvider;
         private readonly ILogger<SqliteWalletRepository> _logger;
 
-        public SqliteWalletRepository(string @namespace, string databaseName, IWalletAddressProvider addressProvider, ILogger<SqliteWalletRepository> logger) : base(@namespace, databaseName, logger)
+        public SqliteWalletRepository(string baseDirectory, string subDirectory, string databaseName, IWalletAddressProvider addressProvider, ILogger<SqliteWalletRepository> logger) :
+			base(baseDirectory, subDirectory, databaseName, logger)
         {
 	        _addressProvider = addressProvider;
             _logger = logger;

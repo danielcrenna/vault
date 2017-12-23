@@ -12,14 +12,14 @@ using Newtonsoft.Json.Serialization;
 
 namespace ChainLib.Models
 {
-    public class StableHashProvider : IHashProvider
+    public class ObjectHashProvider : IHashProvider
     {
         private readonly HashAlgorithm _algorithm;
         private readonly JsonSerializerSettings _settings;
 
-        public StableHashProvider() : this(SHA256.Create()) { }
+        public ObjectHashProvider() : this(SHA256.Create()) { }
 
-        public StableHashProvider(HashAlgorithm algorithm)
+        public ObjectHashProvider(HashAlgorithm algorithm)
         {
             _algorithm = algorithm;
             _settings = new JsonSerializerSettings

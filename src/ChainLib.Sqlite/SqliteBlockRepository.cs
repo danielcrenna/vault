@@ -19,12 +19,13 @@ namespace ChainLib.Sqlite
 	    private readonly ILogger<SqliteBlockRepository> _logger;
 
         public SqliteBlockRepository(
-			string @namespace, 
+			string baseDirectory,
+			string subDirectory, 
 			string databaseName,
 			Block genesisBlock,
 			IHashProvider hashProvider,
 			IBlockObjectTypeProvider typeProvider,
-			ILogger<SqliteBlockRepository> logger) : base(@namespace, databaseName, logger)
+			ILogger<SqliteBlockRepository> logger) : base(baseDirectory, subDirectory, databaseName, logger)
         {
 	        _genesisBlock = genesisBlock;
 	        _hashProvider = hashProvider;

@@ -7,7 +7,11 @@ namespace ChainLib.Models
 {
     public class Block
     {
-		public Block() { }
+	    public Block()
+	    {
+		    Version = 1;
+			Objects = new List<BlockObject>();
+	    }
 
 		public long? Index { get; set; }
 		public int Version { get; private set; }

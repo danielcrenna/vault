@@ -16,7 +16,10 @@ namespace ChainLib.Tests.Wallets.Fixtures
 			var factory = new LoggerFactory();
 			factory.AddConsole();
 
+			var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+
 			Value = new SqliteWalletRepository(
+				baseDirectory,
 				$"{Guid.NewGuid()}",
 				"wallets",
 				addresses,
