@@ -1,4 +1,4 @@
-![screenshot](https://github.com/danielcrenna/artapp/raw/master/screenshot.jpg) 
+![screenshot](https://github.com/danielcrenna/vault/raw/master/artapp/screenshot.jpg) 
 
 artapp
 ======
