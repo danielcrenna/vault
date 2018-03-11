@@ -16,14 +16,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ChainLib.Sqlite\ChainLib.Sqlite.csproj" />
-    <ProjectReference Include="..\src\ChainLib\ChainLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="chain.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ChainLib.Sqlite\ChainLib.Sqlite.csproj" />
+    <ProjectReference Include="..\ChainLib\ChainLib.csproj" />
   </ItemGroup>
 
 </Project>
