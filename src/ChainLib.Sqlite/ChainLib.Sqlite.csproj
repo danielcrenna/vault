@@ -2,6 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Version>0.0.2-pre</Version>
+    <Authors>Daniel Crenna</Authors>
+    <Company>Daniel Crenna</Company>
+    <Description>Provides a SQLite implementation of the ChainLib blockchain.</Description>
+    <Copyright>© 2018 Daniel Crenna &amp; Contributors</Copyright>
+    <PackageLicenseUrl>https://github.com/danielcrenna/ChainLib/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/danielcrenna/ChainLib</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/danielcrenna/ChainLib</RepositoryUrl>
+    <PackageTags>blockchain cryptocurrency sqlite</PackageTags>
+    <AssemblyVersion>0.0.2.0</AssemblyVersion>
+    <FileVersion>0.0.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

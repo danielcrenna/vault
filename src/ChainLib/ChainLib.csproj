@@ -4,9 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.1-pre</Version>
+    <Version>0.0.2-pre</Version>
     <Description>A general purpose blockchain programming library for .NET Standard 2.0.</Description>
-    <Copyright>&gt;&amp;#169; 2017 Daniel Crenna &amp;amp; Contributors</Copyright>
+    <Copyright>© 2018 Daniel Crenna &amp; Contributors</Copyright>
     <PackageLicenseUrl>https://github.com/danielcrenna/ChainLib/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>blockchain cryptocurrency</PackageTags>
     <PackageProjectUrl>https://github.com/danielcrenna/ChainLib</PackageProjectUrl>
@@ -18,9 +18,9 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.4" />
     <PackageReference Include="FastMember" Version="1.3.0" />
-    <PackageReference Include="hq.pipes" Version="1.2.0-pre" />
     <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="2.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="reactive.pipes" Version="1.3.8" />
     <PackageReference Include="Sodium.Core" Version="1.1.0" />
   </ItemGroup>
 
