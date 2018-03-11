@@ -35,7 +35,7 @@ namespace ChainLib.Tests.Wallets
 		public void The_wallet_can_be_exported_to_keystore_on_disk()
 		{
 			var wallet1 = Fixture.Value;
-			var filename = KeystoreFileStorageFormat.WriteToFile(Path.GetTempPath(), wallet1);
+			var filename = KeystoreFileStorageFormat.WriteToFile(Path.GetTempPath(), wallet1, KeystoreFileStorageFormat.KdfType.Scrypt);
 			var keystore = File.ReadAllText(filename);
 
 			var factory = new FixedSaltWalletFactoryProvider(Constants.DefaultFixedSalt16);

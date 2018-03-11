@@ -21,7 +21,7 @@ using System;
 using System.Security.Cryptography;
 using System.Threading;
 
-namespace ChainLib.WarpWallet
+namespace ChainLib.WarpWallet.Internal
 {
 	// See http://www.tarsnap.com/scrypt/scrypt.pdf for algorithm details.
 	// TODO: Test on a big-endian machine. Do any exist with .NET implementations?
@@ -148,7 +148,7 @@ namespace ChainLib.WarpWallet
 			if (maxThreads == null) { maxThreads = int.MaxValue; }
 
 			if (!BitMath.IsPositivePowerOf2(cost))
-			{ throw Exceptions.ArgumentOutOfRange("cost", "Cost must be a positive power of 2."); }
+			{ throw Internal.Exceptions.ArgumentOutOfRange("cost", "Cost must be a positive power of 2."); }
 			Check.Range("blockSize", blockSize, 1, int.MaxValue / 128);
 			Check.Range("parallel", parallel, 1, int.MaxValue / MFLen);
 			Check.Range("maxThreads", (int)maxThreads, 1, int.MaxValue);

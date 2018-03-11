@@ -21,7 +21,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace ChainLib.WarpWallet
+namespace ChainLib.WarpWallet.Internal
 {
 	/// <summary>
 	/// Implements the PBKDF2 key derivation function.
@@ -70,7 +70,7 @@ namespace ChainLib.WarpWallet
 			Check.Length("salt", salt, 0, int.MaxValue - 4);
 			Check.Range("iterations", iterations, 1, int.MaxValue);
 			if (hmacAlgorithm.HashSize == 0 || hmacAlgorithm.HashSize % 8 != 0)
-			{ throw Exceptions.Argument("hmacAlgorithm", "Unsupported hash size."); }
+			{ throw Internal.Exceptions.Argument("hmacAlgorithm", "Unsupported hash size."); }
 
 			int hmacLength = hmacAlgorithm.HashSize / 8;
 			_saltBuffer = new byte[salt.Length + 4]; Array.Copy(salt, _saltBuffer, salt.Length);
@@ -91,7 +91,7 @@ namespace ChainLib.WarpWallet
 			int bytes = Read(buffer, 0, count);
 			if (bytes < count)
 			{
-				throw Exceptions.Argument("count", "Can only return {0} bytes.", bytes);
+				throw Internal.Exceptions.Argument("count", "Can only return {0} bytes.", bytes);
 			}
 
 			return buffer;
@@ -202,23 +202,23 @@ namespace ChainLib.WarpWallet
 				case SeekOrigin.Begin: pos = offset; break;
 				case SeekOrigin.Current: pos = Position + offset; break;
 				case SeekOrigin.End: pos = Length + offset; break;
-				default: throw Exceptions.ArgumentOutOfRange("origin", "Unknown seek type.");
+				default: throw Internal.Exceptions.ArgumentOutOfRange("origin", "Unknown seek type.");
 			}
 
-			if (pos < 0) { throw Exceptions.Argument("offset", "Can't seek before the stream start."); }
+			if (pos < 0) { throw Internal.Exceptions.Argument("offset", "Can't seek before the stream start."); }
 			Position = pos; return pos;
 		}
 
 		/// <exclude />
 		public override void SetLength(long value)
 		{
-			throw Exceptions.NotSupported();
+			throw Internal.Exceptions.NotSupported();
 		}
 
 		/// <exclude />
 		public override void Write(byte[] buffer, int offset, int count)
 		{
-			throw Exceptions.NotSupported();
+			throw Internal.Exceptions.NotSupported();
 		}
 
 		/// <exclude />
@@ -255,7 +255,7 @@ namespace ChainLib.WarpWallet
 			get { return _pos; }
 			set
 			{
-				if (_pos < 0) { throw Exceptions.Argument(null, "Can't seek before the stream start."); }
+				if (_pos < 0) { throw Internal.Exceptions.Argument(null, "Can't seek before the stream start."); }
 				_pos = value;
 			}
 		}

@@ -60,7 +60,7 @@ namespace ChainLib.Wallets.StorageFormats
 			return ExportToKeystore(_kdfType, wallet, address, _jsonSettings);
 		}
 
-		public static string WriteToFile(string fileDirectory, Wallet wallet)
+		public static string WriteToFile(string fileDirectory, Wallet wallet, KdfType kdfType)
 		{
 			if (wallet?.KeyPairs == null || wallet.KeyPairs.Count != 1)
 				throw new NotSupportedException("This function expects a wallet with a single address");
@@ -72,7 +72,7 @@ namespace ChainLib.Wallets.StorageFormats
 				throw new InvalidOperationException("The provided directory path does not exist");
 			
 			var address = wallet.KeyPairs[0].PublicKey;
-			var json = ExportToKeystore(KdfType.Scrypt, wallet, address, GetJsonSerializerSettings());
+			var json = ExportToKeystore(kdfType, wallet, address, GetJsonSerializerSettings());
 
 			// UTC--2017-10-01T17-22-26.196Z--01caf1a3bf2164ec410b888c74d82a292c326487
 			var timestamp = $"{DateTimeOffset.UtcNow:s}".Replace(':', '-');
@@ -170,7 +170,7 @@ namespace ChainLib.Wallets.StorageFormats
 
 			var iv = CryptoUtil.RandomBytes(32);
 			var pKey = wallet.GetPrivateKeyByAddress(address);
-			var nonce = derivedKey.Take(24).ToArray();
+			var nonce = derivedKey.Take(Constants.KeystoreKeyLength).ToArray();
 			var box = SecretBox.CreateDetached(pKey, nonce, iv);
 
 			var keystore = new Keystore

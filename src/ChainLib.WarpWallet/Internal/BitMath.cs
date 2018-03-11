@@ -17,7 +17,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 #endregion
 
-namespace ChainLib.WarpWallet
+namespace ChainLib.WarpWallet.Internal
 {
 	static class BitMath
 	{

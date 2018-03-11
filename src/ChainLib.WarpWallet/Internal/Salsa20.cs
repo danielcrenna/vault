@@ -19,7 +19,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 using System;
 
-namespace ChainLib.WarpWallet
+namespace ChainLib.WarpWallet.Internal
 {
 	// Source: http://cr.yp.to/salsa20.html
 	/// <summary>
@@ -43,7 +43,7 @@ namespace ChainLib.WarpWallet
 		{
 			if (rounds < 2 || rounds > 20 || (rounds & 1) == 1)
 			{
-				throw Exceptions.Argument("rounds", "Must be even and in the range 2 to 20.");
+				throw Internal.Exceptions.Argument("rounds", "Must be even and in the range 2 to 20.");
 			}
 
 			try

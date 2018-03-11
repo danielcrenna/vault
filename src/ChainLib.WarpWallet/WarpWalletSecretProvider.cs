@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using System.Text;
 using ChainLib.Crypto;
 using ChainLib.Wallets;
+using ChainLib.WarpWallet.Internal;
 
 namespace ChainLib.WarpWallet
 {

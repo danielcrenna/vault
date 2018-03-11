@@ -19,7 +19,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 using System;
 
-namespace ChainLib.WarpWallet
+namespace ChainLib.WarpWallet.Internal
 {
 	static class Exceptions
 	{
