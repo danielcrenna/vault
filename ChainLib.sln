@@ -15,10 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{CDB35376-B48C-42B0-BC8B-1B5B55829FC5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "libsodium-net", "src\libsodium-net\libsodium-net\libsodium-net.csproj", "{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ThirdParty", "ThirdParty", "{5077B8EE-66B1-472A-9839-5E245447F897}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib", "src\ChainLib\ChainLib.csproj", "{A5B26E1B-9B4A-47D6-A2A8-C4469F70AB21}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.Tests", "test\ChainLib.Tests\ChainLib.Tests.csproj", "{7568E712-491D-42F2-89DC-25413DB4E6F8}"
@@ -37,10 +33,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5B26E1B-9B4A-47D6-A2A8-C4469F70AB21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5B26E1B-9B4A-47D6-A2A8-C4469F70AB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5B26E1B-9B4A-47D6-A2A8-C4469F70AB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -66,7 +58,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27} = {5077B8EE-66B1-472A-9839-5E245447F897}
 		{7568E712-491D-42F2-89DC-25413DB4E6F8} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
 		{7971480C-C9E8-4BD6-95F2-94CE7B1B1583} = {485150A3-13B5-4285-B658-2FEBD613D8D5}
 	EndGlobalSection
