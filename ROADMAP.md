@@ -44,7 +44,7 @@ Peers:
 [ ] Efficient peer replication 
 [ ] Consensus with Paxos and/or Raft
 [ ] Pluggable consensus
-[ ] Need a way to enforce coin settings are the same between peers (another hash / version checksum)
+[ ] Need a way to enforce coin settings are the same between peers (use chain hash)
 
 Misc:
 [ ] 100% unit test coverage

@@ -142,3 +142,4 @@ node_modules
 # .NET Core / VS2015
 project.lock.json
 applicationhost.config
+/src/ChainLib.Cli/Data/*

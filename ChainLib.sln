@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D799DE2C-F24A-4419-8C83-DF2E05024BB1}"
 	ProjectSection(SolutionItems) = preProject
@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.WarpWallet", "src\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{485150A3-13B5-4285-B658-2FEBD613D8D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainLib.Cli", "ChainLib.Cli\ChainLib.Cli.csproj", "{5A2D3AE7-B82B-4E9C-B7CB-9F866D73585E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.Cli", "src\ChainLib.Cli\ChainLib.Cli.csproj", "{7971480C-C9E8-4BD6-95F2-94CE7B1B1583}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,10 +57,10 @@ Global
 		{6834AD13-524C-491A-8BF2-75AE4795A553}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6834AD13-524C-491A-8BF2-75AE4795A553}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6834AD13-524C-491A-8BF2-75AE4795A553}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A2D3AE7-B82B-4E9C-B7CB-9F866D73585E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A2D3AE7-B82B-4E9C-B7CB-9F866D73585E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A2D3AE7-B82B-4E9C-B7CB-9F866D73585E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A2D3AE7-B82B-4E9C-B7CB-9F866D73585E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7971480C-C9E8-4BD6-95F2-94CE7B1B1583}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7971480C-C9E8-4BD6-95F2-94CE7B1B1583}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7971480C-C9E8-4BD6-95F2-94CE7B1B1583}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7971480C-C9E8-4BD6-95F2-94CE7B1B1583}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,7 +68,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{795FC5CD-9A72-43A8-8CD9-7ED6A92B5D27} = {5077B8EE-66B1-472A-9839-5E245447F897}
 		{7568E712-491D-42F2-89DC-25413DB4E6F8} = {CDB35376-B48C-42B0-BC8B-1B5B55829FC5}
-		{5A2D3AE7-B82B-4E9C-B7CB-9F866D73585E} = {485150A3-13B5-4285-B658-2FEBD613D8D5}
+		{7971480C-C9E8-4BD6-95F2-94CE7B1B1583} = {485150A3-13B5-4285-B658-2FEBD613D8D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9332D765-4E73-4CAD-88FB-243D4CFF2185}
