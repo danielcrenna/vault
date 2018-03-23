@@ -2,12 +2,12 @@ namespace ChainLib.Models
 {
 	public class NoProofOfWork : IProofOfWork
 	{
-		public double GetDifficulty(long index)
+		public uint GetDifficulty(long index)
 		{
 			return 0;
 		}
 
-		public Block ProveWorkFor(Block block, double difficulty)
+		public Block ProveWorkFor(Block block, uint difficulty)
 		{
 			block.Difficulty = 0;
 			return block;

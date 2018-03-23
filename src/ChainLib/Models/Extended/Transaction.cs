@@ -9,21 +9,14 @@ namespace ChainLib.Models.Extended
 		public enum TransactionType : byte { Unknown, Regular, Fee, Reward }
 
 		public string Id { get; set; }
-	    public byte[] Hash { get; set; }
 	    public TransactionType Type { get; set; }
 	    public TransactionData Data { get; set; }
 		
 	    public Transaction() { }
 
-		public string ToHashString(IHashProvider provider)
-	    {
-		    return provider.ComputeHashString(this);
-	    }
-		
 	    public void Serialize(BlockSerializeContext context)
 	    {
 		    context.bw.Write(Id);
-		    context.bw.WriteBuffer(Hash);
 		    context.bw.Write((byte)Type);
 
 		    if (context.bw.WriteBoolean(Data != null))
@@ -34,7 +27,7 @@ namespace ChainLib.Models.Extended
 			}
 	    }
 
-	    private static void SerializeTransactionItems(BlockSerializeContext context, IList<TransactionItem> items)
+	    private static void SerializeTransactionItems(BlockSerializeContext context, ICollection<TransactionItem> items)
 	    {
 		    if (context.bw.WriteBoolean(items != null))
 		    {
@@ -55,7 +48,6 @@ namespace ChainLib.Models.Extended
 	    public Transaction(BlockDeserializeContext context)
 	    {
 			Id = context.br.ReadString();
-		    Hash = context.br.ReadBuffer();
 		    Type = (TransactionType)context.br.ReadByte();
 
 		    if (context.br.ReadBoolean())

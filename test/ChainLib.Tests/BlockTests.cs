@@ -26,7 +26,7 @@ namespace ChainLib.Tests
 			var block = new Block();
 			block.Nonce = 1;
 			block.PreviousHash = "rosebud".Sha256();
-			block.Timestamp = DateTimeOffset.UtcNow.Ticks;
+			block.Timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 			block.Hash = block.ToHashBytes(_hash.Value);
 
 			block.Objects = new List<BlockObject>();
@@ -39,7 +39,7 @@ namespace ChainLib.Tests
 			var block = new Block();
 			block.Nonce = 1;
 			block.PreviousHash = "rosebud".Sha256();
-			block.Timestamp = DateTimeOffset.UtcNow.Ticks;
+			block.Timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 			block.Hash = block.ToHashBytes(_hash.Value);
 
 			Assert.Equal(block.Hash, block.ToHashBytes(_hash.Value));
@@ -52,7 +52,7 @@ namespace ChainLib.Tests
 			{
 				Nonce = 1,
 				PreviousHash = "rosebud".Sha256(),
-				Timestamp = DateTimeOffset.UtcNow.Ticks
+				Timestamp = (uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
 			};
 			block.Hash = block.ToHashBytes(_hash.Value);
 			block.RoundTripCheck(_hash.Value, _types.Value);
@@ -77,7 +77,7 @@ namespace ChainLib.Tests
 			{
 				Nonce = 1,
 				PreviousHash = "rosebud".Sha256(),
-				Timestamp = DateTimeOffset.UtcNow.Ticks,
+				Timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
 				Objects = new List<BlockObject> {blockObject}
 			};
 			block.Hash = block.ToHashBytes(_hash.Value);

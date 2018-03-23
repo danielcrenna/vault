@@ -46,7 +46,13 @@ namespace ChainLib.Models
             return hash;
         }
 
-        public string ComputeHashString(object instance)
+	    public byte[] ComputeHashBytes(byte[] buffer)
+	    {
+		    var hash = _algorithm.ComputeHash(buffer);
+		    return hash;
+	    }
+
+		public string ComputeHashString(object instance)
         {
             return ComputeHashBytes(instance).ToHex();
         }
@@ -56,7 +62,27 @@ namespace ChainLib.Models
             return ComputeHashBytes(any).ToHex();
         }
 
-        private static readonly IDictionary<Type, IList<JsonProperty>> Map =
+	    public string ComputeHashString(byte[] any)
+	    {
+		    return ComputeHashBytes(any).ToHex();
+	    }
+
+		public byte[] DoubleHash(object any)
+	    {
+		    return ComputeHashBytes(ComputeHashBytes(any));
+	    }
+
+	    public byte[] DoubleHash(byte[] any)
+	    {
+		    return ComputeHashBytes(ComputeHashBytes(any));
+	    }
+
+	    public byte[] DoubleHash(string any)
+	    {
+		    return ComputeHashBytes(ComputeHashBytes(any));
+	    }
+
+		private static readonly IDictionary<Type, IList<JsonProperty>> Map =
             new Dictionary<Type, IList<JsonProperty>>();
 
         private class StableHashResolver : DefaultContractResolver

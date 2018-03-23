@@ -11,6 +11,8 @@ namespace ChainLib.Models
 		public long Version { get; set; }
 		public IBlockSerialized Data { get; set; }
 		public long Timestamp { get; set; }
+
+		[Computed]
 		public byte[] Hash { get; set; }
 
 		#region Serialization

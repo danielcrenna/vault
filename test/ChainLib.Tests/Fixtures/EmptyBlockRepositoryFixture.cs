@@ -26,7 +26,8 @@ namespace ChainLib.Tests.Fixtures
 			{
 				Index = 0L,
 				PreviousHash = new byte[] {0},
-				Timestamp = 1465154705L,
+				MerkleRootHash = new byte[] {0},
+				Timestamp = 1465154705U,
 				Nonce = 0L,
 				Objects = new BlockObject[] { },
 			};

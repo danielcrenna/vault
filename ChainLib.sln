@@ -5,10 +5,7 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D799DE2C-F24A-4419-8C83-DF2E05024BB1}"
 	ProjectSection(SolutionItems) = preProject
-		src\ChainLib\ChainLib.nuspec = src\ChainLib\ChainLib.nuspec
 		LICENSE = LICENSE
-		pack-chainlib.bat = pack-chainlib.bat
-		push-chainlib.bat = push-chainlib.bat
 		README.md = README.md
 		ROADMAP.md = ROADMAP.md
 	EndProjectSection

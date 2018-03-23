@@ -38,6 +38,11 @@ namespace ChainLib.Services
 			}
 		}
 
+		public IEnumerable<BlockHeader> StreamAllBlockHeaders(bool forwards, int startingAt = 0)
+		{
+			return _blocks.StreamAllBlockHeaders(forwards, startingAt);
+		}
+
 		public IEnumerable<Block> StreamAllBlocks(bool forwards, int startingAt = 0)
 		{
 			return _blocks.StreamAllBlocks(forwards, startingAt);
@@ -63,7 +68,7 @@ namespace ChainLib.Services
 			return await _blocks.GetLastBlockAsync();
 		}
 
-		public double GetDifficulty(long index)
+		public uint GetDifficulty(long index)
 		{
 			return _proofOfWork.GetDifficulty(index);
 		}
@@ -79,7 +84,7 @@ namespace ChainLib.Services
 			}
 
 			// Verify if the new blockchain is correct
-			await CheckChainAsync(newBlockchain);
+			await ChainIsValid(newBlockchain);
 
 			// Get the blocks that diverge from our blockchain
 			_logger?.LogInformation($"Received blockchain is valid. Replacing current blockchain with received blockchain");
@@ -92,7 +97,7 @@ namespace ChainLib.Services
 			}
 		}
 
-		public async Task<bool> CheckChainAsync(IReadOnlyList<Block> blockchainToValidate)
+		public async Task<bool> ChainIsValid(IReadOnlyList<Block> blockchainToValidate)
 		{
 			// Check if the genesis block is the same
 			if (_hashProvider.ComputeHashString(blockchainToValidate[0]) !=
@@ -108,7 +113,7 @@ namespace ChainLib.Services
 			{
 				for (var i = 1; i < blockchainToValidate.Count; i++)
 				{
-					CheckBlock(blockchainToValidate[i], blockchainToValidate[i - 1]);
+					BlockIsValid(blockchainToValidate[i], blockchainToValidate[i - 1]);
 				}
 			}
 			catch (Exception ex)
@@ -123,9 +128,10 @@ namespace ChainLib.Services
 
 		public async Task<Block> AddBlockAsync(Block block)
 		{
-			// It only adds the block if it's valid (we need to compare to the previous one)
-			if (CheckBlock(block, await GetLastBlockAsync()))
+			if (BlockIsValid(block, await GetLastBlockAsync()))
 			{
+				block.MerkleRootHash = block.ComputeMerkleRoot(_hashProvider);
+
 				await _blocks.AddAsync(block);
 
 				_logger?.LogInformation($"Block added: {block.Hash}");
@@ -137,10 +143,8 @@ namespace ChainLib.Services
 			return null;
 		}
 
-		public bool CheckBlock(Block newBlock, Block previousBlock)
+		public bool BlockIsValid(Block newBlock, Block previousBlock)
 		{
-			var blockHash = newBlock.ToHashBytes(_hashProvider);
-
 			if (previousBlock.Index + 1 != newBlock.Index)
 			{ // Check if the block is the last one
 				var message = $"Invalid index: expected '{previousBlock.Index + 1}' but got '{newBlock.Index}'";
@@ -153,6 +157,9 @@ namespace ChainLib.Services
 				_logger?.LogError(message);
 				throw new BlockAssertionException(message);
 			}
+
+			var blockHash = newBlock.ToHashBytes(_hashProvider);
+
 			if (blockHash != newBlock.Hash)
 			{ // Check if the hash is correct
 				var message = $"Invalid hash: expected '{blockHash}' got '{newBlock.Hash}'";
@@ -160,7 +167,7 @@ namespace ChainLib.Services
 			}
 			if (newBlock.Difficulty >= GetDifficulty(newBlock.Index ?? 0))
 			{ // If the difficulty level of the proof-of-work challenge is correct
-				var message = $"Invalid proof-of-work difficulty: expected '${newBlock.Difficulty}' to be smaller than '${GetDifficulty(newBlock.Index ?? 0)}'";
+				var message = $"Invalid difficulty: expected '${newBlock.Difficulty}' to be smaller than '${GetDifficulty(newBlock.Index ?? 0)}'";
 				_logger?.LogError(message);
 				throw new BlockAssertionException(message);
 			}

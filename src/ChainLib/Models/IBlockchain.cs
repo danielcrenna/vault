@@ -15,12 +15,13 @@ namespace ChainLib.Models
 		Task ReplaceChainAsync(List<T> newBlockchain);
 		Task<T> AddBlockAsync(T block);
 		
-		Task<bool> CheckChainAsync(IReadOnlyList<T> blockchainToValidate);
-		bool CheckBlock(T newBlock, T previousBlock);
+		Task<bool> ChainIsValid(IReadOnlyList<T> blockchainToValidate);
+		bool BlockIsValid(T newBlock, T previousBlock);
 
+		IEnumerable<BlockHeader> StreamAllBlockHeaders(bool forwards, int startingAt = 0);
 		IEnumerable<T> StreamAllBlocks(bool forwards, int startingAt = 0);
 		IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards, int startingAt = 0);
 
-		double GetDifficulty(long index);
+		uint GetDifficulty(long index);
 	}
 }

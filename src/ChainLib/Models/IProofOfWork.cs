@@ -2,7 +2,7 @@ namespace ChainLib.Models
 {
     public interface IProofOfWork
     {
-        double GetDifficulty(long index);
-	    Block ProveWorkFor(Block block, double difficulty);
+        uint GetDifficulty(long index);
+	    Block ProveWorkFor(Block block, uint difficulty);
     }
 }

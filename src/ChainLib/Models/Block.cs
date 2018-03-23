@@ -1,26 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using ChainLib.Extensions;
 using ChainLib.Serialization;
 
 namespace ChainLib.Models
 {
-    public class Block
-    {
-	    public Block()
+    public class Block : IBlockDescriptor
+	{
+	    internal static ICollection<BlockObject> NoObjects = new List<BlockObject>(0);
+
+		public Block()
 	    {
 		    Version = 1;
 			Objects = new List<BlockObject>();
 	    }
 
 		public long? Index { get; set; }
-		public int Version { get; private set; }
+		public int Version { get; set; }
         public byte[] PreviousHash { get; set; }
-        public long Timestamp { get; set; }
-	    public double Difficulty { get; set; }
+		public byte[] MerkleRootHash { get; set; }
+        public uint Timestamp { get; set; }
+	    public uint Difficulty { get; set; }
 		public long Nonce { get; set; }
 
-        public ICollection<BlockObject> Objects { get; set; }
+        public IList<BlockObject> Objects { get; set; }
 
 		[Computed]
 		public byte[] Hash { get; set; }
@@ -33,20 +35,15 @@ namespace ChainLib.Models
 		    SerializeObjects(context);
 	    }
 
-	    private Block(BlockDeserializeContext context, IHashProvider hashProvider)
+	    private Block(BlockDeserializeContext context)
 	    {
 		    DeserializeHeader(context);
 		    DeserializeObjects(context);
-		    Hash = this.ToHashBytes(hashProvider);
 	    }
 
 	    public void DeserializeHeader(BlockDeserializeContext context)
 	    {
-		    Version = context.br.ReadInt32();           // Version
-		    PreviousHash = context.br.ReadBuffer();     // PreviousHash
-		    Timestamp = context.br.ReadInt64();         // Timestamp
-		    Difficulty = context.br.ReadDouble();       // Difficulty
-		    Nonce = context.br.ReadInt64();             // Nonce
+		    BlockHeader.Deserialize(this, context);
 	    }
 
 		public void DeserializeObjects(BlockDeserializeContext context)
@@ -59,12 +56,8 @@ namespace ChainLib.Models
 		
 	    public void SerializeHeader(BlockSerializeContext context)
 	    {
-		    context.bw.Write(context.Version);          // Version
-			context.bw.WriteBuffer(PreviousHash);       // PreviousHash
-			context.bw.Write(Timestamp);                // Timestamp
-			context.bw.Write(Difficulty);				// Difficulty
-			context.bw.Write(Nonce);                    // Nonce
-		}
+		    BlockHeader.Serialize(this, context);
+	    }
 
 	    public void SerializeObjects(BlockSerializeContext context)
 	    {
@@ -86,7 +79,7 @@ namespace ChainLib.Models
 		    // Then deserialize that data
 		    var br = new BinaryReader(new MemoryStream(originalData));
 		    var deserializeContext = new BlockDeserializeContext(br, typeProvider);
-		    var deserialized = new Block(deserializeContext, hashProvider);
+		    var deserialized = new Block(deserializeContext);
 
 		    // Then serialize that deserialized data and see if it matches
 		    var secondMemoryStream = new MemoryCompareStream(originalData);

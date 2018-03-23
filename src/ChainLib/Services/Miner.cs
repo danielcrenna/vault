@@ -31,9 +31,9 @@ namespace ChainLib.Services
         {
             var index = previousBlock.Index + 1;
             var previousHash = previousBlock.Hash;
-            var timestamp = DateTimeOffset.UtcNow.Ticks;
+	        var timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 			
-            return new Block
+			return new Block
 			{
                 Index = index,
                 Nonce = 0,

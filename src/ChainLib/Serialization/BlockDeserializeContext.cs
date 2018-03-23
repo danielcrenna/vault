@@ -20,6 +20,6 @@ namespace ChainLib.Serialization
 		public readonly BinaryReader br;
 		public readonly IBlockObjectTypeProvider typeProvider;
 
-		public int Version { get; private set; }
+		public int Version { get; }
 	}
 }

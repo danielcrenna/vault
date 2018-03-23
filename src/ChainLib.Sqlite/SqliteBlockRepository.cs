@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using ChainLib.Extensions;
 using ChainLib.Models;
 using ChainLib.Serialization;
 using Dapper;
@@ -14,7 +13,6 @@ namespace ChainLib.Sqlite
     public class SqliteBlockRepository : SqliteRepository, IBlockRepository
     {
 	    private readonly Block _genesisBlock;
-	    private readonly IHashProvider _hashProvider;
 	    private readonly IBlockObjectTypeProvider _typeProvider;
 	    private readonly ILogger<SqliteBlockRepository> _logger;
 
@@ -28,7 +26,6 @@ namespace ChainLib.Sqlite
 			ILogger<SqliteBlockRepository> logger) : base(baseDirectory, subDirectory, databaseName, logger)
         {
 	        _genesisBlock = genesisBlock;
-	        _hashProvider = hashProvider;
 	        _typeProvider = typeProvider;
 	        _logger = logger;
         }
@@ -60,11 +57,14 @@ namespace ChainLib.Sqlite
 				using (var t = db.BeginTransaction())
 				{
 					var index = await db.QuerySingleAsync<long>(
-						"INSERT INTO 'Block' ('PreviousHash','Timestamp','Nonce','Hash','Data') VALUES (@PreviousHash,@Timestamp,@Nonce,@Hash,@Data); " +
+						"INSERT INTO 'Block' ('Version','PreviousHash','MerkleRootHash','Timestamp','Difficulty','Nonce','Hash','Data') VALUES (@Version,@PreviousHash,@MerkleRootHash,@Timestamp,@Difficulty,@Nonce,@Hash,@Data); " +
 						"SELECT LAST_INSERT_ROWID();", new
 						{
+							block.Version,
 							block.PreviousHash,
+							block.MerkleRootHash,
 							block.Timestamp,
+							block.Difficulty,
 							block.Nonce,
 							block.Hash,
 							Data = data
@@ -77,15 +77,16 @@ namespace ChainLib.Sqlite
 			}
         }
 
-	    public IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards, int startingFrom = 0)
+	    public IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards, long startingFrom = 0)
 	    {
 		    using (var db = new SqliteConnection($"Data Source={DataFile}"))
 		    {
 			    const string sql = "SELECT b.* " +
 			                       "FROM 'Block' b " +
-			                       "ORDER BY b.'Index' ASC";
+			                       "WHERE b.'Index' >= @startingFrom " +
+								   "ORDER BY b.'Index' ASC";
 
-			    foreach (var block in db.Query<BlockResult>(sql, buffered: false))
+			    foreach (var block in db.Query<BlockResult>(sql, new { startingFrom }, buffered: false))
 			    {
 				    DeserializeObjects(block, block.Data);
 
@@ -97,15 +98,32 @@ namespace ChainLib.Sqlite
 		    }
 		}
 
-	    public IEnumerable<Block> StreamAllBlocks(bool forwards, int startingFrom = 0)
+	    public IEnumerable<BlockHeader> StreamAllBlockHeaders(bool forwards, long startingFrom = 0)
+	    {
+			using (var db = new SqliteConnection($"Data Source={DataFile}"))
+			{
+				const string sql = "SELECT b.'Version', b.'PreviousHash', b.'MerkleRootHash', b.'Timestamp', b.'Difficulty', b.'Nonce'" +
+				                   "FROM 'Block' b " +
+				                   "WHERE b.'Index' >= @startingFrom " +
+				                   "ORDER BY b.'Index' ASC";
+
+				foreach (var header in db.Query<BlockHeader>(sql, new { startingFrom }, buffered: false))
+				{
+					yield return header;
+				}
+			}
+		}
+
+	    public IEnumerable<Block> StreamAllBlocks(bool forwards, long startingFrom = 0)
         {
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
                 const string sql = "SELECT b.* " +
                                    "FROM 'Block' b " +
-                                   "ORDER BY b.'Index' ASC";
+                                   "WHERE b.'Index' >= @startingFrom " +
+								   "ORDER BY b.'Index' ASC";
 
-                foreach (var block in db.Query<BlockResult>(sql, buffered: false))
+                foreach (var block in db.Query<BlockResult>(sql, new { startingFrom }, buffered: false))
                 {
 	                DeserializeObjects(block, block.Data);
 
@@ -169,15 +187,18 @@ namespace ChainLib.Sqlite
 CREATE TABLE IF NOT EXISTS 'Block'
 (  
     'Index' INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+	'Version' INTEGER NOT NULL,
     'PreviousHash' VARCHAR(64) NOT NULL, 
+	'MerkleRootHash' VARCHAR(64) NOT NULL,
     'Timestamp' INTEGER NOT NULL,
+	'Difficulty' INTEGER NOT NULL,
     'Nonce' INTEGER NOT NULL,
     'Hash' VARCHAR(64) UNIQUE NOT NULL,
 	'Data' BLOB NOT NULL
 );");
                 }
             }
-            catch (SqliteException e)
+            catch (SqliteException e)						 
             {
                 _logger?.LogError(e, "Error migrating blocks database");
                 throw;
@@ -212,7 +233,6 @@ CREATE TABLE IF NOT EXISTS 'Block'
 			    {
 				    var context = new BlockDeserializeContext(br, _typeProvider);
 				    block.DeserializeObjects(context);
-				    block.Hash = block.ToHashBytes(_hashProvider);
 			    }
 		    }
 	    }

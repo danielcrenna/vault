@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using ChainLib.Crypto;
 using Microsoft.Data.Sqlite;
-using ChainLib.Extensions;
 using ChainLib.Models;
 using ChainLib.Models.Extended;
-using ChainLib.Streaming;
 using ChainLib.Tests.Fixtures;
 using Xunit;
 
@@ -17,18 +11,13 @@ namespace ChainLib.Tests
 		IClassFixture<EmptyBlockRepositoryFixture>,
 		IClassFixture<ObjectHashProviderFixture>
 	{
-		public WhenBlockDatabaseContainsOnlyGenesis(
-			EmptyBlockRepositoryFixture blockDatabase, 
-			ObjectHashProviderFixture hashProvider)
+		public WhenBlockDatabaseContainsOnlyGenesis(EmptyBlockRepositoryFixture blockDatabase)
 		{
 			Fixture = blockDatabase;
 			TypeProvider = Fixture.TypeProvider;
-			HashProvider = hashProvider.Value;
-
 			TypeProvider.TryAdd(0, typeof(Transaction));
 		}
 
-		public IHashProvider HashProvider { get; set; }
 		public EmptyBlockRepositoryFixture Fixture { get; set; }
 		public IBlockObjectTypeProvider TypeProvider { get; }
 
@@ -56,10 +45,13 @@ namespace ChainLib.Tests
 		}
 
 		[Fact]
-		public void Can_retrieve_genesis_block_by_index()
+		public async Task Can_retrieve_genesis_block_by_index()
 		{
-			var retrieved = Fixture.Value.GetByIndexAsync(1);
+			Block retrieved = await Fixture.Value.GetByIndexAsync(1);
 			Assert.NotNull(retrieved);
+			Assert.Equal(retrieved.Hash, Fixture.GenesisBlock.Hash);
+			Assert.Equal(retrieved.PreviousHash, Fixture.GenesisBlock.PreviousHash);
+			Assert.Equal(retrieved.MerkleRootHash, Fixture.GenesisBlock.MerkleRootHash);
 		}
 
 		[Fact]
@@ -83,40 +75,6 @@ namespace ChainLib.Tests
 			var genesis = Fixture.GenesisBlock;
 			var retrieved = await Fixture.Value.GetLastBlockAsync();
 			Assert.Equal(genesis.Timestamp, retrieved.Timestamp);
-		}
-		
-		[Fact]
-		public async Task Can_stream_typed_objects()
-		{
-			await Fixture.Value.AddAsync(CreateBlock());
-
-			var projection = new BlockObjectProjection(Fixture.Value, TypeProvider);
-			var transactions = projection.Stream<Transaction>();
-			
-			Assert.NotNull(transactions);
-			Assert.Equal(1, transactions.Count());
-		}
-
-		private Block CreateBlock()
-		{
-			var transaction = new Transaction
-			{
-				Id = $"{Guid.NewGuid()}"
-			};
-			var blockObject = new BlockObject
-			{
-				Data = transaction,
-				Hash = null,
-			};
-			var block = new Block
-			{
-				Nonce = 1,
-				PreviousHash = "rosebud".Sha256(),
-				Timestamp = DateTimeOffset.UtcNow.Ticks,
-				Objects = new List<BlockObject> {blockObject}
-			};
-			block.Hash = block.ToHashBytes(HashProvider);
-			return block;
 		}
 	}
 }

@@ -16,7 +16,7 @@ I/O:
 [ ] Pluggable storage
 [ ] Bootstrap chain (ala log shipping)
 [ ] Database performance improvements
-[ ] Encrypt Sqlite databases
+[ ] Encrypt Sqlite data (cross-platform though)
 [ ] GetAllBlocks should support Range, or even enforce it
 [ ] Performance optimization of block objects using snapshots
 
@@ -34,6 +34,7 @@ Wallets:
 [ ] Offline wallet
 [ ] Online wallet
 [ ] Brainwallets (improvements ala warpwallet)
+[ ] BIP39/44
 
 Peers:
 [ ] Full replication (default)
@@ -47,12 +48,12 @@ Peers:
 [ ] Need a way to enforce coin settings are the same between peers (use chain hash)
 
 Misc:
+[ ] Dynamic serialization for block objects
 [ ] 100% unit test coverage
-[ ] Remove code behaviour from Block, Transaction
 [ ] Audit access of _logger
 [ ] Audit access of JsonConvert
 [ ] Remove exceptions thrown when they can be handled higher up
 [ ] Investigate performance of removing first-class transaction objects
 [ ] Remove Index from KeyPair?
-[ ] Switch to NSec when it releases
+[ ] Switch to NSec when it releases?
 [ ] coveralls and coverity badges

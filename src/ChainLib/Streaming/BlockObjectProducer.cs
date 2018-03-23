@@ -5,9 +5,9 @@ namespace ChainLib.Streaming
 {
 	public class BlockObjectProducer<T> : BackgroundProducer<T> where T : IBlockSerialized
 	{
-		public BlockObjectProducer(BlockObjectProjection projection)
+		public BlockObjectProducer(BlockObjectProjection objectProjection)
 		{
-			Background.Produce(projection.Stream<T>());
+			Background.Produce(objectProjection.Stream<T>());
 		}
 	}
 }

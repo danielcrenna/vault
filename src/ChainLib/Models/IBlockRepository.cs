@@ -13,7 +13,8 @@ namespace ChainLib.Models
 	    Task<T> GetByHashAsync(byte[] hash);
         Task<T> GetLastBlockAsync();
         Task AddAsync(T block);
-	    IEnumerable<T> StreamAllBlocks(bool forwards = true, int startingAt = 0);
-		IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards = true, int startingAt = 0);
+	    IEnumerable<T> StreamAllBlocks(bool forwards = true, long startingAt = 0);
+		IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards = true, long startingAt = 0);
+	    IEnumerable<BlockHeader> StreamAllBlockHeaders(bool forwards, long startingFrom);
     }
 }
