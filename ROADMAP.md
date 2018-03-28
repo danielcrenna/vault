@@ -4,7 +4,6 @@ Blockchain:
 [ ] Hoist proof system in ChainLib
 [ ] Smart contracts
 [ ] Side chains
-[ ] Verification of block objects (sources, order, etc.)
 
 UI:
 [ ] Block Explorer
@@ -16,13 +15,12 @@ I/O:
 [ ] Pluggable storage
 [ ] Bootstrap chain (ala log shipping)
 [ ] Database performance improvements
-[ ] Encrypt Sqlite data (cross-platform though)
 [ ] GetAllBlocks should support Range, or even enforce it
 [ ] Performance optimization of block objects using snapshots
 
 Security:
 [ ] Need to wipe all working arrays (ala Chaos.NaCl)
-[ ] Block object encryption (different than sqlite encryption, as its block layer level and address specific)
+[ ] Per-block-object encryption (address level)
 
 Mining:
 [ ] Proof of Stake implementation
@@ -38,21 +36,21 @@ Wallets:
 
 Peers:
 [ ] Full replication (default)
-[ ] Partial replication
-[ ] Pluggable peer protocols
+[ ] Partial replication (DHT?)
 [ ] Proper peer network (Lidgren, Neo, etc.)
 [ ] Peer discovery over UPNP/UDP beacons
-[ ] Efficient peer replication 
-[ ] Consensus with Paxos and/or Raft
-[ ] Pluggable consensus
+[ ] Peer discovery with seeds
+[ ] Consensus with Paxos and/or Raft?
+[ ] Pluggable consensus?
 [ ] Need a way to enforce coin settings are the same between peers (use chain hash)
 
 Misc:
-[ ] Dynamic serialization for block objects
+[ ] Fix merkle root hash implementation
+[ ] Dynamic serialization for block objects (i.e. custom objects should be auto-serialized)
 [ ] 100% unit test coverage
 [ ] Audit access of _logger
 [ ] Audit access of JsonConvert
-[ ] Remove exceptions thrown when they can be handled higher up
+[ ] Remove exceptions thrown when they can be handled higher up (see: Blockchain.cs)
 [ ] Investigate performance of removing first-class transaction objects
 [ ] Remove Index from KeyPair?
 [ ] Switch to NSec when it releases?

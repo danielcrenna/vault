@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.2-pre</Version>
+    <Version>0.0.3-pre</Version>
     <Description>A general purpose blockchain programming library for .NET Standard 2.0.</Description>
     <Copyright>© 2018 Daniel Crenna &amp; Contributors</Copyright>
     <PackageLicenseUrl>https://github.com/danielcrenna/ChainLib/blob/master/LICENSE</PackageLicenseUrl>
