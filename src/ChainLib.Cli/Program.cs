@@ -149,7 +149,7 @@ namespace ChainLib.Cli
 						    string baseDirectory =
 							    chain.StorageDirectory ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-						    blocks = new SqliteBlockRepository(baseDirectory, chain.Name, "blocks", chain.GenesisBlock, hashProvider,
+						    blocks = new SqliteBlockRepository(baseDirectory, chain.Name, "blocks", chain.GenesisBlock,
 							    typeProvider, loggerFactory.CreateLogger<SqliteBlockRepository>());
 						    break;
 					    }

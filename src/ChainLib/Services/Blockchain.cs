@@ -130,8 +130,6 @@ namespace ChainLib.Services
 		{
 			if (BlockIsValid(block, await GetLastBlockAsync()))
 			{
-				block.MerkleRootHash = block.ComputeMerkleRoot(_hashProvider);
-
 				await _blocks.AddAsync(block);
 
 				_logger?.LogInformation($"Block added: {block.Hash}");
@@ -159,12 +157,19 @@ namespace ChainLib.Services
 			}
 
 			var blockHash = newBlock.ToHashBytes(_hashProvider);
-
 			if (blockHash != newBlock.Hash)
 			{ // Check if the hash is correct
 				var message = $"Invalid hash: expected '{blockHash}' got '{newBlock.Hash}'";
 				throw new BlockAssertionException(message);
 			}
+
+			var merkleRootHash = newBlock.ComputeMerkleRoot(_hashProvider);
+			if (merkleRootHash != newBlock.MerkleRootHash)
+			{
+				var message = $"Invalid merkle root: expected '{merkleRootHash}' got '{newBlock.MerkleRootHash}'";
+				throw new BlockAssertionException(message);
+			}
+
 			if (newBlock.Difficulty >= GetDifficulty(newBlock.Index ?? 0))
 			{ // If the difficulty level of the proof-of-work challenge is correct
 				var message = $"Invalid difficulty: expected '${newBlock.Difficulty}' to be smaller than '${GetDifficulty(newBlock.Index ?? 0)}'";

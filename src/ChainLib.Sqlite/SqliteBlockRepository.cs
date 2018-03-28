@@ -7,6 +7,7 @@ using ChainLib.Serialization;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
+using Sodium;
 
 namespace ChainLib.Sqlite
 {
@@ -21,7 +22,6 @@ namespace ChainLib.Sqlite
 			string subDirectory, 
 			string databaseName,
 			Block genesisBlock,
-			IHashProvider hashProvider,
 			IBlockObjectTypeProvider typeProvider,
 			ILogger<SqliteBlockRepository> logger) : base(baseDirectory, subDirectory, databaseName, logger)
         {
@@ -48,8 +48,8 @@ namespace ChainLib.Sqlite
 
         public async Task AddAsync(Block block)
         {
-	        var data = SerializeObjects(block);
-
+	        byte[] data = SerializeObjects(block);
+			
 			using (var db = new SqliteConnection($"Data Source={DataFile}"))
 			{
 				await db.OpenAsync();
@@ -215,13 +215,39 @@ CREATE TABLE IF NOT EXISTS 'Block'
 		    byte[] data;
 		    using (var ms = new MemoryStream())
 		    {
-			    using (var bw = new BinaryWriter(ms, Encoding.UTF8))
+				using (var bw = new BinaryWriter(ms, Encoding.UTF8))
 			    {
+					// Version:
 				    var context = new BlockSerializeContext(bw, _typeProvider);
-				    block.SerializeObjects(context);
-			    }
-			    data = ms.ToArray();
+
+				    if (context.typeProvider.SecretKey != null)
+				    {
+						// Nonce:
+					    var nonce = StreamEncryption.GenerateNonceChaCha20();
+						context.bw.WriteBuffer(nonce);
+
+					    // Data:
+						using (var ems = new MemoryStream())
+					    {
+						    using (var ebw = new BinaryWriter(ems, Encoding.UTF8))
+						    {
+							    var ec = new BlockSerializeContext(ebw, _typeProvider, context.Version);
+							    block.SerializeObjects(ec);
+							    context.bw.WriteBuffer(StreamEncryption.EncryptChaCha20(ems.ToArray(), nonce, ec.typeProvider.SecretKey));
+						    }
+					    }
+				    }
+				    else
+				    {
+						// Data:
+					    context.bw.Write(false);
+					    block.SerializeObjects(context);
+					}
+
+				    data = ms.ToArray();
+				}
 		    }
+
 		    return data;
 	    }
 
@@ -231,10 +257,30 @@ CREATE TABLE IF NOT EXISTS 'Block'
 		    {
 			    using (var br = new BinaryReader(ms))
 			    {
-				    var context = new BlockDeserializeContext(br, _typeProvider);
-				    block.DeserializeObjects(context);
-			    }
+				    // Version:
+					var context = new BlockDeserializeContext(br, _typeProvider);
+
+					// Nonce:
+				    var nonce = context.br.ReadBuffer();
+					if(nonce != null)
+					{
+						// Data:
+						using (var dms = new MemoryStream(StreamEncryption.EncryptChaCha20(context.br.ReadBuffer(), nonce, _typeProvider.SecretKey)))
+						{
+							using (var dbr = new BinaryReader(dms))
+							{
+								var dc = new BlockDeserializeContext(dbr, _typeProvider);
+								block.DeserializeObjects(dc);
+							}
+						}
+					}
+					else
+					{
+						// Data:
+						block.DeserializeObjects(context);
+					}
+				}
 		    }
-	    }
+		}
 	}
 }

@@ -11,13 +11,31 @@ using Xunit;
 
 namespace ChainLib.Tests
 {
-	public class WithBlockDatabase :
-		IClassFixture<EmptyBlockRepositoryFixture>,
-		IClassFixture<ObjectHashProviderFixture>
+	public class WithUnencryptedBlockDatabase : WithBlockDatabase<EmptyBlockRepositoryFixture>,
+		IClassFixture<ObjectHashProviderFixture>, IClassFixture<EmptyBlockRepositoryFixture>
 	{
-		public WithBlockDatabase(
-			EmptyBlockRepositoryFixture blockDatabase,
-			ObjectHashProviderFixture hashProvider)
+		public WithUnencryptedBlockDatabase(EmptyBlockRepositoryFixture blockDatabase, ObjectHashProviderFixture hashProvider) : base(blockDatabase, hashProvider)
+		{
+
+		}
+	}
+
+	public class WithEncryptedBlockDatabase : 
+		WithBlockDatabase<EncryptedEmptyBlockRepositoryFixture>,
+		IClassFixture<ObjectHashProviderFixture>, IClassFixture<EncryptedEmptyBlockRepositoryFixture>
+	{
+		public WithEncryptedBlockDatabase(
+			EncryptedEmptyBlockRepositoryFixture blockDatabase, 
+			ObjectHashProviderFixture hashProvider) : base(blockDatabase, hashProvider)
+		{
+
+		}
+	}
+
+	public abstract class WithBlockDatabase<T>
+		where T : EmptyBlockRepositoryFixture
+	{
+		protected WithBlockDatabase(EmptyBlockRepositoryFixture blockDatabase, ObjectHashProviderFixture hashProvider)
 		{
 			Fixture = blockDatabase;
 			TypeProvider = Fixture.TypeProvider;

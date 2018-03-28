@@ -21,6 +21,7 @@ namespace ChainLib.Serialization
 			{
 				if (buffer[offset + i] != compareTo[position + i])
 				{
+
 					Debug.Assert(false);
 					throw new Exception("Data mismatch");
 				}

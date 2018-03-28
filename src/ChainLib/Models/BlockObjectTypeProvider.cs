@@ -9,8 +9,11 @@ namespace ChainLib.Models
 {
 	public class BlockObjectTypeProvider : IBlockObjectTypeProvider
 	{
-		public BlockObjectTypeProvider()
+		public byte[] SecretKey { get; }
+
+		public BlockObjectTypeProvider(byte[] secretKey = null)
 		{
+			SecretKey = secretKey;
 			Map = new ConcurrentDictionary<long, Type>();
 			ReverseMap = new ConcurrentDictionary<Type, long>();
 			Serializers = new ConcurrentDictionary<Type, ConstructorInfo>();

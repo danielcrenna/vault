@@ -9,7 +9,9 @@ using Xunit;
 
 namespace ChainLib.Tests
 {
-	public class WithBlock : IClassFixture<ObjectHashProviderFixture>, IClassFixture<BlockObjectTypeProviderFixture>
+	public class WithBlock : 
+		IClassFixture<ObjectHashProviderFixture>, 
+		IClassFixture<BlockObjectTypeProviderFixture>
 	{
 		private readonly ObjectHashProviderFixture _hash;
 		private readonly BlockObjectTypeProviderFixture _types;
@@ -23,12 +25,15 @@ namespace ChainLib.Tests
 		[Fact]
 		public void Empty_object_collection_is_equivalent_to_null()
 		{
-			var block = new Block();
-			block.Nonce = 1;
-			block.PreviousHash = "rosebud".Sha256();
-			block.Timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+			var block = new Block
+			{
+				Nonce = 1,
+				PreviousHash = "rosebud".Sha256(),
+				Timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+			};
+			block.MerkleRootHash = block.ComputeMerkleRoot(_hash.Value);
 			block.Hash = block.ToHashBytes(_hash.Value);
-
+			
 			block.Objects = new List<BlockObject>();
 			Assert.Equal(block.Hash, block.ToHashBytes(_hash.Value));
 		}
@@ -36,10 +41,13 @@ namespace ChainLib.Tests
 		[Fact]
 		public void Consecutive_hashing_is_idempotent()
 		{
-			var block = new Block();
-			block.Nonce = 1;
-			block.PreviousHash = "rosebud".Sha256();
-			block.Timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+			var block = new Block
+			{
+				Nonce = 1,
+				PreviousHash = "rosebud".Sha256(),
+				Timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+			};
+			block.MerkleRootHash = block.ComputeMerkleRoot(_hash.Value);
 			block.Hash = block.ToHashBytes(_hash.Value);
 
 			Assert.Equal(block.Hash, block.ToHashBytes(_hash.Value));
@@ -54,7 +62,9 @@ namespace ChainLib.Tests
 				PreviousHash = "rosebud".Sha256(),
 				Timestamp = (uint)DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
 			};
+			block.MerkleRootHash = block.ComputeMerkleRoot(_hash.Value);
 			block.Hash = block.ToHashBytes(_hash.Value);
+
 			block.RoundTripCheck(_hash.Value, _types.Value);
 		}
 
@@ -69,10 +79,10 @@ namespace ChainLib.Tests
 			};
 			var blockObject = new BlockObject
 			{
-				Data = transaction,
-				Hash = null,
+				Data = transaction
 			};
-			
+			blockObject.Hash = blockObject.ToHashBytes(_hash.Value);
+
 			var block = new Block
 			{
 				Nonce = 1,
@@ -80,6 +90,7 @@ namespace ChainLib.Tests
 				Timestamp = (uint) DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
 				Objects = new List<BlockObject> {blockObject}
 			};
+			block.MerkleRootHash = block.ComputeMerkleRoot(_hash.Value);
 			block.Hash = block.ToHashBytes(_hash.Value);
 
 			block.RoundTripCheck(_hash.Value, _types.Value);

@@ -8,17 +8,13 @@ namespace ChainLib.Tests.Fixtures
 {
 	public class EmptyBlockRepositoryFixture : IDisposable
 	{
-		public EmptyBlockRepositoryFixture()
-		{
-			var @namespace = $"{Guid.NewGuid()}";
+		public EmptyBlockRepositoryFixture() : this(
+			$"{Guid.NewGuid()}", 
+			new ObjectHashProviderFixture().Value, 
+			new BlockObjectTypeProviderFixture().Value) { }
 
-			Init(@namespace);
-		}
-
-		protected void Init(string subDirectory)
+		protected EmptyBlockRepositoryFixture(string subDirectory, IHashProvider hashProvider, IBlockObjectTypeProvider typeProvider)
 		{
-			var hashProvider = new ObjectHashProviderFixture().Value;
-			var typeProvider = new BlockObjectTypeProviderFixture().Value;
 			var factory = new LoggerFactory();
 			factory.AddConsole();
 
@@ -39,7 +35,6 @@ namespace ChainLib.Tests.Fixtures
 				subDirectory,
 				"blockchain",
 				genesisBlock,
-				hashProvider,
 				typeProvider,
 				factory.CreateLogger<SqliteBlockRepository>());
 
@@ -56,9 +51,9 @@ namespace ChainLib.Tests.Fixtures
 
 		public SqliteBlockRepository Value { get; set; }
 
-		public Block GenesisBlock { get; private set; }
+		public Block GenesisBlock { get; }
 
-		public IBlockObjectTypeProvider TypeProvider { get; private set; }
+		public IBlockObjectTypeProvider TypeProvider { get; }
 
 		public void Dispose()
 		{

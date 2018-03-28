@@ -16,7 +16,7 @@ namespace ChainLib.Models.Extended
 
 	    public void Serialize(BlockSerializeContext context)
 	    {
-		    context.bw.Write(Id);
+		    context.bw.WriteNullableString(Id);
 		    context.bw.Write((byte)Type);
 
 		    if (context.bw.WriteBoolean(Data != null))
@@ -47,15 +47,18 @@ namespace ChainLib.Models.Extended
 
 	    public Transaction(BlockDeserializeContext context)
 	    {
-			Id = context.br.ReadString();
+			Id = context.br.ReadNullableString();
 		    Type = (TransactionType)context.br.ReadByte();
 
 		    if (context.br.ReadBoolean())
 		    {
-			    Data = new TransactionData
+			    var inputs = DeserializeTransactionItems(context);
+			    var outputs = DeserializeTransactionItems(context);
+
+				Data = new TransactionData
 			    {
-				    Inputs = DeserializeTransactionItems(context),
-				    Outputs = DeserializeTransactionItems(context)
+				    Inputs = inputs,
+				    Outputs = outputs
 			    };
 		    }
 	    }

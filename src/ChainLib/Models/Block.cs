@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using ChainLib.Serialization;
+using Sodium;
 
 namespace ChainLib.Models
 {
@@ -32,13 +33,15 @@ namespace ChainLib.Models
 	    public void Serialize(BlockSerializeContext context)
 	    {
 		    SerializeHeader(context);
-		    SerializeObjects(context);
+		    context.bw.WriteBuffer(Hash);
+			SerializeObjects(context);
 	    }
 
 	    private Block(BlockDeserializeContext context)
 	    {
 		    DeserializeHeader(context);
-		    DeserializeObjects(context);
+		    Hash = context.br.ReadBuffer();
+			DeserializeObjects(context);
 	    }
 
 	    public void DeserializeHeader(BlockDeserializeContext context)
@@ -61,7 +64,7 @@ namespace ChainLib.Models
 
 	    public void SerializeObjects(BlockSerializeContext context)
 	    {
-		    var count = Objects?.Count ?? 0;
+			var count = Objects?.Count ?? 0;
 		    context.bw.Write(count);
 		    if (Objects != null)
 				foreach (var @object in Objects)
@@ -73,18 +76,78 @@ namespace ChainLib.Models
 		    // Serialize a first time
 		    var firstMemoryStream = new MemoryStream();
 		    var firstSerializeContext = new BlockSerializeContext(new BinaryWriter(firstMemoryStream), typeProvider);
-		    Serialize(firstSerializeContext);
-		    var originalData = firstMemoryStream.ToArray();
 
-		    // Then deserialize that data
-		    var br = new BinaryReader(new MemoryStream(originalData));
-		    var deserializeContext = new BlockDeserializeContext(br, typeProvider);
-		    var deserialized = new Block(deserializeContext);
+		    byte[] nonce;
+		    if (typeProvider.SecretKey != null)
+		    {
+			    nonce = StreamEncryption.GenerateNonceChaCha20();
+				firstSerializeContext.bw.WriteBuffer(nonce);
+			    using (var ems = new MemoryStream())
+			    {
+					using (var ebw = new BinaryWriter(ems))
+					{
+						var ec = new BlockSerializeContext(ebw, typeProvider, firstSerializeContext.Version);
+						Serialize(ec);
+						firstSerializeContext.bw.WriteBuffer(StreamEncryption.EncryptChaCha20(ems.ToArray(), nonce, ec.typeProvider.SecretKey));
+					}
+			    }
+			}
+		    else
+		    {
+			    firstSerializeContext.bw.Write(false);
+			    Serialize(firstSerializeContext);
+			}
 
-		    // Then serialize that deserialized data and see if it matches
-		    var secondMemoryStream = new MemoryCompareStream(originalData);
-		    var secondSerializeContext = new BlockSerializeContext(new BinaryWriter(secondMemoryStream), typeProvider);
-		    deserialized.Serialize(secondSerializeContext);
+		    byte[] originalData = firstMemoryStream.ToArray();
+
+			// Then deserialize that data
+		    {
+			    var br = new BinaryReader(new MemoryStream(originalData));
+			    var deserializeContext = new BlockDeserializeContext(br, typeProvider);
+			    nonce = deserializeContext.br.ReadBuffer();
+
+			    Block deserialized;
+			    if (nonce != null)
+			    {
+				    using (var dms = new MemoryStream(StreamEncryption.DecryptChaCha20(deserializeContext.br.ReadBuffer(), nonce, typeProvider.SecretKey)))
+				    {
+					    using (var dbr = new BinaryReader(dms))
+					    {
+						    var dc = new BlockDeserializeContext(dbr, typeProvider);
+						    deserialized = new Block(dc);
+					    }
+				    }
+				}
+			    else
+			    {
+				    deserialized = new Block(deserializeContext);
+			    }
+
+				// Then serialize that deserialized data and see if it matches
+			    {
+				    var secondMemoryStream = new MemoryCompareStream(originalData);
+				    var secondSerializeContext = new BlockSerializeContext(new BinaryWriter(secondMemoryStream), typeProvider);
+				    if (typeProvider.SecretKey != null)
+				    {
+					    secondSerializeContext.bw.WriteBuffer(nonce);
+					    using (var ems = new MemoryStream())
+					    {
+						    using (var ebw = new BinaryWriter(ems))
+						    {
+							    var ec = new BlockSerializeContext(ebw, typeProvider, secondSerializeContext.Version);
+							    deserialized.Serialize(ec);
+							    secondSerializeContext.bw.WriteBuffer(StreamEncryption.EncryptChaCha20(ems.ToArray(), nonce, ec.typeProvider.SecretKey));
+						    }
+					    }
+				    }
+				    else
+				    {
+					    secondSerializeContext.bw.Write(false);
+					    deserialized.Serialize(secondSerializeContext);
+					}
+				}
+			   
+			}
 	    }
 
 	    #endregion

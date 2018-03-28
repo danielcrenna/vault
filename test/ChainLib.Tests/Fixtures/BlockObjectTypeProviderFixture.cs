@@ -1,3 +1,4 @@
+using System.Text;
 using ChainLib.Models;
 
 namespace ChainLib.Tests.Fixtures

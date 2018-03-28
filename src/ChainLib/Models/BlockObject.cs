@@ -1,4 +1,5 @@
 ﻿using ChainLib.Serialization;
+using Sodium;
 
 namespace ChainLib.Models
 {
@@ -32,7 +33,9 @@ namespace ChainLib.Models
 			context.bw.WriteBuffer(Hash);            // Hash
 
 			if (context.bw.WriteBoolean(Data != null) && Type.HasValue)
+			{
 				Data?.Serialize(context);
+			}
 		}
 		
 		public BlockObject(BlockDeserializeContext context)
