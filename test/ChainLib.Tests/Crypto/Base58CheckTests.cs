@@ -4,7 +4,10 @@ using Xunit;
 
 namespace ChainLib.Tests.Crypto
 {
-    public class Base58CheckTests
+	/// <summary>
+	/// https://github.com/adamcaudill/Base58Check
+	/// </summary>
+	public class Base58CheckTests
     {
         // Test cases from https://github.com/bitcoin/bitcoin/blob/master/src/test/base58_tests.cpp
         private readonly Tuple<string, byte[]>[] _testCases = {

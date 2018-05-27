@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Contracts;
+﻿using System;
+using System.Diagnostics.Contracts;
 
 namespace ChainLib.Wallets.Factories
 {
@@ -18,5 +19,10 @@ namespace ChainLib.Wallets.Factories
 			Contract.Assert(!string.IsNullOrWhiteSpace(password));
 			return Wallet.FromPassword(password, _salt);
         }
+
+	    public Wallet Create(params object[] args)
+	    {
+		    return args.Length != 1 ? null : Create(args[0]?.ToString());
+	    }
     }
 }

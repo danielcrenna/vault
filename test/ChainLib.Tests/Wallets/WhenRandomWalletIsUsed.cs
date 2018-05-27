@@ -5,11 +5,11 @@ using Xunit;
 
 namespace ChainLib.Tests.Wallets
 {
-    public class WhenSecureWalletIsUsed : IClassFixture<SecureWalletProviderFixture>
+    public class WhenRandomWalletIsUsed : IClassFixture<RandomWalletProviderFixture>
     {
-        private readonly SecureWalletProviderFixture _provider;
+        private readonly RandomWalletProviderFixture _provider;
 
-        public WhenSecureWalletIsUsed(SecureWalletProviderFixture provider)
+        public WhenRandomWalletIsUsed(RandomWalletProviderFixture provider)
         {
             _provider = provider;
         }

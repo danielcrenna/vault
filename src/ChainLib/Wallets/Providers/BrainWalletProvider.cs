@@ -35,14 +35,14 @@ namespace ChainLib.Wallets.Providers
             return _addresses.GenerateAddress(wallet);
         }
 
-        public byte[] GenerateSecret(params object[] args)
+	    public byte[] GenerateSecret(params object[] args)
 	    {
 			return _secrets.GenerateSecret(args);
 		}
 
-		public Wallet Create(string password)
+		public Wallet Create(params object[] args)
         {
-            return _factory.Create(password);
+            return _factory.Create(args);
         }
 
 	    public Task<IEnumerable<Wallet>> GetAllAsync()
@@ -64,6 +64,5 @@ namespace ChainLib.Wallets.Providers
 	    {
 		    return _repository.SaveAddressesAsync(wallet);
 	    }
-
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IWalletFactoryProvider
     {
-        Wallet Create(string password);
+        Wallet Create(params object[] args);
     }
 }

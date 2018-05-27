@@ -33,7 +33,7 @@ namespace ChainLib.Wallets
             return KeyPairs.Select(x => x.PublicKey);
         }
 
-        internal static Wallet FromPassword(string password, string salt = null)
+		internal static Wallet FromPassword(string password, string salt = null)
         {
             var wallet = new Wallet
             {

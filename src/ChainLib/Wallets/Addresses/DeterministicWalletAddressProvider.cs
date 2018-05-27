@@ -27,7 +27,11 @@ namespace ChainLib.Wallets.Addresses
 
             // Generate next seed based on the first secret or a new secret from the last key pair
             var lastKeyPair = wallet.KeyPairs.LastOrDefault();
-            var seed = lastKeyPair == null ? wallet.Secret : PasswordUtil.FastHash(Encoding.UTF8.GetString(lastKeyPair.PrivateKey), "salt");
+	        var seed = lastKeyPair == null
+		        ? wallet.Secret
+		        : PasswordUtil.FastHash(
+			        Encoding.UTF8.GetString(lastKeyPair.PrivateKey),
+			        Constants.DefaultFixedSalt16);
 
             var keyPair = Ed25519.GenerateKeyPairFromSecret(seed);
 

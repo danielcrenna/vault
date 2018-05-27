@@ -3,13 +3,13 @@ using ChainLib.Wallets.Providers;
 
 namespace ChainLib.Tests.Wallets.Fixtures
 {
-    public class SecureWalletProviderFixture
+    public class RandomWalletProviderFixture
     {
-        public SecureWalletProviderFixture()
+        public RandomWalletProviderFixture()
         {
 			var repository = new WalletRepositoryFixture();
 
-            Value = new SecureWalletProvider(repository.Value);
+            Value = new RandomWalletProvider(repository.Value);
         }
 
         public IWalletProvider Value { get; set; }

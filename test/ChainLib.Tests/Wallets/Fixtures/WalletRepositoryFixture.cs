@@ -22,7 +22,6 @@ namespace ChainLib.Tests.Wallets.Fixtures
 				baseDirectory,
 				$"{Guid.NewGuid()}",
 				"wallets",
-				addresses,
 				factory.CreateLogger<SqliteWalletRepository>());
 		}
 

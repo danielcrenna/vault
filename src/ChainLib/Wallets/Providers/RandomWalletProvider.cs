@@ -6,7 +6,7 @@ using ChainLib.Wallets.Secrets;
 
 namespace ChainLib.Wallets.Providers
 {
-    public class SecureWalletProvider : IWalletProvider
+	public class RandomWalletProvider : IWalletProvider
     {
 	    private readonly IWalletRepository _repository;
 
@@ -14,10 +14,10 @@ namespace ChainLib.Wallets.Providers
         private readonly RandomWalletSecretProvider _secrets;
         private readonly SaltedWalletFactoryProvider _factory;
 
-        public SecureWalletProvider(IWalletRepository repository, ushort bitsOfEntropy = 256)
+        public RandomWalletProvider(IWalletRepository repository, ushort bitsOfEntropy = 256)
         {
 	        _repository = repository;
-	        _addresses = new RandomWalletAddressProvider(bitsOfEntropy);
+			_addresses = new RandomWalletAddressProvider(bitsOfEntropy);
             _secrets = new RandomWalletSecretProvider(bitsOfEntropy);
             _factory = new SaltedWalletFactoryProvider();
         }
@@ -32,12 +32,12 @@ namespace ChainLib.Wallets.Providers
 			return _secrets.GenerateSecret(args);
 		}
 
-		public Wallet Create(string password)
-        {
-            return _factory.Create(password);
-        }
+	    public Wallet Create(params object[] args)
+	    {
+		    return _factory.Create(args);
+	    }
 
-	    public Task<IEnumerable<Wallet>> GetAllAsync()
+		public Task<IEnumerable<Wallet>> GetAllAsync()
 	    {
 		    return _repository.GetAllAsync();
 	    }
