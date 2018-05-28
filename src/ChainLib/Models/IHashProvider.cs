@@ -11,6 +11,7 @@
 
 	    byte[] DoubleHash(object instance);
 	    byte[] DoubleHash(byte[] any);
-	    byte[] DoubleHash(string any);
+	    byte[] DoubleHash(byte[] one, byte[] two);
+		byte[] DoubleHash(string any);
     }
 }

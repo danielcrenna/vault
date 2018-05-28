@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using ChainLib.Crypto;
 using FastMember;
+using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace ChainLib.Models
 {
-    public class ObjectHashProvider : IHashProvider
+	public class ObjectHashProvider : IHashProvider
     {
         private readonly HashAlgorithm _algorithm;
         private readonly JsonSerializerSettings _settings;
@@ -48,8 +50,12 @@ namespace ChainLib.Models
 
 	    public byte[] ComputeHashBytes(byte[] buffer)
 	    {
-		    var hash = _algorithm.ComputeHash(buffer);
-		    return hash;
+		    return _algorithm.ComputeHash(buffer);
+	    }
+
+	    public byte[] ComputeHashBytes(Stream stream)
+	    {
+		    return _algorithm.ComputeHash(stream);
 	    }
 
 		public string ComputeHashString(object instance)
@@ -77,7 +83,18 @@ namespace ChainLib.Models
 		    return ComputeHashBytes(ComputeHashBytes(any));
 	    }
 
-	    public byte[] DoubleHash(string any)
+	    public byte[] DoubleHash(byte[] one, byte[] two)
+	    {
+		    var three = SharedPools.ByteArray.Allocate();
+			Buffer.BlockCopy(one, 0, three, 0, one.Length);
+			Buffer.BlockCopy(two, 0, three, three.Length, two.Length);
+
+		    var result = ComputeHashBytes(ComputeHashBytes(three));
+		    SharedPools.ByteArray.Free(three);
+		    return result;
+	    }
+
+		public byte[] DoubleHash(string any)
 	    {
 		    return ComputeHashBytes(ComputeHashBytes(any));
 	    }
