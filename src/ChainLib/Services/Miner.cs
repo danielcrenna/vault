@@ -18,7 +18,7 @@ namespace ChainLib.Services
             _logger = logger;
         }
 
-        public async Task<Block> MineAsync(string address)
+        public async Task<Block> MineAsync(byte[] address)
         {
 	        var lastBlock = await _blockchain.GetLastBlockAsync();
 	        var baseBlock = GenerateNextBlock(lastBlock);

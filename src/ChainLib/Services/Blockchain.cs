@@ -38,17 +38,17 @@ namespace ChainLib.Services
 			}
 		}
 
-		public IEnumerable<BlockHeader> StreamAllBlockHeaders(bool forwards, int startingAt = 0)
+		public IEnumerable<BlockHeader> StreamAllBlockHeaders(bool forwards, long startingAt = 0)
 		{
 			return _blocks.StreamAllBlockHeaders(forwards, startingAt);
 		}
 
-		public IEnumerable<Block> StreamAllBlocks(bool forwards, int startingAt = 0)
+		public IEnumerable<Block> StreamAllBlocks(bool forwards, long startingAt = 0)
 		{
 			return _blocks.StreamAllBlocks(forwards, startingAt);
 		}
 
-		public IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards, int startingAt = 0)
+		public IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards, long startingAt = 0)
 		{
 			return _blocks.StreamAllBlockObjects(forwards, startingAt);
 		}
