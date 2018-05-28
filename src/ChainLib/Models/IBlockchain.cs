@@ -18,9 +18,9 @@ namespace ChainLib.Models
 		Task<bool> ChainIsValid(IReadOnlyList<T> blockchainToValidate);
 		bool BlockIsValid(T newBlock, T previousBlock);
 
-		IEnumerable<BlockHeader> StreamAllBlockHeaders(bool forwards, int startingAt = 0);
-		IEnumerable<T> StreamAllBlocks(bool forwards, int startingAt = 0);
-		IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards, int startingAt = 0);
+		IEnumerable<BlockHeader> StreamAllBlockHeaders(bool forwards, long startingAt = 0);
+		IEnumerable<T> StreamAllBlocks(bool forwards, long startingAt = 0);
+		IEnumerable<BlockObject> StreamAllBlockObjects(bool forwards, long startingAt = 0);
 
 		uint GetDifficulty(long index);
 	}
