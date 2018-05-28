@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using ChainLib.Crypto;
@@ -11,14 +12,12 @@ namespace ChainLib.Sqlite
 {
     public class SqliteWalletRepository : SqliteRepository, IWalletRepository
     {
-	    private readonly IWalletAddressProvider _addressProvider;
-        private readonly ILogger<SqliteWalletRepository> _logger;
+	    private readonly ILogger<SqliteWalletRepository> _logger;
 
-        public SqliteWalletRepository(string baseDirectory, string subDirectory, string databaseName, IWalletAddressProvider addressProvider, ILogger<SqliteWalletRepository> logger) :
+        public SqliteWalletRepository(string baseDirectory, string subDirectory, string databaseName, ILogger<SqliteWalletRepository> logger) :
 			base(baseDirectory, subDirectory, databaseName, logger)
         {
-	        _addressProvider = addressProvider;
-            _logger = logger;
+	        _logger = logger;
         }
 
         public async Task<IEnumerable<Wallet>> GetAllAsync()
@@ -69,10 +68,10 @@ namespace ChainLib.Sqlite
 
         public async Task<Wallet> AddAsync(Wallet wallet)
         {
-            if (wallet.KeyPairs.Count == 0)
-            {
-                _addressProvider.GenerateAddress(wallet);
-            }
+			if (wallet.KeyPairs.Count == 0)
+			{
+				throw new ArgumentException("Wallet contains no keypairs", nameof(wallet));
+			}
 
             using (var db = new SqliteConnection($"Data Source={DataFile}"))
             {
