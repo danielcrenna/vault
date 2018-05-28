@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.Extensions.Logging;
 
 namespace ChainLib.Sqlite
 {
-    public abstract class SqliteRepository
+	public abstract class SqliteRepository
     {
 	    private readonly string _baseDirectory;
 	    private readonly ILogger _logger;

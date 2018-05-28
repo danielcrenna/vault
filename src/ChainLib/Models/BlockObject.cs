@@ -1,5 +1,4 @@
 ﻿using ChainLib.Serialization;
-using Sodium;
 
 namespace ChainLib.Models
 {

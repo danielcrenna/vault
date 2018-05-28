@@ -7,7 +7,7 @@ namespace ChainLib.Models
 {
     public class Block : IBlockDescriptor
 	{
-	    internal static ICollection<BlockObject> NoObjects = new List<BlockObject>(0);
+	    internal static IReadOnlyCollection<BlockObject> NoObjects = new List<BlockObject>(0);
 
 		public Block()
 	    {
@@ -146,7 +146,6 @@ namespace ChainLib.Models
 					    deserialized.Serialize(secondSerializeContext);
 					}
 				}
-			   
 			}
 	    }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using ChainLib.Configuration;
 using ChainLib.Crypto;
 using ChainLib.Extensions;
 using ChainLib.Models;

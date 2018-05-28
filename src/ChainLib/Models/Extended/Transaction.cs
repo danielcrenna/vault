@@ -4,7 +4,7 @@ using ChainLib.Serialization;
 
 namespace ChainLib.Models.Extended
 {
-    public class Transaction : IBlockSerialized
+	public class Transaction : IBlockSerialized
     {
 		public enum TransactionType : byte { Unknown, Regular, Fee, Reward }
 
