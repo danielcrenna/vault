@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ChainLib.Crypto;
 using ChainLib.Models;
 
 namespace ChainLib.Extensions
@@ -51,7 +50,7 @@ namespace ChainLib.Extensions
 					{
 						var a = block.Objects[i].Hash;
 						var b = block.Objects[j].Hash;
-						var d = hashProvider.DoubleHash(a.ConcatArrays(b));
+						var d = hashProvider.DoubleHash(a, b);
 						n.Add(d);
 						i++;
 					}
