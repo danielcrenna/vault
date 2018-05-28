@@ -1,6 +1,6 @@
 ﻿using ChainLib.Models;
 
-namespace ChainLib.Cli
+namespace ChainLib.Configuration
 {
 	public class ChainSettings
 	{
