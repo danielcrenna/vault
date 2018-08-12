@@ -1,10 +1,10 @@
-{
+﻿{
   "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
+    "windowsAuthentication": false, 
+    "anonymousAuthentication": true, 
     "iisExpress": {
-      "applicationUrl": "http://localhost:2845/",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:22029",
+      "sslPort": 44361
     }
   },
   "profiles": {
@@ -18,10 +18,10 @@
     "ChainLib.Node": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "http://localhost:2846/"
+      }
     }
   }
 }
