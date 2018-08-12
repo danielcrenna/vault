@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -85,12 +86,12 @@ namespace ChainLib.Models
 
 	    public byte[] DoubleHash(byte[] one, byte[] two)
 	    {
-		    var three = SharedPools.ByteArray.Allocate();
+		    var three = ArrayPool<byte>.Shared.Rent(one.Length + two.Length);
 			Buffer.BlockCopy(one, 0, three, 0, one.Length);
 			Buffer.BlockCopy(two, 0, three, three.Length, two.Length);
 
 		    var result = ComputeHashBytes(ComputeHashBytes(three));
-		    SharedPools.ByteArray.Free(three);
+		    ArrayPool<byte>.Shared.Return(three);
 		    return result;
 	    }
 

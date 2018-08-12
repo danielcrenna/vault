@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.0.3-pre</Version>
+    <Version>0.0.4-pre</Version>
     <Description>A general purpose blockchain programming library for .NET Standard 2.0.</Description>
     <Copyright>© 2018 Daniel Crenna &amp; Contributors</Copyright>
     <PackageLicenseUrl>https://github.com/danielcrenna/ChainLib/blob/master/LICENSE</PackageLicenseUrl>
@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="reactive.pipes" Version="1.5.0" />
     <PackageReference Include="Sodium.Core" Version="1.2.0" />
+    <PackageReference Include="System.Buffers" Version="4.5.0" />
   </ItemGroup>
 
 </Project>
