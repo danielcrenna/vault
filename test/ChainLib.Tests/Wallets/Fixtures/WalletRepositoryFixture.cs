@@ -14,7 +14,6 @@ namespace ChainLib.Tests.Wallets.Fixtures
 			var addresses = new DeterministicWalletAddressProvider(secrets);
 
 			var factory = new LoggerFactory();
-			factory.AddConsole();
 
 			var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 

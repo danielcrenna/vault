@@ -16,8 +16,7 @@ namespace ChainLib.Tests.Fixtures
 		protected EmptyBlockRepositoryFixture(string subDirectory, IHashProvider hashProvider, IBlockObjectTypeProvider typeProvider)
 		{
 			var factory = new LoggerFactory();
-			factory.AddConsole();
-
+			
 			var genesisBlock = new Block
 			{
 				Index = 0L,
