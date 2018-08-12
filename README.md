@@ -10,8 +10,7 @@ ChainLib
 
 A general purpose blockchain programming library for .NET Standard 2.0.
 
-The goal of the project is to be a useful library for creating blockchains for various purposes, with a specific goal of enabling private, enterprise, and consortium chains,
-as well as provide cross-chain compatibility for any blockchain programmed using this library, with pluggable support for other blockchains where needed.
+The goal of the project is to be a useful library for creating blockchains for various purposes, with a specific goal of enabling private, enterprise, and consortium chains.
 
 "White label" blockchains may be created using JSON definitions, such as:
 
