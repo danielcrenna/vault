@@ -5,10 +5,10 @@ namespace ChainLib.Streaming
 {
 	public class BlockObjectProjection
     {
-	    private readonly IBlockRepository _source;
+	    private readonly IBlockStore _source;
 	    private readonly IBlockObjectTypeProvider _typeProvider;
 
-	    public BlockObjectProjection(IBlockRepository source, IBlockObjectTypeProvider typeProvider)
+	    public BlockObjectProjection(IBlockStore source, IBlockObjectTypeProvider typeProvider)
 	    {
 		    _source = source;
 		    _typeProvider = typeProvider;

@@ -8,9 +8,9 @@ namespace ChainLib.Crypto
     {
 	    public static Tuple<byte[], byte[]> GenerateKeyPairFromSecret(byte[] privateKeySeed)
 	    {
-		    var keypair = PublicKeyAuth.GenerateKeyPair(privateKeySeed);
+		    var keyPair = PublicKeyAuth.GenerateKeyPair(privateKeySeed);
 
-            return new Tuple<byte[], byte[]>(keypair.PublicKey, keypair.PrivateKey);
+            return new Tuple<byte[], byte[]>(keyPair.PublicKey, keyPair.PrivateKey);
         }
 
         public static Tuple<byte[], byte[]> GenerateKeyPairFromPrivateKey(byte[] privateKey)

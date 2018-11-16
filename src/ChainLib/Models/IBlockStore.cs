@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace ChainLib.Models
 {
-	public interface IBlockRepository : IBlockRepository<Block> { }
+	public interface IBlockStore : IBlockStore<Block> { }
 
-    public interface IBlockRepository<T> where T : Block
+    public interface IBlockStore<T> where T : Block
     {
 	    Task<T> GetGenesisBlockAsync();
 		Task<long> GetLengthAsync();

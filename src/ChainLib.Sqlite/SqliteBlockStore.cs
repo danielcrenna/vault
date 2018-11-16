@@ -11,19 +11,19 @@ using Sodium;
 
 namespace ChainLib.Sqlite
 {
-    public class SqliteBlockRepository : SqliteRepository, IBlockRepository
+    public class SqliteBlockStore : SqliteRepository, IBlockStore
     {
 	    private readonly Block _genesisBlock;
 	    private readonly IBlockObjectTypeProvider _typeProvider;
-	    private readonly ILogger<SqliteBlockRepository> _logger;
+	    private readonly ILogger<SqliteBlockStore> _logger;
 
-        public SqliteBlockRepository(
+        public SqliteBlockStore(
 			string baseDirectory,
 			string subDirectory, 
 			string databaseName,
 			Block genesisBlock,
 			IBlockObjectTypeProvider typeProvider,
-			ILogger<SqliteBlockRepository> logger) : base(baseDirectory, subDirectory, databaseName, logger)
+			ILogger<SqliteBlockStore> logger) : base(baseDirectory, subDirectory, databaseName, logger)
         {
 	        _genesisBlock = genesisBlock;
 	        _typeProvider = typeProvider;

@@ -29,13 +29,13 @@ namespace ChainLib.Tests.Fixtures
 
 			var baseDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-			Value = new SqliteBlockRepository(
+			Value = new SqliteBlockStore(
 				baseDirectory,
 				subDirectory,
 				"blockchain",
 				genesisBlock,
 				typeProvider,
-				factory.CreateLogger<SqliteBlockRepository>());
+				factory.CreateLogger<SqliteBlockStore>());
 
 			genesisBlock.Index = 1;
 
@@ -48,7 +48,7 @@ namespace ChainLib.Tests.Fixtures
 			TypeProvider = typeProvider;
 		}
 
-		public SqliteBlockRepository Value { get; set; }
+		public SqliteBlockStore Value { get; set; }
 
 		public Block GenesisBlock { get; }
 

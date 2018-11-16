@@ -7,7 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
 		README.md = README.md
-		ROADMAP.md = ROADMAP.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib", "src\ChainLib\ChainLib.csproj", "{A5B26E1B-9B4A-47D6-A2A8-C4469F70AB21}"
@@ -16,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.Sqlite", "src\Chai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.WarpWallet", "src\ChainLib.WarpWallet\ChainLib.WarpWallet.csproj", "{6834AD13-524C-491A-8BF2-75AE4795A553}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainLib.Node", "src\ChainLib.Node\ChainLib.Node.csproj", "{C17799CE-C298-4586-AF29-52EF6B4242F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.Node", "src\ChainLib.Node\ChainLib.Node.csproj", "{C17799CE-C298-4586-AF29-52EF6B4242F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainLib.Console", "src\ChainLib.Console\ChainLib.Console.csproj", "{BAF15EC8-BD47-47AB-B98C-4C6020B742D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.Console", "src\ChainLib.Console\ChainLib.Console.csproj", "{BAF15EC8-BD47-47AB-B98C-4C6020B742D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChainLib.Tests", "test\ChainLib.Tests\ChainLib.Tests.csproj", "{FCDADA6F-11BC-4AF2-B739-5D8DE9829CAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChainLib.Tests", "test\ChainLib.Tests\ChainLib.Tests.csproj", "{FCDADA6F-11BC-4AF2-B739-5D8DE9829CAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -140,7 +140,7 @@ namespace ChainLib.Console
 				//
 				// Storage:
 				//
-				IBlockRepository blocks = null;
+				IBlockStore blocks = null;
 				if (!string.IsNullOrWhiteSpace(chain.StorageEngine))
 				{
 					switch (chain.StorageEngine?.ToUpperInvariant())
@@ -150,8 +150,8 @@ namespace ChainLib.Console
 								string baseDirectory =
 									chain.StorageDirectory ?? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
-								blocks = new SqliteBlockRepository(baseDirectory, chain.Name, "blocks", chain.GenesisBlock,
-									typeProvider, loggerFactory.CreateLogger<SqliteBlockRepository>());
+								blocks = new SqliteBlockStore(baseDirectory, chain.Name, "blocks", chain.GenesisBlock,
+									typeProvider, loggerFactory.CreateLogger<SqliteBlockStore>());
 								break;
 							}
 					}

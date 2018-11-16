@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using ChainLib.Serialization;
 
@@ -25,8 +24,6 @@ namespace ChainLib.Models
 
 		public bool TryAdd(long id, Type type)
 		{
-			Debug.Assert(typeof(IBlockSerialized).IsAssignableFrom(type));
-
 			if (!Map.TryGetValue(id, out Type added))
 			{
 				Map.Add(id, type);

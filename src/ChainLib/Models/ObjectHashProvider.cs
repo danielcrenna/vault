@@ -9,7 +9,6 @@ using System.Security.Cryptography;
 using System.Text;
 using ChainLib.Crypto;
 using FastMember;
-using Microsoft.CodeAnalysis;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 

@@ -12,12 +12,12 @@ namespace ChainLib.Services
 {
 	public class Blockchain : IBlockchain
 	{
-		private readonly IBlockRepository<Block> _blocks;
+		private readonly IBlockStore<Block> _blocks;
 		private readonly IProofOfWork _proofOfWork;
 		private readonly IHashProvider _hashProvider;
 		private readonly ILogger _logger;
 
-		public Blockchain(IBlockRepository<Block> blocks, IProofOfWork proofOfWork, IHashProvider hashProvider, ILogger<Blockchain> logger)
+		public Blockchain(IBlockStore<Block> blocks, IProofOfWork proofOfWork, IHashProvider hashProvider, ILogger<Blockchain> logger)
 		{
 			_blocks = blocks;
 			_hashProvider = hashProvider;

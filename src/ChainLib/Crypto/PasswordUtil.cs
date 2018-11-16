@@ -21,7 +21,6 @@ namespace ChainLib.Crypto
 		/// <returns></returns>
 		public static string StorageHash(string password, string salt = null)
 		{
-			Contract.Assert(!string.IsNullOrWhiteSpace(password));
 			var saltBytes = ArgonSalt(salt);
 			var hashBytes = ArgonHash(password, saltBytes);
 			return $"{Convert.ToBase64String(saltBytes)}:{Convert.ToBase64String(hashBytes)}";
