@@ -10,11 +10,11 @@ namespace ChainLib.Sqlite
 
         private const string DataSubFolder = "Data";
 
-        protected SqliteRepository(string baseDirectory, string subdirectory, string databaseName, ILogger logger)
+        protected SqliteRepository(string baseDirectory, string subDirectory, string databaseName, ILogger logger)
         {
 	        _baseDirectory = baseDirectory;
 	        _logger = logger;
-            CreateIfNotExists(subdirectory, databaseName);
+            CreateIfNotExists(subDirectory, databaseName);
         }
 
         protected void CreateIfNotExists(string @namespace, string name)
