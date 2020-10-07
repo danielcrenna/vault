@@ -69,6 +69,7 @@ _ReSharper*/
 # TeamCity is a build add-in
 _TeamCity*
 
+<<<<<<< HEAD
 # DotCover is a Code Coverage Tool
 *.dotCover
 
@@ -92,6 +93,8 @@ DocProject/Help/html
 # Click-Once directory
 publish/
 
+=======
+>>>>>>> bf231d8ec455524ab4ebe1efdc53f9ca96e323f0
 # Publish Web Output
 *.Publish.xml
 
@@ -157,8 +160,12 @@ $RECYCLE.BIN/
 # Dependency directory
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
+
+# Visual Studio 2015 cache/options directory
+.vs/
+.vscode/
+
+# .NET Core / VS2015
 project.lock.json
 applicationhost.config
-
-src/fap.io/uploads
-src/image.svc/imagecache
+/src/ChainLib.Cli/Data/*
